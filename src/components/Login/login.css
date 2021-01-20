@@ -1,85 +1,90 @@
+/* Mobile First Technique  */
+
+/* Mobile CSS*/
+
 .login-grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr;
   height: 100vh;
-  place-items: center;
-
-  grid-template-areas: 'col1 col2';
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-
-.carousel-col1 {
-  grid-area: col1;
-  width: 100%;
-  height: 100%;
+.carousel-container {
+  display: none;
 }
 .login-form-container {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  padding: 0% 18.5% 0% 10.5%;
   align-items: flex-start;
-  justify-content: center;
-  max-width: 60%;
 }
-.carousel-container {
-  grid-area: col2;
+.carousel-col1 {
   height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #f5f6f8;
+  display: grid;
+  place-items: center;
 }
-.carousel-paper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  text-align: center;
+.student-sign-in {
+  font-size: 0.8125rem;
 }
+.loginForm header {
+  margin-bottom: 30px;
+}
+/* iPad and Tablets  */
+@media only screen and (min-width: 720px) {
+  .login-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 
-.carousel-paper p {
-  max-width: 90%;
-}
+    place-items: center;
+    grid-template-areas: 'col1 col2';
+  }
 
-.carousel-img {
-  max-width: 500px;
-  min-width: 80%;
-  margin-bottom: 1rem;
-}
+  .carousel-col1 {
+    grid-area: col1;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+  }
+  .login-form-container {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+  }
+  .carousel-container {
+    grid-area: col2;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f5f6f8;
+  }
+  .carousel-paper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    text-align: center;
+  }
 
-.btn-grad {
-  background-image: linear-gradient(
-    to right,
-    #2b5876 0%,
-    #4e4376 51%,
-    #2b5876 100%
-  );
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  font-size: 1rem;
-  border: none;
-  margin: 10px 0px;
-  padding: 10px 30px;
-  text-align: center;
-  transition: 0.5s;
-  background-size: 200% auto;
-  color: white;
-  box-shadow: 0 0 20px #eee;
-  border-radius: 30px;
-  display: block;
-  width: fit-content;
-  cursor: pointer;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  -ms-border-radius: 30px;
-  -o-border-radius: 30px;
-}
+  .carousel-paper p {
+    max-width: 90%;
+  }
 
-.btn-grad:hover {
-  background-position: right center; /* change the direction of the change here */
-  color: #fff;
-  text-decoration: none;
+  .carousel-img {
+    max-width: 500px;
+    min-width: 80%;
+    margin-bottom: 1rem;
+  }
+}
+/* Desktop */
+
+@media only screen and (min-width: 1024px) {
 }

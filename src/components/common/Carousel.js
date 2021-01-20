@@ -15,7 +15,7 @@ function Item(props) {
   return (
     <div className='carousel-paper'>
       <img src={props.item.image} alt='login-img' className='carousel-img' />
-      <h2>{props.item.name}</h2>
+      <h3>{props.item.name}</h3>
       <p>{props.item.description}</p>
     </div>
   );

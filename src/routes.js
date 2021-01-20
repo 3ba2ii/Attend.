@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Link, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Login from './components/Login/Login';
 
 const Public = () => <div>Public</div>;
@@ -31,7 +31,7 @@ const PrivateRoute = ({ children, ...rest }) => {
 const Routes = () => (
   <div>
     <Switch>
-      <Route path='/login' render={() => <Login />} />
+      <Route path='/' render={() => <Login />} />
 
       <PrivateRoute path='/protected'>
         <Protected />

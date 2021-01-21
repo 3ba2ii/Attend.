@@ -89,6 +89,7 @@ p span {
   -moz-border-radius: 15px;
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
+  outline: none;
 }
 
 .btn-grad:hover {
@@ -96,6 +97,7 @@ p span {
   color: #fff;
   text-decoration: none;
 }
+
 .cursor-pointer {
   cursor: pointer;
 }

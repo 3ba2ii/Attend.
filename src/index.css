@@ -1,8 +1,19 @@
+:root {
+  --color-alert-error-border: rgba(158, 28, 35, 0.2);
+  --color-alert-error-text: #24292e;
+  --color-alert-error-icon: rgba(158, 28, 35, 0.6);
+  --color-alert-error-bg: #ffe3e6;
+  --main-heading-font-color: #334d6e;
+  --main-subheading-font-color: #90a0b7;
+  --arabic-font-family: Arial, Helvetica, sans-serif;
+  --main-font-family: 'Poppins', sans-serif;
+}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 html {
   overflow-x: hidden;
 }
@@ -10,17 +21,13 @@ body {
   height: 100vh;
   font-family: 'Poppins', sans-serif;
 
-  --main-heading-font-color: #334d6e;
-  --main-subheading-font-color: #90a0b7;
-  --arabic-font-family: Arial, Helvetica, sans-serif;
-  --main-font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
 }
 
 h1,
 h2 {
   color: var(--main-heading-font-color);
-  font-size: clamp(2.5rem, 1rem + 1.5vw, 64px);
+  font-size: clamp(2.5rem, 1rem + 1.5vw, 4rem);
   font-weight: 600;
 }
 h3,
@@ -28,14 +35,14 @@ h4,
 h5,
 h6 {
   color: var(--main-heading-font-color);
-  font-size: clamp(1.5rem, 1rem + 1.1vw, 64px);
+  font-size: clamp(1.5rem, 1rem + 1.1vw, 3.375rem);
   font-weight: 600;
 }
 
 p {
   margin: 15px 0px;
   color: var(--main-subheading-font-color);
-  font-size: clamp(0.8rem, 0.5rem + 0.5vw, 1.5rem);
+  font-size: clamp(0.7rem, 0.5rem + 0.8vmin, 1.5rem);
   font-weight: 300;
 }
 
@@ -66,6 +73,7 @@ p span {
   font-family: var(--main-font-family);
   font-weight: 500;
   border: none;
+  font-size: 0.8rem;
   margin: 40px 0px 20px 0px;
   padding: 10px 30px;
   text-align: center;
@@ -73,14 +81,14 @@ p span {
   background-size: 200% auto;
   color: white;
   box-shadow: 0 0 20px #eee;
-  border-radius: 30px;
+  border-radius: 15px;
   display: block;
   width: fit-content;
   cursor: pointer;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  -ms-border-radius: 30px;
-  -o-border-radius: 30px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
 }
 
 .btn-grad:hover {
@@ -88,7 +96,9 @@ p span {
   color: #fff;
   text-decoration: none;
 }
-
+.cursor-pointer {
+  cursor: pointer;
+}
 .login-logo {
   display: inline;
   max-width: 20%;
@@ -98,4 +108,7 @@ p span {
   max-width: 25%;
   min-width: 130px;
   display: inline-block;
+}
+.error-color-icon {
+  color: var(--color-alert-error-icon);
 }

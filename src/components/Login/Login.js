@@ -1,24 +1,62 @@
 import React, { useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
-import { fakeAuth } from '../../routes';
-import Carousel from '../common/Carousel';
+
+import CloseIcon from '@material-ui/icons/Close';
+import { useDispatch } from 'react-redux';
 
 import './login.css';
+import Carousel from '../common/Carousel';
 import carouselItems from '../../types/constants/carousel';
 import { Form } from '../common/Form';
-
-import logo from '../../assets/logo.png';
 import Logo from '../common/Logo';
+import {
+  validateEmail,
+  validatePassword,
+} from '../../utlis/validation/validation';
+import { FAILED_AUTHENTICATION } from '../../types/constants/redux-constants';
+import { LoginAction } from '../../redux-store/actions/authedAction';
 
 const Login = () => {
-  console.log('a7a');
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
+  const [emailOrUsername, setEmailOrUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
   const { state } = useLocation();
 
-  const onLogin = () => {
-    fakeAuth.authenticate(() => {
-      setRedirectToReferrer(true);
+  const dispatch = useDispatch();
+
+  const onLogin = async (e) => {
+    e.preventDefault();
+    const isValidEmail = validateEmail(emailOrUsername);
+
+    const isValidPassword = validatePassword(password);
+
+    if (!isValidEmail || !isValidPassword) {
+      setError(true);
+      return;
+    }
+    setLoading(true);
+    const action = await LoginAction({
+      identifier: emailOrUsername,
+      password: password,
     });
+
+    if (action.type === FAILED_AUTHENTICATION) {
+      setError(true);
+    } else {
+      dispatch(action);
+    }
+    setLoading(false);
+  };
+  const onChange = {
+    email: (e) => {
+      setEmailOrUsername(e.target.value);
+    },
+    password: (e) => {
+      setPassword(e.target.value);
+    },
   };
   if (redirectToReferrer) {
     return <Redirect to={state?.from || '/'} />;
@@ -30,7 +68,7 @@ const Login = () => {
         <div className='login-form-container'>
           <Logo {...{ className: 'login-logo' }} />
 
-          <form className='loginForm'>
+          <form className='loginForm' onSubmit={onLogin}>
             <header>
               <h2>Sign in</h2>
               <p className='sign-in-paragraph'>
@@ -39,8 +77,22 @@ const Login = () => {
                 <span className='blue-span'>contact us.</span>
               </p>
             </header>
-            <Form {...{ className: 'email', name: 'email', type: 'email' }} />
+            {error && (
+              <div className='login-error full-width-separated'>
+                <span>Incorrect username or password.</span>
+                <CloseIcon
+                  className='cursor-pointer error-color-icon'
+                  fontSize={'small'}
+                  onClick={() => setError(false)}
+                />
+              </div>
+            )}
             <Form
+              onChange={onChange.email}
+              {...{ className: 'email', name: 'Username', type: 'text' }}
+            />
+            <Form
+              onChange={onChange.password}
               {...{ className: 'password', name: 'password', type: 'password' }}
             />
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import './form.css';
+
 export const Form = (props) => {
   return (
     <div className={`${props.className}-form`}>
@@ -8,11 +9,9 @@ export const Form = (props) => {
         name={props.name}
         required={props.required || true}
         onChange={(e) => {
-          console.log(
-            '🚀 ~ file: Form.js ~ line 11 ~ Form ~ e',
-            e.target.value
-          );
+          props.onChange(e);
         }}
+        autoComplete='off'
       />
       <label htmlFor={props.name} className={`label-name`}>
         <span className='content-name'>{props.name}</span>

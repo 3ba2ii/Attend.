@@ -56,7 +56,12 @@ p span {
   color: #109cf1;
   cursor: pointer;
 }
-
+button {
+  outline: none;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
 .line-clamp {
   display: -webkit-box;
   -webkit-line-clamp: 3;

@@ -1,0 +1,116 @@
+.drawer-logo {
+  position: relative;
+  padding-left: 10px;
+  z-index: -1;
+}
+.drawer-logo img {
+  min-width: 90px;
+  object-fit: contain;
+  max-width: 20%;
+}
+.toolbar {
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+.avatar-drawer {
+  display: flex;
+
+  height: 160px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px 5px;
+}
+.avatar-drawer img {
+  width: 100%;
+  object-fit: contain;
+  max-width: 70px;
+}
+.avatar-drawer div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: var(--main-font-family);
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 24px;
+  width: 60%;
+  color: #192a3e;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.avatar-drawer span {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.avatar-drawer p {
+  margin: 0;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.navbar-list {
+  font-family: var(--main-font-family);
+}
+.list-item-text {
+  color: #596e89;
+
+  font-weight: 500;
+}
+.list-item-icon > * {
+  color: #c2cfe0;
+}
+.monthly-report-button {
+  position: relative;
+  /*Blue2*/
+  min-height: 40px;
+  border: 1px solid #2d9cdb;
+  border-radius: 30px;
+  margin: 10% 16px 0rem 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 180px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+}
+.monthly-button-text {
+  font-family: var(--main-font-family);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: #2d9cdb;
+  position: absolute;
+  right: 11px;
+}
+
+.monthly-button-icon {
+  position: absolute;
+  left: 11px;
+}
+
+.monthly-button-icon > * {
+  color: #2d9cdb;
+  font-size: 1px;
+}
+
+.only-icon {
+  padding: 0;
+  border: none;
+  margin: 10% 0px 0rem 0px;
+
+  position: relative;
+  left: 3px;
+}
+.logout-btn {
+  width: 100%;
+  position: absolute;
+  bottom: 24px;
+}
+.delete-shadow {
+  background: white;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import MiniDrawer from './components/Dashboard/Drawer';
 import Login from './components/Login/Login';
 
 const Public = () => <div>Public</div>;
@@ -31,11 +32,11 @@ const PrivateRoute = ({ children, ...rest }) => {
 const Routes = () => (
   <div>
     <Switch>
-      <Route path='/' render={() => <Login />} />
-
-      <PrivateRoute path='/protected'>
-        <Protected />
-      </PrivateRoute>
+      {/*  <Route path='/' render={() => <Login />} /> */}
+      <Route path='/' render={() => <MiniDrawer />} />
+      {/* <PrivateRoute path='/'>
+        <MiniDrawer />
+      </PrivateRoute> */}
       <Route path='/public' render={() => <Public />} />
     </Switch>
   </div>

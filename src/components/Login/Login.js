@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import CloseIcon from '@material-ui/icons/Close';
 import { Redirect, useLocation } from 'react-router-dom';
 
-import CloseIcon from '@material-ui/icons/Close';
-import { useDispatch } from 'react-redux';
-
 import './login.css';
+
 import Carousel from '../common/Carousel';
-import carouselItems from '../../types/constants/carousel';
 import { Form } from '../common/Form';
 import Logo from '../common/Logo';
+
+import carouselItems from '../../types/constants/carousel';
 import {
   validateEmail,
   validatePassword,
@@ -47,6 +48,7 @@ const Login = () => {
       setError(true);
     } else {
       dispatch(action);
+      setRedirectToReferrer(true);
     }
     setLoading(false);
   };
@@ -96,7 +98,9 @@ const Login = () => {
               {...{ className: 'password', name: 'password', type: 'password' }}
             />
 
-            <button className='btn-grad'>Sign in</button>
+            <button className={`btn-grad ${loading && 'loading-btn'}`}>
+              Sign in
+            </button>
             <p className='student-sign-in'>
               a student?<span> Sign in as a student</span>
             </p>

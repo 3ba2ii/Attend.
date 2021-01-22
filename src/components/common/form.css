@@ -10,7 +10,8 @@
 
   margin-bottom: 40px;
   z-index: 1;
-  max-width: 75%;
+  width: 100%;
+  max-width: 450px;
 }
 
 [class$='-form'] input {

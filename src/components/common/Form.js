@@ -13,9 +13,12 @@ export const Form = (props) => {
           (!visiblePassword ? (
             <span
               className='cursor-pointer'
-              onClick={(e) => setVisiblePassword(true)}
+              onClick={() => setVisiblePassword(true)}
             >
-              <VisibilityIcon className='visibility-icon' fontSize={'small'} />
+              <VisibilityIcon
+                className='visibility-icon'
+                style={{ color: '#90a0b7', fontSize: '22px' }}
+              />
             </span>
           ) : (
             <span
@@ -24,7 +27,7 @@ export const Form = (props) => {
             >
               <VisibilityOffIcon
                 className='visibility-icon'
-                fontSize={'small'}
+                style={{ color: '#90a0b7', fontSize: '22px' }}
               />
             </span>
           ))}

@@ -1,73 +1,111 @@
-import statics from '../../assets/profit.png';
-import time from '../../assets/time2.png';
-import kingdom from '../../assets/kingdom.png';
-import mail from '../../assets/Mail.png';
-
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import CloseIcon from '@material-ui/icons/Close';
 import { Redirect, useLocation } from 'react-router-dom';
-import { fakeAuth } from '../../routes';
-import Carousel from '../common/Carousel';
 
 import './login.css';
 
+import Carousel from '../common/Carousel';
+import { Form } from '../common/Form';
+import Logo from '../common/Logo';
+
+import carouselItems from '../../types/constants/carousel';
+import {
+  validateEmail,
+  validatePassword,
+} from '../../utlis/validation/validation';
+import { FAILED_AUTHENTICATION } from '../../types/constants/redux-constants';
+import { LoginAction } from '../../redux-store/actions/authedAction';
+
 const Login = () => {
-  console.log('a7a');
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
+  const [emailOrUsername, setEmailOrUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
   const { state } = useLocation();
 
-  const onLogin = () => {
-    fakeAuth.authenticate(() => {
-      setRedirectToReferrer(true);
+  const dispatch = useDispatch();
+
+  const onLogin = async (e) => {
+    e.preventDefault();
+    const isValidEmail = validateEmail(emailOrUsername);
+
+    const isValidPassword = validatePassword(password);
+
+    if (!isValidEmail || !isValidPassword) {
+      setError(true);
+      return;
+    }
+    setLoading(true);
+    const action = await LoginAction({
+      identifier: emailOrUsername,
+      password: password,
     });
+
+    if (action.type === FAILED_AUTHENTICATION) {
+      setError(true);
+    } else {
+      dispatch(action);
+      setRedirectToReferrer(true);
+    }
+    setLoading(false);
+  };
+  const onChange = {
+    email: (e) => {
+      setEmailOrUsername(e.target.value);
+    },
+    password: (e) => {
+      setPassword(e.target.value);
+    },
   };
   if (redirectToReferrer) {
     return <Redirect to={state?.from || '/'} />;
   }
 
-  const carouselItems = [
-    {
-      name: 'Easy Reports',
-      description:
-        'Select and download your attendance reports with a lot of options and types.',
-      image: statics,
-    },
-    {
-      name: 'Automated Mails',
-      description:
-        'Alerts and notifications are sent to you via your email and appears on your account as well.',
-      image: mail,
-    },
-    {
-      name: 'Your Time Matters',
-      description:
-        'Save your precious time and get your attendance reports and statics right away!',
-      image: time,
-    },
-    {
-      name: 'Reward your Top Students',
-      description:
-        'Get to know how are your top students and send congratulations emails to them.',
-      image: kingdom,
-    },
-  ];
   return (
     <div className='login-grid-container'>
-      <div className='login-form-container carousel-col1'>
-        <div className='logo side-by-side'>
-          <img src={''} />
-          <img src={''} />
+      <div className='carousel-col1'>
+        <div className='login-form-container'>
+          <Logo {...{ className: 'login-logo' }} />
+
+          <form className='loginForm' onSubmit={onLogin}>
+            <header>
+              <h2>Sign in</h2>
+              <p className='sign-in-paragraph'>
+                Login to access your courses and download your reports, if you
+                have a trouble signing in please{' '}
+                <span className='blue-span'>contact us.</span>
+              </p>
+            </header>
+            {error && (
+              <div className='login-error full-width-separated'>
+                <span>Incorrect username or password.</span>
+                <CloseIcon
+                  className='cursor-pointer error-color-icon'
+                  fontSize={'small'}
+                  onClick={() => setError(false)}
+                />
+              </div>
+            )}
+            <Form
+              onChange={onChange.email}
+              {...{ className: 'email', name: 'Username', type: 'text' }}
+            />
+            <Form
+              onChange={onChange.password}
+              {...{ className: 'password', name: 'password', type: 'password' }}
+            />
+
+            <button className={`btn-grad ${loading && 'loading-btn'}`}>
+              Sign in
+            </button>
+            <p className='student-sign-in'>
+              a student?<span> Sign in as a student</span>
+            </p>
+          </form>
         </div>
-        <h2>Sign in</h2>
-        <p>
-          Login to access your courses and download your reports if you have a
-          trouble signning in please{' '}
-          <span className='blue-span'>contact us.</span>
-        </p>
-        <p>Username</p>
-        <input></input>
-        <p>Password</p>
-        <input></input>
-        <button className='btn-grad'>Sign in</button>
       </div>
       <Carousel items={carouselItems} />
     </div>

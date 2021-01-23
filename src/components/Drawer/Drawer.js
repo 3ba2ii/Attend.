@@ -31,6 +31,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import avatar from '../../assets/Ellipse.png';
 
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import PrimarySearchAppBar from './AppBar';
 export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
@@ -47,28 +48,8 @@ export default function MiniDrawer() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position='fixed'
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-        elevation={0}
-      >
-        <Toolbar className='toolbar'>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            onClick={handleDrawerOpen}
-            edge='start'
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
-          {!open && <Logo className='drawer-logo' />}
-        </Toolbar>
-      </AppBar>
+
+      <PrimarySearchAppBar open={open} handleDrawerOpen={handleDrawerOpen} />
       <Drawer
         variant='permanent'
         className={clsx(classes.drawer, {
@@ -134,7 +115,7 @@ export default function MiniDrawer() {
         </List>
         <Divider />
 
-        <button className={`monthly-report-button ${!open && 'only-icon'}`}>
+        {/* <button className={`monthly-report-button ${!open && 'only-icon'}`}>
           <ListItemIcon className='monthly-button-icon'>
             <InsertDriveFileOutlinedIcon />
           </ListItemIcon>
@@ -145,7 +126,7 @@ export default function MiniDrawer() {
               disableTypography
             />
           )}
-        </button>
+        </button> */}
         <button className='logout-btn'>
           <List className='logout-btn'>
             {[{ text: 'Logout', icon: <ExitToAppIcon /> }].map(

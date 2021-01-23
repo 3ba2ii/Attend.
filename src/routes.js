@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import MiniDrawer from './components/Dashboard/Drawer';
+import MiniDrawer from './components/Drawer/Drawer';
 import Login from './components/Login/Login';
 
 const Public = () => <div>Public</div>;

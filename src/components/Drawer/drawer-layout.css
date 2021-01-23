@@ -114,3 +114,15 @@
 .delete-shadow {
   background: white;
 }
+
+.logo-small {
+  display: block;
+  max-width: 25px;
+}
+.small-avatar {
+  display: block;
+  max-width: 38px;
+}
+.appBar-icons {
+  margin-right: 30px;
+}

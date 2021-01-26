@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import CloseIcon from '@material-ui/icons/Close';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import './login.css';
@@ -15,11 +14,15 @@ import {
   validatePassword,
 } from '../../utlis/validation/validation';
 import { FAILED_AUTHENTICATION } from '../../types/constants/redux-constants';
-import { LoginAction } from '../../redux-store/actions/authedAction';
+import {
+  LoginAction,
+  LoginActionUsingCookies,
+} from '../../redux-store/actions/authedAction';
+import { Error } from '../common/Error';
 
 const Login = () => {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
-  const [emailOrUsername, setEmailOrUsername] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -30,36 +33,53 @@ const Login = () => {
 
   const onLogin = async (e) => {
     e.preventDefault();
-    const isValidEmail = validateEmail(emailOrUsername);
-
+    const isValidEmail = validateEmail(identifier);
     const isValidPassword = validatePassword(password);
-
     if (!isValidEmail || !isValidPassword) {
       setError(true);
       return;
     }
     setLoading(true);
+
     const action = await LoginAction({
-      identifier: emailOrUsername,
+      identifier: identifier,
       password: password,
     });
-
     if (action.type === FAILED_AUTHENTICATION) {
       setError(true);
+      setLoading(false);
     } else {
       dispatch(action);
+      setLoading(false);
       setRedirectToReferrer(true);
     }
-    setLoading(false);
   };
   const onChange = {
     email: (e) => {
-      setEmailOrUsername(e.target.value);
+      setIdentifier(e.target.value);
     },
     password: (e) => {
       setPassword(e.target.value);
     },
   };
+  const ignoreError = () => {
+    setError(false);
+  };
+  function checkCookies() {
+    setLoading(true);
+    const action = LoginActionUsingCookies();
+    if (action.type !== FAILED_AUTHENTICATION) {
+      dispatch(action);
+      setRedirectToReferrer(true);
+    }
+
+    setLoading(false);
+  }
+  useEffect(() => {
+    checkCookies();
+    return;
+  }, [dispatch]);
+
   if (redirectToReferrer) {
     return <Redirect to={state?.from || '/'} />;
   }
@@ -79,16 +99,7 @@ const Login = () => {
                 <span className='blue-span'>contact us.</span>
               </p>
             </header>
-            {error && (
-              <div className='login-error full-width-separated'>
-                <span>Incorrect username or password.</span>
-                <CloseIcon
-                  className='cursor-pointer error-color-icon'
-                  fontSize={'small'}
-                  onClick={() => setError(false)}
-                />
-              </div>
-            )}
+            {error && <Error ignoreError={ignoreError} />}
             <Form
               onChange={onChange.email}
               {...{ className: 'email', name: 'Username', type: 'text' }}

@@ -1,6 +1,7 @@
 import {
   SIGNED_OUT_SUCCESSFULLY,
   SUCCESSFULLY_AUTHENTICATED,
+  SUCCESSFULLY_AUTHENTICATED_USING_COOKIES,
 } from '../../types/constants/redux-constants';
 import Cookies from 'js-cookie';
 
@@ -10,10 +11,10 @@ const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SUCCESSFULLY_AUTHENTICATED:
       console.log(
-        `🚀 ~ file: authedReducer.js ~ line 11 ~ authReducer ~ action.type`,
+        `🚀 ~ file: authedReducer.js ~ line 12 ~ authReducer ~ action`,
         action
       );
-
+      localStorage.setItem('token', action?.authedUser.jwt);
       Cookies.set(
         'authedUser',
         { ...action.authedUser },
@@ -22,8 +23,12 @@ const authReducer = (state = initialState, action) => {
         }
       );
       return { ...state, authedUser: { ...action.authedUser } };
+
+    case SUCCESSFULLY_AUTHENTICATED_USING_COOKIES:
+      return { ...state, authedUser: { ...action.authedUser } };
     case SIGNED_OUT_SUCCESSFULLY:
-      Cookies.remove('user');
+      Cookies.remove('authedUser');
+      localStorage.removeItem('token');
 
       return { ...state, authedUser: null };
 

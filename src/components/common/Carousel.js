@@ -3,7 +3,7 @@ import Carousel from 'react-material-ui-carousel';
 
 function CarouselComponent({ items }) {
   return (
-    <Carousel className='carousel-container'>
+    <Carousel className='carousel-container' navButtonsAlwaysInvisible={true}>
       {items.map((item, i) => (
         <Item key={i} item={item} className='carousel-item' />
       ))}

@@ -1,25 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import MiniDrawer from './components/Drawer/Drawer';
 import Login from './components/Login/Login';
 
-const Public = () => <div>Public</div>;
-
-const Protected = () => <div>Protected</div>;
-
-export const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100);
-  },
-};
-
 const PrivateRoute = ({ children, ...rest }) => {
+  const { authedUser } = useSelector((state) => state.authReducer);
+
   return (
     <Route
       {...rest}
       render={({ location }) => {
-        return fakeAuth.isAuthenticated === true ? (
+        return authedUser ? (
           children
         ) : (
           <Redirect to={{ pathname: '/login', state: { from: location } }} />
@@ -28,17 +20,14 @@ const PrivateRoute = ({ children, ...rest }) => {
     />
   );
 };
-const Routes = () => (
-  <div>
-    <Switch>
-      <Route path='/' render={() => <Login />} />
 
-      <PrivateRoute path='/protected'>
-        <Protected />
-      </PrivateRoute>
-      <Route path='/public' render={() => <Public />} />
-    </Switch>
-  </div>
+const Routes = () => (
+  <Switch>
+    <Route path='/login' render={() => <Login />} />
+    <PrivateRoute path='/'>
+      <MiniDrawer />
+    </PrivateRoute>
+  </Switch>
 );
 
 export default Routes;

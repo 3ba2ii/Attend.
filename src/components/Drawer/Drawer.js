@@ -1,41 +1,46 @@
 import React from 'react';
+import { useLocation, Link, Route } from 'react-router-dom';
+
 import './drawer-layout.css';
 import clsx from 'clsx';
+
 import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import useStyles from '../../types/styles/drawer-styles';
+
 import Logo from '../common/Logo';
+import { Avatar } from '../common/Avatar';
+
+import PowerSettingsNewOutlinedIcon from '@material-ui/icons/PowerSettingsNewOutlined';
+import TuneOutlinedIcon from '@material-ui/icons/TuneOutlined';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import BarChartIcon from '@material-ui/icons/BarChart';
 import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
-
-import BarChartIcon from '@material-ui/icons/BarChart';
 import CloudIcon from '@material-ui/icons/Cloud';
-import SettingsIcon from '@material-ui/icons/Settings';
-import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import avatar from '../../assets/Ellipse.png';
 
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import PrimarySearchAppBar from './AppBar';
+import { useDispatch } from 'react-redux';
+import { SIGNED_OUT_SUCCESSFULLY } from '../../types/constants/redux-constants';
+import { SignOut } from '../../redux-store/actions/authedAction';
+
 export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const dispatch = useDispatch();
+  let { pathname } = useLocation();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -43,6 +48,18 @@ export default function MiniDrawer() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const onLogout = () => {
+    const action = SignOut();
+    console.log(`🚀 ~ file: Drawer.js ~ line 55 ~ onLogout ~ action`, action);
+    dispatch(action);
+  };
+  var width;
+  window.onresize = window.onload = function () {
+    width = this.innerWidth;
+    if (width < 550) setOpen(false);
+    else setOpen(true);
   };
 
   return (
@@ -74,108 +91,96 @@ export default function MiniDrawer() {
             )}
           </IconButton>
         </div>
-        <div className='avatar-drawer'>
-          <img src={avatar} alt={'avatar'} />
-          {open && (
-            <div>
-              <span>Dr. M.Elshewami</span>
-              <p>Admin</p>
-            </div>
-          )}
-        </div>
+
+        {Avatar(open)}
         <List className='navbar-list'>
           {[
-            { text: 'Dashboard', icon: <DashboardIcon /> },
-            { text: 'My Profile', icon: <PersonIcon /> },
-            { text: 'Courses', icon: <SchoolIcon /> },
-            { text: 'Leaderboard', icon: <BarChartIcon /> },
-            { text: 'Data Entry', icon: <CloudIcon /> },
-          ].map((item, index) => (
-            <ListItem button key={item.text + index}>
-              <ListItemIcon className='list-item-icon'>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.text} className='list-item-text' />
-            </ListItem>
+            { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
+            { text: 'My Profile', icon: <PersonIcon />, path: '/profile' },
+            { text: 'Courses', icon: <SchoolIcon />, path: '/courses' },
+            {
+              text: 'Leaderboard',
+              icon: <BarChartIcon />,
+              path: '/leaderboard',
+            },
+            { text: 'Data Entry', icon: <CloudIcon />, path: '/data_entry' },
+          ].map(({ text, icon, path }, index) => (
+            <Link to={path} key={text + index}>
+              <ListItem button>
+                <ListItemIcon
+                  className={`list-item-icon ${
+                    path === pathname && ' active-nav-icon'
+                  }`}
+                >
+                  {path === pathname && <div className='active' />}
+
+                  {icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={text}
+                  className={`list-item-text ${
+                    path === pathname && ' active-nav-text'
+                  }`}
+                  disableTypography
+                />
+              </ListItem>
+            </Link>
           ))}
         </List>
+
         <Divider />
         <List className='navbar-list'>
           {[
-            { text: 'Need Help?', icon: <HelpOutlineIcon /> },
-            { text: 'Settings', icon: <SettingsIcon /> },
-          ].map((item, index) => (
-            <ListItem button key={item.text + index}>
-              <ListItemIcon className='list-item-icon'>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.text} className='list-item-text' />
-            </ListItem>
+            { text: 'Need Help?', icon: <HelpOutlineIcon />, path: '/help' },
+            { text: 'Settings', icon: <TuneOutlinedIcon />, path: '/settings' },
+          ].map(({ text, icon, path }, index) => (
+            <Link to={path} key={text + index}>
+              <ListItem button>
+                <ListItemIcon
+                  className={`list-item-icon ${
+                    path === pathname && ' active-nav-icon'
+                  }`}
+                >
+                  {path === pathname && <div className='active' />}
+
+                  {icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={text}
+                  disableTypography
+                  className={`list-item-text ${
+                    path === pathname && ' active-nav-text'
+                  }`}
+                />
+              </ListItem>
+            </Link>
           ))}
         </List>
         <Divider />
 
-        {/* <button className={`monthly-report-button ${!open && 'only-icon'}`}>
-          <ListItemIcon className='monthly-button-icon'>
-            <InsertDriveFileOutlinedIcon />
-          </ListItemIcon>
-          {open && (
+        <button className='logout-btn' onClick={onLogout}>
+          <ListItem button key={'logout-btnss'}>
+            <ListItemIcon className='list-item-icon'>
+              <PowerSettingsNewOutlinedIcon />
+            </ListItemIcon>
             <ListItemText
-              primary={'Get Monthly Reports'}
-              className='monthly-button-text'
               disableTypography
+              primary={'Logout'}
+              className='list-item-text'
             />
-          )}
-        </button> */}
-        <button className='logout-btn'>
-          <List className='logout-btn'>
-            {[{ text: 'Logout', icon: <ExitToAppIcon /> }].map(
-              (item, index) => (
-                <ListItem button key={item.text + index}>
-                  <ListItemIcon className='list-item-icon'>
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.text}
-                    className='list-item-text'
-                  />
-                </ListItem>
-              )
-            )}
-          </List>
+          </ListItem>
         </button>
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        <div className={classes.content}>
+          <Route path={'/dashboard'} render={() => <div>Hellooo</div>} />
+          <Route path={'/data_entry'} render={() => <div>Hellooo</div>} />
+          <Route path={'/courses'} render={() => <div>Hellooo</div>} />
+          <Route path={'/profile'} render={() => <div>Hellooo</div>} />
+          <Route path={'/leaderboard'} render={() => <div>leaderboard</div>} />
+          <Route path={'/help'} render={() => <div>Hellooo</div>} />
+          <Route path={'/settings'} render={() => <div>Hellooo</div>} />
+        </div>
       </main>
     </div>
   );

@@ -18,13 +18,13 @@
 
   height: 160px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   margin: 0px 5px;
 }
 .avatar-drawer img {
   width: 100%;
   object-fit: contain;
-  max-width: 70px;
+  max-width: 50px;
 }
 .avatar-drawer div {
   display: flex;
@@ -36,7 +36,7 @@
   line-height: 24px;
   width: 60%;
   color: #192a3e;
-  margin-left: 16px;
+  margin-left: 0px;
   margin-right: 16px;
 }
 .avatar-drawer span {
@@ -53,20 +53,29 @@
 
 .navbar-list {
   font-family: var(--main-font-family);
+  font-weight: 400;
 }
 .list-item-text {
   color: #596e89;
+  font-size: 0.875rem;
+  font-family: var(--main-font-family);
 
   font-weight: 500;
+  letter-spacing: -0.01em;
 }
+
 .list-item-icon > * {
   color: #c2cfe0;
 }
+.active-nav-icon > * {
+  color: var(--color-link-text);
+}
+
 .monthly-report-button {
   position: relative;
   /*Blue2*/
   min-height: 40px;
-  border: 1px solid #2d9cdb;
+  border: 1px solid var(--color-link-text);
   border-radius: 30px;
   margin: 10% 16px 0rem 12px;
   display: flex;
@@ -83,7 +92,8 @@
   font-weight: 500;
   font-size: 12px;
   letter-spacing: 0.01em;
-  color: #2d9cdb;
+  color: var(--color-link-text);
+
   position: absolute;
   right: 11px;
 }
@@ -94,7 +104,7 @@
 }
 
 .monthly-button-icon > * {
-  color: #2d9cdb;
+  color: var(--color-link-text);
   font-size: 1px;
 }
 
@@ -109,7 +119,8 @@
 .logout-btn {
   width: 100%;
   position: absolute;
-  bottom: 24px;
+  bottom: 5px;
+  cursor: pointer;
 }
 .delete-shadow {
   background: white;
@@ -121,8 +132,31 @@
 }
 .small-avatar {
   display: block;
-  max-width: 38px;
+  max-width: 30px;
 }
 .appBar-icons {
   margin-right: 30px;
+}
+.active-nav-text {
+  color: #109cf1;
+  font-weight: 600;
+}
+.active {
+  position: absolute;
+  left: -5px;
+  width: 5px;
+  height: 22px;
+  background: #109cf1;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+}
+
+.test {
+  width: fit-content;
+  background: red;
+  color: red;
 }

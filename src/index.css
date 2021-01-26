@@ -2,6 +2,7 @@
   --color-alert-error-border: rgba(158, 28, 35, 0.2);
   --color-alert-error-text: #24292e;
   --color-alert-error-icon: rgba(158, 28, 35, 0.6);
+  --color-link-text: #109cf1;
   --color-alert-error-bg: #ffe3e6;
   --main-heading-font-color: #334d6e;
   --main-subheading-font-color: #90a0b7;
@@ -53,7 +54,7 @@ img {
 }
 
 p span {
-  color: #109cf1;
+  color: var(--color-link-text);
   cursor: pointer;
 }
 button {
@@ -62,6 +63,10 @@ button {
   background: transparent;
   border: 0;
 }
+a {
+  text-decoration: none;
+}
+
 .line-clamp {
   display: -webkit-box;
   -webkit-line-clamp: 3;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,100 +6,16 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+
 import MoreIcon from '@material-ui/icons/MoreVert';
 import clsx from 'clsx';
 
 import qlogo from '../../assets/Q-Only-Logo.png';
 import smallAvatar from '../../assets/Ellipse.png';
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
-  },
-  appBar: {
-    background: 'white',
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    borderBottom: '1px solid #EBEFF2',
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-    color: '#90A0B7',
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '40ch',
-    },
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
-  },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
-}));
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
+import { useStyles } from '../../types/styles/appB-styles';
 
 export default function PrimarySearchAppBar({ open, handleDrawerOpen }) {
   const classes = useStyles();
@@ -156,8 +71,8 @@ export default function PrimarySearchAppBar({ open, handleDrawerOpen }) {
     >
       <MenuItem>
         <IconButton aria-label='show 11 new notifications' color='inherit'>
-          <Badge badgeContent={11} color='secondary'>
-            <NotificationsIcon />
+          <Badge variant='dot' color='secondary'>
+            <NotificationsNoneOutlinedIcon style={{ color: '#C2CFE0' }} />
           </Badge>
         </IconButton>
         <p>Notifications</p>
@@ -169,7 +84,7 @@ export default function PrimarySearchAppBar({ open, handleDrawerOpen }) {
           aria-haspopup='true'
           color='inherit'
         >
-          <AccountCircle />
+          <img src={smallAvatar} alt='small-avatar' className='small-avatar' />
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -204,6 +119,10 @@ export default function PrimarySearchAppBar({ open, handleDrawerOpen }) {
             </div>
             <InputBase
               placeholder='Search for courses subjects or students..'
+              style={{
+                fontSize: 'small',
+                fontFamily: 'Poppins' || 'sans-serif',
+              }}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -214,8 +133,8 @@ export default function PrimarySearchAppBar({ open, handleDrawerOpen }) {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop + ' appBar-icons'}>
             <IconButton aria-label='show new notifications' color='inherit'>
-              <Badge badgeContent={17} color='secondary' fontSize={'small'}>
-                <NotificationsIcon style={{ color: '#C2CFE0' }} />
+              <Badge variant='dot' color='secondary'>
+                <NotificationsNoneOutlinedIcon style={{ color: '#C2CFE0' }} />
               </Badge>
             </IconButton>
             <IconButton
@@ -231,6 +150,7 @@ export default function PrimarySearchAppBar({ open, handleDrawerOpen }) {
                 alt='small-avatar'
                 className='small-avatar'
               />
+              <ArrowDropDownIcon style={{ color: '#AEAEAE' }} />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>

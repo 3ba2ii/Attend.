@@ -32,8 +32,8 @@ import CloudIcon from '@material-ui/icons/Cloud';
 
 import PrimarySearchAppBar from './AppBar';
 import { useDispatch } from 'react-redux';
-import { SIGNED_OUT_SUCCESSFULLY } from '../../types/constants/redux-constants';
 import { SignOut } from '../../redux-store/actions/authedAction';
+import Dashboard from '../Dashboard/Dashboard';
 
 export default function MiniDrawer() {
   const classes = useStyles();
@@ -52,7 +52,6 @@ export default function MiniDrawer() {
 
   const onLogout = () => {
     const action = SignOut();
-    console.log(`🚀 ~ file: Drawer.js ~ line 55 ~ onLogout ~ action`, action);
     dispatch(action);
   };
   var width;
@@ -173,7 +172,7 @@ export default function MiniDrawer() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.content}>
-          <Route path={'/dashboard'} render={() => <div>Hellooo</div>} />
+          <Route path={'/dashboard'} render={() => <Dashboard />} />
           <Route path={'/data_entry'} render={() => <div>Hellooo</div>} />
           <Route path={'/courses'} render={() => <div>Hellooo</div>} />
           <Route path={'/profile'} render={() => <div>Hellooo</div>} />

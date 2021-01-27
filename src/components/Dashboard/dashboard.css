@@ -1,0 +1,112 @@
+#dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.page-name {
+  grid-row: 1/2;
+  margin: 0px 16px;
+  max-width: 50%;
+}
+.page-name h5 {
+  overflow-wrap: break-word;
+  font-size: clamp(1rem, 1rem + 1.1vw, 3.375rem);
+}
+
+.cards-container {
+  width: 95vw;
+  overflow: auto;
+  white-space: nowrap;
+  padding-right: clamp(240px, 240px + 1.5vw, 300px);
+  grid-row: 2/3;
+}
+
+.course-card-container {
+  position: relative;
+  width: 100%;
+  width: clamp(260px, 260px + 1.5vw, 320px);
+  height: clamp(240px, 240px + 0.5vh + 0.5vw, 300px);
+  display: inline-block;
+  margin: 32px 16px;
+  background: #fff;
+  border: 1px solid rgba(51, 77, 110, 0.24);
+  border-radius: 30px;
+  box-shadow: var(--card-border-shadow);
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  overflow: hidden;
+}
+.center-area {
+  position: relative;
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 25px 0px 0px 25px;
+  margin-bottom: 25px;
+}
+
+.course-card-container img {
+  display: block;
+  width: 100%;
+  max-width: 40px;
+}
+.course-info h5 {
+  font-family: var(--main-font-family);
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: left;
+}
+.course-card-container header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding: 0px 0px 20px 0px;
+}
+.course-attendance-rate {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.course-attendance-rate span {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2.125rem;
+  color: var(--main-heading-font-color);
+}
+
+.course-name {
+  width: 130px;
+}
+.vs-last {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  color: var(--main-subheading-font-color);
+}
+
+.line-chart-container {
+  position: relative;
+  width: 100%;
+  bottom: 10%;
+}
+
+/* iPad and Tablets  */
+
+@media only screen and (min-width: 720px) {
+}
+/* Desktop */
+
+@media only screen and (min-width: 1024px) {
+  #dashboard-container {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, minmax(1fr, 23%));
+  }
+}

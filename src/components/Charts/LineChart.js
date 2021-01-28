@@ -88,8 +88,8 @@ const LineChart = ({
     tooltips: {
       mode: 'index',
       position: 'average',
+
       backgroundColor: '#344D6D',
-      usePointStyle: true,
       callbacks: {
         label: function (tooltipItem, _) {
           return ' Att. Rate: ' + Number(tooltipItem.yLabel).toFixed(1) + '%';

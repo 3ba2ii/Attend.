@@ -6,6 +6,7 @@ import patternRecognition from '../../assets/courseImg.png';
 import mc from '../../assets/mc.png';
 import ai from '../../assets/ai.png';
 import circuits from '../../assets/circuits.png';
+import StackedLinesCard from './StackedLinesCard';
 
 const cardData = [
   {
@@ -68,6 +69,24 @@ const Dashboard = () => {
         {cardData.map((card, index) => (
           <CourseCard key={card.courseName + index} {...card} />
         ))}
+      </div>
+      <div className='dashboard-second-row-container'>
+        <div className='stacked-lines-container card-shadow'>
+          <StackedLinesCard />
+        </div>
+        <div className='doughnut-chart'>
+          Esse exercitation sit ullamco dolor dolore in et in sunt duis.Id
+          veniam sunt in nostrud ullamco ex ullamco exercitation sint eiusmod
+          proident dolore fugiat.Et ex Lorem aute laborum quis reprehenderit
+          quis.Ullamco sit aliqua nostrud eu ullamco eiusmod ex et.
+        </div>
+
+        <div className='overall-attendance-rate'>
+          Esse exercitation sit ullamco dolor dolore in et in sunt duis.Id
+          veniam sunt in nostrud ullamco ex ullamco exercitation sint eiusmod
+          proident dolore fugiat.Et ex Lorem aute laborum quis reprehenderit
+          quis.Ullamco sit aliqua nostrud eu ullamco eiusmod ex et.
+        </div>
       </div>
     </main>
   );

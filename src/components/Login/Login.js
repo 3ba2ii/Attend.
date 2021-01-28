@@ -14,11 +14,9 @@ import {
   validatePassword,
 } from '../../utlis/validation/validation';
 import { FAILED_AUTHENTICATION } from '../../types/constants/redux-constants';
-import {
-  LoginAction,
-  LoginActionUsingCookies,
-} from '../../redux-store/actions/authedAction';
+import { LoginAction } from '../../redux-store/actions/authedAction';
 import { Error } from '../common/Error';
+import { checkCookies } from '../../utlis/helpers/checkCookies';
 
 const Login = () => {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
@@ -65,23 +63,13 @@ const Login = () => {
   const ignoreError = () => {
     setError(false);
   };
-  function checkCookies() {
-    setLoading(true);
-    const action = LoginActionUsingCookies();
-    if (action.type !== FAILED_AUTHENTICATION) {
-      dispatch(action);
-      setRedirectToReferrer(true);
-    }
 
-    setLoading(false);
-  }
   useEffect(() => {
-    checkCookies();
-    return;
+    checkCookies({ dispatch, setLoading, setRedirectToReferrer });
   }, [dispatch]);
 
   if (redirectToReferrer) {
-    return <Redirect to={state?.from || '/'} />;
+    return <Redirect to={state?.from || '/dashboard'} />;
   }
 
   return (

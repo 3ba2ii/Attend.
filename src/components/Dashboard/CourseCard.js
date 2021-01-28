@@ -1,23 +1,19 @@
 import React from 'react';
 import LineChart from '../Charts/LineChart';
-let average = (array) => array.reduce((a, b) => a + b) / array.length;
-let calculateGrowth = (array) => {
-  const oldAverage = average(array.slice(0, array.length - 1));
-  const newAverage = average(array);
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import TrendingDownIcon from '@material-ui/icons/TrendingDown';
+import { calculateGrowth, average } from '../../utlis/helpers/calcuateAverage';
 
-  return (newAverage - oldAverage).toFixed(1);
-};
 const CourseCard = ({
   courseID,
   courseName,
-  courseAttendance,
   courseImageURL,
   datasetValues,
 }) => {
   const growth = calculateGrowth(datasetValues);
   const growthClassName = growth >= 0 ? 'green-stock' : 'red-stock';
   return (
-    <div className='course-card-container'>
+    <div className='course-card-container card-shadow'>
       <div className='center-area'>
         <header className='course-info'>
           <img src={courseImageURL} alt={'course-image'} />
@@ -31,6 +27,13 @@ const CourseCard = ({
         <div className='course-attendance-rate'>
           <span>{average(datasetValues).toFixed(2)}%</span>
           <div className='vs-last'>
+            {growth >= 0 ? (
+              <TrendingUpIcon style={{ color: '#31c977', maxWidth: '21px' }} />
+            ) : (
+              <TrendingDownIcon
+                style={{ color: '#e47c67', maxWidth: '21px' }}
+              />
+            )}
             <b className={growthClassName}>{growth}% </b>vs last lecture
           </div>
         </div>

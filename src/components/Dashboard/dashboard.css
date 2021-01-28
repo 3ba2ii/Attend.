@@ -1,41 +1,45 @@
 #dashboard-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  padding: 8rem 5rem 2rem 3%;
 }
 .page-name {
+  grid-column: 1/2;
   grid-row: 1/2;
-  margin: 0px 16px;
-  max-width: 50%;
+  max-width: 100%;
 }
+
 .page-name h5 {
   overflow-wrap: break-word;
   font-size: clamp(1rem, 1rem + 1.1vw, 3.375rem);
 }
 
 .cards-container {
-  width: 95vw;
-  overflow: auto;
-  white-space: nowrap;
-  padding-right: clamp(240px, 240px + 1.5vw, 300px);
+  grid-column: 1/2;
   grid-row: 2/3;
+
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-right: clamp(360px, 240px + 1.5vw, 400px);
+
+  margin-bottom: 20px;
 }
 
 .course-card-container {
   position: relative;
-  width: 100%;
-  width: clamp(260px, 260px + 1.5vw, 320px);
-  height: clamp(240px, 240px + 0.5vh + 0.5vw, 300px);
+  width: clamp(230px, 230px + 1.5vw, 320px);
+  height: clamp(210px, 210px + 1.5vh + 0.5vw, 310px);
   display: inline-block;
-  margin: 32px 16px;
-  background: #fff;
-  border: 1px solid rgba(51, 77, 110, 0.24);
+  margin: 32px 32px;
+  margin-left: 0;
   border-radius: 30px;
-  box-shadow: var(--card-border-shadow);
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   -ms-border-radius: 30px;
   -o-border-radius: 30px;
-  overflow: hidden;
 }
 .center-area {
   position: relative;
@@ -57,7 +61,8 @@
 .course-info h5 {
   font-family: var(--main-font-family);
   font-weight: 500;
-  font-size: 1rem;
+  font-size: clamp(0.5rem, 1rem + 1vw, 1rem);
+
   text-align: left;
 }
 .course-card-container header {
@@ -78,7 +83,8 @@
 .course-attendance-rate span {
   font-style: normal;
   font-weight: 600;
-  font-size: 2.125rem;
+  font-size: clamp(1rem, 1rem + 3vw, 2rem);
+
   color: var(--main-heading-font-color);
 }
 
@@ -87,17 +93,51 @@
 }
 .vs-last {
   font-weight: 500;
-  font-size: 13px;
+  font-size: clamp(0.4rem, 0.4rem + 1vw, 0.8rem);
+
   line-height: 13px;
   color: var(--main-subheading-font-color);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .line-chart-container {
   position: relative;
   width: 100%;
-  bottom: 10%;
+  bottom: 14%;
 }
+.dashboard-second-row-container {
+  grid-row: 3/4;
+  grid-column: 1/2;
+  width: 100%;
 
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.stacked-lines-container {
+  padding: 2rem 1rem 1rem 1.5rem;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+.stacked-line-chart-container {
+  height: clamp(300px, 300px + 2vh + 2vw, 600px);
+}
+.stacked-chart {
+  height: 100%;
+}
+.stacked-lines-container header {
+  position: relative;
+  left: 16px;
+  margin-bottom: 1.5rem;
+}
+.stacked-lines-container header h5 {
+  font-size: clamp(0.8rem, 0.8rem + 1vw, 3rem);
+}
 /* iPad and Tablets  */
 
 @media only screen and (min-width: 720px) {
@@ -106,7 +146,33 @@
 
 @media only screen and (min-width: 1024px) {
   #dashboard-container {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, minmax(1fr, 23%));
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.1fr 1fr 2fr 1fr;
+  }
+  .page-name {
+    grid-row: 1/2;
+    grid-column: 1/5;
+  }
+  .cards-container {
+    grid-row: 2/3;
+    grid-column: 1/5;
+  }
+  .dashboard-second-row-container {
+    grid-row: 3/4;
+    grid-column: 1/5;
+
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    place-items: center;
+  }
+  .stacked-lines-container {
+    grid-column: 1/2;
+    width: 100%;
+  }
+  .doughnut-chart {
+    grid-column: 2/3;
+  }
+  .overall-attendance-rate {
+    grid-column: 3/4;
   }
 }

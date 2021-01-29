@@ -87,25 +87,24 @@ a {
   font-weight: 500;
   border: none;
   margin: 40px 0px 20px 0px;
-  padding: 10px 30px;
+  padding: 10px 32px;
   text-align: center;
   transition: 0.5s;
   background-size: 200% auto;
   color: white;
   box-shadow: 0 0 20px #eee;
-  border-radius: 6px;
+  border-radius: 2px;
   display: block;
   width: fit-content;
   cursor: pointer;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  -ms-border-radius: 6px;
-  -o-border-radius: 6px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
   outline: none;
   /*Importantpart*/
   position: relative;
   transition: padding-right 0.3s ease-out;
-
   font-size: clamp(0.8rem, 0.5rem + 0.4vw, 1.2rem);
 }
 

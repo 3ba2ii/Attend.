@@ -61,12 +61,19 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
-  content: {
-    width: '100%',
-    height: '100vh',
-    backgroundColor: '#F5F6F8',
-    flexGrow: 1,
-    padding: theme.spacing(8, 2, 2, 3),
+  contentWhenDrawerOpen: {
+    width: `calc(100vw - ${drawerWidth}px)`,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  contentWhenDrawerClosed: {
+    width: `calc(100vw - ${theme.spacing(9) + 1}px)`,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
 }));
 

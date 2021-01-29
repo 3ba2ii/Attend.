@@ -107,7 +107,11 @@ export default function PrimarySearchAppBar({ open, handleDrawerOpen }) {
               className={classes.menuButton}
               color='inherit'
               aria-label='open drawer'
-              onClick={handleDrawerOpen}
+              onClick={() => {
+                if (window.screen.width >= 500) {
+                  handleDrawerOpen();
+                }
+              }}
             >
               <img src={qlogo} alt={'logo'} className='logo-small' />
             </IconButton>

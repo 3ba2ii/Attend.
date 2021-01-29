@@ -51,10 +51,14 @@ const LineChart = ({
   };
 
   const lineOptions = {
+    /* animation: {
+      duration: 0,
+    }, */
     maintainAspectRatio: true,
     gridLines: {
       z: 2,
     },
+
     scales: {
       xAxes: [
         {
@@ -76,7 +80,7 @@ const LineChart = ({
             beginAtZero: true,
             display: null,
             suggestedMax: 110,
-            suggestedMin: Math.min(Math.min(...datasetValues) - 43, -40),
+            suggestedMin: Math.min(Math.min(...datasetValues) - 50, -40),
           },
         },
       ],

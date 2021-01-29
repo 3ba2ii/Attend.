@@ -7,6 +7,7 @@ import mc from '../../assets/mc.png';
 import ai from '../../assets/ai.png';
 import circuits from '../../assets/circuits.png';
 import StackedLinesCard from './StackedLinesCard';
+import DoughnutCard from './DoughnutCard';
 
 const cardData = [
   {
@@ -74,18 +75,15 @@ const Dashboard = () => {
         <div className='stacked-lines-container card-shadow'>
           <StackedLinesCard />
         </div>
-        <div className='doughnut-chart'>
-          Esse exercitation sit ullamco dolor dolore in et in sunt duis.Id
-          veniam sunt in nostrud ullamco ex ullamco exercitation sint eiusmod
-          proident dolore fugiat.Et ex Lorem aute laborum quis reprehenderit
-          quis.Ullamco sit aliqua nostrud eu ullamco eiusmod ex et.
+        <div className='doughnut-card-container card-shadow'>
+          <DoughnutCard />
         </div>
 
-        <div className='overall-attendance-rate'>
-          Esse exercitation sit ullamco dolor dolore in et in sunt duis.Id
-          veniam sunt in nostrud ullamco ex ullamco exercitation sint eiusmod
-          proident dolore fugiat.Et ex Lorem aute laborum quis reprehenderit
-          quis.Ullamco sit aliqua nostrud eu ullamco eiusmod ex et.
+        <div className='overall-attendance-rate-card-container'>
+          Laboris laborum culpa excepteur labore est.Irure dolore aliquip
+          cupidatat magna. Qui esse qui laboris duis quis velit aliquip ut
+          excepteur ipsum. Cupidatat ex et eu sit consectetur deserunt eiusmod
+          ea cupidatat labore consectetur ullamco sint eiusmod.
         </div>
       </div>
     </main>

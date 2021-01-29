@@ -38,7 +38,10 @@ import Dashboard from '../Dashboard/Dashboard';
 export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  var { width } = window.screen;
+
+  const [open, setOpen] = React.useState(width >= 500);
+
   const dispatch = useDispatch();
   let { pathname } = useLocation();
 
@@ -50,16 +53,15 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
+  window.onresize = window.onload = function () {
+    width = this.innerWidth;
+    if (width < 720) setOpen(false);
+  };
+
   const onLogout = () => {
     const action = SignOut();
     dispatch(action);
   };
-  /*  var width;
-  window.onresize = window.onload = function () {
-    width = this.innerWidth;
-    if (width < 550) setOpen(false);
-    else setOpen(true);
-  }; */
 
   return (
     <div className={classes.root}>
@@ -170,15 +172,21 @@ export default function MiniDrawer() {
           </ListItem>
         </button>
       </Drawer>
-      <Switch>
-        <Route path={'/dashboard'} render={() => <Dashboard />} />
-        <Route path={'/data_entry'} render={() => <div>Hellooo</div>} />
-        <Route path={'/courses'} render={() => <div>Hellooo</div>} />
-        <Route path={'/profile'} render={() => <div>Hellooo</div>} />
-        <Route path={'/leaderboard'} render={() => <div>leaderboard</div>} />
-        <Route path={'/help'} render={() => <div>Hellooo</div>} />
-        <Route path={'/settings'} render={() => <div>Hellooo</div>} />
-      </Switch>
+      <div
+        className={
+          open ? classes.contentWhenDrawerOpen : classes.contentWhenDrawerClosed
+        }
+      >
+        <Switch>
+          <Route path={'/dashboard'} render={() => <Dashboard {...open} />} />
+          <Route path={'/data_entry'} render={() => <div>Hellooo</div>} />
+          <Route path={'/courses'} render={() => <div>Hellooo</div>} />
+          <Route path={'/profile'} render={() => <div>Hellooo</div>} />
+          <Route path={'/leaderboard'} render={() => <div>leaderboard</div>} />
+          <Route path={'/help'} render={() => <div>Hellooo</div>} />
+          <Route path={'/settings'} render={() => <div>Hellooo</div>} />
+        </Switch>
+      </div>
     </div>
   );
 }

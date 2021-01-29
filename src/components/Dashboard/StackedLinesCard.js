@@ -2,10 +2,9 @@ import React from 'react';
 import StackedLinesChart from '../Charts/StackedLinesChart';
 
 const StackedLinesCard = () => {
-  console.log('a7a');
   return (
     <div>
-      <header>
+      <header className='responsive-card-header'>
         <h5>Courses Attendance Rates</h5>
       </header>
       <div className='stacked-line-chart-container'>

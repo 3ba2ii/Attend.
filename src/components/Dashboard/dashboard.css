@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 100%;
   position: relative;
-  padding: 8rem 5rem 2rem 3%;
+  padding: 8rem 3% 2rem 3%;
 }
 .page-name {
   grid-column: 1/2;
@@ -25,7 +25,7 @@
   white-space: nowrap;
   padding-right: clamp(360px, 240px + 1.5vw, 400px);
 
-  margin-bottom: 20px;
+  margin-bottom: 32px;
 }
 
 .course-card-container {
@@ -110,35 +110,52 @@
 .dashboard-second-row-container {
   grid-row: 3/4;
   grid-column: 1/2;
-  width: 100%;
 
   display: flex;
   flex-direction: column;
-  gap: 40px;
 }
-.stacked-lines-container {
-  padding: 2rem 1rem 1rem 1.5rem;
+.dashboard-second-row-container > * {
+  margin-bottom: 30px;
+}
+.stacked-lines-container,
+.doughnut-card-container {
+  padding: 2rem 1rem 0rem 1rem;
   border-radius: 20px;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
+  position: relative;
+}
+.doughnut-card-container div,
+.stacked-line-chart-container div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.doughnut-chart-container {
+  height: clamp(320px, 320px + 2vh + 2vw, 650px);
 }
 .stacked-line-chart-container {
-  height: clamp(300px, 300px + 2vh + 2vw, 600px);
+  height: clamp(300px, 300px + 1vh + 1vw, 600px);
 }
-.stacked-chart {
+.stacked-chart,
+.doughnut-chart {
   height: 100%;
 }
-.stacked-lines-container header {
+.doughnut-chart {
+  max-height: 300px;
+}
+.responsive-card-header {
   position: relative;
   left: 16px;
   margin-bottom: 1.5rem;
 }
-.stacked-lines-container header h5 {
-  font-size: clamp(0.8rem, 0.8rem + 1vw, 3rem);
+.responsive-card-header h5 {
+  font-size: clamp(0.8rem, 0.8rem + 0.6vw, 2.5rem);
+  font-weight: 500;
+  font-family: var(--main-font-family);
 }
-/* iPad and Tablets  */
 
 @media only screen and (min-width: 720px) {
 }
@@ -162,17 +179,29 @@
     grid-column: 1/5;
 
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    place-items: center;
+    grid-template-rows: minmax(40ch, 60ch);
+
+    grid-template-columns: 50% repeat(auto-fit, minmax(150px, 1fr));
+
+    gap: 32px;
   }
+
   .stacked-lines-container {
+    grid-row: 1/2;
     grid-column: 1/2;
     width: 100%;
   }
-  .doughnut-chart {
+
+  .doughnut-card-container {
+    grid-row: 1/2;
+
     grid-column: 2/3;
+    width: 100%;
   }
-  .overall-attendance-rate {
+  .overall-attendance-rate-card-container {
+    grid-row: 1/2;
+
     grid-column: 3/4;
+    width: 100%;
   }
 }

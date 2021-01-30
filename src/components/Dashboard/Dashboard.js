@@ -1,13 +1,12 @@
-import './dashboard.css';
-
 import React from 'react';
-import CourseCard from './CourseCard';
-import patternRecognition from '../../assets/courseImg.png';
-import mc from '../../assets/mc.png';
 import ai from '../../assets/ai.png';
 import circuits from '../../assets/circuits.png';
-import StackedLinesCard from './StackedLinesCard';
+import patternRecognition from '../../assets/courseImg.png';
+import mc from '../../assets/mc.png';
+import CourseCard from './CourseCard';
+import './dashboard.css';
 import DoughnutCard from './DoughnutCard';
+import StackedLinesCard from './StackedLinesCard';
 
 const cardData = [
   {
@@ -32,7 +31,7 @@ const cardData = [
     courseName: 'Microcontollers',
     courseAttendance: 99,
     courseImageURL: mc,
-    datasetValues: [20, 99, 70, 10, 70, 89, 99],
+    datasetValues: [20, 99, 70, 0, 70, 89, 99],
   },
   {
     courseName: 'Pattern Recognition',

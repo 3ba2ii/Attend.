@@ -34,6 +34,7 @@ const DoughnutChart = () => {
     responsiveAnimationDuration: 0,
 
     legend: {
+      display: false,
       align: 'left',
       position: window.screen.width <= 720 ? 'left' : 'top',
 

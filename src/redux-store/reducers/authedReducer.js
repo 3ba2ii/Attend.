@@ -1,9 +1,9 @@
+import Cookies from 'js-cookie';
 import {
   SIGNED_OUT_SUCCESSFULLY,
   SUCCESSFULLY_AUTHENTICATED,
   SUCCESSFULLY_AUTHENTICATED_USING_COOKIES,
 } from '../../types/constants/redux-constants';
-import Cookies from 'js-cookie';
 
 const initialState = { authedUser: null };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import MiniDrawer from './components/Drawer/Drawer';
+import ResponsiveDrawer from './components/Drawer/ResponsiveDrawer';
 import Login from './components/Login/Login';
 
 const PrivateRoute = ({ children, ...rest }) => {
@@ -25,7 +25,7 @@ const Routes = () => (
   <Switch>
     <Route path='/login' render={() => <Login />} />
     <PrivateRoute path='/'>
-      <MiniDrawer />
+      <ResponsiveDrawer />
     </PrivateRoute>
   </Switch>
 );

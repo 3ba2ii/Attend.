@@ -1,8 +1,8 @@
-import React from 'react';
-import LineChart from '../Charts/LineChart';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import TrendingDownIcon from '@material-ui/icons/TrendingDown';
-import { calculateGrowth, average } from '../../utlis/helpers/calcuateAverage';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import React from 'react';
+import { average, calculateGrowth } from '../../utlis/helpers/calcuateAverage';
+import LineChart from '../Charts/LineChart';
 
 const CourseCard = ({
   courseID,
@@ -28,10 +28,10 @@ const CourseCard = ({
           <span>{average(datasetValues).toFixed(2)}%</span>
           <div className='vs-last'>
             {growth >= 0 ? (
-              <TrendingUpIcon style={{ color: '#31c977', maxWidth: '21px' }} />
+              <TrendingUpIcon style={{ color: '#31c977', maxWidth: '18px' }} />
             ) : (
               <TrendingDownIcon
-                style={{ color: '#e47c67', maxWidth: '21px' }}
+                style={{ color: '#e47c67', maxWidth: '18px' }}
               />
             )}
             <b className={growthClassName}>{growth}% </b>vs last lecture

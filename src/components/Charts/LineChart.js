@@ -80,7 +80,7 @@ const LineChart = ({
             beginAtZero: true,
             display: null,
             suggestedMax: 110,
-            suggestedMin: Math.min(Math.min(...datasetValues) - 50, -40),
+            suggestedMin: Math.min(Math.min(...datasetValues) - 100, -40),
           },
         },
       ],

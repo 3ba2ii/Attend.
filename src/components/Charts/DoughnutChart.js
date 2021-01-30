@@ -1,17 +1,15 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
-
 const DoughnutChart = () => {
-  const width = window.screen.width;
-
+  const labels = [
+    'Circuits',
+    'Fuzzy Control',
+    'Neural Network',
+    'Pattern Recognition',
+  ];
   const dataSet = [40, 50, 60, 70];
   const DData = {
-    labels: [
-      'Pattern Recognition',
-      'Neural Network',
-      'Fuzzy Control',
-      'Circuits',
-    ],
+    labels: labels,
 
     datasets: [
       {
@@ -33,15 +31,30 @@ const DoughnutChart = () => {
     maintainAspectRatio: false,
     responsiveAnimationDuration: 0,
 
+    layout: {
+      padding: {
+        left: 0,
+        right: 0,
+        top: 10,
+        bottom: 0,
+      },
+    },
     legend: {
-      display: false,
-      align: 'left',
-      position: window.screen.width <= 720 ? 'left' : 'top',
+      align: 'start',
+      position: 'bottom',
 
       labels: {
-        fontSize: width <= 420 ? 8 : 14,
+        fontSize: 12,
         usePointStyle: true,
         boxWidth: 7,
+        /* generateLabels: function ({ data }) {
+          const { labels } = data;
+          console.log(
+            `🚀 ~ file: DoughnutChart.js ~ line 53 ~ DoughnutChart ~ chart`,
+            labels
+          );
+          return labels;
+        }, */
       },
     },
     tooltips: {
@@ -55,6 +68,9 @@ const DoughnutChart = () => {
             Number(data.datasets[0].data[tooltipItem.index]).toFixed(1) +
             '%'
           );
+        },
+        title: function (tooltipItem, data) {
+          return data.labels[tooltipItem[0].index];
         },
       },
     },

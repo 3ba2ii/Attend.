@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import './form.css';
-
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import React, { useState } from 'react';
+import './form.css';
 
 export const Form = (props) => {
   const [visiblePassword, setVisiblePassword] = useState(false);

@@ -1,5 +1,3 @@
-import './drawer-layout.css';
-
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import SearchIcon from '@material-ui/icons/Search';
@@ -16,9 +15,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import smallAvatar from '../../assets/Ellipse.png';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import Dashboard from '../Dashboard/Dashboard';
 import useStyles from '../../types/styles/drawer-styles';
+import Dashboard from '../Dashboard/Dashboard';
+import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
 
 function ResponsiveDrawer(props) {

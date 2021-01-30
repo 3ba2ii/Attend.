@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
-
-import './login.css';
-
-import Carousel from '../common/Carousel';
-import { Form } from '../common/Form';
-import Logo from '../common/Logo';
-
+import { LoginAction } from '../../redux-store/actions/authedAction';
 import carouselItems from '../../types/constants/carousel';
+import { FAILED_AUTHENTICATION } from '../../types/constants/redux-constants';
+import { checkCookies } from '../../utlis/helpers/checkCookies';
 import {
   validateEmail,
   validatePassword,
 } from '../../utlis/validation/validation';
-import { FAILED_AUTHENTICATION } from '../../types/constants/redux-constants';
-import {
-  LoginAction,
-  LoginActionUsingCookies,
-} from '../../redux-store/actions/authedAction';
+import Carousel from '../common/Carousel';
 import { Error } from '../common/Error';
+import { Form } from '../common/Form';
+import Logo from '../common/Logo';
+import './login.css';
 
 const Login = () => {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
@@ -26,10 +21,9 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
   const { state } = useLocation();
-
   const dispatch = useDispatch();
+  const [mounted, setMounted] = useState(false);
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -65,23 +59,14 @@ const Login = () => {
   const ignoreError = () => {
     setError(false);
   };
-  function checkCookies() {
-    setLoading(true);
-    const action = LoginActionUsingCookies();
-    if (action.type !== FAILED_AUTHENTICATION) {
-      dispatch(action);
-      setRedirectToReferrer(true);
-    }
 
-    setLoading(false);
-  }
   useEffect(() => {
-    checkCookies();
-    return;
-  }, [dispatch]);
+    if (!mounted)
+      checkCookies({ dispatch, setLoading, setRedirectToReferrer, setMounted });
+  }, [dispatch, mounted]);
 
   if (redirectToReferrer) {
-    return <Redirect to={state?.from || '/'} />;
+    return <Redirect to={state?.from || '/dashboard'} />;
   }
 
   return (
@@ -118,7 +103,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-      <Carousel items={carouselItems} />
+      {mounted && <Carousel items={carouselItems} />}
     </div>
   );
 };

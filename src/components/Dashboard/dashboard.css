@@ -1,0 +1,205 @@
+#dashboard-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  padding: 8rem 3% 2rem 3%;
+}
+.page-name {
+  grid-column: 1/2;
+  grid-row: 1/2;
+  max-width: 100%;
+}
+
+.page-name h5 {
+  overflow-wrap: break-word;
+  font-size: clamp(1rem, 1rem + 1.1vw, 3.375rem);
+}
+
+.cards-container {
+  grid-column: 1/2;
+  grid-row: 2/3;
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-right: clamp(240px, 240px + 1.5vw, 400px);
+
+  margin-bottom: 16px;
+}
+
+.course-card-container {
+  position: relative;
+  width: clamp(210px, 210px + 1vw, 320px);
+  height: clamp(200px, 200px + 1vh + 0.5vw, 310px);
+  display: inline-block;
+  margin: 32px 32px;
+  margin-left: 0;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+}
+.center-area {
+  position: relative;
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 25px 0px 0px 25px;
+  margin-bottom: 25px;
+}
+
+.course-card-container img {
+  display: block;
+  width: 100%;
+  max-width: 40px;
+}
+.course-info h5 {
+  font-family: var(--main-font-family);
+  font-weight: 500;
+  font-size: clamp(0.5rem, 1rem + 1vw, 1rem);
+
+  text-align: left;
+}
+.course-card-container header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding: 0px 0px 20px 0px;
+}
+.course-attendance-rate {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.course-attendance-rate span {
+  font-style: normal;
+  font-weight: 600;
+  font-size: clamp(1rem, 1rem + 1.5vw, 1.7rem);
+  color: var(--main-heading-font-color);
+}
+
+.course-name {
+  width: 130px;
+  margin-left: 8px;
+}
+.vs-last {
+  font-weight: 500;
+  font-size: clamp(0.4rem, 0.4rem + 0.8vw, 0.7rem);
+  color: var(--main-subheading-font-color);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.line-chart-container {
+  position: relative;
+  width: 100%;
+  bottom: 14%;
+}
+.dashboard-second-row-container {
+  grid-row: 3/4;
+  grid-column: 1/2;
+
+  display: flex;
+  flex-direction: column;
+}
+.dashboard-second-row-container > * {
+  margin-bottom: 30px;
+}
+.stacked-lines-container,
+.doughnut-card-container {
+  padding: 2rem 0rem 0rem 1rem;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  position: relative;
+}
+.doughnut-card-container div,
+.stacked-line-chart-container div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.doughnut-chart-container {
+  height: clamp(320px, 320px + 2vh + 2vw, 650px);
+}
+.stacked-line-chart-container {
+  height: clamp(300px, 300px + 1vh + 1vw, 600px);
+}
+.stacked-chart,
+.doughnut-chart {
+  height: 100%;
+}
+.doughnut-chart {
+  max-height: 300px;
+}
+.responsive-card-header {
+  position: relative;
+  left: 16px;
+  margin-bottom: 1.5rem;
+}
+.responsive-card-header h5 {
+  font-size: clamp(0.8rem, 0.8rem + 0.6vw, 2.5rem);
+  font-weight: 500;
+  font-family: var(--main-font-family);
+}
+
+@media only screen and (min-width: 720px) {
+}
+/* Desktop */
+
+@media only screen and (min-width: 1024px) {
+  #dashboard-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.1fr 1fr 2fr 1fr;
+  }
+  .page-name {
+    grid-row: 1/2;
+    grid-column: 1/5;
+  }
+  .cards-container {
+    grid-row: 2/3;
+    grid-column: 1/5;
+  }
+  .dashboard-second-row-container {
+    grid-row: 3/4;
+    grid-column: 1/5;
+
+    display: grid;
+    grid-template-rows: minmax(40ch, 60ch);
+
+    grid-template-columns: 45% repeat(auto-fit, minmax(225px, 1fr));
+
+    gap: 32px;
+  }
+
+  .stacked-lines-container {
+    grid-row: 1/2;
+    grid-column: 1/2;
+    width: 100%;
+  }
+
+  .doughnut-card-container {
+    grid-row: 1/2;
+
+    grid-column: 2/3;
+    width: 100%;
+  }
+  .overall-attendance-rate-card-container {
+    grid-row: 1/2;
+
+    grid-column: 3/4;
+    width: 100%;
+  }
+}

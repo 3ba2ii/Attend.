@@ -1,5 +1,5 @@
-import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
+import React from 'react';
 
 export function Error({ ignoreError }) {
   console.log(

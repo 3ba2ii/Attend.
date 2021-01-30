@@ -6,6 +6,10 @@
   --color-alert-error-bg: #ffe3e6;
   --main-heading-font-color: #334d6e;
   --main-subheading-font-color: #90a0b7;
+  --main-compare-green-color: #31c977;
+  --main-compare-red-color: #e47c67;
+
+  --card-border-shadow: 0px 6px 18px rgba(0, 0, 0, 0.29);
   --arabic-font-family: Arial, Helvetica, sans-serif;
   --main-font-family: 'Poppins', sans-serif;
 }
@@ -21,7 +25,6 @@ html {
 body {
   height: 100vh;
   font-family: 'Poppins', sans-serif;
-
   overflow-x: hidden;
 }
 
@@ -84,25 +87,24 @@ a {
   font-weight: 500;
   border: none;
   margin: 40px 0px 20px 0px;
-  padding: 10px 30px;
+  padding: 10px 32px;
   text-align: center;
   transition: 0.5s;
   background-size: 200% auto;
   color: white;
   box-shadow: 0 0 20px #eee;
-  border-radius: 6px;
+  border-radius: 2px;
   display: block;
   width: fit-content;
   cursor: pointer;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  -ms-border-radius: 6px;
-  -o-border-radius: 6px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
   outline: none;
   /*Importantpart*/
   position: relative;
   transition: padding-right 0.3s ease-out;
-
   font-size: clamp(0.8rem, 0.5rem + 0.4vw, 1.2rem);
 }
 
@@ -159,4 +161,15 @@ a {
 }
 .error-color-icon {
   color: var(--color-alert-error-icon);
+}
+.green-stock {
+  color: var(--main-compare-green-color);
+}
+.red-stock {
+  color: var(--main-compare-red-color);
+}
+.card-shadow {
+  border: 1px solid rgba(51, 77, 110, 0.24);
+  background: #fff;
+  box-shadow: var(--card-border-shadow);
 }

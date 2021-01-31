@@ -1,0 +1,7 @@
+#data-entry-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  padding: 8rem 3% 2rem 3%;
+}

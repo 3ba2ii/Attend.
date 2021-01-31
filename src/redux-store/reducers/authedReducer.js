@@ -15,16 +15,17 @@ const authReducer = (state = initialState, action) => {
         action
       );
       localStorage.setItem('token', action?.authedUser.jwt);
-      Cookies.set(
-        'authedUser',
-        { ...action.authedUser },
-        {
-          expires: 30,
-        }
-      );
+      Cookies.set('authedUser', action?.authedUser?.user?.id, {
+        expires: 30,
+      });
       return { ...state, authedUser: { ...action.authedUser } };
 
     case SUCCESSFULLY_AUTHENTICATED_USING_COOKIES:
+      console.log(
+        `🚀 ~ file: authedReducer.js ~ line 11 ~ authReducer ~ action`,
+        action
+      );
+
       return { ...state, authedUser: { ...action.authedUser } };
     case SIGNED_OUT_SUCCESSFULLY:
       Cookies.remove('authedUser');

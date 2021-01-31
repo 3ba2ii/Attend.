@@ -15,8 +15,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import smallAvatar from '../../assets/Ellipse.png';
+import DataEntryPage from '../../Pages/DataEntry/DataEntry';
 import useStyles from '../../types/styles/drawer-styles';
-import Dashboard from '../Dashboard/Dashboard';
+import Dashboard from '../../Pages/Dashboard/Dashboard';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
 
@@ -74,7 +75,7 @@ function ResponsiveDrawer(props) {
       <main className={classes.content}>
         <Switch>
           <Route path={'/dashboard'} render={() => <Dashboard />} />
-          <Route path={'/data_entry'} render={() => <div>Hellooo</div>} />
+          <Route path={'/data_entry'} render={() => <DataEntryPage />} />
           <Route path={'/courses'} render={() => <div>Hellooo</div>} />
           <Route path={'/profile'} render={() => <div>Hellooo</div>} />
           <Route path={'/leaderboard'} render={() => <div>leaderboard</div>} />

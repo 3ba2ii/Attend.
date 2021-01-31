@@ -1,11 +1,13 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import { GET_USER_BY_ID } from '../../api/queries/getUserByID';
 import {
-  SUCCESSFULLY_AUTHENTICATED,
   FAILED_AUTHENTICATION,
   SIGNED_OUT_SUCCESSFULLY,
+  SUCCESSFULLY_AUTHENTICATED,
   SUCCESSFULLY_AUTHENTICATED_USING_COOKIES,
 } from '../../types/constants/redux-constants';
-import Cookies from 'js-cookie';
+import client from '../../utlis/apollo/apolloClient';
 
 export const LoginAction = async (credentials) => {
   const url = process.env.STRAPI_APP_BACKEND_URL
@@ -22,14 +24,18 @@ export const LoginAction = async (credentials) => {
     return { type: FAILED_AUTHENTICATION, error: err.message };
   }
 };
-export const LoginActionUsingCookies = () => {
+export const LoginActionUsingCookies = async ({ _token, userID }) => {
   try {
-    const body = Cookies.get('authedUser');
-    const userInfo = JSON.parse(body);
+    const { data } = await client.query({
+      query: GET_USER_BY_ID,
+      variables: {
+        id: userID,
+      },
+    });
 
     return {
       type: SUCCESSFULLY_AUTHENTICATED_USING_COOKIES,
-      authedUser: { ...userInfo },
+      authedUser: { ...data },
     };
   } catch (err) {
     console.error(err.message);

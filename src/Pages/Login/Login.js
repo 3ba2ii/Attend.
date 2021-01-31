@@ -9,12 +9,13 @@ import {
   validateEmail,
   validatePassword,
 } from '../../utlis/validation/validation';
-import Carousel from '../common/Carousel';
-import { Error } from '../common/Error';
-import { Form } from '../common/Form';
-import Logo from '../common/Logo';
+import Carousel from '../../components/common/Carousel';
+import { Error } from '../../components/common/Error';
+import { Form } from '../../components/common/Form';
+import Logo from '../../components/common/Logo';
 import './login.css';
-
+import loadingImage from '../../assets/attendSpinner.gif';
+import Cookies from 'js-cookie';
 const Login = () => {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
   const [identifier, setIdentifier] = useState('');
@@ -24,6 +25,7 @@ const Login = () => {
   const { state } = useLocation();
   const dispatch = useDispatch();
   const [mounted, setMounted] = useState(false);
+  const [checkingCookiesLoading, setCheckingCookiesLoading] = useState(true);
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -61,14 +63,35 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (!mounted)
-      checkCookies({ dispatch, setLoading, setRedirectToReferrer, setMounted });
+    const token = localStorage.getItem('token');
+    const userID = Cookies.get('authedUser');
+
+    if (token && userID && !mounted) {
+      checkCookies({
+        dispatch,
+        setLoading,
+        setRedirectToReferrer,
+        setMounted,
+        setCheckingCookiesLoading,
+        token,
+        userID,
+      });
+    } else {
+      setCheckingCookiesLoading(false);
+      setMounted(true);
+    }
   }, [dispatch, mounted]);
 
   if (redirectToReferrer) {
     return <Redirect to={state?.from || '/dashboard'} />;
   }
-
+  if (checkingCookiesLoading) {
+    return (
+      <div className='loading-spinner'>
+        <img src={loadingImage} alt='spinner' />
+      </div>
+    );
+  }
   return (
     <div className='login-grid-container'>
       <div className='carousel-col1'>

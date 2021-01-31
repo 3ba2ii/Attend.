@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default fسunction MultilineTextFields({
+export default function MultilineTextFields({
   label,
   placeholder,
   handleChange,

@@ -95,7 +95,7 @@ a {
   box-shadow: 0 0 20px #eee;
   border-radius: 2px;
   display: block;
-  width: fit-content;
+
   cursor: pointer;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -172,4 +172,12 @@ a {
   border: 1px solid rgba(51, 77, 110, 0.24);
   background: #fff;
   box-shadow: var(--card-border-shadow);
+}
+
+.avatar {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }

@@ -1,22 +1,36 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 
 export const GET_USER_BY_ID = gql`
-  query MyQuery {
-    user(id: "6009a36afbff4a336d138b0f") {
+  query MyQuery($id: ID!) {
+    user(id: $id) {
       blocked
       confirmed
-      createdAt
       email
       id
-      provider
-      role {
+      updatedAt
+      username
+      lecturer {
+        LecturerNameInArabic
+        LecturerNameInEnglish
         id
-        description
+        isMailNotificationUsed
+        isOverallSystemNotificationUsed
+        notifications(limit: 40, sort: "createdAt:asc") {
+          id
+          isSeen
+          published_at
+          type
+        }
+        avatar {
+          previewUrl
+          url
+        }
+      }
+      role {
         name
         type
+        id
       }
-      username
-      updatedAt
     }
   }
 `;

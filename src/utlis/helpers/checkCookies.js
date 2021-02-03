@@ -21,5 +21,4 @@ export async function checkCookies({
   }
   setLoading(false);
   setCheckingCookiesLoading(false);
-  setMounted(false);
 }

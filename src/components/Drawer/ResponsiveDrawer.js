@@ -75,7 +75,7 @@ function ResponsiveDrawer(props) {
       <main className={classes.content}>
         <Switch>
           <Route path={'/dashboard'} render={() => <Dashboard />} />
-          <Route path={'/data_entry'} render={() => <DataEntryPage />} />
+          <Route exact path={'/data_entry'} render={() => <DataEntryPage />} />
           <Route path={'/courses'} render={() => <div>Hellooo</div>} />
           <Route path={'/profile'} render={() => <div>Hellooo</div>} />
           <Route path={'/leaderboard'} render={() => <div>leaderboard</div>} />

@@ -1,5 +1,3 @@
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import { GET_USER_BY_ID } from '../../api/queries/getUserByID';
 import {
   FAILED_AUTHENTICATION,
@@ -9,22 +7,22 @@ import {
 } from '../../types/constants/redux-constants';
 import client from '../../utlis/apollo/apolloClient';
 
-export const LoginAction = async (credentials) => {
-  const url = process.env.STRAPI_APP_BACKEND_URL
-    ? process.env.STRAPI_APP_BACKEND_URL
-    : 'http://localhost:1337';
+export const LoginAction = async ({ identifier, password, LoginMutation }) => {
   try {
-    const { data } = await axios.post(`${url}/auth/local`, {
-      identifier: credentials.identifier,
-      password: credentials.password,
+    const { data } = await LoginMutation({
+      variables: {
+        identifier: identifier,
+        password: password,
+      },
     });
-    return { type: SUCCESSFULLY_AUTHENTICATED, authedUser: data };
+
+    return { type: SUCCESSFULLY_AUTHENTICATED, authedUser: data?.login };
   } catch (err) {
     console.error(err.message);
     return { type: FAILED_AUTHENTICATION, error: err.message };
   }
 };
-export const LoginActionUsingCookies = async ({ _token, userID }) => {
+export const LoginActionUsingCookies = async ({ _, userID }) => {
   try {
     const { data } = await client.query({
       query: GET_USER_BY_ID,

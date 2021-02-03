@@ -41,6 +41,7 @@ export const Form = (props) => {
           props.onChange(e);
         }}
         autoComplete='off'
+        autoFocus
       />
 
       <label htmlFor={props.name} className={`label-name`}>

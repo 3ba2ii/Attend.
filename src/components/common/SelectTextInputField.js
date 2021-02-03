@@ -15,12 +15,15 @@ const useStyles = makeStyles((theme) => ({
 export default function MultilineTextFields({
   label,
   placeholder,
-  handleChange,
   options,
-  selectedOption,
+  setSelectedForm,
 }) {
   const classes = useStyles();
-
+  const [option, setOption] = React.useState(options[0]);
+  const handleChange = (event) => {
+    setOption(event.target.value);
+    setSelectedForm(event.target.value);
+  };
   return (
     <form className={classes.root} noValidate autoComplete='off'>
       <div>
@@ -28,10 +31,8 @@ export default function MultilineTextFields({
           id='outlined-select-currency'
           select
           label={label}
-          value={selectedOption}
-          onChange={() => {
-            handleChange(selectedOption);
-          }}
+          value={option}
+          onChange={handleChange}
           helperText={placeholder}
           variant='outlined'
         >

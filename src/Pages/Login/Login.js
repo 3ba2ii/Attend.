@@ -16,6 +16,10 @@ import Logo from '../../components/common/Logo';
 import './login.css';
 import loadingImage from '../../assets/attendSpinner.gif';
 import Cookies from 'js-cookie';
+
+import { useMutation } from '@apollo/client';
+import { LOGIN } from '../../api/mutations/login';
+
 const Login = () => {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
   const [identifier, setIdentifier] = useState('');
@@ -26,20 +30,22 @@ const Login = () => {
   const dispatch = useDispatch();
   const [mounted, setMounted] = useState(false);
   const [checkingCookiesLoading, setCheckingCookiesLoading] = useState(true);
+  const [loginMutation] = useMutation(LOGIN);
 
   const onLogin = async (e) => {
     e.preventDefault();
-    const isValidEmail = validateEmail(identifier);
+    /* const isValidEmail = validateEmail(identifier);
     const isValidPassword = validatePassword(password);
     if (!isValidEmail || !isValidPassword) {
       setError(true);
       return;
-    }
+    } */
     setLoading(true);
 
     const action = await LoginAction({
       identifier: identifier,
       password: password,
+      LoginMutation: loginMutation,
     });
     if (action.type === FAILED_AUTHENTICATION) {
       setError(true);
@@ -117,7 +123,9 @@ const Login = () => {
               {...{ className: 'password', name: 'password', type: 'password' }}
             />
 
-            <button className={`btn-grad ${loading && 'loading-btn'}`}>
+            <button
+              className={`btn-grad sign-in-button ${loading && 'loading-btn'}`}
+            >
               Sign in
             </button>
             <p className='student-sign-in'>

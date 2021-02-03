@@ -29,6 +29,8 @@
   width: 100%;
   object-fit: contain;
   max-width: 50px;
+  margin-right: 10px;
+  margin-left: 5px;
 }
 .avatar-drawer div {
   display: flex;
@@ -38,21 +40,21 @@
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 24px;
-  width: 60%;
+  width: 100%;
   color: #192a3e;
   margin-left: 0px;
-  margin-right: 16px;
 }
 .avatar-drawer span {
   width: 100%;
-  white-space: nowrap;
+  white-space: break-word;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: break-inside;
+  font-size: 0.8rem;
 }
 .avatar-drawer p {
   margin: 0;
   font-weight: 500;
-  font-size: 0.875rem;
+  font-size: 0.7rem;
 }
 
 .navbar-list {

@@ -1,0 +1,12 @@
+#import-student-for-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  height: 100%;
+  padding: 9rem 3% 2rem 5%;
+  font-family: Poppins;
+}
+.import-students-header p {
+  font-weight: 500;
+}

@@ -20,6 +20,7 @@ import useStyles from '../../types/styles/drawer-styles';
 import Dashboard from '../../Pages/Dashboard/Dashboard';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
+import ImportStudentContainer from '../../Pages/DataEntry/ImportStudents';
 
 function ResponsiveDrawer(props) {
   const { window } = props;
@@ -76,6 +77,12 @@ function ResponsiveDrawer(props) {
         <Switch>
           <Route path={'/dashboard'} render={() => <Dashboard />} />
           <Route exact path={'/data_entry'} render={() => <DataEntryPage />} />
+          <Route
+            exact
+            path={`/data_entry/import_students`}
+            component={ImportStudentContainer}
+          />
+
           <Route path={'/courses'} render={() => <div>Hellooo</div>} />
           <Route path={'/profile'} render={() => <div>Hellooo</div>} />
           <Route path={'/leaderboard'} render={() => <div>leaderboard</div>} />

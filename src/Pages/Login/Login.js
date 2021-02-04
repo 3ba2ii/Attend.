@@ -1,24 +1,19 @@
+import { useMutation } from '@apollo/client';
+import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
-import { LoginAction } from '../../redux-store/actions/authedAction';
-import carouselItems from '../../types/constants/carousel';
-import { FAILED_AUTHENTICATION } from '../../types/constants/redux-constants';
-import { checkCookies } from '../../utlis/helpers/checkCookies';
-import {
-  validateEmail,
-  validatePassword,
-} from '../../utlis/validation/validation';
+import { LOGIN } from '../../api/mutations/login';
 import Carousel from '../../components/common/Carousel';
 import { Error } from '../../components/common/Error';
 import { Form } from '../../components/common/Form';
 import Logo from '../../components/common/Logo';
+import { LoginAction } from '../../redux-store/actions/authedAction';
+import carouselItems from '../../types/constants/carousel';
+import { FAILED_AUTHENTICATION } from '../../types/constants/redux-constants';
+import { checkCookies } from '../../utlis/helpers/checkCookies';
+import { LoadingSpinner } from './LoadingSpinner';
 import './login.css';
-import loadingImage from '../../assets/attendSpinner.gif';
-import Cookies from 'js-cookie';
-
-import { useMutation } from '@apollo/client';
-import { LOGIN } from '../../api/mutations/login';
 
 const Login = () => {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
@@ -92,11 +87,7 @@ const Login = () => {
     return <Redirect to={state?.from || '/dashboard'} />;
   }
   if (checkingCookiesLoading) {
-    return (
-      <div className='loading-spinner'>
-        <img src={loadingImage} alt='spinner' />
-      </div>
-    );
+    return LoadingSpinner();
   }
   return (
     <div className='login-grid-container'>

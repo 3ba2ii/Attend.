@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import addData from '../../assets/clip-uploading.png';
+import addData from '../../assets/clip-uploading2.png';
 import teacher from '../../assets/schoolTeacher.png';
 import addLecturer from '../../assets/clip-welcome.png';
 
@@ -9,21 +9,21 @@ const optionalProps = [
     title: 'Data Entry',
     subtitle: 'Add or Remove students to and from the database.',
     img: addData,
-    path: '/data_entry/mutate_data',
+    path: 'import_students',
   },
   {
     id: 'addData234',
     title: 'Assign Lecturers',
     subtitle: 'Assign lecturers to certain courses.',
     img: teacher,
-    path: '/data_entry/mutate_data',
+    path: 'mutate_data2',
   },
   {
     id: 'addData456',
     title: 'Add Lecturers and Assistants',
     subtitle: 'Add new lecturers and assistants to the database.',
     img: addLecturer,
-    path: '/data_entry/mutate_data',
+    path: 'mutate_data3',
   },
 ];
 const SelectCardsComponent = ({ setSelectedPath }) => {

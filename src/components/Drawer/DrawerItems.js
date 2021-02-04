@@ -38,17 +38,17 @@ export function DrawerItems(classes, pathname) {
             <ListItem button>
               <ListItemIcon
                 className={`list-item-icon ${
-                  path === pathname && ' active-nav-icon'
+                  pathname.includes(path) && ' active-nav-icon'
                 }`}
               >
-                {path === pathname && <div className='active' />}
+                {pathname.includes(path) && <div className='active' />}
 
                 {icon}
               </ListItemIcon>
               <ListItemText
                 primary={text}
                 className={`list-item-text ${
-                  path === pathname && ' active-nav-text'
+                  pathname.includes(path) && ' active-nav-text'
                 }`}
                 disableTypography
               />
@@ -67,10 +67,10 @@ export function DrawerItems(classes, pathname) {
             <ListItem button>
               <ListItemIcon
                 className={`list-item-icon ${
-                  path === pathname && ' active-nav-icon'
+                  pathname.includes(path) && ' active-nav-icon'
                 }`}
               >
-                {path === pathname && <div className='active' />}
+                {pathname.includes(path) && <div className='active' />}
 
                 {icon}
               </ListItemIcon>
@@ -78,7 +78,7 @@ export function DrawerItems(classes, pathname) {
                 primary={text}
                 disableTypography
                 className={`list-item-text ${
-                  path === pathname && ' active-nav-text'
+                  pathname.includes(path) && ' active-nav-text'
                 }`}
               />
             </ListItem>

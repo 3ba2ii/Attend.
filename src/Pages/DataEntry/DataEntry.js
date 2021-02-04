@@ -1,19 +1,15 @@
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect, useLocation } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-
+import { Link, Redirect, useLocation, useRouteMatch } from 'react-router-dom';
 import './data_entry.css';
 import SelectCardsComponent from './SelectCards';
 
 const DataEntryPage = () => {
   const { user } = useSelector((state) => state?.authReducer?.authedUser);
   const [selectedPath, setSelectedPath] = useState('');
-  console.log(
-    `🚀 ~ file: DataEntry.js ~ line 11 ~ DataEntryPage ~ selectedPath`,
-    selectedPath
-  );
 
+  let { url } = useRouteMatch();
   const { state } = useLocation();
 
   const optionsData = [
@@ -34,9 +30,8 @@ const DataEntryPage = () => {
   return (
     <main id='data-entry-page'>
       <header className='data-entry-header'>
-        {/* <h6>Admin Panel</h6> */}
         <div>
-          <span>Please select the data the you wish to modify</span>
+          <span>Please select the data entry model</span>
           <p>
             Please note that this actions are only accessed by the admin and no
             one else is authorized to access these pages and modify the data{' '}
@@ -44,11 +39,17 @@ const DataEntryPage = () => {
         </div>
       </header>
       <SelectCardsComponent setSelectedPath={setSelectedPath} />
-      <div className='btn-container'>
-        <Link to={selectedPath} className='route-to-path-btn'>
-          Next
+      <button className='btn-container'>
+        <Link
+          to={`${url}/${selectedPath}`}
+          className={`route-to-path-btn ${
+            selectedPath === null && 'disabled-btn'
+          }`}
+        >
+          <span>Select</span>
+          <NavigateNextIcon />
         </Link>
-      </div>
+      </button>
     </main>
   );
 };

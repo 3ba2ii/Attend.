@@ -1,37 +1,17 @@
 import { useQuery } from '@apollo/client';
-import { makeStyles } from '@material-ui/core/styles';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { GET_FACULTY_DATA } from '../../../api/queries/getFacultyData';
 import Spinner from '../../../assets/spinner.gif';
+import { useStyles } from '../../../types/styles/ImportFormsStyles';
 import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
 import { SelectFormContainer } from '../SelectFormContainer';
 import DropzoneContainer from './Dropzone';
 import TransitionsModal from './FormatModal';
 import './import_student.css';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(3),
-
-    '& .MuiTextField-root': {
-      width: '100%',
-      margin: theme.spacing(2, 2, 2, 0),
-
-      [theme.breakpoints.up('md')]: {
-        margin: theme.spacing(1.5, 5, 2, 0),
-        width: '50ch',
-      },
-      [theme.breakpoints.up('lg')]: {
-        width: '60ch',
-      },
-      [theme.breakpoints.up('xl')]: {
-        width: '80ch',
-      },
-    },
-  },
-}));
 const ImportStudentContainer = () => {
   const classes = useStyles();
   const { loading, error, data } = useQuery(GET_FACULTY_DATA);
@@ -47,10 +27,16 @@ const ImportStudentContainer = () => {
   const [studentsFile, setStudentsFile] = useState(null);
   const [open, setOpen] = useState(false);
   const [fileFormatError, setFileFormatError] = useState(null);
-  console.log(
-    `🚀 ~ file: ImportStudents.js ~ line 50 ~ ImportStudentContainer ~ fileFormatError`,
-    fileFormatError
-  );
+  const { state } = useLocation();
+
+  const { user } = useSelector((state) => state?.authReducer?.authedUser);
+
+  if (user?.role?.name !== 'Super Admin') {
+    /* TODO: Add an unauthenticated behavior screen*/
+
+    return <Redirect to={state?.from || '/dashboard'} />;
+  }
+
   const faculties = data?.faculties;
 
   const handleOpen = () => {
@@ -60,10 +46,6 @@ const ImportStudentContainer = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  console.log(
-    `🚀 ~ file: ImportStudents.js ~ line 44 ~ ImportStudentContainer ~ studentsFile`,
-    studentsFile
-  );
 
   const onSelectFaculty = (e) =>
     handleChangesAndReturnNextState(
@@ -104,7 +86,6 @@ const ImportStudentContainer = () => {
   };
   const onUploadData = (e) => {
     e.preventDefault();
-    console.log(e);
   };
   if (loading)
     return (

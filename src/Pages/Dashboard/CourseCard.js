@@ -1,8 +1,8 @@
 import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import React from 'react';
-import { average, calculateGrowth } from '../../utlis/helpers/calcuateAverage';
 import LineChart from '../../components/Charts/LineChart';
+import { average, calculateGrowth } from '../../utlis/helpers/calcuateAverage';
 
 const CourseCard = ({
   courseID,

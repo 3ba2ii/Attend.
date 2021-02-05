@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import addData from '../../assets/clip-uploading2.png';
-import teacher from '../../assets/schoolTeacher.png';
 import addLecturer from '../../assets/clip-welcome.png';
+import teacher from '../../assets/schoolTeacher.png';
 
 const optionalProps = [
   {

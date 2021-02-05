@@ -11,10 +11,7 @@ const DropzoneContainer = ({
   const handleChangeStatus = async ({ meta, file }, status) => {
     if (status === 'done') {
       const result = await readExcel(file);
-      console.log(
-        `🚀 ~ file: Dropzone.js ~ line 10 ~ handleChangeStatus ~ result`,
-        result
-      );
+
       if (
         result[0].hasOwnProperty(
           'ID' && 'اسم الطالب' && 'الرقم القومي' && 'الايميل'

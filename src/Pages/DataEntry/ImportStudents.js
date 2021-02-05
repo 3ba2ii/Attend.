@@ -1,23 +1,32 @@
-import { useQuery, useEffect } from '@apollo/client';
-import { MenuItem, TextField } from '@material-ui/core';
+import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { GET_FACULTY_DATA } from '../../api/queries/getFacultyData';
+import { handleChangesAndReturnNextState } from '../../utlis/helpers/handleChangesAndReturnNextState';
 import { LoadingSpinner } from '../Login/LoadingSpinner';
+import DropzoneContainer from './Dropzone';
 import './import_student.css';
 import { SelectFormContainer } from './SelectFormContainer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(5),
+    marginTop: theme.spacing(3),
 
     '& .MuiTextField-root': {
       width: '100%',
       margin: theme.spacing(2, 2, 2, 0),
 
       [theme.breakpoints.up('md')]: {
-        margin: theme.spacing(2, 2, 2, 0),
-        width: '65ch',
+        margin: theme.spacing(1.5, 5, 2, 0),
+        width: '50ch',
+      },
+      [theme.breakpoints.up('lg')]: {
+        width: '60ch',
+      },
+      [theme.breakpoints.up('xl')]: {
+        width: '80ch',
       },
     },
   },
@@ -38,6 +47,12 @@ const ImportStudentContainer = () => {
 
   const [group, setGroup] = useState('');
   const [groups, setGroups] = useState([]);
+
+  const [studentsFile, setStudentsFile] = useState(null);
+  console.log(
+    `🚀 ~ file: ImportStudents.js ~ line 44 ~ ImportStudentContainer ~ studentsFile`,
+    studentsFile
+  );
 
   const faculties = data?.faculties;
 
@@ -157,21 +172,32 @@ const ImportStudentContainer = () => {
             }}
           />
         </div>
+        <DropzoneContainer setStudentsFile={setStudentsFile} />
+        <div className='buttons-container'>
+          <Link className='cancel-btn' to={'/data_entry'}>
+            <span>Cancel</span>
+          </Link>
+          <button
+            type='submit'
+            className='submit-btn-container'
+            disabled={
+              !faculty ||
+              !department ||
+              !major ||
+              !academicYear ||
+              !group ||
+              !studentsFile
+            }
+          >
+            <span className='animated-top-onhover'>
+              <ArrowUpwardIcon />
+            </span>
+            <span>Upload</span>
+          </button>
+        </div>
       </form>
     </main>
   );
 };
 
 export default ImportStudentContainer;
-
-const handleChangesAndReturnNextState = (
-  e,
-  handleCurrentState,
-  handeNextState,
-  data,
-  neededField
-) => {
-  handleCurrentState(e.target.value);
-  const selectedData = data.filter((x) => x.id === e.target.value);
-  handeNextState(selectedData[0][neededField]);
-};

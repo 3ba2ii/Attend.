@@ -15,12 +15,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import smallAvatar from '../../assets/Ellipse.png';
-import DataEntryPage from '../../Pages/DataEntry/DataEntry';
-import useStyles from '../../types/styles/drawer-styles';
 import Dashboard from '../../Pages/Dashboard/Dashboard';
+import DataEntryPage from '../../Pages/DataEntry/DataEntry';
+import ImportStudentContainer from '../../Pages/DataEntry/ImportStudents/ImportStudents';
+import useStyles from '../../types/styles/drawer-styles';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
-import ImportStudentContainer from '../../Pages/DataEntry/ImportStudents';
 
 function ResponsiveDrawer(props) {
   const { window } = props;

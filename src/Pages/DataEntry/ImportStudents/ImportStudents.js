@@ -3,12 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { GET_FACULTY_DATA } from '../../api/queries/getFacultyData';
-import { handleChangesAndReturnNextState } from '../../utlis/helpers/handleChangesAndReturnNextState';
-import { LoadingSpinner } from '../Login/LoadingSpinner';
+import { GET_FACULTY_DATA } from '../../../api/queries/getFacultyData';
+import Spinner from '../../../assets/spinner.gif';
+import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
+import { SelectFormContainer } from '../SelectFormContainer';
 import DropzoneContainer from './Dropzone';
+import TransitionsModal from './FormatModal';
 import './import_student.css';
-import { SelectFormContainer } from './SelectFormContainer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,24 +38,32 @@ const ImportStudentContainer = () => {
   const [faculty, setFaculty] = useState('');
   const [department, setDepartment] = useState('');
   const [departments, setDepartments] = useState([]);
-
   const [major, setMajor] = useState('');
-
   const [majors, setMajors] = useState([]);
-
   const [academicYear, setAcademicYear] = useState('');
   const [academicYears, setAcademicYears] = useState([]);
-
   const [group, setGroup] = useState('');
   const [groups, setGroups] = useState([]);
-
   const [studentsFile, setStudentsFile] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [fileFormatError, setFileFormatError] = useState(null);
+  console.log(
+    `🚀 ~ file: ImportStudents.js ~ line 50 ~ ImportStudentContainer ~ fileFormatError`,
+    fileFormatError
+  );
+  const faculties = data?.faculties;
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   console.log(
     `🚀 ~ file: ImportStudents.js ~ line 44 ~ ImportStudentContainer ~ studentsFile`,
     studentsFile
   );
-
-  const faculties = data?.faculties;
 
   const onSelectFaculty = (e) =>
     handleChangesAndReturnNextState(
@@ -92,9 +101,17 @@ const ImportStudentContainer = () => {
 
   const onSelectGroup = (e) => {
     setGroup(e.target.value);
-    console.log('hehehe');
   };
-  if (loading) return <LoadingSpinner />;
+  const onUploadData = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
+  if (loading)
+    return (
+      <div className='loading-spinner-gif'>
+        <img src={Spinner} alt='loading' />
+      </div>
+    );
   if (error) return `Error! ${error.message}`;
 
   return (
@@ -112,6 +129,7 @@ const ImportStudentContainer = () => {
         className={classes.root + ' select-import-form-container'}
         noValidate
         autoComplete='off'
+        onSubmit={onUploadData}
       >
         <div>
           <SelectFormContainer
@@ -172,7 +190,15 @@ const ImportStudentContainer = () => {
             }}
           />
         </div>
-        <DropzoneContainer setStudentsFile={setStudentsFile} />
+
+        <DropzoneContainer
+          setStudentsFile={setStudentsFile}
+          fileFormatError={fileFormatError}
+          setFileFormatError={setFileFormatError}
+        />
+        <div className='show-formation-of-excel-file' onClick={handleOpen}>
+          Show how the Excel File should be formatted?
+        </div>
         <div className='buttons-container'>
           <Link className='cancel-btn' to={'/data_entry'}>
             <span>Cancel</span>
@@ -181,12 +207,13 @@ const ImportStudentContainer = () => {
             type='submit'
             className='submit-btn-container'
             disabled={
-              !faculty ||
-              !department ||
-              !major ||
-              !academicYear ||
+              fileFormatError ||
+              !studentsFile ||
               !group ||
-              !studentsFile
+              !academicYear ||
+              !major ||
+              !department ||
+              !faculty
             }
           >
             <span className='animated-top-onhover'>
@@ -196,6 +223,11 @@ const ImportStudentContainer = () => {
           </button>
         </div>
       </form>
+      <TransitionsModal
+        handleClose={handleClose}
+        handleOpen={handleOpen}
+        open={open}
+      />
     </main>
   );
 };

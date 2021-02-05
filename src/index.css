@@ -181,3 +181,9 @@ a {
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
 }
+.loading-spinner-gif {
+  max-width: 50px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}

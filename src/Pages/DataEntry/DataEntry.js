@@ -8,19 +8,9 @@ import SelectCardsComponent from './SelectCards';
 const DataEntryPage = () => {
   const { user } = useSelector((state) => state?.authReducer?.authedUser);
   const [selectedPath, setSelectedPath] = useState('');
-
   let { url } = useRouteMatch();
   const { state } = useLocation();
 
-  const optionsData = [
-    {
-      id: '327yiu37248',
-      label: 'Major',
-      placeholder: 'Please Select a Major',
-      setSelectedForm: 'setMajor',
-      options: ['test', 'nope', 'ds', 'test'],
-    },
-  ];
   if (user?.role?.name !== 'Super Admin') {
     /* TODO: Add an unauthenticated behavior screen*/
 

@@ -16,12 +16,12 @@ import React from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import smallAvatar from '../../assets/Ellipse.png';
 import Dashboard from '../../Pages/Dashboard/Dashboard';
+import AddLecturersPage from '../../Pages/DataEntry/AddLecturers/AddLecturers';
 import DataEntryPage from '../../Pages/DataEntry/DataEntry';
 import ImportStudentContainer from '../../Pages/DataEntry/ImportStudents/ImportStudents';
 import useStyles from '../../types/styles/drawer-styles';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
-
 function ResponsiveDrawer(props) {
   const { window } = props;
   const classes = useStyles();
@@ -83,6 +83,11 @@ function ResponsiveDrawer(props) {
             component={ImportStudentContainer}
           />
 
+          <Route
+            exact
+            path={'/data_entry/add_lecturers_users'}
+            component={AddLecturersPage}
+          />
           <Route path={'/courses'} render={() => <div>Hellooo</div>} />
           <Route path={'/profile'} render={() => <div>Hellooo</div>} />
           <Route path={'/leaderboard'} render={() => <div>leaderboard</div>} />

@@ -23,7 +23,7 @@ const optionalProps = [
     title: 'Add Lecturers and Assistants',
     subtitle: 'Add new lecturers and assistants to the database.',
     img: addLecturer,
-    path: 'mutate_data3',
+    path: 'add_lecturers_users',
   },
 ];
 const SelectCardsComponent = ({ setSelectedPath }) => {

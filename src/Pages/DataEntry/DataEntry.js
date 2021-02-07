@@ -6,7 +6,7 @@ import './data_entry.css';
 import SelectCardsComponent from './SelectCards';
 
 const DataEntryPage = () => {
-  const { user } = useSelector((state) => state?.authReducer?.authedUser);
+  const user = useSelector((state) => state?.authReducer?.authedUser);
   const [selectedPath, setSelectedPath] = useState('');
   let { url } = useRouteMatch();
   const { state } = useLocation();

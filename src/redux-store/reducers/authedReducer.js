@@ -13,8 +13,13 @@ const authReducer = (state = initialState, action) => {
       if (!action.authedUser) {
         return { ...state, authedUser: null };
       }
-      localStorage.setItem('token', action?.authedUser.jwt);
-      Cookies.set('authedUser', action?.authedUser?.user?.id, {
+      console.log(
+        `🚀 ~ file: authedReducer.js ~ line 12 ~ authReducer ~ action`,
+        action
+      );
+
+      localStorage.setItem('token', action?.authedUser?.jwt);
+      Cookies.set('authedUser', action?.authedUser?.id, {
         expires: 30,
       });
       return { ...state, authedUser: { ...action.authedUser } };

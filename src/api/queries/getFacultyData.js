@@ -3,28 +3,17 @@ import { gql } from '@apollo/client';
 export const GET_FACULTY_DATA = gql`
   query GET_FACULTY_Data {
     faculties {
+      id
       FacultyNameInArabic
       FacultyNameInEnglish
-      id
       departments {
-        DepartmentID
-        DepartmentNameInEnglish
-        DepartmentNameInArabic
         id
-        majors {
+        DepartmentID
+        DepartmentNameInArabic
+        DepartmentNameInEnglish
+        academic_years {
           id
-          MajorID
-          MajorNameInArabic
-          MajorNameInEnglish
-          academic_years {
-            AcademicYearInEnglish
-            id
-            groups {
-              GroupID
-              GroupNumber
-              id
-            }
-          }
+          YearNumber
         }
       }
     }

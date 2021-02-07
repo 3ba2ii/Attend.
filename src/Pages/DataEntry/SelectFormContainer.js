@@ -21,14 +21,20 @@ export function SelectFormContainer({
       helperText={helperText}
       variant='outlined'
       required
-      disabled={selections.length === 0}
+      disabled={!selections || selections?.length === 0}
       error={error}
     >
-      {selections.map((sel) => (
-        <MenuItem key={sel.id} value={sel.id}>
-          {sel[valueText]}
+      {selections ? (
+        selections.map((sel) => (
+          <MenuItem key={sel.id} value={sel.id}>
+            {sel[valueText]}
+          </MenuItem>
+        ))
+      ) : (
+        <MenuItem key={`not-found-${id}`} value={`not-found-${id}`}>
+          Not Found
         </MenuItem>
-      ))}
+      )}
     </TextField>
   );
 }

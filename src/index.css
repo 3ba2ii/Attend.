@@ -173,6 +173,36 @@ a {
   background: #fff;
   box-shadow: var(--card-border-shadow);
 }
+.drawer-avatar-container {
+  display: flex;
+  height: 160px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  padding-right: 6px;
+}
+.user-information {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: var(--main-font-family);
+  font-weight: 500;
+  width: 100%;
+  color: #192a3e;
+  margin-left: 14px;
+}
+.user-information span {
+  width: 100%;
+  white-space: break-word;
+  overflow: hidden;
+  text-overflow: break-inside;
+  font-size: 0.8rem;
+}
+.user-information p {
+  margin: 0;
+  font-weight: 500;
+  font-size: 0.7rem;
+}
 
 .avatar {
   border-radius: 50%;

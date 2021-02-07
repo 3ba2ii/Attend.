@@ -18,8 +18,6 @@ const ImportStudentContainer = () => {
   const [faculty, setFaculty] = useState('');
   const [department, setDepartment] = useState('');
   const [departments, setDepartments] = useState([]);
-  const [major, setMajor] = useState('');
-  const [majors, setMajors] = useState([]);
   const [academicYear, setAcademicYear] = useState('');
   const [academicYears, setAcademicYears] = useState([]);
   const [group, setGroup] = useState('');
@@ -29,7 +27,7 @@ const ImportStudentContainer = () => {
   const [fileFormatError, setFileFormatError] = useState(null);
   const { state } = useLocation();
 
-  const { user } = useSelector((state) => state?.authReducer?.authedUser);
+  const user = useSelector((state) => state?.authReducer?.authedUser);
 
   if (user?.role?.name !== 'Super Admin') {
     /* TODO: Add an unauthenticated behavior screen*/
@@ -59,16 +57,8 @@ const ImportStudentContainer = () => {
     handleChangesAndReturnNextState(
       e,
       setDepartment,
-      setMajors,
-      departments,
-      'majors'
-    );
-  const onSelectMajor = (e) =>
-    handleChangesAndReturnNextState(
-      e,
-      setMajor,
       setAcademicYears,
-      majors,
+      departments,
       'academic_years'
     );
 
@@ -120,7 +110,7 @@ const ImportStudentContainer = () => {
               handleSelection: onSelectFaculty,
               label: 'Faculty',
               helperText: 'Please Select a Faculty',
-              valueText: 'FacultyNameInEnglish',
+              valueText: 'FacultyNameInArabic',
               id: 'faculty',
             }}
           />
@@ -132,21 +122,11 @@ const ImportStudentContainer = () => {
               handleSelection: onSelectDepartment,
               label: 'Department',
               helperText: 'Please Select a Department',
-              valueText: 'DepartmentNameInEnglish',
+              valueText: 'DepartmentNameInArabic',
               id: 'department',
             }}
           />
-          <SelectFormContainer
-            {...{
-              selected: major,
-              selections: majors,
-              handleSelection: onSelectMajor,
-              label: 'Major',
-              helperText: 'Please Select a Major',
-              valueText: 'MajorNameInEnglish',
-              id: 'major',
-            }}
-          />
+
           <SelectFormContainer
             {...{
               selected: academicYear,
@@ -154,10 +134,11 @@ const ImportStudentContainer = () => {
               handleSelection: onSelectAcademicYear,
               label: 'Academic Year',
               helperText: 'Please Select an Academic Year',
-              valueText: 'AcademicYearInEnglish',
+              valueText: 'YearNumber',
               id: 'academic-year',
             }}
           />
+
           <SelectFormContainer
             {...{
               selected: group,
@@ -180,7 +161,7 @@ const ImportStudentContainer = () => {
         <div className='show-formation-of-excel-file' onClick={handleOpen}>
           Show how the Excel File should be formatted?
         </div>
-        <div className='buttons-container'>
+        <div className='fixed-btn-bottom'>
           <Link className='cancel-btn' to={'/data_entry'}>
             <span>Cancel</span>
           </Link>
@@ -192,7 +173,6 @@ const ImportStudentContainer = () => {
               !studentsFile ||
               !group ||
               !academicYear ||
-              !major ||
               !department ||
               !faculty
             }

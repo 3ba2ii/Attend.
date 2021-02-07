@@ -1,9 +1,10 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import { LOGIN } from '../../api/mutations/login';
+import { GET_USER_BY_ID } from '../../api/queries/getUserByID';
 import Carousel from '../../components/common/Carousel';
 import { Error } from '../../components/common/Error';
 import { Form } from '../../components/common/Form';
@@ -29,12 +30,7 @@ const Login = () => {
 
   const onLogin = async (e) => {
     e.preventDefault();
-    /* const isValidEmail = validateEmail(identifier);
-    const isValidPassword = validatePassword(password);
-    if (!isValidEmail || !isValidPassword) {
-      setError(true);
-      return;
-    } */
+
     setLoading(true);
 
     const action = await LoginAction({

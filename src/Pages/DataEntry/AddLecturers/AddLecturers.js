@@ -1,66 +1,38 @@
-import { useQuery } from '@apollo/client';
-import { IconButton } from '@material-ui/core';
+import { useMutation, useQuery } from '@apollo/client';
+import { FormHelperText, IconButton, MenuItem } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import AddIcon from '@material-ui/icons/Add';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, Redirect, useLocation } from 'react-router-dom';
+import { CREATE_LECTURER_ACCOUNT } from '../../../api/mutations/createLecturer';
 import { GET_USERNAMES_EMAILS } from '../../../api/queries/getOnlyUsernamesAndEmails';
 import Spinner from '../../../assets/spinner.gif';
+import LimitTags from '../../../components/AutoComplete/AutoCompleteLimiteTags';
+import CreateLecturerAccount from '../../../utlis/helpers/createLecturerAction';
 import {
   validateArabicName,
   validateEnglishName,
 } from '../../../utlis/validation/validation';
 import './add_lecturers.css';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(3),
-
-    '& .MuiTextField-root': {
-      width: '100%',
-      margin: theme.spacing(2, 2, 2, 0),
-
-      [theme.breakpoints.up('md')]: {
-        margin: theme.spacing(1.5, 5, 2, 0),
-        width: '50ch',
-      },
-      [theme.breakpoints.up('lg')]: {
-        width: '60ch',
-      },
-      [theme.breakpoints.up('xl')]: {
-        width: '80ch',
-      },
-    },
-    margin: {
-      margin: theme.spacing(10),
-    },
-    withoutLabel: {
-      marginTop: theme.spacing(30),
-    },
-  },
-  textField: {
-    width: '100%',
-    margin: theme.spacing(2, 2, 2, 0),
-
-    [theme.breakpoints.up('md')]: {
-      margin: theme.spacing(1.5, 5, 2, 0),
-      width: '50ch',
-    },
-    [theme.breakpoints.up('lg')]: {
-      width: '60ch',
-    },
-    [theme.breakpoints.up('xl')]: {
-      width: '80ch',
-    },
-  },
-}));
+import { useStyles } from './useStyles';
 
 export default function AddLecturersPage() {
+  const user = useSelector((state) => state?.authReducer?.authedUser);
+  const { state } = useLocation();
+
+  if (user?.role?.name !== 'Super Admin') {
+    /* TODO: Add an unauthenticated behavior screen*/
+
+    return <Redirect to={state?.from || '/dashboard'} />;
+  }
+
   const classes = useStyles();
   const { loading, error, data } = useQuery(GET_USERNAMES_EMAILS);
   const [username, setUsername] = useState('');
@@ -68,12 +40,14 @@ export default function AddLecturersPage() {
   const [password, setPassword] = useState('');
   const [nameInEnglish, setNameInEnglish] = useState('');
   const [nameInArabic, setNameInArabic] = useState('');
-
+  const [TeachingRole, setRole] = useState('');
+  const [departments, setDepartments] = useState([]);
   const [usernameError, setUsernameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [nameInEnglishError, setNameInEnglishError] = useState(false);
   const [nameInArabicError, setNameInArabicError] = useState(false);
+  const [createLecturer] = useMutation(CREATE_LECTURER_ACCOUNT);
 
   const validateUsername = (e) => {
     setUsername(e.target.value);
@@ -108,6 +82,27 @@ export default function AddLecturersPage() {
     else setNameInArabicError(false);
   };
 
+  const onSelectRole = (e) => {
+    setRole(e.target.value);
+  };
+  const onSelectDepartments = (e, value) => {
+    setDepartments(value);
+  };
+  const onSubmitCreate = (e) => {
+    e.preventDefault();
+    CreateLecturerAccount(
+      {
+        username,
+        email,
+        password,
+        nameInEnglish,
+        nameInArabic,
+        departments,
+        TeachingRole,
+      },
+      createLecturer
+    );
+  };
   if (loading)
     return (
       <div className='loading-spinner-gif'>
@@ -126,12 +121,17 @@ export default function AddLecturersPage() {
           <br />
         </p>
       </header>
-      <form className={classes.root} noValidate autoComplete='off'>
+      <form
+        className={classes.root}
+        noValidate
+        autoComplete='off'
+        onSubmit={onSubmitCreate}
+      >
         <div>
           <TextField
             required
-            autoComplete='off'
-            id='outlined-error-helper-text'
+            autoComplete='username'
+            id='outlined-error-helper-text-username'
             label='Username'
             helperText={
               usernameError
@@ -145,7 +145,8 @@ export default function AddLecturersPage() {
           <TextField
             required
             type='email'
-            id='outlined-error-helper-text'
+            autoComplete='email'
+            id='outlined-error-helper-text-email'
             label='Email'
             helperText={
               emailError
@@ -156,14 +157,17 @@ export default function AddLecturersPage() {
             error={emailError}
             onChange={validateEmail}
           />
-          <FormControl className={classes.textField} variant='outlined'>
+          <FormControl
+            className={classes.textField}
+            variant='outlined'
+            autoComplete='new-password'
+          >
             <InputLabel htmlFor='outlined-adornment-password'>
               Password
             </InputLabel>
             <OutlinedInput
               id='outlined-adornment-password'
               type={showPassword ? 'text' : 'password'}
-              value={password}
               onChange={validatePassword}
               endAdornment={
                 <InputAdornment position='end'>
@@ -177,12 +181,16 @@ export default function AddLecturersPage() {
                     }}
                     edge='end'
                   >
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                    {!showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               }
               labelWidth={70}
             />
+            <FormHelperText id='my-helper-text'>
+              Make sure it's at least 8 characters including a number and a
+              lowercase letter.
+            </FormHelperText>
           </FormControl>
           <TextField
             required
@@ -210,6 +218,51 @@ export default function AddLecturersPage() {
             variant='outlined'
             error={nameInArabicError}
           />
+          <TextField
+            id='filled-select-currency'
+            select
+            required
+            label='Select Role'
+            value={TeachingRole}
+            onChange={onSelectRole}
+            helperText='Please select a role for the lecturer'
+            variant='outlined'
+          >
+            {[
+              { label: 'Lecturer', value: 'lecturer' },
+              { label: 'Teacher Assistant', value: 'TA' },
+            ].map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <LimitTags {...{ onSelectDepartments }} />
+        </div>
+        <div className='fixed-btn-bottom'>
+          <Link className='cancel-btn' to={'/data_entry'}>
+            <span>Cancel</span>
+          </Link>
+          <button
+            type='submit'
+            className='submit-btn-container'
+            disabled={
+              !departments.length ||
+              nameInEnglishError ||
+              nameInArabicError ||
+              usernameError ||
+              emailError ||
+              !nameInEnglish ||
+              !nameInArabic ||
+              !TeachingRole ||
+              !password
+            }
+          >
+            <span className='animated-top-onhover'>
+              <AddIcon />
+            </span>
+            <span>Create Lecturer</span>
+          </button>
         </div>
       </form>
     </main>

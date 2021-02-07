@@ -16,7 +16,17 @@ export const LoginAction = async ({ identifier, password, LoginMutation }) => {
       },
     });
 
-    return { type: SUCCESSFULLY_AUTHENTICATED, authedUser: data?.login };
+    const userInfo = await client.query({
+      query: GET_USER_BY_ID,
+      variables: {
+        id: data?.login?.user?.id,
+      },
+    });
+
+    return {
+      type: SUCCESSFULLY_AUTHENTICATED,
+      authedUser: { ...userInfo?.data?.user, jwt: data?.login?.jwt },
+    };
   } catch (err) {
     console.error(err.message);
     return { type: FAILED_AUTHENTICATION, error: err.message };
@@ -33,7 +43,7 @@ export const LoginActionUsingCookies = async ({ _, userID }) => {
 
     return {
       type: SUCCESSFULLY_AUTHENTICATED_USING_COOKIES,
-      authedUser: { ...data },
+      authedUser: { ...data?.user },
     };
   } catch (err) {
     console.error(err.message);

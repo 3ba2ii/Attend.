@@ -12,7 +12,7 @@ import SchoolIcon from '@material-ui/icons/School';
 import TuneOutlinedIcon from '@material-ui/icons/TuneOutlined';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar } from '../common/Avatar';
+import AvatarComponent from '../common/Avatar';
 import Logo from '../common/Logo';
 
 export function DrawerItems(classes, pathname) {
@@ -21,7 +21,7 @@ export function DrawerItems(classes, pathname) {
       <Logo className='drawer-logo padding-left-1rem' />
       <div className={classes.toolbar} />
 
-      {Avatar(true)}
+      {AvatarComponent(true)}
       <List className='navbar-list'>
         {[
           { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },

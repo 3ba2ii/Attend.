@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(7),
   },
 }));
-
+const randomClass = Math.floor(Math.random() * 4);
 export default function AvatarComponent() {
   const classes = useStyles();
   const MyColorsArray = [
@@ -36,8 +36,7 @@ export default function AvatarComponent() {
     classes.pink,
     classes.lightBlue,
   ];
-  var randomClass =
-    MyColorsArray[Math.floor(Math.random() * MyColorsArray.length)];
+
   const { authedUser } = useSelector((state) => state?.authReducer);
 
   const InitialsName = authedUser?.LecturerNameInEnglish.split(' ');
@@ -59,7 +58,7 @@ export default function AvatarComponent() {
           alt='avatar'
         />
       ) : (
-        <Avatar className={randomClass} alt='avatar'>
+        <Avatar className={MyColorsArray[randomClass]} alt='avatar'>
           {Initials}
         </Avatar>
       )}

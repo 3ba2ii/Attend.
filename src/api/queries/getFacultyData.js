@@ -11,9 +11,16 @@ export const GET_FACULTY_DATA = gql`
         DepartmentID
         DepartmentNameInArabic
         DepartmentNameInEnglish
-        academic_years {
-          id
+        academic_years(sort: "YearNumber:asc") {
+          AcademicYearInArabic
+          AcademicYearInEnglish
           YearNumber
+          id
+          groups(sort: "GroupID:asc") {
+            GroupID
+            GroupNumber
+            id
+          }
         }
       }
     }

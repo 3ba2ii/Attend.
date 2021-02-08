@@ -11,11 +11,14 @@ import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
 import TuneOutlinedIcon from '@material-ui/icons/TuneOutlined';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AvatarComponent from '../common/Avatar';
 import Logo from '../common/Logo';
 
 export function DrawerItems(classes, pathname) {
+  const { authedUser } = useSelector((state) => state.authReducer);
+
   return (
     <div>
       <Logo className='drawer-logo padding-left-1rem' />
@@ -32,7 +35,11 @@ export function DrawerItems(classes, pathname) {
             icon: <BarChartIcon />,
             path: '/leaderboard',
           },
-          { text: 'Data Entry', icon: <CloudIcon />, path: '/data_entry' },
+          authedUser?.role?.name === 'Super Admin' && {
+            text: 'Data Entry',
+            icon: <CloudIcon />,
+            path: '/data_entry',
+          },
         ].map(({ text, icon, path }, index) => (
           <Link to={path} key={text + index}>
             <ListItem button>

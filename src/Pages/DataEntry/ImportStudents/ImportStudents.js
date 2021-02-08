@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -10,7 +10,11 @@ import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleCh
 import { SelectFormContainer } from '../SelectFormContainer';
 import DropzoneContainer from './Dropzone';
 import TransitionsModal from './FormatModal';
+import { CREATE_STUDENT } from '../../../api/mutations/createStudent';
 import './import_student.css';
+import { createStudentHelperFunction } from '../../../utlis/helpers/createStudentHelperFunction';
+import { CircularProgress } from '@material-ui/core';
+import CustomizedSnackbars from '../../../components/Alerts/Alerts';
 
 const ImportStudentContainer = () => {
   const classes = useStyles();
@@ -23,8 +27,12 @@ const ImportStudentContainer = () => {
   const [group, setGroup] = useState('');
   const [groups, setGroups] = useState([]);
   const [studentsFile, setStudentsFile] = useState(null);
-  const [open, setOpen] = useState(false);
   const [fileFormatError, setFileFormatError] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [createStudent] = useMutation(CREATE_STUDENT);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarType, setSnackbarType] = useState('');
   const { state } = useLocation();
 
   const user = useSelector((state) => state?.authReducer?.authedUser);
@@ -74,9 +82,25 @@ const ImportStudentContainer = () => {
   const onSelectGroup = (e) => {
     setGroup(e.target.value);
   };
+  const handleCloseToaster = (e, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
   const onUploadData = (e) => {
     e.preventDefault();
+    createStudentHelperFunction({
+      createStudent,
+      studentsFile,
+      group,
+      setUploadLoading,
+      setOpenSnackbar,
+      setSnackbarType,
+    });
   };
+
   if (loading)
     return (
       <div className='loading-spinner-gif'>
@@ -96,6 +120,17 @@ const ImportStudentContainer = () => {
           <span>Show uploaded groups</span>
         </p>
       </header>
+      <CustomizedSnackbars
+        {...{
+          open: openSnackbar,
+          type: snackbarType || 'error',
+          message:
+            snackbarType === 'success'
+              ? `Imported ${studentsFile?.length || ''} Students Successfully!`
+              : 'There was an error creating this account, Please try again later! ',
+          handleClose: handleCloseToaster,
+        }}
+      />
       <form
         className={classes.root + ' select-import-form-container'}
         noValidate
@@ -134,7 +169,7 @@ const ImportStudentContainer = () => {
               handleSelection: onSelectAcademicYear,
               label: 'Academic Year',
               helperText: 'Please Select an Academic Year',
-              valueText: 'YearNumber',
+              valueText: 'AcademicYearInArabic',
               id: 'academic-year',
             }}
           />
@@ -177,9 +212,16 @@ const ImportStudentContainer = () => {
               !faculty
             }
           >
-            <span className='animated-top-onhover'>
-              <ArrowUpwardIcon />
-            </span>
+            {uploadLoading ? (
+              <div className='circular-progress-bar-container'>
+                <CircularProgress color='inherit' size={24} />
+              </div>
+            ) : (
+              <span className='animated-top-onhover'>
+                <ArrowUpwardIcon size={24} />
+              </span>
+            )}
+
             <span>Upload</span>
           </button>
         </div>

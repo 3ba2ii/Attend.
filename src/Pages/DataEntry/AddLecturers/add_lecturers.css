@@ -17,11 +17,20 @@
   position: absolute;
   bottom: 0;
   left: 50%;
+  transition: transform 0.5s;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
   -moz-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   -o-transform: translateX(-50%);
+  -webkit-transition: transform 0.5s;
+  -moz-transition: transform 0.5s;
+  -ms-transition: transform 0.5s;
+  -o-transition: transform 0.5s;
+}
+.circular-progress-bar-container {
+  padding: 2px;
+  margin-right: 5px;
 }
 @media only screen and (min-width: 720px) {
   .fixed-btn-bottom {

@@ -13,6 +13,14 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
+  pink: {
+    color: theme.palette.getContrastText('#F7E2DB'),
+    backgroundColor: '#F7E2DB',
+  },
+  lightBlue: {
+    color: theme.palette.getContrastText('#DBEAF7'),
+    backgroundColor: '#DBEAF7',
+  },
 
   large: {
     width: theme.spacing(7),
@@ -22,7 +30,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AvatarComponent() {
   const classes = useStyles();
-
+  const MyColorsArray = [
+    classes.purple,
+    classes.orange,
+    classes.pink,
+    classes.lightBlue,
+  ];
+  var randomClass =
+    MyColorsArray[Math.floor(Math.random() * MyColorsArray.length)];
   const { authedUser } = useSelector((state) => state?.authReducer);
 
   const InitialsName = authedUser?.LecturerNameInEnglish.split(' ');
@@ -44,7 +59,7 @@ export default function AvatarComponent() {
           alt='avatar'
         />
       ) : (
-        <Avatar className={classes.orange} alt='avatar'>
+        <Avatar className={randomClass} alt='avatar'>
           {Initials}
         </Avatar>
       )}

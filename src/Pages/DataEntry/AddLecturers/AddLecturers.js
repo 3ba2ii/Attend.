@@ -1,5 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { FormHelperText, IconButton, MenuItem } from '@material-ui/core';
+import {
+  CircularProgress,
+  FormHelperText,
+  IconButton,
+  MenuItem,
+} from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -14,6 +19,7 @@ import { Link, Redirect, useLocation } from 'react-router-dom';
 import { CREATE_LECTURER_ACCOUNT } from '../../../api/mutations/createLecturer';
 import { GET_USERNAMES_EMAILS } from '../../../api/queries/getOnlyUsernamesAndEmails';
 import Spinner from '../../../assets/spinner.gif';
+import CustomizedSnackbars from '../../../components/Alerts/Alerts';
 import LimitTags from '../../../components/AutoComplete/AutoCompleteLimiteTags';
 import CreateLecturerAccount from '../../../utlis/helpers/createLecturerAction';
 import {
@@ -26,13 +32,6 @@ import { useStyles } from './useStyles';
 export default function AddLecturersPage() {
   const user = useSelector((state) => state?.authReducer?.authedUser);
   const { state } = useLocation();
-
-  if (user?.role?.name !== 'Super Admin') {
-    /* TODO: Add an unauthenticated behavior screen*/
-
-    return <Redirect to={state?.from || '/dashboard'} />;
-  }
-
   const classes = useStyles();
   const { loading, error, data } = useQuery(GET_USERNAMES_EMAILS);
   const [username, setUsername] = useState('');
@@ -47,6 +46,10 @@ export default function AddLecturersPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [nameInEnglishError, setNameInEnglishError] = useState(false);
   const [nameInArabicError, setNameInArabicError] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarType, setSnackbarType] = useState('');
+
   const [createLecturer] = useMutation(CREATE_LECTURER_ACCOUNT);
 
   const validateUsername = (e) => {
@@ -100,9 +103,24 @@ export default function AddLecturersPage() {
         departments,
         TeachingRole,
       },
-      createLecturer
+      createLecturer,
+      setSubmitLoading,
+      setOpenSnackbar,
+      setSnackbarType
     );
   };
+
+  const handleClose = (e, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
+  if (user?.role?.name !== 'Super Admin') {
+    return <Redirect to={state?.from || '/dashboard'} />;
+  }
+
   if (loading)
     return (
       <div className='loading-spinner-gif'>
@@ -121,6 +139,17 @@ export default function AddLecturersPage() {
           <br />
         </p>
       </header>
+      <CustomizedSnackbars
+        {...{
+          open: openSnackbar,
+          type: snackbarType || 'error',
+          message:
+            snackbarType === 'success'
+              ? `A new lecturer account has been created successfully! `
+              : 'There was an error creating this account, Please try again later! ',
+          handleClose,
+        }}
+      />
       <form
         className={classes.root}
         noValidate
@@ -239,6 +268,7 @@ export default function AddLecturersPage() {
           </TextField>
           <LimitTags {...{ onSelectDepartments }} />
         </div>
+
         <div className='fixed-btn-bottom'>
           <Link className='cancel-btn' to={'/data_entry'}>
             <span>Cancel</span>
@@ -255,12 +285,19 @@ export default function AddLecturersPage() {
               !nameInEnglish ||
               !nameInArabic ||
               !TeachingRole ||
-              !password
+              !password ||
+              submitLoading
             }
           >
-            <span className='animated-top-onhover'>
-              <AddIcon />
-            </span>
+            {submitLoading ? (
+              <div className='circular-progress-bar-container'>
+                <CircularProgress color='inherit' size={24} />
+              </div>
+            ) : (
+              <span className='animated-top-onhover'>
+                <AddIcon size={24} />
+              </span>
+            )}
             <span>Create Lecturer</span>
           </button>
         </div>

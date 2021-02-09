@@ -18,9 +18,9 @@ import { useSelector } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { CREATE_LECTURER_ACCOUNT } from '../../../api/mutations/createLecturer';
 import { GET_USERNAMES_EMAILS } from '../../../api/queries/getOnlyUsernamesAndEmails';
-import Spinner from '../../../assets/spinner.gif';
 import CustomizedSnackbars from '../../../components/Alerts/Alerts';
 import LimitTags from '../../../components/AutoComplete/AutoCompleteLimiteTags';
+import SpinnerElement from '../../../components/Spinner/spinner';
 import CreateLecturerAccount from '../../../utlis/helpers/createLecturerAction';
 import {
   validateArabicName,
@@ -123,8 +123,8 @@ export default function AddLecturersPage() {
 
   if (loading)
     return (
-      <div className='loading-spinner-gif'>
-        <img src={Spinner} alt='loading' />
+      <div className='center-spinner'>
+        <SpinnerElement />
       </div>
     );
   if (error) return `Error! ${error.message}`;

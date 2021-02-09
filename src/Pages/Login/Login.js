@@ -1,19 +1,18 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import { LOGIN } from '../../api/mutations/login';
-import { GET_USER_BY_ID } from '../../api/queries/getUserByID';
 import Carousel from '../../components/common/Carousel';
 import { Error } from '../../components/common/Error';
 import { Form } from '../../components/common/Form';
 import Logo from '../../components/common/Logo';
+import SpinnerElement from '../../components/Spinner/spinner';
 import { LoginAction } from '../../redux-store/actions/authedAction';
 import carouselItems from '../../types/constants/carousel';
 import { FAILED_AUTHENTICATION } from '../../types/constants/redux-constants';
 import { checkCookies } from '../../utlis/helpers/checkCookies';
-import { LoadingSpinner } from './LoadingSpinner';
 import './login.css';
 
 const Login = () => {
@@ -83,7 +82,11 @@ const Login = () => {
     return <Redirect to={state?.from || '/dashboard'} />;
   }
   if (checkingCookiesLoading) {
-    return LoadingSpinner();
+    return (
+      <div className='center-spinner full-height'>
+        <SpinnerElement />
+      </div>
+    );
   }
   return (
     <div className='login-grid-container'>

@@ -2,6 +2,9 @@
   --color-alert-error-border: rgba(158, 28, 35, 0.2);
   --color-alert-error-text: #24292e;
   --color-alert-error-icon: rgba(158, 28, 35, 0.6);
+  --color-danger-area-text: #eb5d63;
+  --color-danger-area-icon-background: #eb5d6442;
+
   --color-link-text: #109cf1;
   --color-alert-error-bg: #ffe3e6;
   --main-heading-font-color: #334d6e;
@@ -211,9 +214,18 @@ a {
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
 }
-.loading-spinner-gif {
-  max-width: 50px;
+
+.center-spinner {
+  display: grid;
   position: fixed;
+  place-items: center;
+  width: 100%;
+  height: 100%;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
 }

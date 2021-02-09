@@ -130,8 +130,120 @@
   max-width: 700px;
   margin-top: 3rem;
 }
+
 .excel-sheet-screenshot {
   width: 100%;
+}
+.uploaded-groups-modal-header h3 {
+  font-size: clamp(1rem, 1rem + 1vw, 2rem);
+
+  font-weight: 500;
+  position: relative;
+}
+.confirmation-modal-container {
+  overflow: hidden;
+}
+.confirmation-modal-container h3 {
+  font-size: clamp(1.25rem, 1.25rem + 0.5vw, 2rem);
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+.confirmation-modal-container h3:after {
+  content: '';
+  width: calc(100% + 6rem);
+  height: 0.5px;
+  border-bottom: 0.5px solid #90a0b7;
+  position: absolute;
+  left: -2.5rem;
+  bottom: 0;
+}
+.uploaded-groups-modal-header p,
+.confirmation-modal-container p {
+  font-weight: 400;
+  font-size: clamp(0.7rem, 0.7rem + 0.5vw, 1rem);
+}
+.uploaded-groups-modal-header p span {
+  color: var(--color-danger-area-text);
+  cursor: text;
+}
+.list-container {
+  border: 0.5px solid #b5b5b5;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-family: var(--main-font-family);
+  color: #405877;
+  margin: 3rem 0rem;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+
+.list-container li {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 15px;
+  border-bottom: 0.3px solid #90a0b7;
+}
+
+.group-container-info {
+  padding: 0rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 500;
+}
+#group-students-count {
+  font-weight: 400;
+
+  margin-left: 16px;
+  display: flex;
+  color: #90a0b7;
+  font-size: 0.8rem;
+  align-items: flex-end;
+  gap: 5px;
+}
+.list-container li:last-child {
+  border-bottom: none;
+}
+.on-hover-red {
+  padding: 6px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.on-hover-red:hover {
+  background: var(--color-danger-area-icon-background);
+}
+.submit-delete-group-btn {
+  color: var(--color-danger-area-text);
+  padding: 16px 24px;
+  font-family: var(--main-font-family);
+  font-weight: 600;
+  border: 0.3px solid #99999941;
+  border-radius: 10px;
+  font-size: clamp(0.5rem, 0.5rem + 0.5vw, 0.9rem);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+.submit-delete-group-btn:hover {
+  background: var(--color-danger-area-text);
+  color: white;
+}
+.submit-delete-group-btn:disabled {
+  color: rgba(235, 93, 99, 0.55);
+  background: rgba(239, 237, 237, 0.68);
+  cursor: not-allowed;
 }
 @media only screen and (min-width: 720px) {
   .dropzone-wrapper {

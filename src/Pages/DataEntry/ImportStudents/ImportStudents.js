@@ -1,20 +1,21 @@
 import { useMutation, useQuery } from '@apollo/client';
+import { CircularProgress } from '@material-ui/core';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
+import { CREATE_STUDENT } from '../../../api/mutations/createStudent';
 import { GET_FACULTY_DATA } from '../../../api/queries/getFacultyData';
-import Spinner from '../../../assets/spinner.gif';
+import CustomizedSnackbars from '../../../components/Alerts/Alerts';
+import SpinnerElement from '../../../components/Spinner/spinner';
 import { useStyles } from '../../../types/styles/ImportFormsStyles';
+import { createStudentHelperFunction } from '../../../utlis/helpers/createStudentHelperFunction';
 import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
 import { SelectFormContainer } from '../SelectFormContainer';
 import DropzoneContainer from './Dropzone';
 import TransitionsModal from './FormatModal';
-import { CREATE_STUDENT } from '../../../api/mutations/createStudent';
 import './import_student.css';
-import { createStudentHelperFunction } from '../../../utlis/helpers/createStudentHelperFunction';
-import { CircularProgress } from '@material-ui/core';
-import CustomizedSnackbars from '../../../components/Alerts/Alerts';
+import UploadedGroupsModal from './UploadedGroupsModal';
 
 const ImportStudentContainer = () => {
   const classes = useStyles();
@@ -28,13 +29,13 @@ const ImportStudentContainer = () => {
   const [groups, setGroups] = useState([]);
   const [studentsFile, setStudentsFile] = useState(null);
   const [fileFormatError, setFileFormatError] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [openFormationModal, setOpenFormationModal] = useState(false);
+  const [openGroupsModal, setOpenGroupsModal] = useState(false);
   const [createStudent] = useMutation(CREATE_STUDENT);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarType, setSnackbarType] = useState('');
   const { state } = useLocation();
-
   const user = useSelector((state) => state?.authReducer?.authedUser);
 
   if (user?.role?.name !== 'Super Admin') {
@@ -42,15 +43,22 @@ const ImportStudentContainer = () => {
 
     return <Redirect to={state?.from || '/dashboard'} />;
   }
-
   const faculties = data?.faculties;
 
   const handleOpen = () => {
-    setOpen(true);
+    setOpenFormationModal(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenFormationModal(false);
+  };
+
+  const handleOpenGroupModal = () => {
+    setOpenGroupsModal(true);
+  };
+
+  const handleCloseGroupModal = () => {
+    setOpenGroupsModal(false);
   };
 
   const onSelectFaculty = (e) =>
@@ -103,8 +111,8 @@ const ImportStudentContainer = () => {
 
   if (loading)
     return (
-      <div className='loading-spinner-gif'>
-        <img src={Spinner} alt='loading' />
+      <div className='center-spinner'>
+        <SpinnerElement />
       </div>
     );
   if (error) return `Error! ${error.message}`;
@@ -117,7 +125,7 @@ const ImportStudentContainer = () => {
           Please fill out all the information required below to upload the
           students to the database.
           <br />
-          <span>Show uploaded groups</span>
+          <span onClick={handleOpenGroupModal}>Show uploaded groups</span>
         </p>
       </header>
       <CustomizedSnackbars
@@ -229,8 +237,15 @@ const ImportStudentContainer = () => {
       <TransitionsModal
         handleClose={handleClose}
         handleOpen={handleOpen}
-        open={open}
+        open={openFormationModal}
       />
+      {openGroupsModal && (
+        <UploadedGroupsModal
+          handleClose={handleCloseGroupModal}
+          handleOpen={handleOpenGroupModal}
+          open={openGroupsModal}
+        />
+      )}
     </main>
   );
 };

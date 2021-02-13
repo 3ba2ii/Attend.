@@ -218,13 +218,14 @@
   -o-border-radius: 50%;
   display: grid;
   place-items: center;
+  cursor: pointer;
 }
 
 .on-hover-red:hover {
   background: var(--color-danger-area-icon-background);
 }
 .submit-delete-group-btn {
-  color: var(--color-danger-area-text);
+  color: #fff;
   padding: 16px 24px;
   font-family: var(--main-font-family);
   font-weight: 600;
@@ -235,10 +236,11 @@
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
+  background: var(--color-danger-area-text);
 }
 .submit-delete-group-btn:hover {
-  background: var(--color-danger-area-text);
-  color: white;
+  filter: brightness(103%);
+  -webkit-filter: brightness(103%);
 }
 .submit-delete-group-btn:disabled {
   color: rgba(235, 93, 99, 0.55);

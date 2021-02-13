@@ -216,6 +216,7 @@ a {
 }
 
 .center-spinner {
+  outline: none;
   display: grid;
   position: fixed;
   place-items: center;

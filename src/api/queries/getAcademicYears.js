@@ -15,7 +15,7 @@ export const GET_ACADEMIC_YEARS = gql`
         GroupNumber
         id
         students {
-          sid
+          id
         }
       }
     }

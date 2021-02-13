@@ -5,7 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GET_ACADEMIC_YEARS } from '../../../api/queries/getAcademicYears';
 import SpinnerElement from '../../../components/Spinner/spinner';
 import AreYouSureModal from './AreYouSureModal';
@@ -46,13 +46,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UploadedGroupsModal({ handleOpen, handleClose, open }) {
   const classes = useStyles();
-  const { data, loading, error } = useQuery(GET_ACADEMIC_YEARS);
+  const { data, loading, error, refetch } = useQuery(GET_ACADEMIC_YEARS);
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
   const [selectedGroupToDelete, setSelectedGroupToDelete] = useState({});
-  console.log(
-    `🚀 ~ file: UploadedGroupsModal.js ~ line 36 ~ UploadedGroupsModal ~ setSelectedGroupToDelete`,
-    selectedGroupToDelete
-  );
   const values = data?.groupsConnection?.values;
 
   const handleOpenConfirmationModal = ({
@@ -61,10 +57,6 @@ export default function UploadedGroupsModal({ handleOpen, handleClose, open }) {
     id,
     groupTitle,
   }) => {
-    console.log(
-      `🚀 ~ file: UploadedGroupsModal.js ~ line 39 ~ handleOpenConfirmationModal ~ groupTitle`,
-      groupTitle
-    );
     setSelectedGroupToDelete({ GroupNumber, ...academic_year, id, groupTitle });
     setOpenConfirmationModal(true);
   };
@@ -72,6 +64,10 @@ export default function UploadedGroupsModal({ handleOpen, handleClose, open }) {
   const handleCloseConfirmationModal = () => {
     setOpenConfirmationModal(false);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   if (error) return `Error! ${error.message}`;
 
   return (
@@ -155,6 +151,7 @@ export default function UploadedGroupsModal({ handleOpen, handleClose, open }) {
           handleOpen={handleOpenConfirmationModal}
           open={openConfirmationModal}
           groupInfo={selectedGroupToDelete}
+          refetch={refetch}
         />
       )}
     </div>

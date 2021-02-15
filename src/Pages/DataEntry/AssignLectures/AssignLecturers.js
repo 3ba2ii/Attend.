@@ -1,17 +1,18 @@
 import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
-import { GET_COURSES_INFO } from '../../../api/queries/getCoursesInfo';
-import SpinnerElement from '../../../components/Spinner/spinner';
-import './assign-lecturers.css';
-import { SelectFormContainer } from '../DataEntryMainPage/SelectFormContainer';
-import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
 import { useState } from 'react';
+import { GET_COURSES_INFO } from '../../../api/queries/getCoursesInfo';
 import CoursesCardsContainer from '../../../components/CoursesCards/CoursesCardsContainer';
+import SpinnerElement from '../../../components/Spinner/spinner';
+import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
+import { SelectFormContainer } from '../DataEntryMainPage/SelectFormContainer';
+import './assign-lecturers.css';
+import searching from '../../../assets/searching.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(5),
+    marginBottom: theme.spacing(8),
 
     '& .MuiTextField-root': {
       width: '100%',
@@ -96,11 +97,11 @@ const AssignLecturersPage = () => {
     <main id='assign-lecturers-page'>
       <header>
         <h4>
-          Please select the Department and the term to show the associated
-          courses.
+          Please fill the following fields to show the associated courses.
         </h4>
         <p>
-          If the course is not displayed, Please <span>contact us.</span>
+          If the desired course is not displayed, Please{' '}
+          <span>contact us.</span>
         </p>
       </header>
       <form
@@ -158,8 +159,13 @@ const AssignLecturersPage = () => {
           />
         </div>
       </form>
-      {faculty && department && academicYear && term && courses && (
+      {faculty && department && academicYear && term && courses.length > 0 && (
         <CoursesCardsContainer courses={courses} />
+      )}
+      {courses.length === 0 && (
+        <div className='no-courses-img'>
+          <img src={searching} alt='searching...' />
+        </div>
       )}
     </main>
   );

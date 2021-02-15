@@ -29,9 +29,7 @@ const Login = () => {
 
   const onLogin = async (e) => {
     e.preventDefault();
-
     setLoading(true);
-
     const action = await LoginAction({
       identifier: identifier,
       password: password,

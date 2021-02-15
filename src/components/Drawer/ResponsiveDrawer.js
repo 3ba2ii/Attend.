@@ -13,7 +13,7 @@ import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneO
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import smallAvatar from '../../assets/Ellipse.png';
 import Dashboard from '../../Pages/Dashboard/Dashboard';
 import AddLecturersPage from '../../Pages/DataEntry/AddLecturers/AddLecturers';
@@ -21,6 +21,7 @@ import AssignLecturersPage from '../../Pages/DataEntry/AssignLectures/AssignLect
 import AssignLecturerToCourse from '../../Pages/DataEntry/AssignLectures/AssignLecturerToCourse';
 import DataEntryPage from '../../Pages/DataEntry/DataEntryMainPage/DataEntry';
 import ImportStudentContainer from '../../Pages/DataEntry/ImportStudents/ImportStudents';
+import NotFound from '../../Pages/Error/NotFound';
 import useStyles from '../../types/styles/drawer-styles';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
@@ -106,6 +107,8 @@ function ResponsiveDrawer(props) {
           <Route path={'/leaderboard'} render={() => <div>leaderboard</div>} />
           <Route path={'/help'} render={() => <div>Hellooo</div>} />
           <Route path={'/settings'} render={() => <div>Hellooo</div>} />
+          <Route path='/404' component={NotFound} />
+          <Redirect to='/404' />
         </Switch>
       </main>
     </div>

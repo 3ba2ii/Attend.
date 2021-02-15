@@ -23,10 +23,6 @@ export const createStudentHelperFunction = ({
           group,
         },
       });
-      console.log(
-        `🚀 ~ file: createStudentHelperFunction.js ~ line 20 ~ studentsFile.forEach ~ data`,
-        data
-      );
 
       setOpenSnackbar(true);
       setSnackbarType('success');
@@ -38,8 +34,3 @@ export const createStudentHelperFunction = ({
     setUploadLoading(false);
   });
 };
-
-/* ID: 123456
-اسم الطالب: "احمد عبد الباقي عبد المنعم غنيم"
-الايميل: "aghonem@gmail.com"
-الرقم القومي: "2981120xxxx" */

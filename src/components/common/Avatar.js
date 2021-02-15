@@ -9,10 +9,6 @@ export default function AvatarComponent() {
 
   const { authedUser } = useSelector((state) => state?.authReducer);
   let fullName = authedUser?.LecturerNameInEnglish.split(' ');
-  console.log(
-    `🚀 ~ file: Avatar.js ~ line 12 ~ AvatarComponent ~ fullName`,
-    fullName
-  );
   fullName = `${fullName[0]} ${fullName[fullName.length - 1]}`;
 
   return (

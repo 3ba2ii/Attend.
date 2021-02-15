@@ -10,10 +10,6 @@ const AssignLecturerToCourse = () => {
       id: courseID,
     },
   });
-  console.log(
-    `🚀 ~ file: AssignLecturerToCourse.js ~ line 8 ~ AssignLecturerToCourse ~ data`,
-    data
-  );
 
   if (loading)
     return (

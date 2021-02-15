@@ -11,7 +11,7 @@ import SpinnerElement from '../../../components/Spinner/spinner';
 import { useStyles } from '../../../types/styles/ImportFormsStyles';
 import { createStudentHelperFunction } from '../../../utlis/helpers/createStudentHelperFunction';
 import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
-import { SelectFormContainer } from '../SelectFormContainer';
+import { SelectFormContainer } from '../DataEntryMainPage/SelectFormContainer';
 import DropzoneContainer from './Dropzone';
 import TransitionsModal from './FormatModal';
 import './import_student.css';
@@ -135,7 +135,7 @@ const ImportStudentContainer = () => {
           message:
             snackbarType === 'success'
               ? `Imported ${studentsFile?.length || ''} Students Successfully!`
-              : 'There was an error creating this account, Please try again later! ',
+              : 'There was an error uploading this students file, Please try again later! ',
           handleClose: handleCloseToaster,
         }}
       />

@@ -17,7 +17,9 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import smallAvatar from '../../assets/Ellipse.png';
 import Dashboard from '../../Pages/Dashboard/Dashboard';
 import AddLecturersPage from '../../Pages/DataEntry/AddLecturers/AddLecturers';
-import DataEntryPage from '../../Pages/DataEntry/DataEntry';
+import AssignLecturersPage from '../../Pages/DataEntry/AssignLectures/AssignLecturers';
+import AssignLecturerToCourse from '../../Pages/DataEntry/AssignLectures/AssignLecturerToCourse';
+import DataEntryPage from '../../Pages/DataEntry/DataEntryMainPage/DataEntry';
 import ImportStudentContainer from '../../Pages/DataEntry/ImportStudents/ImportStudents';
 import useStyles from '../../types/styles/drawer-styles';
 import './drawer-layout.css';
@@ -75,8 +77,9 @@ function ResponsiveDrawer(props) {
       </nav>
       <main className={classes.content}>
         <Switch>
-          <Route path={'/dashboard'} render={() => <Dashboard />} />
-          <Route exact path={'/data_entry'} render={() => <DataEntryPage />} />
+          <Route exact path={'/'} component={Dashboard} />
+          <Route path={'/dashboard'} component={Dashboard} />
+          <Route exact path={'/data_entry'} component={DataEntryPage} />
           <Route
             exact
             path={`/data_entry/import_students`}
@@ -87,6 +90,16 @@ function ResponsiveDrawer(props) {
             exact
             path={'/data_entry/add_lecturers_users'}
             component={AddLecturersPage}
+          />
+          <Route
+            exact
+            path={'/data_entry/assign_lecturers'}
+            component={AssignLecturersPage}
+          />
+          <Route
+            exact
+            path={'/data_entry/assign_lecturers/:courseID'}
+            component={AssignLecturerToCourse}
           />
           <Route path={'/courses'} render={() => <div>Hellooo</div>} />
           <Route path={'/profile'} render={() => <div>Hellooo</div>} />

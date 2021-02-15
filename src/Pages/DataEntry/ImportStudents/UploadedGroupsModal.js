@@ -91,56 +91,7 @@ export default function UploadedGroupsModal({ handleOpen, handleClose, open }) {
                 <SpinnerElement />
               </div>
             ) : (
-              <div className='uploaded-groups-modal-header-container'>
-                <header className='uploaded-groups-modal-header'>
-                  <h3>Uploaded Groups</h3>
-                  <p>
-                    This is a <span>danger area</span> so please be sure about
-                    what you are doing here
-                    <br /> any change occurs here will affect the database and
-                    the whole stored data.
-                  </p>
-                </header>
-                <ul className='list-container'>
-                  {values.map(
-                    ({ id, GroupNumber, academic_year, students }) => {
-                      let groupTitle = `${academic_year?.AcademicYearInArabic} - Group ${GroupNumber}`;
-                      let groupStudentsCount = students?.length;
-
-                      if (!groupStudentsCount) return null;
-                      return (
-                        <li className='group=container' key={id}>
-                          <div className='group-container-info'>
-                            <span id='group-title'>{groupTitle}</span>
-                            <span id='group-students-count'>
-                              <GroupOutlinedIcon fontSize={'small'} />
-                              {groupStudentsCount} Students
-                            </span>
-                          </div>
-                          <div
-                            className='on-hover-red'
-                            onClick={() =>
-                              handleOpenConfirmationModal({
-                                GroupNumber,
-                                academic_year,
-                                id,
-                                groupTitle,
-                              })
-                            }
-                          >
-                            <DeleteOutlineOutlinedIcon
-                              style={{
-                                color: '#eb5d63',
-                                cursor: 'pointer',
-                              }}
-                            />
-                          </div>
-                        </li>
-                      );
-                    }
-                  )}
-                </ul>
-              </div>
+              <div>{GroupList(values, handleOpenConfirmationModal)}</div>
             )}
           </div>
         </Fade>
@@ -154,6 +105,58 @@ export default function UploadedGroupsModal({ handleOpen, handleClose, open }) {
           refetch={refetch}
         />
       )}
+    </div>
+  );
+}
+function GroupList(values, handleOpenConfirmationModal) {
+  return (
+    <div className='uploaded-groups-modal-header-container'>
+      <header className='uploaded-groups-modal-header'>
+        <h3>Uploaded Groups</h3>
+        <p>
+          This is a <span>danger area</span> so please be sure about what you
+          are doing here
+          <br /> any change occurs here will affect the database and the whole
+          stored data.
+        </p>
+      </header>
+      <ul className='list-container'>
+        {values.map(({ id, GroupNumber, academic_year, students }) => {
+          let groupTitle = `${academic_year?.AcademicYearInArabic} - Group ${GroupNumber}`;
+          let groupStudentsCount = students?.length;
+
+          if (!groupStudentsCount) return null;
+          return (
+            <li className='group=container' key={id}>
+              <div className='group-container-info'>
+                <span id='group-title'>{groupTitle}</span>
+                <span id='group-students-count'>
+                  <GroupOutlinedIcon fontSize={'small'} />
+                  {groupStudentsCount} Students
+                </span>
+              </div>
+              <div
+                className='on-hover-red'
+                onClick={() =>
+                  handleOpenConfirmationModal({
+                    GroupNumber,
+                    academic_year,
+                    id,
+                    groupTitle,
+                  })
+                }
+              >
+                <DeleteOutlineOutlinedIcon
+                  style={{
+                    color: '#eb5d63',
+                    cursor: 'pointer',
+                  }}
+                />
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

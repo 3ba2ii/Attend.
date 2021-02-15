@@ -111,15 +111,14 @@
   font-size: 1rem;
   padding: 10px 32px;
   text-align: center;
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
+  border-radius: 40px;
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  -ms-border-radius: 40px;
+  -o-border-radius: 40px;
   width: fit-content;
   display: flex;
   align-items: center;
-
   cursor: pointer;
 }
 .route-to-path-btn span {

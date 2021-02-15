@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import addData from '../../assets/clip-uploading2.png';
-import addLecturer from '../../assets/clip-welcome.png';
-import teacher from '../../assets/schoolTeacher.png';
+import addData from '../../../assets/clip-uploading2.png';
+import addLecturer from '../../../assets/clip-welcome.png';
+import teacher from '../../../assets/schoolTeacher.png';
 
 const optionalProps = [
   {
@@ -16,7 +16,7 @@ const optionalProps = [
     title: 'Assign Lecturers',
     subtitle: 'Assign lecturers to certain courses.',
     img: teacher,
-    path: 'mutate_data2',
+    path: 'assign_lecturers',
   },
   {
     id: 'addData456',

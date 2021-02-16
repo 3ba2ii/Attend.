@@ -10,18 +10,18 @@ const initialState = { authedUser: null };
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SUCCESSFULLY_AUTHENTICATED:
+      if (!action.authedUser) {
+        return { ...state, authedUser: null };
+      }
       console.log(
         `🚀 ~ file: authedReducer.js ~ line 12 ~ authReducer ~ action`,
         action
       );
-      localStorage.setItem('token', action?.authedUser.jwt);
-      Cookies.set(
-        'authedUser',
-        { ...action.authedUser },
-        {
-          expires: 30,
-        }
-      );
+
+      localStorage.setItem('token', action?.authedUser?.jwt);
+      Cookies.set('authedUser', action?.authedUser?.id, {
+        expires: 30,
+      });
       return { ...state, authedUser: { ...action.authedUser } };
 
     case SUCCESSFULLY_AUTHENTICATED_USING_COOKIES:

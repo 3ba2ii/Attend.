@@ -47,14 +47,6 @@ const DoughnutChart = () => {
         fontSize: 12,
         usePointStyle: true,
         boxWidth: 7,
-        /* generateLabels: function ({ data }) {
-          const { labels } = data;
-          console.log(
-            `🚀 ~ file: DoughnutChart.js ~ line 53 ~ DoughnutChart ~ chart`,
-            labels
-          );
-          return labels;
-        }, */
       },
     },
     tooltips: {

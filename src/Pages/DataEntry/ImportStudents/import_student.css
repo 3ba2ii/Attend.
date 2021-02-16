@@ -1,0 +1,267 @@
+#import-student-for-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  height: 100%;
+  padding: 6.5rem 3% 2rem 5%;
+  font-family: Poppins;
+}
+.import-students-header p {
+  font-weight: 500;
+}
+.dropzone-wrapper {
+  width: 100%;
+  margin-right: 100%;
+  margin-top: 32px;
+  border: 2px dashed #90a0b7;
+  padding: 6rem 0rem 5rem 0rem;
+}
+
+.dropzone-error {
+  border: 2px dashed rgba(158, 28, 35, 0.5);
+}
+.submitButtonContainer {
+  display: none;
+}
+.submit-btn-container {
+  width: 100%;
+  padding: 10px 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  box-sizing: border-box;
+  border-radius: 50px;
+  font-family: var(--main-font-family);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  background: #109cf1;
+  color: #fff;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+}
+.submit-btn-container:disabled {
+  background: #109bf178;
+  cursor: not-allowed;
+}
+
+.animated-top-onhover {
+  padding-top: 5px;
+  transition: transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  -moz-transition: transform 0.3s;
+  -ms-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+}
+.submit-btn-container:hover .animated-top-onhover {
+  transform: translateY(-5px);
+  -webkit-transform: translateY(-5px);
+  -moz-transform: translateY(-5px);
+  -ms-transform: translateY(-5px);
+  -o-transform: translateY(-5px);
+}
+.cancel-btn {
+  font-size: 1rem;
+  font-family: var(--main-font-family);
+  font-weight: 600;
+  line-height: 24px;
+
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #9daabf;
+  position: relative;
+  top: -8px;
+}
+.buttons-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  margin: 2.5rem 1rem;
+
+  position: relative;
+}
+.input-label {
+  font-family: var(--main-font-family);
+  position: relative;
+  font-weight: 400;
+}
+.input-label:before {
+  content: '';
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698394-icon-130-cloud-upload-512.png');
+  background-size: 80%;
+  background-repeat: no-repeat;
+  top: -60px;
+}
+.input-label:after {
+  content: 'Files Supported :  .xsls  .csv';
+  position: absolute;
+  bottom: -30px;
+  font-weight: normal;
+
+  font-size: 14px;
+  line-height: 24px;
+  color: #90a0b7;
+}
+.show-formation-of-excel-file {
+  font-weight: 500;
+  color: var(--color-link-text);
+  font-size: 12px;
+  cursor: pointer;
+  position: relative;
+  top: 10px;
+  width: fit-content;
+}
+#transition-modal-title {
+  font-size: clamp(1rem, 1rem + 1vw, 2rem);
+}
+#transition-modal-description {
+  font-weight: 400;
+}
+.excel-sheet-screenshot-container {
+  width: 100%;
+  max-width: 700px;
+  margin-top: 3rem;
+}
+
+.excel-sheet-screenshot {
+  width: 100%;
+}
+.uploaded-groups-modal-header h3 {
+  font-size: clamp(1rem, 1rem + 1vw, 2rem);
+
+  font-weight: 500;
+  position: relative;
+}
+.confirmation-modal-container {
+  overflow: hidden;
+}
+.confirmation-modal-container h3 {
+  font-size: clamp(1.25rem, 1.25rem + 0.5vw, 2rem);
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+.confirmation-modal-container h3:after {
+  content: '';
+  width: calc(100% + 6rem);
+  height: 0.5px;
+  border-bottom: 0.5px solid #90a0b7;
+  position: absolute;
+  left: -2.5rem;
+  bottom: 0;
+}
+.uploaded-groups-modal-header p,
+.confirmation-modal-container p {
+  font-weight: 400;
+  font-size: clamp(0.7rem, 0.7rem + 0.5vw, 1rem);
+}
+.uploaded-groups-modal-header p span {
+  color: var(--color-danger-area-text);
+  cursor: text;
+}
+.list-container {
+  border: 0.5px solid #b5b5b5;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-family: var(--main-font-family);
+  color: #405877;
+  margin: 3rem 0rem;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+
+.list-container li {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 15px;
+  border-bottom: 0.3px solid #90a0b7;
+}
+
+.group-container-info {
+  padding: 0rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 500;
+}
+#group-students-count {
+  font-weight: 400;
+
+  margin-left: 16px;
+  display: flex;
+  color: #90a0b7;
+  font-size: 0.8rem;
+  align-items: flex-end;
+  gap: 5px;
+}
+.list-container li:last-child {
+  border-bottom: none;
+}
+.on-hover-red {
+  padding: 6px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.on-hover-red:hover {
+  background: var(--color-danger-area-icon-background);
+}
+.submit-delete-group-btn {
+  color: #fff;
+  padding: 16px 24px;
+  font-family: var(--main-font-family);
+  font-weight: 600;
+  border: 0.3px solid #99999941;
+  border-radius: 10px;
+  font-size: clamp(0.5rem, 0.5rem + 0.5vw, 0.9rem);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  background: var(--color-danger-area-text);
+}
+.submit-delete-group-btn:hover {
+  filter: brightness(103%);
+  -webkit-filter: brightness(103%);
+}
+.submit-delete-group-btn:disabled {
+  color: rgba(235, 93, 99, 0.55);
+  background: rgba(239, 237, 237, 0.68);
+  cursor: not-allowed;
+}
+@media only screen and (min-width: 720px) {
+  .dropzone-wrapper {
+    width: 80%;
+    display: block;
+    position: relative;
+  }
+  .submit-btn-container {
+    font-size: 14px;
+    width: fit-content;
+  }
+  .buttons-container {
+    flex-direction: row;
+  }
+}
+/* Desktop */
+
+@media only screen and (min-width: 1024px) {
+}

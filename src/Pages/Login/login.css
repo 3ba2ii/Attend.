@@ -32,6 +32,10 @@
   margin-bottom: 30px;
 }
 
+.sign-in-button {
+  display: flex;
+  width: 100%;
+}
 /* iPad and Tablets  */
 @media only screen and (min-width: 720px) {
   .login-grid-container {
@@ -83,6 +87,10 @@
     max-width: 500px;
     min-width: 80%;
     margin-bottom: 1rem;
+  }
+  .sign-in-button {
+    display: flex;
+    width: fit-content;
   }
 }
 /* Desktop */

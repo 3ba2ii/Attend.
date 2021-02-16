@@ -11,17 +11,20 @@ import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
 import TuneOutlinedIcon from '@material-ui/icons/TuneOutlined';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Avatar } from '../common/Avatar';
+import AvatarComponent from '../common/Avatar';
 import Logo from '../common/Logo';
 
 export function DrawerItems(classes, pathname) {
+  const { authedUser } = useSelector((state) => state.authReducer);
+
   return (
     <div>
       <Logo className='drawer-logo padding-left-1rem' />
       <div className={classes.toolbar} />
 
-      {Avatar(true)}
+      {AvatarComponent(true)}
       <List className='navbar-list'>
         {[
           { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
@@ -32,23 +35,27 @@ export function DrawerItems(classes, pathname) {
             icon: <BarChartIcon />,
             path: '/leaderboard',
           },
-          { text: 'Data Entry', icon: <CloudIcon />, path: '/data_entry' },
+          authedUser?.role?.name === 'Super Admin' && {
+            text: 'Admin Panel',
+            icon: <CloudIcon />,
+            path: '/admin-panel',
+          },
         ].map(({ text, icon, path }, index) => (
           <Link to={path} key={text + index}>
             <ListItem button>
               <ListItemIcon
                 className={`list-item-icon ${
-                  path === pathname && ' active-nav-icon'
+                  pathname.includes(path) && ' active-nav-icon'
                 }`}
               >
-                {path === pathname && <div className='active' />}
+                {pathname.includes(path) && <div className='active' />}
 
                 {icon}
               </ListItemIcon>
               <ListItemText
                 primary={text}
                 className={`list-item-text ${
-                  path === pathname && ' active-nav-text'
+                  pathname.includes(path) && ' active-nav-text'
                 }`}
                 disableTypography
               />
@@ -67,10 +74,10 @@ export function DrawerItems(classes, pathname) {
             <ListItem button>
               <ListItemIcon
                 className={`list-item-icon ${
-                  path === pathname && ' active-nav-icon'
+                  pathname.includes(path) && ' active-nav-icon'
                 }`}
               >
-                {path === pathname && <div className='active' />}
+                {pathname.includes(path) && <div className='active' />}
 
                 {icon}
               </ListItemIcon>
@@ -78,7 +85,7 @@ export function DrawerItems(classes, pathname) {
                 primary={text}
                 disableTypography
                 className={`list-item-text ${
-                  path === pathname && ' active-nav-text'
+                  pathname.includes(path) && ' active-nav-text'
                 }`}
               />
             </ListItem>

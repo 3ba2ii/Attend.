@@ -1,35 +1,49 @@
-import axios from 'axios';
+import { GET_USER_BY_ID } from '../../api/queries/getUserByID';
 import {
-  SUCCESSFULLY_AUTHENTICATED,
   FAILED_AUTHENTICATION,
   SIGNED_OUT_SUCCESSFULLY,
+  SUCCESSFULLY_AUTHENTICATED,
   SUCCESSFULLY_AUTHENTICATED_USING_COOKIES,
 } from '../../types/constants/redux-constants';
-import Cookies from 'js-cookie';
+import client from '../../utlis/apollo/apolloClient';
 
-export const LoginAction = async (credentials) => {
-  const url = process.env.STRAPI_APP_BACKEND_URL
-    ? process.env.STRAPI_APP_BACKEND_URL
-    : 'http://localhost:1337';
+export const LoginAction = async ({ identifier, password, LoginMutation }) => {
   try {
-    const { data } = await axios.post(`${url}/auth/local`, {
-      identifier: credentials.identifier,
-      password: credentials.password,
+    const { data } = await LoginMutation({
+      variables: {
+        identifier: identifier,
+        password: password,
+      },
     });
-    return { type: SUCCESSFULLY_AUTHENTICATED, authedUser: data };
+
+    const userInfo = await client.query({
+      query: GET_USER_BY_ID,
+      variables: {
+        id: data?.login?.user?.id,
+      },
+    });
+
+    return {
+      type: SUCCESSFULLY_AUTHENTICATED,
+      authedUser: { ...userInfo?.data?.user, jwt: data?.login?.jwt },
+    };
   } catch (err) {
     console.error(err.message);
     return { type: FAILED_AUTHENTICATION, error: err.message };
   }
 };
-export const LoginActionUsingCookies = () => {
+export const LoginActionUsingCookies = async ({ _, userID }) => {
   try {
-    const body = Cookies.get('authedUser');
-    const userInfo = JSON.parse(body);
+    const { data } = await client.query({
+      query: GET_USER_BY_ID,
+      variables: {
+        id: userID,
+      },
+    });
 
     return {
       type: SUCCESSFULLY_AUTHENTICATED_USING_COOKIES,
-      authedUser: { ...userInfo },
+      authedUser: { ...data?.user },
     };
   } catch (err) {
     console.error(err.message);

@@ -1,4 +1,8 @@
 import { ApolloProvider } from '@apollo/client';
+import {
+  createMuiTheme,
+  ThemeProvider as MuiThemeProvider,
+} from '@material-ui/core/styles';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -15,14 +19,21 @@ const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(logger))
 );
-
+const THEME = createMuiTheme({
+  typography: {
+    fontFamily: `"Poppins", "Helvetica", "Arial", sans-serif`,
+    color: '#334d6e',
+  },
+});
 ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <ApolloProvider client={client}>
-        <App />
-      </ApolloProvider>
-    </Router>
-  </Provider>,
+  <MuiThemeProvider theme={THEME}>
+    <Provider store={store}>
+      <Router>
+        <ApolloProvider client={client}>
+          <App />
+        </ApolloProvider>
+      </Router>
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('root')
 );

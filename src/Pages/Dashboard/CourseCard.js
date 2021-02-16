@@ -1,8 +1,8 @@
 import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import React from 'react';
+import LineChart from '../../components/Charts/LineChart';
 import { average, calculateGrowth } from '../../utlis/helpers/calcuateAverage';
-import LineChart from '../Charts/LineChart';
 
 const CourseCard = ({
   courseID,
@@ -34,7 +34,8 @@ const CourseCard = ({
                 style={{ color: '#e47c67', maxWidth: '18px' }}
               />
             )}
-            <b className={growthClassName}>{growth}% </b>vs last lecture
+            <strong className={growthClassName}>{growth}% </strong>vs last
+            lecture
           </div>
         </div>
       </div>

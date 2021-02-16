@@ -270,7 +270,7 @@ export default function AddLecturersPage() {
         </div>
 
         <div className='fixed-btn-bottom'>
-          <Link className='cancel-btn' to={'/data_entry'}>
+          <Link className='cancel-btn' to={'/admin-panel'}>
             <span>Cancel</span>
           </Link>
           <button

@@ -1,11 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { GET_COURSES_INFO } from '../../../api/queries/getCoursesInfo';
 import CoursesCardsContainer from '../../../components/CoursesCards/CoursesCardsContainer';
 import SpinnerElement from '../../../components/Spinner/spinner';
 import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
-import { SelectFormContainer } from '../DataEntryMainPage/SelectFormContainer';
+import { SelectFormContainer } from '../AdminPanel/SelectFormContainer';
 import './assign-lecturers.css';
 import searching from '../../../assets/searching.png';
 
@@ -44,48 +44,60 @@ const AssignLecturersPage = () => {
   const [terms, setTerms] = useState([]);
   const [courses, setCourses] = useState([]);
 
-  const onSelectFaculty = (e) => {
-    setAcademicYears([]);
-    setAcademicYear([]);
-    setCourses([]);
-    setTerm([]);
-    handleChangesAndReturnNextState(
-      e,
-      setFaculty,
-      setDepartments,
-      faculties,
-      'departments'
-    );
-  };
-  const onSelectDepartment = (e) => {
-    setCourses([]);
-    setTerms([]);
-    setTerm([]);
+  const onSelectFaculty = useCallback(
+    (e) => {
+      setAcademicYears([]);
+      setAcademicYear([]);
+      setCourses([]);
+      setTerm([]);
+      handleChangesAndReturnNextState(
+        e,
+        setFaculty,
+        setDepartments,
+        faculties,
+        'departments'
+      );
+    },
+    [faculty]
+  );
+  const onSelectDepartment = useCallback(
+    (e) => {
+      setCourses([]);
+      setTerms([]);
+      setTerm([]);
 
-    handleChangesAndReturnNextState(
-      e,
-      setDepartment,
-      setAcademicYears,
-      departments,
-      'academic_years'
-    );
-  };
+      handleChangesAndReturnNextState(
+        e,
+        setDepartment,
+        setAcademicYears,
+        departments,
+        'academic_years'
+      );
+    },
+    [department]
+  );
 
-  const onSelectAcademicYear = (e) => {
-    setTerm([]);
-    handleChangesAndReturnNextState(
-      e,
-      setAcademicYear,
-      setTerms,
-      academicYears,
-      'terms'
-    );
-  };
-  const onSelectTerm = (e) => {
-    setTerm(e.target.value);
-    let selectedTerm = terms.filter((term) => term.id === e.target.value);
-    setCourses(selectedTerm[0].courses);
-  };
+  const onSelectAcademicYear = useCallback(
+    (e) => {
+      setTerm([]);
+      handleChangesAndReturnNextState(
+        e,
+        setAcademicYear,
+        setTerms,
+        academicYears,
+        'terms'
+      );
+    },
+    [academicYear]
+  );
+  const onSelectTerm = useCallback(
+    (e) => {
+      setTerm(e.target.value);
+      let selectedTerm = terms.filter((term) => term.id === e.target.value);
+      setCourses(selectedTerm[0].courses);
+    },
+    [term]
+  );
   if (loading)
     return (
       <div className='center-spinner'>

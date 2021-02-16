@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import Cookies from 'js-cookie';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import { LOGIN } from '../../api/mutations/login';
@@ -27,23 +27,34 @@ const Login = () => {
   const [checkingCookiesLoading, setCheckingCookiesLoading] = useState(true);
   const [loginMutation] = useMutation(LOGIN);
 
-  const onLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const action = await LoginAction({
-      identifier: identifier,
-      password: password,
-      LoginMutation: loginMutation,
-    });
-    if (action.type === FAILED_AUTHENTICATION) {
-      setError(true);
-      setLoading(false);
-    } else {
-      dispatch(action);
-      setLoading(false);
-      setRedirectToReferrer(true);
-    }
-  };
+  const onLogin = useCallback(
+    async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      const action = await LoginAction({
+        identifier: identifier,
+        password: password,
+        LoginMutation: loginMutation,
+      });
+      if (action.type === FAILED_AUTHENTICATION) {
+        setError(true);
+        setLoading(false);
+      } else {
+        dispatch(action);
+        setLoading(false);
+        setRedirectToReferrer(true);
+      }
+    },
+    [
+      dispatch,
+      setLoading,
+      setRedirectToReferrer,
+      identifier,
+      password,
+      setError,
+      loginMutation,
+    ]
+  );
   const onChange = {
     email: (e) => {
       setIdentifier(e.target.value);
@@ -52,9 +63,9 @@ const Login = () => {
       setPassword(e.target.value);
     },
   };
-  const ignoreError = () => {
+  const ignoreError = useCallback(() => {
     setError(false);
-  };
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -74,6 +85,9 @@ const Login = () => {
       setCheckingCookiesLoading(false);
       setMounted(true);
     }
+    return () => {
+      setMounted(true);
+    };
   }, [dispatch, mounted]);
 
   if (redirectToReferrer) {

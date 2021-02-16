@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { CircularProgress } from '@material-ui/core';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { CREATE_STUDENT } from '../../../api/mutations/createStudent';
@@ -11,7 +11,7 @@ import SpinnerElement from '../../../components/Spinner/spinner';
 import { useStyles } from '../../../types/styles/ImportFormsStyles';
 import { createStudentHelperFunction } from '../../../utlis/helpers/createStudentHelperFunction';
 import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
-import { SelectFormContainer } from '../DataEntryMainPage/SelectFormContainer';
+import { SelectFormContainer } from '../AdminPanel/SelectFormContainer';
 import DropzoneContainer from './Dropzone';
 import TransitionsModal from './FormatModal';
 import './import_student.css';
@@ -38,66 +38,72 @@ const ImportStudentContainer = () => {
   const { state } = useLocation();
   const user = useSelector((state) => state?.authReducer?.authedUser);
 
-  if (user?.role?.name !== 'Super Admin') {
-    /* TODO: Add an unauthenticated behavior screen*/
-
-    return <Redirect to={state?.from || '/dashboard'} />;
-  }
   const faculties = data?.faculties;
 
-  const handleOpen = () => {
+  const handleOpen = useCallback(() => {
     setOpenFormationModal(true);
-  };
+  });
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpenFormationModal(false);
-  };
+  });
 
-  const handleOpenGroupModal = () => {
+  const handleOpenGroupModal = useCallback(() => {
     setOpenGroupsModal(true);
-  };
+  });
 
-  const handleCloseGroupModal = () => {
+  const handleCloseGroupModal = useCallback(() => {
     setOpenGroupsModal(false);
-  };
+  });
 
-  const onSelectFaculty = (e) =>
-    handleChangesAndReturnNextState(
-      e,
-      setFaculty,
-      setDepartments,
-      faculties,
-      'departments'
-    );
-  const onSelectDepartment = (e) =>
-    handleChangesAndReturnNextState(
-      e,
-      setDepartment,
-      setAcademicYears,
-      departments,
-      'academic_years'
-    );
+  const onSelectFaculty = useCallback(
+    (e) =>
+      handleChangesAndReturnNextState(
+        e,
+        setFaculty,
+        setDepartments,
+        faculties,
+        'departments'
+      ),
+    [faculties]
+  );
+  const onSelectDepartment = useCallback(
+    (e) =>
+      handleChangesAndReturnNextState(
+        e,
+        setDepartment,
+        setAcademicYears,
+        departments,
+        'academic_years'
+      ),
+    [departments]
+  );
 
-  const onSelectAcademicYear = (e) =>
-    handleChangesAndReturnNextState(
-      e,
-      setAcademicYear,
-      setGroups,
-      academicYears,
-      'groups'
-    );
+  const onSelectAcademicYear = useCallback(
+    (e) =>
+      handleChangesAndReturnNextState(
+        e,
+        setAcademicYear,
+        setGroups,
+        academicYears,
+        'groups'
+      ),
+    [academicYears]
+  );
 
-  const onSelectGroup = (e) => {
-    setGroup(e.target.value);
-  };
-  const handleCloseToaster = (e, reason) => {
+  const onSelectGroup = useCallback(
+    (e) => {
+      setGroup(e.target.value);
+    },
+    [groups]
+  );
+  const handleCloseToaster = useCallback((e, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpenSnackbar(false);
-  };
-  const onUploadData = (e) => {
+  });
+  const onUploadData = useCallback((e) => {
     e.preventDefault();
     createStudentHelperFunction({
       createStudent,
@@ -107,8 +113,13 @@ const ImportStudentContainer = () => {
       setOpenSnackbar,
       setSnackbarType,
     });
-  };
+  });
 
+  if (user?.role?.name !== 'Super Admin') {
+    /* TODO: Add an unauthenticated behavior screen*/
+
+    return <Redirect to={state?.from || '/dashboard'} />;
+  }
   if (loading)
     return (
       <div className='center-spinner'>
@@ -205,7 +216,7 @@ const ImportStudentContainer = () => {
           Show how the Excel File should be formatted?
         </div>
         <div className='fixed-btn-bottom'>
-          <Link className='cancel-btn' to={'/data_entry'}>
+          <Link className='cancel-btn' to={'/admin-panel'}>
             <span>Cancel</span>
           </Link>
           <button

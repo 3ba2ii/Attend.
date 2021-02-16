@@ -36,9 +36,9 @@ export function DrawerItems(classes, pathname) {
             path: '/leaderboard',
           },
           authedUser?.role?.name === 'Super Admin' && {
-            text: 'Data Entry',
+            text: 'Admin Panel',
             icon: <CloudIcon />,
-            path: '/data_entry',
+            path: '/admin-panel',
           },
         ].map(({ text, icon, path }, index) => (
           <Link to={path} key={text + index}>

@@ -2,7 +2,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, useLocation, useRouteMatch } from 'react-router-dom';
-import './data_entry.css';
+import './admin-panel.css';
 import SelectCardsComponent from './SelectCards';
 
 const DataEntryPage = () => {

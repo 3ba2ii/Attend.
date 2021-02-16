@@ -12,14 +12,14 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import smallAvatar from '../../assets/Ellipse.png';
 import Dashboard from '../../Pages/Dashboard/Dashboard';
 import AddLecturersPage from '../../Pages/DataEntry/AddLecturers/AddLecturers';
+import DataEntryPage from '../../Pages/DataEntry/AdminPanel/AdminPanel';
 import AssignLecturersPage from '../../Pages/DataEntry/AssignLectures/AssignLecturers';
 import AssignLecturerToCourse from '../../Pages/DataEntry/AssignLectures/AssignLecturerToCourse';
-import DataEntryPage from '../../Pages/DataEntry/DataEntryMainPage/DataEntry';
 import ImportStudentContainer from '../../Pages/DataEntry/ImportStudents/ImportStudents';
 import NotFound from '../../Pages/Error/NotFound';
 import useStyles from '../../types/styles/drawer-styles';
@@ -32,9 +32,9 @@ function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   let { pathname } = useLocation();
 
-  const handleDrawerToggle = () => {
+  const handleDrawerToggle = useCallback(() => {
     setMobileOpen(!mobileOpen);
-  };
+  }, [setMobileOpen]);
 
   const drawerItems = DrawerItems(classes, pathname);
 
@@ -80,26 +80,26 @@ function ResponsiveDrawer(props) {
         <Switch>
           <Route exact path={'/'} component={Dashboard} />
           <Route path={'/dashboard'} component={Dashboard} />
-          <Route exact path={'/data_entry'} component={DataEntryPage} />
+          <Route exact path={'/admin-panel'} component={DataEntryPage} />
           <Route
             exact
-            path={`/data_entry/import_students`}
+            path={`/admin-panel/import_students`}
             component={ImportStudentContainer}
           />
 
           <Route
             exact
-            path={'/data_entry/add_lecturers_users'}
+            path={'/admin-panel/add_lecturers_users'}
             component={AddLecturersPage}
           />
           <Route
             exact
-            path={'/data_entry/assign_lecturers'}
+            path={'/admin-panel/assign_lecturers'}
             component={AssignLecturersPage}
           />
           <Route
             exact
-            path={'/data_entry/assign_lecturers/:courseID'}
+            path={'/admin-panel/assign_lecturers/:courseID'}
             component={AssignLecturerToCourse}
           />
           <Route path={'/courses'} render={() => <div>Hellooo</div>} />
@@ -136,7 +136,8 @@ function AppBarComponent(classes, handleDrawerToggle) {
           <InputBase
             placeholder='Search for courses subjects or students..'
             style={{
-              fontSize: 'small',
+              fontSize: '.9rem',
+              fontWeight: '500',
               fontFamily: 'Poppins' || 'sans-serif',
             }}
             classes={{

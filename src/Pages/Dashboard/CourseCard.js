@@ -34,7 +34,8 @@ const CourseCard = ({
                 style={{ color: '#e47c67', maxWidth: '18px' }}
               />
             )}
-            <b className={growthClassName}>{growth}% </b>vs last lecture
+            <strong className={growthClassName}>{growth}% </strong>vs last
+            lecture
           </div>
         </div>
       </div>

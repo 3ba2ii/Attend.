@@ -78,12 +78,7 @@ const Dashboard = () => {
           <DoughnutCard />
         </div>
 
-        <div className='overall-attendance-rate-card-container'>
-          Laboris laborum culpa excepteur labore est.Irure dolore aliquip
-          cupidatat magna. Qui esse qui laboris duis quis velit aliquip ut
-          excepteur ipsum. Cupidatat ex et eu sit consectetur deserunt eiusmod
-          ea cupidatat labore consectetur ullamco sint eiusmod.
-        </div>
+        <div className='overall-attendance-rate-card-container'>test</div>
       </div>
     </main>
   );

@@ -112,7 +112,7 @@ function GroupList(values, handleOpenConfirmationModal) {
   return (
     <div className='uploaded-groups-modal-header-container'>
       <header className='uploaded-groups-modal-header'>
-        <h3>Uploaded Groups</h3>
+        <h4>Uploaded Groups</h4>
         <p>
           This is a <span>danger area</span> so please be sure about what you
           are doing here

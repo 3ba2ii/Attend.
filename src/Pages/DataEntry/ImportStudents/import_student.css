@@ -105,7 +105,6 @@
   position: absolute;
   bottom: -30px;
   font-weight: normal;
-
   font-size: 14px;
   line-height: 24px;
   color: #90a0b7;
@@ -134,23 +133,18 @@
 .excel-sheet-screenshot {
   width: 100%;
 }
-.uploaded-groups-modal-header h3 {
-  font-size: clamp(1rem, 1rem + 1vw, 2rem);
-
+.uploaded-groups-modal-header h4 {
   font-weight: 500;
   position: relative;
 }
 .confirmation-modal-container {
   overflow: hidden;
 }
-.confirmation-modal-container h3 {
-  font-size: clamp(1.25rem, 1.25rem + 0.5vw, 2rem);
-  font-weight: 500;
-  position: relative;
-  padding-bottom: 1.5rem;
+#confirmation-modal-title {
   margin-bottom: 2rem;
+  display: block;
 }
-.confirmation-modal-container h3:after {
+#confirmation-modal-title:after {
   content: '';
   width: calc(100% + 6rem);
   height: 0.5px;

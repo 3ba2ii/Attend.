@@ -58,7 +58,7 @@ const AssignLecturersPage = () => {
         'departments'
       );
     },
-    [faculty]
+    [faculties, setFaculty, setDepartments]
   );
   const onSelectDepartment = useCallback(
     (e) => {
@@ -74,7 +74,7 @@ const AssignLecturersPage = () => {
         'academic_years'
       );
     },
-    [department]
+    [departments, setDepartment, setAcademicYears]
   );
 
   const onSelectAcademicYear = useCallback(
@@ -88,7 +88,7 @@ const AssignLecturersPage = () => {
         'terms'
       );
     },
-    [academicYear]
+    [academicYears, setTerm, setTerms, setAcademicYear]
   );
   const onSelectTerm = useCallback(
     (e) => {
@@ -96,7 +96,7 @@ const AssignLecturersPage = () => {
       let selectedTerm = terms.filter((term) => term.id === e.target.value);
       setCourses(selectedTerm[0].courses);
     },
-    [term]
+    [setTerm, setCourses, terms]
   );
   if (loading)
     return (

@@ -70,7 +70,7 @@ export default function AreYouSureModal({
             </div>
           ) : (
             <div className={classes.paper + ' confirmation-modal-container'}>
-              <h3 id='confirmation-modal-title'>Are you absolutely sure?</h3>
+              <h5 id='confirmation-modal-title'>Are you absolutely sure?</h5>
               <p id='confirmation-modal-description'>
                 This action <b>cannot</b> be undone. This will permanently
                 delete the <b>{groupTitle}</b> group along with all the

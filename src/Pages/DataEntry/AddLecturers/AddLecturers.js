@@ -145,7 +145,7 @@ export default function AddLecturersPage() {
           type: snackbarType || 'error',
           message:
             snackbarType === 'success'
-              ? `A new lecturer account has been created successfully! `
+              ? `A new account has been created successfully! `
               : 'There was an error creating this account, Please try again later! ',
           handleClose,
         }}

@@ -14,9 +14,6 @@
   gap: 0.5rem;
 }
 
-#page-not-found header h3 {
-  font-size: clamp(1.5rem, 1.5rem + 1vw + 1vh, 3rem);
-}
 #page-not-found header p {
   font-weight: 400;
 }

@@ -63,7 +63,7 @@ const Dashboard = () => {
   return (
     <main id='dashboard-container'>
       <header className='page-name'>
-        <h5>Dashboard and Statistics 📈</h5>
+        <h3>Dashboard and Statistics 📈</h3>
       </header>
       <div className='cards-container'>
         {cardData.map((card, index) => (

@@ -54,41 +54,7 @@
   -ms-border-radius: 30px;
   -o-border-radius: 30px;
 }
-.monthly-button-text {
-  font-family: var(--main-font-family);
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: 0.01em;
-  color: var(--color-link-text);
 
-  position: absolute;
-  right: 11px;
-}
-
-.monthly-button-icon {
-  position: absolute;
-  left: 11px;
-}
-
-.monthly-button-icon > * {
-  color: var(--color-link-text);
-  font-size: 1px;
-}
-
-.only-icon {
-  padding: 0;
-  border: none;
-  margin: 10% 0px 0rem 0px;
-
-  position: relative;
-  left: 3px;
-}
-.logout-btn {
-  width: 100%;
-  position: absolute;
-  bottom: 5px;
-  cursor: pointer;
-}
 .delete-shadow {
   background: white;
 }

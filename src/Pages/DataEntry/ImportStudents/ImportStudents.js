@@ -42,19 +42,19 @@ const ImportStudentContainer = () => {
 
   const handleOpen = useCallback(() => {
     setOpenFormationModal(true);
-  });
+  }, [setOpenFormationModal]);
 
   const handleClose = useCallback(() => {
     setOpenFormationModal(false);
-  });
+  }, [setOpenFormationModal]);
 
   const handleOpenGroupModal = useCallback(() => {
     setOpenGroupsModal(true);
-  });
+  }, [setOpenGroupsModal]);
 
   const handleCloseGroupModal = useCallback(() => {
     setOpenGroupsModal(false);
-  });
+  }, [setOpenGroupsModal]);
 
   const onSelectFaculty = useCallback(
     (e) =>
@@ -95,25 +95,38 @@ const ImportStudentContainer = () => {
     (e) => {
       setGroup(e.target.value);
     },
-    [groups]
+    [setGroup]
   );
-  const handleCloseToaster = useCallback((e, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenSnackbar(false);
-  });
-  const onUploadData = useCallback((e) => {
-    e.preventDefault();
-    createStudentHelperFunction({
+  const handleCloseToaster = useCallback(
+    (e, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setOpenSnackbar(false);
+    },
+    [setOpenSnackbar]
+  );
+  const onUploadData = useCallback(
+    (e) => {
+      e.preventDefault();
+      createStudentHelperFunction({
+        createStudent,
+        studentsFile,
+        group,
+        setUploadLoading,
+        setOpenSnackbar,
+        setSnackbarType,
+      });
+    },
+    [
       createStudent,
       studentsFile,
       group,
       setUploadLoading,
       setOpenSnackbar,
       setSnackbarType,
-    });
-  });
+    ]
+  );
 
   if (user?.role?.name !== 'Super Admin') {
     /* TODO: Add an unauthenticated behavior screen*/

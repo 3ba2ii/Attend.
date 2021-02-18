@@ -3,12 +3,13 @@ import { CircularProgress } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
-import { makeStyles } from '@material-ui/core/styles';
+
 import TextField from '@material-ui/core/TextField';
 import React from 'react';
 import { DELETE_STUDENT_BY_GROUP } from '../../../api/mutations/deleteStudent';
 import { GET_STUDENT_BY_GROUP } from '../../../api/queries/getStudentByGroup';
 import SpinnerElement from '../../../components/Spinner/spinner';
+import { areYouSureModalStyles } from '../../../types/styles';
 
 export default function AreYouSureModal({
   handleOpen,
@@ -17,7 +18,7 @@ export default function AreYouSureModal({
   groupInfo,
   refetch,
 }) {
-  const classes = useStyles();
+  const classes = areYouSureModalStyles();
   const { groupTitle, id, AcademicYearInArabic, GroupNumber } = groupInfo;
   const [fieldText, setFieldText] = React.useState('');
   const { data, loading, error } = useQuery(GET_STUDENT_BY_GROUP, {
@@ -112,36 +113,3 @@ export default function AreYouSureModal({
     </div>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    outline: 'none',
-  },
-  paper: {
-    outline: 'none',
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(5),
-    borderRadius: 20,
-    width: '80%',
-    [theme.breakpoints.up('md')]: {
-      width: '50%',
-    },
-    [theme.breakpoints.up('lg')]: {
-      width: '35%',
-    },
-    [theme.breakpoints.up('xl')]: {
-      width: '25%',
-    },
-  },
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '100%',
-      outline: 'none',
-    },
-  },
-}));

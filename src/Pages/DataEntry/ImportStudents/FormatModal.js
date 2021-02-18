@@ -1,27 +1,12 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import Modal from '@material-ui/core/Modal';
+import React from 'react';
 import excelFileScreenshot from '../../../assets/excelsheet.png';
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
-    outline: 'none',
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(8),
-    borderRadius: 20,
-  },
-}));
+import { transitionFormatModalStyle } from '../../../types/styles';
 
 export default function TransitionsModal({ handleOpen, handleClose, open }) {
-  const classes = useStyles();
+  const classes = transitionFormatModalStyle();
 
   return (
     <div>

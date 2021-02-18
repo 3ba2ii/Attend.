@@ -48,8 +48,9 @@ h5 {
   font-size: clamp(1rem, 1rem + 0.5vw, 1.5rem);
 }
 h6 {
-  font-size: clamp(0.75rem, 0.75rem + 0.5vw, 1.2rem);
+  font-size: clamp(0.8rem, 0.8rem + 0.5vw, 1.2rem);
 }
+
 h1,
 h2,
 h3,
@@ -80,7 +81,7 @@ h6 {
 p {
   margin: 15px 0px;
   color: var(--main-subheading-font-color);
-  font-size: clamp(0.7rem, 0.5rem + 0.8vmin, 1.5rem);
+  font-size: clamp(0.8rem, 0.8rem + 0.8vmin, 1.5rem);
   font-weight: 400;
 }
 

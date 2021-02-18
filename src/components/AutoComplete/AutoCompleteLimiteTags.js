@@ -1,31 +1,16 @@
 /* eslint-disable no-use-before-define */
-import React from 'react';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import { useQuery } from '@apollo/client';
-import { GET_DEPARTMENTS } from '../../api/queries/getDepartments';
 import { CircularProgress } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  center: {
-    width: 500,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-}));
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import React from 'react';
+import { GET_DEPARTMENTS } from '../../api/queries/getDepartments';
+import { limitTagsStyles } from '../../types/styles';
 
 export default function LimitTags({ onSelectDepartments }) {
   const { loading, error, data } = useQuery(GET_DEPARTMENTS);
   const departments = data?.departments;
-  const classes = useStyles();
+  const classes = limitTagsStyles();
 
   if (loading) {
     return (

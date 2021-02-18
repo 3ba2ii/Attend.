@@ -22,12 +22,12 @@ import AssignLecturersPage from '../../Pages/DataEntry/AssignLectures/AssignLect
 import AssignLecturerToCourse from '../../Pages/DataEntry/AssignLectures/AssignLecturerToCourse';
 import ImportStudentContainer from '../../Pages/DataEntry/ImportStudents/ImportStudents';
 import NotFound from '../../Pages/Error/NotFound';
-import useStyles from '../../types/styles/drawer-styles';
+import { drawerStyles } from '../../types/styles/';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
 function ResponsiveDrawer(props) {
   const { window } = props;
-  const classes = useStyles();
+  const classes = drawerStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   let { pathname } = useLocation();

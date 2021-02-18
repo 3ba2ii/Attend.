@@ -21,18 +21,18 @@ import { GET_USERNAMES_EMAILS } from '../../../api/queries/getOnlyUsernamesAndEm
 import CustomizedSnackbars from '../../../components/Alerts/Alerts';
 import LimitTags from '../../../components/AutoComplete/AutoCompleteLimiteTags';
 import SpinnerElement from '../../../components/Spinner/spinner';
+import { addLecturerPageStyles } from '../../../types/styles';
 import CreateLecturerAccount from '../../../utlis/helpers/createLecturerAction';
 import {
   validateArabicName,
   validateEnglishName,
 } from '../../../utlis/validation/validation';
 import './add_lecturers.css';
-import { useStyles } from './useStyles';
 
 export default function AddLecturersPage() {
   const user = useSelector((state) => state?.authReducer?.authedUser);
   const { state } = useLocation();
-  const classes = useStyles();
+  const classes = addLecturerPageStyles();
   const { loading, error, data } = useQuery(GET_USERNAMES_EMAILS);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');

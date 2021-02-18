@@ -2,50 +2,16 @@ import { useQuery } from '@apollo/client';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
-import { makeStyles } from '@material-ui/core/styles';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import React, { useEffect, useState } from 'react';
 import { GET_ACADEMIC_YEARS } from '../../../api/queries/getAcademicYears';
 import SpinnerElement from '../../../components/Spinner/spinner';
+import { uploadedGroupsModalStyles } from '../../../types/styles';
 import AreYouSureModal from './AreYouSureModal';
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    outline: 'none',
-  },
-  paper: {
-    outline: 'none',
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(5),
-    borderRadius: 20,
-    minWidth: '50%',
-    minHeight: '80%',
-    width: '90%',
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(6),
-
-      width: '50%',
-    },
-    [theme.breakpoints.up('lg')]: {
-      padding: theme.spacing(7),
-
-      width: '40%',
-    },
-    [theme.breakpoints.up('xl')]: {
-      padding: theme.spacing(8),
-
-      width: '30%',
-    },
-  },
-}));
-
 export default function UploadedGroupsModal({ handleOpen, handleClose, open }) {
-  const classes = useStyles();
+  const classes = uploadedGroupsModalStyles();
   const { data, loading, error, refetch } = useQuery(GET_ACADEMIC_YEARS);
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
   const [selectedGroupToDelete, setSelectedGroupToDelete] = useState({});

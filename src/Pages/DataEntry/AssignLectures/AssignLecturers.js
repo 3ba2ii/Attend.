@@ -1,38 +1,16 @@
 import { useQuery } from '@apollo/client';
-import { makeStyles } from '@material-ui/core/styles';
 import { useCallback, useState } from 'react';
 import { GET_COURSES_INFO } from '../../../api/queries/getCoursesInfo';
+import searching from '../../../assets/searching.png';
 import CoursesCardsContainer from '../../../components/CoursesCards/CoursesCardsContainer';
 import SpinnerElement from '../../../components/Spinner/spinner';
+import { AssignLecturersPageStyles } from '../../../types/styles';
 import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
 import { SelectFormContainer } from '../AdminPanel/SelectFormContainer';
 import './assign-lecturers.css';
-import searching from '../../../assets/searching.png';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(8),
-
-    '& .MuiTextField-root': {
-      width: '100%',
-      margin: theme.spacing(2, 2, 2, 0),
-
-      [theme.breakpoints.up('md')]: {
-        margin: theme.spacing(1.5, 5, 2, 0),
-        width: '50ch',
-      },
-      [theme.breakpoints.up('lg')]: {
-        width: '60ch',
-      },
-      [theme.breakpoints.up('xl')]: {
-        width: '80ch',
-      },
-    },
-  },
-}));
 const AssignLecturersPage = () => {
-  const classes = useStyles();
+  const classes = AssignLecturersPageStyles();
   const { loading, error, data } = useQuery(GET_COURSES_INFO);
   const faculties = data?.faculties;
   const [faculty, setFaculty] = useState('');

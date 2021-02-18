@@ -1,20 +1,11 @@
-import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { snackbarStyles } from '../../types/styles';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
-  },
-}));
 
 export default function CustomizedSnackbars({
   type,
@@ -22,7 +13,7 @@ export default function CustomizedSnackbars({
   open,
   handleClose,
 }) {
-  const classes = useStyles();
+  const classes = snackbarStyles();
 
   return (
     <div className={classes.root}>

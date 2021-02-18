@@ -8,7 +8,7 @@ import { CREATE_STUDENT } from '../../../api/mutations/createStudent';
 import { GET_FACULTY_DATA } from '../../../api/queries/getFacultyData';
 import CustomizedSnackbars from '../../../components/Alerts/Alerts';
 import SpinnerElement from '../../../components/Spinner/spinner';
-import { useStyles } from '../../../types/styles/ImportFormsStyles';
+import { importFormsStyles } from '../../../types/styles';
 import { createStudentHelperFunction } from '../../../utlis/helpers/createStudentHelperFunction';
 import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
 import { SelectFormContainer } from '../AdminPanel/SelectFormContainer';
@@ -18,7 +18,7 @@ import './import_student.css';
 import UploadedGroupsModal from './UploadedGroupsModal';
 
 const ImportStudentContainer = () => {
-  const classes = useStyles();
+  const classes = importFormsStyles();
   const { loading, error, data } = useQuery(GET_FACULTY_DATA);
   const [faculty, setFaculty] = useState('');
   const [department, setDepartment] = useState('');

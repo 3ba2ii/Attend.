@@ -1,16 +1,7 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '40ch',
-    },
-  },
-}));
+import TextField from '@material-ui/core/TextField';
+import React from 'react';
+import { multiTextFieldStyles } from '../../types/styles';
 
 export default function MultilineTextFields({
   label,
@@ -18,7 +9,7 @@ export default function MultilineTextFields({
   options,
   setSelectedForm,
 }) {
-  const classes = useStyles();
+  const classes = multiTextFieldStyles();
   const [option, setOption] = React.useState(options[0]);
   const handleChange = (event) => {
     setOption(event.target.value);

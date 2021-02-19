@@ -102,11 +102,11 @@ function ResponsiveDrawer(props) {
             path={'/admin-panel/assign_lecturers/:courseID'}
             component={AssignLecturerToCourse}
           />
-          <Route path={'/courses'} render={() => <div>Hellooo</div>} />
-          <Route path={'/profile'} render={() => <div>Hellooo</div>} />
-          <Route path={'/leaderboard'} render={() => <div>leaderboard</div>} />
-          <Route path={'/help'} render={() => <div>Hellooo</div>} />
-          <Route path={'/settings'} render={() => <div>Hellooo</div>} />
+          <Route path={'/courses'} render={() => <div>Hello</div>} />
+          <Route path={'/profile'} render={() => <div>Hello</div>} />
+          <Route path={'/leaderboard'} render={() => <div>leader-board</div>} />
+          <Route path={'/help'} render={() => <div>Hello</div>} />
+          <Route path={'/settings'} render={() => <div>Hello</div>} />
           <Route path='/404' component={NotFound} />
           <Redirect to='/404' />
         </Switch>

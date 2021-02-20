@@ -170,10 +170,10 @@ export const avatarStyles = makeStyles((theme) => ({
     color: theme.palette.getContrastText('#DBEAF7'),
     backgroundColor: '#DBEAF7',
   },
-
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+  small: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    fontSize: '.9rem',
   },
 }));
 

@@ -13,8 +13,8 @@ import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneO
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import smallAvatar from '../../assets/Ellipse.png';
 import Dashboard from '../../Pages/Dashboard/Dashboard';
 import AddLecturersPage from '../../Pages/DataEntry/AddLecturers/AddLecturers';
 import DataEntryPage from '../../Pages/DataEntry/AdminPanel/AdminPanel';
@@ -22,7 +22,8 @@ import AssignLecturersPage from '../../Pages/DataEntry/AssignLectures/AssignLect
 import AssignLecturerToCourse from '../../Pages/DataEntry/AssignLectures/AssignLecturerToCourse';
 import ImportStudentContainer from '../../Pages/DataEntry/ImportStudents/ImportStudents';
 import NotFound from '../../Pages/Error/NotFound';
-import { drawerStyles } from '../../types/styles/';
+import { avatarStyles, drawerStyles } from '../../types/styles/';
+import AvatarOrInitials from '../Initials/AvatarOrInitials';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
 function ResponsiveDrawer(props) {
@@ -30,6 +31,7 @@ function ResponsiveDrawer(props) {
   const classes = drawerStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
   let { pathname } = useLocation();
 
   const handleDrawerToggle = useCallback(() => {
@@ -116,6 +118,8 @@ function ResponsiveDrawer(props) {
 }
 
 function AppBarComponent(classes, handleDrawerToggle) {
+  const { authedUser } = useSelector((state) => state?.authReducer);
+  const avatarClasses = avatarStyles();
   return (
     <AppBar position='fixed' className={classes.appBar} elevation={0}>
       <Toolbar>
@@ -161,7 +165,14 @@ function AppBarComponent(classes, handleDrawerToggle) {
           aria-haspopup='true'
           color='inherit'
         >
-          <img src={smallAvatar} alt='small-avatar' className='small-avatar' />
+          <AvatarOrInitials
+            {...{
+              url: authedUser?.avatar?.url,
+              name: authedUser?.LecturerNameInEnglish,
+              className: avatarClasses.small,
+              alt: 'small-avatar',
+            }}
+          />
           <ArrowDropDownIcon style={{ color: '#AEAEAE' }} />
         </IconButton>
       </Toolbar>

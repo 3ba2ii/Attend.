@@ -13,7 +13,7 @@ const AvatarOrInitials = ({ url, name, className, alt }) => {
       (initials.shift()?.[1] || '') + (initials.pop()?.[1] || '')
     ).toUpperCase();
 
-    return AvatarInitials(initials);
+    return AvatarInitials(initials, className);
   }
   return null;
 };

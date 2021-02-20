@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { CircularProgress } from '@material-ui/core';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import React, { useCallback, useState } from 'react';
@@ -7,7 +7,7 @@ import { Link, Redirect, useLocation } from 'react-router-dom';
 import { CREATE_STUDENT } from '../../../api/mutations/createStudent';
 import { GET_FACULTY_DATA } from '../../../api/queries/getFacultyData';
 import CustomizedSnackbars from '../../../components/Alerts/Alerts';
-import SpinnerElement from '../../../components/Spinner/spinner';
+import Query from '../../../components/Query';
 import { importFormsStyles } from '../../../types/styles';
 import { createStudentHelperFunction } from '../../../utlis/helpers/createStudentHelperFunction';
 import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
@@ -19,7 +19,7 @@ import UploadedGroupsModal from './UploadedGroupsModal';
 
 const ImportStudentContainer = () => {
   const classes = importFormsStyles();
-  const { loading, error, data } = useQuery(GET_FACULTY_DATA);
+  const [faculties, setFaculties] = useState([]);
   const [faculty, setFaculty] = useState('');
   const [department, setDepartment] = useState('');
   const [departments, setDepartments] = useState([]);
@@ -37,8 +37,6 @@ const ImportStudentContainer = () => {
   const [snackbarType, setSnackbarType] = useState('');
   const { state } = useLocation();
   const user = useSelector((state) => state?.authReducer?.authedUser);
-
-  const faculties = data?.faculties;
 
   const handleOpen = useCallback(() => {
     setOpenFormationModal(true);
@@ -127,150 +125,153 @@ const ImportStudentContainer = () => {
       setSnackbarType,
     ]
   );
+  const fetchFaculties = useCallback(
+    (data) => setFaculties(data?.faculties || []),
+    [setFaculties]
+  );
 
   if (user?.role?.name !== 'Super Admin') {
     /* TODO: Add an unauthenticated behavior screen*/
 
     return <Redirect to={state?.from || '/dashboard'} />;
   }
-  if (loading)
-    return (
-      <div className='center-spinner'>
-        <SpinnerElement />
-      </div>
-    );
-  if (error) return `Error! ${error.message}`;
 
   return (
-    <main id='import-student-for-container'>
-      <header className='import-students-header'>
-        <h3>Import Students 🧑🏼‍🎓</h3>
-        <p>
-          Please fill out all the information required below to upload the
-          students to the database.
-          <br />
-          <span onClick={handleOpenGroupModal}>Show uploaded groups</span>
-        </p>
-      </header>
-      <CustomizedSnackbars
-        {...{
-          open: openSnackbar,
-          type: snackbarType || 'error',
-          message:
-            snackbarType === 'success'
-              ? `Imported ${studentsFile?.length || ''} Students Successfully!`
-              : 'There was an error uploading this students file, Please try again later! ',
-          handleClose: handleCloseToaster,
-        }}
-      />
-      <form
-        className={classes.root + ' select-import-form-container'}
-        noValidate
-        autoComplete='off'
-        onSubmit={onUploadData}
-      >
-        <div>
-          <SelectFormContainer
+    <Query query={GET_FACULTY_DATA} onCompletedFunction={fetchFaculties}>
+      {() => (
+        <main id='import-student-for-container'>
+          <header className='import-students-header'>
+            <h3>Import Students 🧑🏼‍🎓</h3>
+            <p>
+              Please fill out all the information required below to upload the
+              students to the database.
+              <br />
+              <span onClick={handleOpenGroupModal}>Show uploaded groups</span>
+            </p>
+          </header>
+          <CustomizedSnackbars
             {...{
-              selected: faculty,
-              selections: faculties,
-              handleSelection: onSelectFaculty,
-              label: 'Faculty',
-              helperText: 'Please Select a Faculty',
-              valueText: 'FacultyNameInArabic',
-              id: 'faculty',
+              open: openSnackbar,
+              type: snackbarType || 'error',
+              message:
+                snackbarType === 'success'
+                  ? `Imported ${
+                      studentsFile?.length || ''
+                    } Students Successfully!`
+                  : 'There was an error uploading this students file, Please try again later! ',
+              handleClose: handleCloseToaster,
             }}
           />
-
-          <SelectFormContainer
-            {...{
-              selected: department,
-              selections: departments,
-              handleSelection: onSelectDepartment,
-              label: 'Department',
-              helperText: 'Please Select a Department',
-              valueText: 'DepartmentNameInArabic',
-              id: 'department',
-            }}
-          />
-
-          <SelectFormContainer
-            {...{
-              selected: academicYear,
-              selections: academicYears,
-              handleSelection: onSelectAcademicYear,
-              label: 'Academic Year',
-              helperText: 'Please Select an Academic Year',
-              valueText: 'AcademicYearInArabic',
-              id: 'academic-year',
-            }}
-          />
-
-          <SelectFormContainer
-            {...{
-              selected: group,
-              selections: groups,
-              handleSelection: onSelectGroup,
-              label: 'Group',
-              helperText:
-                'Please Select a Group; if none select the first group',
-              valueText: 'GroupNumber',
-              id: 'group',
-            }}
-          />
-        </div>
-
-        <DropzoneContainer
-          setStudentsFile={setStudentsFile}
-          fileFormatError={fileFormatError}
-          setFileFormatError={setFileFormatError}
-        />
-        <div className='show-formation-of-excel-file' onClick={handleOpen}>
-          Show how the Excel File should be formatted?
-        </div>
-        <div className='fixed-btn-bottom'>
-          <Link className='cancel-btn' to={'/admin-panel'}>
-            <span>Cancel</span>
-          </Link>
-          <button
-            type='submit'
-            className='submit-btn-container'
-            disabled={
-              fileFormatError ||
-              !studentsFile ||
-              !group ||
-              !academicYear ||
-              !department ||
-              !faculty
-            }
+          <form
+            className={classes.root + ' select-import-form-container'}
+            noValidate
+            autoComplete='off'
+            onSubmit={onUploadData}
           >
-            {uploadLoading ? (
-              <div className='circular-progress-bar-container'>
-                <CircularProgress color='inherit' size={24} />
-              </div>
-            ) : (
-              <span className='animated-top-onhover'>
-                <ArrowUpwardIcon size={24} />
-              </span>
-            )}
+            <div>
+              <SelectFormContainer
+                {...{
+                  selected: faculty,
+                  selections: faculties,
+                  handleSelection: onSelectFaculty,
+                  label: 'Faculty',
+                  helperText: 'Please Select a Faculty',
+                  valueText: 'FacultyNameInArabic',
+                  id: 'faculty',
+                }}
+              />
 
-            <span>Upload</span>
-          </button>
-        </div>
-      </form>
-      <TransitionsModal
-        handleClose={handleClose}
-        handleOpen={handleOpen}
-        open={openFormationModal}
-      />
-      {openGroupsModal && (
-        <UploadedGroupsModal
-          handleClose={handleCloseGroupModal}
-          handleOpen={handleOpenGroupModal}
-          open={openGroupsModal}
-        />
+              <SelectFormContainer
+                {...{
+                  selected: department,
+                  selections: departments,
+                  handleSelection: onSelectDepartment,
+                  label: 'Department',
+                  helperText: 'Please Select a Department',
+                  valueText: 'DepartmentNameInArabic',
+                  id: 'department',
+                }}
+              />
+
+              <SelectFormContainer
+                {...{
+                  selected: academicYear,
+                  selections: academicYears,
+                  handleSelection: onSelectAcademicYear,
+                  label: 'Academic Year',
+                  helperText: 'Please Select an Academic Year',
+                  valueText: 'AcademicYearInArabic',
+                  id: 'academic-year',
+                }}
+              />
+
+              <SelectFormContainer
+                {...{
+                  selected: group,
+                  selections: groups,
+                  handleSelection: onSelectGroup,
+                  label: 'Group',
+                  helperText:
+                    'Please Select a Group; if none select the first group',
+                  valueText: 'GroupNumber',
+                  id: 'group',
+                }}
+              />
+            </div>
+
+            <DropzoneContainer
+              setStudentsFile={setStudentsFile}
+              fileFormatError={fileFormatError}
+              setFileFormatError={setFileFormatError}
+            />
+            <div className='show-formation-of-excel-file' onClick={handleOpen}>
+              Show how the Excel File should be formatted?
+            </div>
+            <div className='fixed-btn-bottom'>
+              <Link className='cancel-btn' to={'/admin-panel'}>
+                <span>Cancel</span>
+              </Link>
+              <button
+                type='submit'
+                className='submit-btn-container'
+                disabled={
+                  fileFormatError ||
+                  !studentsFile ||
+                  !group ||
+                  !academicYear ||
+                  !department ||
+                  !faculty
+                }
+              >
+                {uploadLoading ? (
+                  <div className='circular-progress-bar-container'>
+                    <CircularProgress color='inherit' size={24} />
+                  </div>
+                ) : (
+                  <span className='animated-top-onhover'>
+                    <ArrowUpwardIcon size={24} />
+                  </span>
+                )}
+
+                <span>Upload</span>
+              </button>
+            </div>
+          </form>
+          <TransitionsModal
+            handleClose={handleClose}
+            handleOpen={handleOpen}
+            open={openFormationModal}
+          />
+          {openGroupsModal && (
+            <UploadedGroupsModal
+              handleClose={handleCloseGroupModal}
+              handleOpen={handleOpenGroupModal}
+              open={openGroupsModal}
+            />
+          )}
+        </main>
       )}
-    </main>
+    </Query>
   );
 };
 

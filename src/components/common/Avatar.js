@@ -17,7 +17,7 @@ export default function AvatarComponent() {
         {...{
           url: authedUser?.avatar?.url,
           name: authedUser?.LecturerNameInEnglish,
-          className: classes.large,
+          className: 'drawer-avatar',
           alt: 'avatar',
         }}
       />

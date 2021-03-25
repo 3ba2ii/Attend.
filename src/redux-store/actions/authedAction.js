@@ -28,7 +28,6 @@ export const LoginAction = async ({ identifier, password, LoginMutation }) => {
       authedUser: { ...userInfo?.data?.user, jwt: data?.login?.jwt },
     };
   } catch (err) {
-    console.error(err.message);
     return { type: FAILED_AUTHENTICATION, error: err.message };
   }
 };
@@ -46,7 +45,6 @@ export const LoginActionUsingCookies = async ({ _, userID }) => {
       authedUser: { ...data?.user },
     };
   } catch (err) {
-    console.error(err.message);
     return { type: FAILED_AUTHENTICATION, error: err.message };
   }
 };

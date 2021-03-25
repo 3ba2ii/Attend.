@@ -68,7 +68,7 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('token');
     const userID = Cookies.get('authedUser');
 
     if (token && userID && !mounted) {

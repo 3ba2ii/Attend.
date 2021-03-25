@@ -1,29 +1,30 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
-import addData from '../../../assets/clip-uploading2.png';
-import addLecturer from '../../../assets/clip-welcome.png';
-import teacher from '../../../assets/schoolTeacher.png';
+import addData from 'assets/clip-uploading2.png';
+import addLecturer from 'assets/clip-welcome.png';
+import teacher from 'assets/schoolTeacher_ybm0cb_c_scale,w_912.png';
 
 const optionalProps = [
   {
     id: 'addData123',
     title: 'Data Entry',
     subtitle: 'Add or Remove students to and from the database.',
-    img: addData,
+    img: <img src={addData} alt='import-students' />,
+
     path: 'import_students',
   },
   {
-    id: 'addData234',
+    id: 'assignLecturers',
     title: 'Assign Lecturers',
     subtitle: 'Assign lecturers to certain courses.',
-    img: teacher,
+    img: <img src={teacher} alt='assign-lectures' />,
     path: 'assign_lecturers',
   },
   {
-    id: 'addData456',
+    id: 'addLecturers',
     title: 'Add Lecturers and Assistants',
     subtitle: 'Add new lecturers and assistants to the database.',
-    img: addLecturer,
+    img: <img src={addLecturer} alt='add-lectures' />,
     path: 'add_lecturers_users',
   },
 ];
@@ -37,9 +38,7 @@ const SelectCardsComponent = () => {
           className='single-select-card-container'
           key={card.id + index}
         >
-          <div className='card-img-container'>
-            <img src={card.img} alt={'opt'} />
-          </div>
+          <div className='card-img-container'>{card.img}</div>
           <h5 className='font-weight600'>{card.title}</h5>
           <p>{card.subtitle}</p>
         </Link>

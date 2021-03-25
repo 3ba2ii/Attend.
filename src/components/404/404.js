@@ -1,4 +1,4 @@
-import notFound from '../../assets/404.png';
+import notFound from 'assets/404.png';
 const PageNotFound = () => {
   return (
     <main>

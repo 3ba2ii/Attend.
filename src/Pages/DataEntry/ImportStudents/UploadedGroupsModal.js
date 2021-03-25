@@ -4,36 +4,40 @@ import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
-import React, { useEffect, useState } from 'react';
-import { GET_ACADEMIC_YEARS } from '../../../api/queries/getAcademicYears';
-import SpinnerElement from '../../../components/Spinner/spinner';
-import { uploadedGroupsModalStyles } from '../../../types/styles';
+import React, { useCallback, useEffect, useState } from 'react';
+import { GET_ACADEMIC_YEARS } from 'api/queries/getAcademicYears';
+import SpinnerElement from 'components/Spinner/spinner';
+import { uploadedGroupsModalStyles } from 'types/styles';
 import AreYouSureModal from './AreYouSureModal';
 
-export default function UploadedGroupsModal({ handleOpen, handleClose, open }) {
+export default function UploadedGroupsModal({ handleClose, open }) {
   const classes = uploadedGroupsModalStyles();
   const { data, loading, error, refetch } = useQuery(GET_ACADEMIC_YEARS);
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
   const [selectedGroupToDelete, setSelectedGroupToDelete] = useState({});
   const values = data?.groupsConnection?.values;
 
-  const handleOpenConfirmationModal = ({
-    GroupNumber,
-    academic_year,
-    id,
-    groupTitle,
-  }) => {
-    setSelectedGroupToDelete({ GroupNumber, ...academic_year, id, groupTitle });
-    setOpenConfirmationModal(true);
-  };
+  const handleOpenConfirmationModal = useCallback(
+    ({ GroupNumber, academic_year, id, groupTitle }) => {
+      setSelectedGroupToDelete({
+        GroupNumber,
+        ...academic_year,
+        id,
+        groupTitle,
+      });
+      setOpenConfirmationModal(true);
+    },
+    [setSelectedGroupToDelete, setOpenConfirmationModal]
+  );
 
-  const handleCloseConfirmationModal = () => {
+  const handleCloseConfirmationModal = useCallback(() => {
     setOpenConfirmationModal(false);
-  };
+  }, [setOpenConfirmationModal]);
 
   useEffect(() => {
     refetch();
   }, [refetch]);
+
   if (error) return `Error! ${error.message}`;
 
   return (

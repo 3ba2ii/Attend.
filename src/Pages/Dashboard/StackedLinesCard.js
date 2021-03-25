@@ -1,5 +1,5 @@
 import React from 'react';
-import StackedLinesChart from '../../components/Charts/StackedLinesChart';
+import StackedLinesChart from 'components/Charts/StackedLinesChart';
 
 const StackedLinesCard = () => {
   return (

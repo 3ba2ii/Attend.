@@ -1,8 +1,8 @@
 import React from 'react';
-import ai from '../../assets/ai.png';
-import circuits from '../../assets/circuits.png';
-import patternRecognition from '../../assets/courseImg.png';
-import mc from '../../assets/mc.png';
+import ai from 'assets/ai.png';
+import circuits from 'assets/circuits.png';
+import patternRecognition from 'assets/courseImg.png';
+import mc from 'assets/mc.png';
 import CourseCard from './CourseCard';
 import './dashboard.css';
 import DoughnutCard from './DoughnutCard';

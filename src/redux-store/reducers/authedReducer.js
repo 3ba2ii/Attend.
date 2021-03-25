@@ -4,7 +4,7 @@ import {
   SIGNED_OUT_SUCCESSFULLY,
   SUCCESSFULLY_AUTHENTICATED,
   SUCCESSFULLY_AUTHENTICATED_USING_COOKIES,
-} from '../../types/constants/redux-constants';
+} from 'types/constants/redux-constants';
 
 const initialState = { authedUser: null };
 

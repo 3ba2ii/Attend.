@@ -5,9 +5,9 @@ import Modal from '@material-ui/core/Modal';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import React, { useCallback, useEffect, useState } from 'react';
-import { GET_ACADEMIC_YEARS } from '../../../api/queries/getAcademicYears';
-import SpinnerElement from '../../../components/Spinner/spinner';
-import { uploadedGroupsModalStyles } from '../../../types/styles';
+import { GET_ACADEMIC_YEARS } from 'api/queries/getAcademicYears';
+import SpinnerElement from 'components/Spinner/spinner';
+import { uploadedGroupsModalStyles } from 'types/styles';
 import AreYouSureModal from './AreYouSureModal';
 
 export default function UploadedGroupsModal({ handleClose, open }) {

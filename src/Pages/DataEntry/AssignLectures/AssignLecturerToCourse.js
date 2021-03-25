@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { GET_COURSE_DATA } from '../../../api/queries/getCourseData';
-import AvatarOrInitials from '../../../components/Initials/AvatarOrInitials';
-import Query from '../../../components/Query';
+import { GET_COURSE_DATA } from 'api/queries/getCourseData';
+import AvatarOrInitials from 'components/Initials/AvatarOrInitials';
+import Query from 'components/Query';
 const AssignLecturerToCourse = () => {
   const { courseID } = useParams();
 

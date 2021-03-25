@@ -16,17 +16,17 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
-import { CREATE_LECTURER_ACCOUNT } from '../../../api/mutations/createLecturer';
-import { GET_USERNAMES_EMAILS } from '../../../api/queries/getOnlyUsernamesAndEmails';
-import CustomizedSnackbars from '../../../components/Alerts/Alerts';
-import LimitTags from '../../../components/AutoComplete/AutoCompleteLimiteTags';
-import Query from '../../../components/Query';
-import { addLecturerPageStyles } from '../../../types/styles';
-import CreateLecturerAccount from '../../../utlis/helpers/createLecturerAction';
+import { CREATE_LECTURER_ACCOUNT } from 'api/mutations/createLecturer';
+import { GET_USERNAMES_EMAILS } from 'api/queries/getOnlyUsernamesAndEmails';
+import CustomizedSnackbars from 'components/Alerts/Alerts';
+import LimitTags from 'components/AutoComplete/AutoCompleteLimiteTags';
+import Query from 'components/Query';
+import { addLecturerPageStyles } from 'types/styles';
+import CreateLecturerAccount from 'utlis/helpers/createLecturerAction';
 import {
   validateArabicName,
   validateEnglishName,
-} from '../../../utlis/validation/validation';
+} from 'utlis/validation/validation';
 import './add_lecturers.css';
 
 export default function AddLecturersPage() {

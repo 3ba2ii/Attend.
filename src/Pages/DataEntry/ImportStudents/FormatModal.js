@@ -2,8 +2,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
 import React from 'react';
-import excelFileScreenshot from '../../../assets/excelsheet.png';
-import { transitionFormatModalStyle } from '../../../types/styles';
+import excelFileScreenshot from 'assets/excelsheet.png';
+import { transitionFormatModalStyle } from 'types/styles';
 
 export default function TransitionsModal({ handleOpen, handleClose, open }) {
   const classes = transitionFormatModalStyle();

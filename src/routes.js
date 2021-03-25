@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ResponsiveDrawer from './components/Drawer/ResponsiveDrawer';
-import Login from './Pages/Login/Login';
+import Login from './pages/Login/Login';
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { authedUser } = useSelector((state) => state.authReducer);

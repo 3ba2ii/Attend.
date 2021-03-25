@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
-import addData from '../../../assets/clip-uploading2.png';
-import addLecturer from '../../../assets/clip-welcome.png';
-import teacher from '../../../assets/schoolTeacher_ybm0cb_c_scale,w_912.png';
+import addData from 'assets/clip-uploading2.png';
+import addLecturer from 'assets/clip-welcome.png';
+import teacher from 'assets/schoolTeacher_ybm0cb_c_scale,w_912.png';
 
 const optionalProps = [
   {

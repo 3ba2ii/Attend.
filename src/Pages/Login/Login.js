@@ -3,16 +3,16 @@ import Cookies from 'js-cookie';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
-import { LOGIN } from '../../api/mutations/login';
-import Carousel from '../../components/common/Carousel';
-import { Error } from '../../components/common/Error';
-import { Form } from '../../components/common/Form';
-import Logo from '../../components/common/Logo';
-import SpinnerElement from '../../components/Spinner/spinner';
-import { LoginAction } from '../../redux-store/actions/authedAction';
-import carouselItems from '../../types/constants/carousel';
-import { FAILED_AUTHENTICATION } from '../../types/constants/redux-constants';
-import { checkCookies } from '../../utlis/helpers/checkCookies';
+import { LOGIN } from 'api/mutations/login';
+import Carousel from 'components/common/Carousel';
+import { Error } from 'components/common/Error';
+import { Form } from 'components/common/Form';
+import Logo from 'components/common/Logo';
+import SpinnerElement from 'components/Spinner/spinner';
+import { LoginAction } from 'redux-store/actions/authedAction';
+import carouselItems from 'types/constants/carousel';
+import { FAILED_AUTHENTICATION } from 'types/constants/redux-constants';
+import { checkCookies } from 'utlis/helpers/checkCookies';
 import './login.css';
 
 const Login = () => {
@@ -68,7 +68,7 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('token');
     const userID = Cookies.get('authedUser');
 
     if (token && userID && !mounted) {

@@ -1,7 +1,7 @@
-import statics from '../../assets/profit.png';
-import time from '../../assets/time2.png';
-import kingdom from '../../assets/kingdom.png';
-import mail from '../../assets/Mail.png';
+import statics from 'assets/profit.png';
+import time from 'assets/time2.png';
+import kingdom from 'assets/kingdom.png';
+import mail from 'assets/Mail.png';
 
 const carouselItems = [
   {

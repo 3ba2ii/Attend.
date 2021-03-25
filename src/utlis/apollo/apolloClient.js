@@ -6,6 +6,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from 'apollo-link-error';
+import Cookies from 'js-cookie';
 
 const uri = process.env.REACT_APP_BACKEND_URL
   ? `${process.env.REACT_APP_BACKEND_URL}/graphql`
@@ -19,9 +20,7 @@ const errorLink = onError(({ graphQLErrors }) => {
 });
 
 const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
-  // return the headers to the context so httpLink can read them
+  const token = Cookies.get('token');
   return {
     headers: {
       ...headers,

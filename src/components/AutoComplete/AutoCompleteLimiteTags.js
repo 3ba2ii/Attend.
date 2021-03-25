@@ -2,8 +2,8 @@
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import React from 'react';
-import { GET_DEPARTMENTS } from '../../api/queries/getDepartments';
-import { limitTagsStyles } from '../../types/styles';
+import { GET_DEPARTMENTS } from 'api/queries/getDepartments';
+import { limitTagsStyles } from 'types/styles';
 import Query from '../Query';
 
 export default function LimitTags({ onSelectDepartments }) {

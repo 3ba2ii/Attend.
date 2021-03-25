@@ -5,10 +5,10 @@ import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import React, { useCallback, useState } from 'react';
-import { DELETE_STUDENT_BY_GROUP } from '../../../api/mutations/deleteStudent';
-import { GET_STUDENT_BY_GROUP } from '../../../api/queries/getStudentByGroup';
-import Query from '../../../components/Query';
-import { areYouSureModalStyles } from '../../../types/styles';
+import { DELETE_STUDENT_BY_GROUP } from 'api/mutations/deleteStudent';
+import { GET_STUDENT_BY_GROUP } from 'api/queries/getStudentByGroup';
+import Query from 'components/Query';
+import { areYouSureModalStyles } from 'types/styles';
 
 export default function AreYouSureModal({
   handleClose,

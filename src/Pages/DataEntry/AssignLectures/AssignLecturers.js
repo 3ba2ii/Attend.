@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
-import { GET_COURSES_INFO } from '../../../api/queries/getCoursesInfo';
-import searching from '../../../assets/searching.png';
-import CoursesCardsContainer from '../../../components/CoursesCards/CoursesCardsContainer';
-import Query from '../../../components/Query';
-import { AssignLecturersPageStyles } from '../../../types/styles';
-import { handleChangesAndReturnNextState } from '../../../utlis/helpers/handleChangesAndReturnNextState';
+import { GET_COURSES_INFO } from 'api/queries/getCoursesInfo';
+import searching from 'assets/searching.png';
+import CoursesCardsContainer from 'components/CoursesCards/CoursesCardsContainer';
+import Query from 'components/Query';
+import { AssignLecturersPageStyles } from 'types/styles';
+import { handleChangesAndReturnNextState } from 'utlis/helpers/handleChangesAndReturnNextState';
 import { SelectFormContainer } from '../AdminPanel/SelectFormContainer';
 import './assign-lecturers.css';
 

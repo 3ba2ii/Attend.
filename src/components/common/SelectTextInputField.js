@@ -1,7 +1,7 @@
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import React from 'react';
-import { multiTextFieldStyles } from '../../types/styles';
+import { multiTextFieldStyles } from 'types/styles';
 
 export default function MultilineTextFields({
   label,

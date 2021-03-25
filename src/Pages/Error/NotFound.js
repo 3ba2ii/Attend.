@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import notFoundImage from '../../assets/clip-fatal-error.png';
+import notFoundImage from 'assets/clip-fatal-error.png';
 import './not-found.css';
 const NotFound = () => {
   return (

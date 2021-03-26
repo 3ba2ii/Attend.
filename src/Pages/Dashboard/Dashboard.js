@@ -17,7 +17,7 @@ const cardData = [
   },
   {
     courseName: 'Circuits',
-    courseAttendance: 70,
+    courseAttendance: 75,
     courseImageURL: circuits,
     datasetValues: [80, 99, 50, 99, 50, 60, 70],
   },

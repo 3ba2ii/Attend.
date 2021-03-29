@@ -24,8 +24,8 @@ export default function LimitTags({ onSelectDepartment }) {
                   {...params}
                   required
                   variant='outlined'
-                  label='Departments'
-                  placeholder='Departments'
+                  label='Department'
+                  placeholder='Department'
                 />
               )}
             />

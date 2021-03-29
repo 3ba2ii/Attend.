@@ -13,14 +13,14 @@ import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React, { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, Redirect, useLocation } from 'react-router-dom';
 import { CREATE_LECTURER_ACCOUNT } from 'api/mutations/createLecturer';
 import { GET_USERNAMES_EMAILS } from 'api/queries/getOnlyUsernamesAndEmails';
 import CustomizedSnackbars from 'components/Alerts/Alerts';
 import LimitTags from 'components/AutoComplete/AutoCompleteLimiteTags';
 import Query from 'components/Query';
+import React, { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { addLecturerPageStyles } from 'types/styles';
 import CreateLecturerAccount from 'utlis/helpers/createLecturerAction';
 import {
@@ -40,7 +40,7 @@ export default function AddLecturersPage() {
   const [nameInEnglish, setNameInEnglish] = useState('');
   const [nameInArabic, setNameInArabic] = useState('');
   const [TeachingRole, setRole] = useState('');
-  const [departments, setDepartments] = useState([]);
+  const [department, setDepartment] = useState(null);
   const [usernameError, setUsernameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -88,8 +88,8 @@ export default function AddLecturersPage() {
   const onSelectRole = (e) => {
     setRole(e.target.value);
   };
-  const onSelectDepartments = (e, value) => {
-    setDepartments(value);
+  const onSelectDepartment = (e, value) => {
+    setDepartment(value);
   };
   const onSubmitCreate = (e) => {
     e.preventDefault();
@@ -100,7 +100,7 @@ export default function AddLecturersPage() {
         password,
         nameInEnglish,
         nameInArabic,
-        departments,
+        department,
         TeachingRole,
       },
       createLecturer,
@@ -269,7 +269,7 @@ export default function AddLecturersPage() {
                     </MenuItem>
                   ))}
                 </TextField>
-                <LimitTags {...{ onSelectDepartments }} />
+                <LimitTags {...{ onSelectDepartment }} />
               </div>
 
               <div className='fixed-btn-bottom'>
@@ -280,7 +280,7 @@ export default function AddLecturersPage() {
                   type='submit'
                   className='submit-btn-container'
                   disabled={
-                    !departments.length ||
+                    !department ||
                     nameInEnglishError ||
                     nameInArabicError ||
                     usernameError ||

@@ -8,7 +8,7 @@ export const CREATE_LECTURER_ACCOUNT = gql`
     $role: ID!
     $nameInEnglish: String!
     $nameInArabic: String!
-    $departments: [ID!]
+    $department: ID!
   ) {
     createUser(
       input: {
@@ -19,7 +19,7 @@ export const CREATE_LECTURER_ACCOUNT = gql`
           role: $role
           LecturerNameInEnglish: $nameInEnglish
           LecturerNameInArabic: $nameInArabic
-          departments: $departments
+          department: $department
         }
       }
     ) {

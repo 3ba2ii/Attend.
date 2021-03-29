@@ -6,7 +6,7 @@ import { GET_DEPARTMENTS } from 'api/queries/getDepartments';
 import { limitTagsStyles } from 'types/styles';
 import Query from '../Query';
 
-export default function LimitTags({ onSelectDepartments }) {
+export default function LimitTags({ onSelectDepartment }) {
   const classes = limitTagsStyles();
 
   return (
@@ -15,9 +15,7 @@ export default function LimitTags({ onSelectDepartments }) {
         {({ data: { departments } }) => {
           return (
             <Autocomplete
-              multiple
-              limitTags={2}
-              onChange={onSelectDepartments}
+              onChange={onSelectDepartment}
               id='multiple-limit-tags'
               options={departments || []}
               getOptionLabel={(dep) => dep?.DepartmentNameInArabic}

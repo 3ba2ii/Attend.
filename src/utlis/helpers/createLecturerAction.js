@@ -6,7 +6,7 @@ const CreateLecturerAccount = async (
     TeachingRole,
     nameInEnglish,
     nameInArabic,
-    departments,
+    department,
   },
   createLecturer,
   setSubmitLoading,
@@ -14,21 +14,21 @@ const CreateLecturerAccount = async (
   setSnackbarType
 ) => {
   setSubmitLoading(true);
-  const depIDs = departments.map((dep) => dep.id);
+  const depID = department?.id;
   const RoleID =
     TeachingRole === 'TA'
       ? '6018080ea6926f2164cb93f7'
       : '6018080da6926f2164cb93f6';
 
   try {
-    const { data } = await createLecturer({
+    const { ـ } = await createLecturer({
       variables: {
         email,
         username,
         password,
         nameInArabic,
         nameInEnglish,
-        departments: depIDs,
+        department: depID,
         role: RoleID,
       },
     });

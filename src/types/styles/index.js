@@ -15,13 +15,13 @@ export const addLecturerPageStyles = makeStyles((theme) => ({
 
       [theme.breakpoints.up('md')]: {
         margin: theme.spacing(1.5, 5, 2, 0),
-        width: '50ch',
+        width: '35ch',
       },
       [theme.breakpoints.up('lg')]: {
-        width: '60ch',
+        width: '50ch',
       },
       [theme.breakpoints.up('xl')]: {
-        width: '80ch',
+        width: '70ch',
       },
     },
   },
@@ -31,13 +31,13 @@ export const addLecturerPageStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.up('md')]: {
       margin: theme.spacing(1.5, 5, 2, 0),
-      width: '50ch',
+      width: '35ch',
     },
     [theme.breakpoints.up('lg')]: {
-      width: '60ch',
+      width: '50ch',
     },
     [theme.breakpoints.up('xl')]: {
-      width: '80ch',
+      width: '70ch',
     },
   },
 }));

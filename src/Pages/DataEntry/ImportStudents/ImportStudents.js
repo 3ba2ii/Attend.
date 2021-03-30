@@ -1,21 +1,22 @@
 import { useMutation } from '@apollo/client';
 import { CircularProgress } from '@material-ui/core';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import React, { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import BackupOutlinedIcon from '@material-ui/icons/BackupOutlined';
 import { CREATE_STUDENT } from 'api/mutations/createStudent';
 import { GET_FACULTY_DATA } from 'api/queries/getFacultyData';
 import CustomizedSnackbars from 'components/Alerts/Alerts';
+import { ButtonWithIcon } from 'components/Buttons/Button';
+import TransitionsModal from 'components/Modals/FormatModal';
+import UploadedGroupsModal from 'components/Modals/UploadedGroupsModal';
 import Query from 'components/Query';
+import React, { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { importFormsStyles } from 'types/styles';
 import { createStudentHelperFunction } from 'utlis/helpers/createStudentHelperFunction';
 import { handleChangesAndReturnNextState } from 'utlis/helpers/handleChangesAndReturnNextState';
 import { SelectFormContainer } from '../AdminPanel/SelectFormContainer';
 import DropzoneContainer from './Dropzone';
-import TransitionsModal from './FormatModal';
 import './import_student.css';
-import UploadedGroupsModal from './UploadedGroupsModal';
 
 const ImportStudentContainer = () => {
   const classes = importFormsStyles();
@@ -227,34 +228,25 @@ const ImportStudentContainer = () => {
             <div className='show-formation-of-excel-file' onClick={handleOpen}>
               Show how the Excel File should be formatted?
             </div>
-            <div className='fixed-btn-bottom'>
+            <div className='btns-container btns-cont-end'>
               <Link className='cancel-btn' to={'/admin-panel'}>
                 <span>Cancel</span>
               </Link>
-              <button
-                type='submit'
-                className='submit-btn-container'
-                disabled={
-                  fileFormatError ||
-                  !studentsFile ||
-                  !group ||
-                  !academicYear ||
-                  !department ||
-                  !faculty
-                }
-              >
-                {uploadLoading ? (
-                  <div className='circular-progress-bar-container'>
-                    <CircularProgress color='inherit' size={24} />
-                  </div>
-                ) : (
-                  <span className='animated-top-onhover'>
-                    <ArrowUpwardIcon size={24} />
-                  </span>
-                )}
-
-                <span>Upload</span>
-              </button>
+              {ButtonWithIcon({
+                ...{
+                  iconLoading: <CircularProgress color='inherit' size={20} />,
+                  iconDefault: <BackupOutlinedIcon size={24} />,
+                  loading: uploadLoading,
+                  label: 'Upload',
+                  disabled:
+                    fileFormatError ||
+                    !studentsFile ||
+                    !group ||
+                    !academicYear ||
+                    !department ||
+                    !faculty,
+                },
+              })}
             </div>
           </form>
           <TransitionsModal

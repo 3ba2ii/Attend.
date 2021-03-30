@@ -10,13 +10,13 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import TextField from '@material-ui/core/TextField';
-import AddIcon from '@material-ui/icons/Add';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { CREATE_LECTURER_ACCOUNT } from 'api/mutations/createLecturer';
 import { GET_USERNAMES_EMAILS } from 'api/queries/getOnlyUsernamesAndEmails';
 import CustomizedSnackbars from 'components/Alerts/Alerts';
 import LimitTags from 'components/AutoComplete/AutoCompleteLimiteTags';
+import { ButtonWithIcon } from 'components/Buttons/Button';
 import Query from 'components/Query';
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -272,37 +272,25 @@ export default function AddLecturersPage() {
                 <LimitTags {...{ onSelectDepartment }} />
               </div>
 
-              <div className='fixed-btn-bottom'>
-                <Link className='cancel-btn' to={'/admin-panel'}>
-                  <span>Cancel</span>
-                </Link>
-                <button
-                  type='submit'
-                  className='submit-btn-container'
-                  disabled={
-                    !department ||
-                    nameInEnglishError ||
-                    nameInArabicError ||
-                    usernameError ||
-                    emailError ||
-                    !nameInEnglish ||
-                    !nameInArabic ||
-                    !TeachingRole ||
-                    !password ||
-                    submitLoading
-                  }
-                >
-                  {submitLoading ? (
-                    <div className='circular-progress-bar-container'>
-                      <CircularProgress color='inherit' size={24} />
-                    </div>
-                  ) : (
-                    <span className='animated-top-onhover'>
-                      <AddIcon size={24} />
-                    </span>
-                  )}
-                  <span>Create Lecturer</span>
-                </button>
+              <div className='btns-container'>
+                {ButtonWithIcon({
+                  ...{
+                    iconLoading: <CircularProgress color='inherit' size={22} />,
+                    loading: submitLoading,
+                    label: 'Create Account',
+                    disabled:
+                      !department ||
+                      nameInEnglishError ||
+                      nameInArabicError ||
+                      usernameError ||
+                      emailError ||
+                      !nameInEnglish ||
+                      !nameInArabic ||
+                      !TeachingRole ||
+                      !password ||
+                      submitLoading,
+                  },
+                })}
               </div>
             </form>
           </main>

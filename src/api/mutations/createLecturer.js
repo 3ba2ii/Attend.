@@ -34,4 +34,3 @@ export const CREATE_LECTURER_ACCOUNT = gql`
     }
   }
 `;
-//"6018080da6926f2164cb93f6"

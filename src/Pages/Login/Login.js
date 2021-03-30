@@ -1,14 +1,15 @@
 import { useMutation } from '@apollo/client';
-import Cookies from 'js-cookie';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Redirect, useLocation } from 'react-router-dom';
 import { LOGIN } from 'api/mutations/login';
+import { ButtonOnly } from 'components/Buttons/Button';
 import Carousel from 'components/common/Carousel';
 import { Error } from 'components/common/Error';
 import { Form } from 'components/common/Form';
 import Logo from 'components/common/Logo';
 import SpinnerElement from 'components/Spinner/spinner';
+import Cookies from 'js-cookie';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Redirect, useLocation } from 'react-router-dom';
 import { LoginAction } from 'redux-store/actions/authedAction';
 import carouselItems from 'types/constants/carousel';
 import { FAILED_AUTHENTICATION } from 'types/constants/redux-constants';
@@ -112,7 +113,7 @@ const Login = () => {
               <p className='sign-in-paragraph'>
                 Login to access your courses and download your reports, if you
                 have a trouble signing in please{' '}
-                <span className='blue-span'>contact us.</span>
+                <a href='mailto:attend.qrsys@gmail.com'>contact us.</a>
               </p>
             </header>
             {error && <Error ignoreError={ignoreError} />}
@@ -125,11 +126,7 @@ const Login = () => {
               {...{ className: 'password', name: 'password', type: 'password' }}
             />
 
-            <button
-              className={`btn-grad sign-in-button ${loading && 'loading-btn'}`}
-            >
-              Sign in
-            </button>
+            <ButtonOnly {...{ text: 'Sign in', disabled: loading }} />
             <p className='student-sign-in'>
               a student?<span> Sign in as a student</span>
             </p>

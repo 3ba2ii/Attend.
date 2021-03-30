@@ -89,7 +89,7 @@ const AssignLecturersPage = () => {
               </h4>
               <p>
                 If the desired course is not displayed, Please{' '}
-                <span>contact us.</span>
+                <a href={'mailto:aghonem2011@gmail.com'}>contact us.</a>
               </p>
             </header>
             <form

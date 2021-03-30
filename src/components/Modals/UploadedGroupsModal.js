@@ -4,11 +4,11 @@ import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
-import React, { useCallback, useEffect, useState } from 'react';
 import { GET_ACADEMIC_YEARS } from 'api/queries/getAcademicYears';
 import SpinnerElement from 'components/Spinner/spinner';
+import React, { useCallback, useEffect, useState } from 'react';
 import { uploadedGroupsModalStyles } from 'types/styles';
-import AreYouSureModal from './AreYouSureModal';
+import AreYouSureModal from 'components/Modals/AreYouSureModal';
 
 export default function UploadedGroupsModal({ handleClose, open }) {
   const classes = uploadedGroupsModalStyles();

@@ -1,4 +1,4 @@
-import { LoginActionUsingCookies } from 'redux-store/actions/authedAction';
+import { LoginActionUsingCookies } from 'redux/actions/authedAction';
 import { FAILED_AUTHENTICATION } from 'types/constants/redux-constants';
 
 export async function checkCookies({

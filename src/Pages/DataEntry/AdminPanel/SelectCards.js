@@ -1,15 +1,15 @@
+import uploadData from 'assets/clip-uploading.svg';
+import wl from 'assets/clip-welcome.svg';
+import sh from 'assets/schoolTeacher.svg';
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
-import addData from 'assets/clip-uploading2.png';
-import addLecturer from 'assets/clip-welcome.png';
-import teacher from 'assets/schoolTeacher_ybm0cb_c_scale,w_912.png';
 
 const optionalProps = [
   {
     id: 'addData123',
     title: 'Data Entry',
     subtitle: 'Add or Remove students to and from the database.',
-    img: <img src={addData} alt='import-students' />,
+    img: <img src={uploadData} className='svg-img' />,
 
     path: 'import_students',
   },
@@ -17,14 +17,14 @@ const optionalProps = [
     id: 'assignLecturers',
     title: 'Assign Lecturers',
     subtitle: 'Assign lecturers to certain courses.',
-    img: <img src={teacher} alt='assign-lectures' />,
+    img: <img src={sh} className='svg-img' />,
     path: 'assign_lecturers',
   },
   {
     id: 'addLecturers',
     title: 'Add Lecturers and Assistants',
     subtitle: 'Add new lecturers and assistants to the database.',
-    img: <img src={addLecturer} alt='add-lectures' />,
+    img: <img src={wl} className='svg-img' />,
     path: 'add_lecturers_users',
   },
 ];

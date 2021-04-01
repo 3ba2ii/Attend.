@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
-import { LoginAction } from 'redux-store/actions/authedAction';
+import { LoginAction } from 'redux/actions/authedAction';
 import carouselItems from 'types/constants/carousel';
 import { FAILED_AUTHENTICATION } from 'types/constants/redux-constants';
 import { checkCookies } from 'utlis/helpers/checkCookies';

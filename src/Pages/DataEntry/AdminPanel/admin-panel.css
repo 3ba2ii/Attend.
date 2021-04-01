@@ -45,6 +45,7 @@
 .single-select-card-container p {
   max-width: 90%;
   text-align: center;
+  font-weight: 500;
 }
 .single-select-card-container h5 {
   font-size: 1.5rem;

@@ -1,8 +1,7 @@
-import { useCallback, useState } from 'react';
 import { GET_COURSES_INFO } from 'api/queries/getCoursesInfo';
-import searching from 'assets/searching.png';
 import CoursesCardsContainer from 'components/CoursesCards/CoursesCardsContainer';
 import Query from 'components/Query';
+import { useCallback, useState } from 'react';
 import { AssignLecturersPageStyles } from 'types/styles';
 import { handleChangesAndReturnNextState } from 'utlis/helpers/handleChangesAndReturnNextState';
 import { SelectFormContainer } from '../AdminPanel/SelectFormContainer';
@@ -80,7 +79,7 @@ const AssignLecturersPage = () => {
       query={GET_COURSES_INFO}
       onCompletedFunction={(data) => setFaculties(data?.faculties || [])}
     >
-      {({ data }) => {
+      {() => {
         return (
           <main id='assign-lecturers-page'>
             <header>
@@ -89,7 +88,7 @@ const AssignLecturersPage = () => {
               </h4>
               <p>
                 If the desired course is not displayed, Please{' '}
-                <a href={'mailto:aghonem2011@gmail.com'}>contact us.</a>
+                <a href='mailto:attend.qrsys@gmail.com'>contact us.</a>
               </p>
             </header>
             <form
@@ -152,11 +151,11 @@ const AssignLecturersPage = () => {
               academicYear &&
               term &&
               courses.length > 0 && <CoursesCardsContainer courses={courses} />}
-            {courses.length === 0 && (
+            {/* {courses.length === 0 && (
               <div className='no-courses-img'>
                 <img src={searching} alt='searching...' />
               </div>
-            )}
+            )} */}
           </main>
         );
       }}

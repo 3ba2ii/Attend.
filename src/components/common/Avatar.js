@@ -1,12 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { avatarStyles } from 'types/styles/';
 import AvatarOrInitials from '../Initials/AvatarOrInitials';
 
-export const randomClass = Math.floor(Math.random() * 4);
+export const randomClass = Math.floor(Math.random() * 3);
 export default function AvatarComponent() {
-  const classes = avatarStyles();
-
   const { authedUser } = useSelector((state) => state?.authReducer);
   let fullName = authedUser?.LecturerNameInEnglish.split(' ');
   fullName = `${fullName[0]} ${fullName[fullName.length - 1]}`;

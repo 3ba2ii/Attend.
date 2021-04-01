@@ -242,6 +242,20 @@ ul {
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
 }
+.svg-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  min-width: calc(300px - 20px);
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+}
 
 @keyframes spin {
   to {

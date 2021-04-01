@@ -12,7 +12,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
 import App from './App';
 import './index.css';
-import rootReducer from './redux-store/reducers/index';
+import rootReducer from './redux/reducers/index';
 import client from './utlis/apollo/apolloClient';
 
 const store = createStore(

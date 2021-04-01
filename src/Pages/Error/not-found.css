@@ -15,7 +15,7 @@
 }
 
 #page-not-found header p {
-  font-weight: 400;
+  font-weight: 500;
 }
 .page-not-found-img-container {
   display: block;
@@ -23,26 +23,25 @@
 }
 .page-not-found-img-container img {
   display: block;
-
   width: 100%;
 }
 .go-to-home-btn {
   padding: 0.8rem 2rem;
-  border-radius: 50px;
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  -ms-border-radius: 50px;
-  -o-border-radius: 50px;
-  font-family: var(--main-font-family);
-  font-weight: 500;
+  min-width: 128px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  font-weight: 600;
   color: #fff;
   background: var(--main-heading-font-color);
   width: 100%;
   text-align: center;
 }
 .go-to-home-btn:hover {
-  filter: brightness(105%);
-  -webkit-filter: brightness(105%);
+  filter: brightness(115%);
+  -webkit-filter: brightness(115%);
 }
 
 @media only screen and (min-width: 720px) {

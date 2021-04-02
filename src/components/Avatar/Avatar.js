@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import AvatarOrInitials from '../Initials/AvatarOrInitials';
+import AvatarOrInitials from './AvatarOrInitials';
 
 export const randomClass = Math.floor(Math.random() * 3);
 export default function AvatarComponent() {

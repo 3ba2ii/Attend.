@@ -23,7 +23,7 @@ import AssignLecturerToCourse from 'pages/DataEntry/AssignLectures/AssignLecture
 import ImportStudentContainer from 'pages/DataEntry/ImportStudents/ImportStudents';
 import NotFound from 'pages/Error/NotFound';
 import { avatarStyles, drawerStyles } from 'types/styles/';
-import AvatarOrInitials from '../Initials/AvatarOrInitials';
+import AvatarOrInitials from '../Avatar/AvatarOrInitials';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
 function ResponsiveDrawer(props) {

@@ -13,7 +13,7 @@ import TuneOutlinedIcon from '@material-ui/icons/TuneOutlined';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import AvatarComponent from '../common/Avatar';
+import AvatarComponent from '../Avatar/Avatar';
 import Logo from '../common/Logo';
 
 export function DrawerItems(classes, pathname) {

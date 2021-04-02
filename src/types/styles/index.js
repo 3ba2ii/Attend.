@@ -175,6 +175,10 @@ export const avatarStyles = makeStyles((theme) => ({
     height: theme.spacing(4),
     fontSize: '.9rem',
   },
+  large: {
+    width: theme.spacing(6),
+    height: theme.spacing(6),
+  },
 }));
 
 export const uploadedGroupsModalStyles = makeStyles((theme) => ({

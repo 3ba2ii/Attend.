@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import './admin-panel.css';
@@ -8,6 +8,9 @@ const DataEntryPage = () => {
   const user = useSelector((state) => state?.authReducer?.authedUser);
   const { state } = useLocation();
 
+  useEffect(() => {
+    document.title = 'Attend. | Admin Panel';
+  }, []);
   if (user?.role?.name !== 'Super Admin') {
     /* TODO: Add an unauthenticated behavior screen*/
 

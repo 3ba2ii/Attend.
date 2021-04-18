@@ -1,15 +1,12 @@
-import CloseIcon from '@material-ui/icons/Close';
-import React from 'react';
-
+import closeIcon from 'assets/icons/closeIcon.svg';
+import './errorIndicator.css';
 export function Error({ ignoreError }) {
   return (
     <div className='login-error full-width-separated'>
       <span>Incorrect username or password.</span>
-      <CloseIcon
-        className='cursor-pointer error-color-icon'
-        fontSize={'small'}
-        onClick={ignoreError}
-      />
+      <aside onClick={ignoreError}>
+        <img src={closeIcon} alt={'close'} className='error-close-icon' />
+      </aside>
     </div>
   );
 }

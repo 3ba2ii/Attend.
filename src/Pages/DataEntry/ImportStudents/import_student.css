@@ -4,7 +4,7 @@
   width: 100%;
   position: relative;
   height: 100%;
-  padding: 6.5rem 3% 2rem 5%;
+  padding: 6.5rem 3% 0rem 5%;
   font-family: Poppins;
 }
 .import-students-header p {
@@ -31,7 +31,7 @@
   font-weight: 500;
   text-align: center;
   letter-spacing: 0.01em;
-  color: var(--main-subheading-font-color);
+  color: var(--secondary-color);
   position: relative;
 }
 .buttons-container {
@@ -202,7 +202,7 @@
 }
 @media only screen and (min-width: 720px) {
   .dropzone-wrapper {
-    width: 80%;
+    width: 100%;
     display: block;
     position: relative;
   }
@@ -217,9 +217,13 @@
 /* Desktop */
 
 @media only screen and (min-width: 1024px) {
+  .dropzone-wrapper {
+    width: 83%;
+  }
   .btns-cont-end {
-    width: 125ch;
+    width: 83%;
     flex-direction: row;
     justify-content: flex-end;
+    margin-top: 5rem;
   }
 }

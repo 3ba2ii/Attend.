@@ -1,0 +1,14 @@
+.small-logo {
+  display: inline;
+  max-width: 20%;
+}
+.small-logo img {
+  object-fit: contain;
+  width: clamp(70px, 70px + 1vw, 90px);
+  display: inline-block;
+}
+.login-logo {
+  display: block;
+  max-width: 112px;
+  cursor: pointer;
+}

@@ -1,4 +1,5 @@
-import logo from 'assets/logo.png';
+import logo from 'assets/logo.svg';
+import '../styles/logo.css';
 const Logo = (props) => {
   return (
     <div className={`${props.className}`}>

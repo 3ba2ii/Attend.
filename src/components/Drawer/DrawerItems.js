@@ -21,7 +21,7 @@ export function DrawerItems(classes, pathname) {
 
   return (
     <div>
-      <Logo className='drawer-logo padding-left-1rem' />
+      <Logo className='small-logo drawer-logo' />
       <div className={classes.toolbar} />
 
       {AvatarComponent(true)}

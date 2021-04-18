@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import BadGatewayPage from 'pages/ErrorPages/502';
 import SpinnerElement from '../Spinner/spinner';
 
 const Query = ({ children, query, variables, onCompletedFunction }) => {
@@ -21,7 +22,7 @@ const Query = ({ children, query, variables, onCompletedFunction }) => {
     );
   }
 
-  if (error) return `Error! ${error.message}`;
+  if (error) return <BadGatewayPage />;
   return children({ data, refetch, loading, error });
 };
 export default Query;

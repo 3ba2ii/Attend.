@@ -8,14 +8,17 @@
   --color-link-text: #109cf1;
   --color-alert-error-bg: #ffe3e6;
   --dark-font-color: #192a3e;
-  --main-heading-font-color: #334d6e;
-  --main-subheading-font-color: #90a0b7;
+  --primary-color: #334d6e;
+  --secondary-color: #90a0b7;
   --main-compare-green-color: #31c977;
   --main-compare-red-color: #e47c67;
 
   --card-border-shadow: 0px 6px 18px rgba(0, 0, 0, 0.29);
   --arabic-font-family: Arial, Helvetica, sans-serif;
   --main-font-family: 'Poppins', sans-serif;
+
+  --transparent-white: hsla(0, 0%, 100%, 0.75);
+  --very-light-white: hsl(0, 0%, 95%);
 }
 * {
   margin: 0;
@@ -58,7 +61,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--main-heading-font-color);
+  color: var(--primary-color);
 }
 h1,
 h2,
@@ -85,7 +88,7 @@ h6 {
 }
 p {
   margin: 12px 0px;
-  color: var(--main-subheading-font-color);
+  color: var(--secondary-color);
   font-size: clamp(0.7rem, 0.7rem + 0.5vmin, 1.5rem);
   font-weight: 400;
 }
@@ -101,6 +104,14 @@ p span {
   color: var(--color-link-text);
   cursor: pointer;
 }
+
+a {
+  text-decoration: none;
+}
+ul {
+  list-style-type: none;
+}
+
 button {
   outline: none;
   cursor: pointer;
@@ -118,14 +129,9 @@ button:disabled {
   -webkit-filter: none;
   box-shadow: none;
 }
-
-a {
-  text-decoration: none;
+button:active {
+  color: inherit;
 }
-ul {
-  list-style-type: none;
-}
-
 .line-clamp {
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -145,7 +151,7 @@ ul {
   box-shadow: 0 0 20px #eee;
   border-radius: 8px;
   display: block;
-  background: var(--main-heading-font-color);
+  background: var(--primary-color);
   cursor: pointer;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
@@ -157,23 +163,10 @@ ul {
   font-size: clamp(0.8rem, 0.5rem + 0.4vw, 1.2rem);
 }
 
-.loading-btn {
-  opacity: 0.4;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
-.login-logo {
-  display: inline;
-  max-width: 20%;
-}
-.login-logo img {
-  object-fit: contain;
-  max-width: 25%;
-  min-width: 130px;
-  display: inline-block;
-}
+
 .error-color-icon {
   color: var(--color-alert-error-icon);
 }

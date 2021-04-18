@@ -81,7 +81,7 @@
   font-style: normal;
   font-weight: 600;
   font-size: clamp(1rem, 1rem + 1.5vw, 1.7rem);
-  color: var(--main-heading-font-color);
+  color: var(--primary-color);
 }
 
 .course-name {
@@ -91,7 +91,7 @@
 .vs-last {
   font-weight: 500;
   font-size: clamp(0.5rem, 0.5rem + 0.8vw, 0.75rem);
-  color: var(--main-subheading-font-color);
+  color: var(--secondary-color);
   display: flex;
   align-items: center;
   gap: 4px;

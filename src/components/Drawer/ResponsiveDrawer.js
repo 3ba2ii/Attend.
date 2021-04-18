@@ -21,11 +21,11 @@ import DataEntryPage from 'pages/DataEntry/AdminPanel/AdminPanel';
 import AssignLecturersPage from 'pages/DataEntry/AssignLectures/AssignLecturers';
 import AssignLecturerToCourse from 'pages/DataEntry/AssignLectures/AssignLecturerToCourse';
 import ImportStudentContainer from 'pages/DataEntry/ImportStudents/ImportStudents';
-import NotFound from 'pages/Error/NotFound';
 import { avatarStyles, drawerStyles } from 'types/styles/';
 import AvatarOrInitials from '../Avatar/AvatarOrInitials';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
+import NotFound404 from 'pages/ErrorPages/404';
 function ResponsiveDrawer(props) {
   const { window } = props;
   const classes = drawerStyles();
@@ -109,7 +109,7 @@ function ResponsiveDrawer(props) {
           <Route path={'/leaderboard'} render={() => <div>leader-board</div>} />
           <Route path={'/help'} render={() => <div>Hello</div>} />
           <Route path={'/settings'} render={() => <div>Hello</div>} />
-          <Route path='/404' component={NotFound} />
+          <Route path='/404' component={NotFound404} />
           <Redirect to='/404' />
         </Switch>
       </main>

@@ -1,17 +1,15 @@
 import { useMutation } from '@apollo/client';
+import { TextField } from '@material-ui/core';
 import { LOGIN } from 'api/mutations/login';
-import { ButtonOnly } from 'components/Buttons/Button';
-import Carousel from 'components/common/Carousel';
 import { Error } from 'components/common/Error';
-import { Form } from 'components/common/Form';
 import Logo from 'components/common/Logo';
+import PasswordTextField from 'components/common/PasswordTextField';
 import SpinnerElement from 'components/Spinner/spinner';
 import Cookies from 'js-cookie';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import { LoginAction } from 'redux/actions/authedAction';
-import carouselItems from 'types/constants/carousel';
 import { FAILED_AUTHENTICATION } from 'types/constants/redux-constants';
 import { checkCookies } from 'utlis/helpers/checkCookies';
 import './login.css';
@@ -69,6 +67,7 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
+    document.title = 'Attend. | Sign in';
     const token = Cookies.get('token');
     const userID = Cookies.get('authedUser');
 
@@ -102,39 +101,53 @@ const Login = () => {
     );
   }
   return (
-    <div className='login-grid-container'>
-      <div className='carousel-col1'>
-        <div className='login-form-container'>
-          <Logo {...{ className: 'login-logo' }} />
-
-          <form className='loginForm' onSubmit={onLogin}>
-            <header>
-              <h2>Sign in</h2>
-              <p className='sign-in-paragraph'>
-                Login to access your courses and download your reports, if you
-                have a trouble signing in please{' '}
-                <a href='mailto:attend.qrsys@gmail.com'>contact us.</a>
-              </p>
-            </header>
-            {error && <Error ignoreError={ignoreError} />}
-            <Form
+    <main className='login-grid-container'>
+      <section className='login-form-container'>
+        <div className='login-page-logo'>
+          <Logo className='login-logo' />
+        </div>
+        <div className='loginForm'>
+          <header className='login-header'>
+            <h3>Sign in</h3>
+            <span className='sign-in-paragraph'>
+              Save time, store attendance and make reports
+            </span>
+          </header>
+          {error && <Error ignoreError={ignoreError} />}
+          <form onSubmit={onLogin} className='login-form'>
+            <input name='utf8' type='hidden' value='✔️' />
+            <TextField
+              id='outlined-required-email'
+              label='Username or Email'
+              variant='outlined'
               onChange={onChange.email}
-              {...{ className: 'email', name: 'Username', type: 'text' }}
-            />
-            <Form
-              onChange={onChange.password}
-              {...{ className: 'password', name: 'password', type: 'password' }}
+              autoFocus
+              fullWidth
             />
 
-            <ButtonOnly {...{ text: 'Sign in', disabled: loading }} />
-            <p className='student-sign-in'>
-              a student?<span> Sign in as a student</span>
-            </p>
+            <PasswordTextField handleChangeInForm={onChange.password} />
+            <input
+              type='hidden'
+              name='loginFlow'
+              id='loginFlow'
+              value='REMEMBER_ME_OPTIN'
+            />
+
+            <div className='login-btn-container'>
+              <button
+                className='login-btn'
+                data-litms-control-urn='login-submit'
+                type='submit'
+                aria-label='Sign in'
+                disabled={loading}
+              >
+                Sign in
+              </button>
+            </div>
           </form>
         </div>
-      </div>
-      {mounted && <Carousel items={carouselItems} />}
-    </div>
+      </section>
+    </main>
   );
 };
 

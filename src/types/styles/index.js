@@ -317,3 +317,20 @@ export const multiTextFieldStyles = makeStyles((theme) => ({
     },
   },
 }));
+export const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '100%',
+  },
+  margin: {
+    margin: theme.spacing(1),
+    marginLeft: 0,
+  },
+  withoutLabel: {
+    marginTop: theme.spacing(3),
+  },
+  textField: {
+    width: '100%',
+  },
+}));

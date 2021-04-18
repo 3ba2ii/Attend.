@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ai from 'assets/ai.png';
 import circuits from 'assets/circuits.png';
 import patternRecognition from 'assets/courseImg.png';
@@ -60,6 +60,9 @@ const cardData = [
 ];
 
 const Dashboard = () => {
+  useEffect(() => {
+    document.title = 'Attend. | Dashboard';
+  }, []);
   return (
     <main id='dashboard-container'>
       <header className='page-name'>

@@ -2,7 +2,7 @@
   width: 100%;
 }
 .btn-only {
-  background: var(--main-heading-font-color);
+  background: var(--primary-color);
   color: white;
   padding: 0.5rem 2rem;
   width: 100%;

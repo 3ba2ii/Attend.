@@ -1,7 +1,7 @@
 .drawer-logo {
   position: relative;
-  padding-left: 24px;
-  padding-top: 24px;
+  top: 24px;
+  left: 24px;
   z-index: -1;
   height: 64px;
   display: flex;

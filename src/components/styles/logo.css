@@ -12,3 +12,16 @@
   max-width: 112px;
   cursor: pointer;
 }
+.drawer-logo {
+  position: relative;
+  top: 24px;
+  left: 24px;
+  z-index: -1;
+  max-width: 75px;
+  display: flex;
+  align-items: center;
+}
+.drawer-logo img {
+  width: 100%;
+  object-fit: contain;
+}

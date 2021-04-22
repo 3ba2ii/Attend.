@@ -7,9 +7,10 @@ import VisibilityOff from 'assets/icons/visibilityOff.svg';
 import Visibility from 'assets/icons/visibilityOn.svg';
 import clsx from 'clsx';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useStyles } from 'types/styles';
 
-export default function PasswordTextField({ handleChangeInForm }) {
+export default function PasswordTextField({ handleChangeInForm, handleLogin }) {
   const classes = useStyles();
   const [showPassword, setShowPassword] = React.useState(false);
   const [password, setPassword] = React.useState('');
@@ -45,6 +46,12 @@ export default function PasswordTextField({ handleChangeInForm }) {
         type={showPassword ? 'text' : 'password'}
         value={password}
         onChange={handleChange}
+        onKeyPress={(ev) => {
+          if (ev.key === 'Enter') {
+            ev.preventDefault();
+            handleLogin(ev);
+          }
+        }}
         endAdornment={
           <InputAdornment position='end'>
             <IconButton
@@ -62,7 +69,9 @@ export default function PasswordTextField({ handleChangeInForm }) {
         }
         labelWidth={70}
       />
-      <button className='forgot-password-btn'>Forgot password?</button>
+      <Link to={'/forgot-password'} style={{ marginTop: '.5rem' }}>
+        <span className='forgot-password-btn'>Forgot password?</span>
+      </Link>
     </FormControl>
   );
 }

@@ -21,7 +21,7 @@ const store = createStore(
 );
 const THEME = createMuiTheme({
   typography: {
-    fontFamily: `"Poppins", "Helvetica", "Arial", sans-serif`,
+    fontFamily: `"system-ui", "Helvetica", "Arial", sans-serif`,
     color: '#334d6e',
   },
 });

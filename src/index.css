@@ -250,6 +250,21 @@ button:active {
   -o-transform: translateX(-50%);
 }
 
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  color: #1a73e8 !important;
+  border-color: #1a73e8 !important;
+  font-size: 14px !important;
+}
+.MuiOutlinedInput-root.Mui-focused,
+.MuiOutlinedInput-root,
+.MuiOutlinedInput-root {
+  color: #333 !important;
+  font-size: 14px !important;
+}
+
+.MuiInputLabel-outlined.Mui-focused {
+  color: #1a73e8 !important;
+}
 @keyframes spin {
   to {
     transform: rotate(359deg);

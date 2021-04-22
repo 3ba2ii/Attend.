@@ -12,20 +12,31 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React, { lazy, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import Dashboard from 'pages/Dashboard/Dashboard';
-import AddLecturersPage from 'pages/DataEntry/AddLecturers/AddLecturers';
-import DataEntryPage from 'pages/DataEntry/AdminPanel/AdminPanel';
-import AssignLecturersPage from 'pages/DataEntry/AssignLectures/AssignLecturers';
-import AssignLecturerToCourse from 'pages/DataEntry/AssignLectures/AssignLecturerToCourse';
-import ImportStudentContainer from 'pages/DataEntry/ImportStudents/ImportStudents';
 import { avatarStyles, drawerStyles } from 'types/styles/';
 import AvatarOrInitials from '../Avatar/AvatarOrInitials';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
-import NotFound404 from 'pages/ErrorPages/404';
+
+const DashboardPage = lazy(() => import('pages/Dashboard/Dashboard'));
+const AddLecturersPage = lazy(() =>
+  import('pages/DataEntry/AddLecturers/AddLecturers')
+);
+const DataEntryPage = lazy(() =>
+  import('pages/DataEntry/AdminPanel/AdminPanel')
+);
+const AssignLecturersPage = lazy(() =>
+  import('pages/DataEntry/AssignLectures/AssignLecturers')
+);
+const AssignLecturerToCourse = lazy(() =>
+  import('pages/DataEntry/AssignLectures/AssignLecturerToCourse')
+);
+const ImportStudentContainer = lazy(() =>
+  import('pages/DataEntry/ImportStudents/ImportStudents')
+);
+const NotFound404 = lazy(() => import('pages/ErrorPages/404'));
 function ResponsiveDrawer(props) {
   const { window } = props;
   const classes = drawerStyles();
@@ -80,8 +91,8 @@ function ResponsiveDrawer(props) {
       </nav>
       <main className={classes.content}>
         <Switch>
-          <Route exact path={'/'} component={Dashboard} />
-          <Route path={'/dashboard'} component={Dashboard} />
+          <Route exact path={'/'} component={DashboardPage} />
+          <Route path={'/dashboard'} component={DashboardPage} />
           <Route exact path={'/admin-panel'} component={DataEntryPage} />
           <Route
             exact

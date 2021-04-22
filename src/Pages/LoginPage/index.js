@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { TextField } from '@material-ui/core';
 import { LOGIN } from 'api/mutations/login';
-import { Error } from 'components/common/Error';
+import { Error } from 'components/common/ErrorIndicator';
 import Logo from 'components/common/Logo';
 import PasswordTextField from 'components/common/PasswordTextField';
 import SpinnerElement from 'components/Spinner/spinner';
@@ -113,7 +113,12 @@ const Login = () => {
               Save time, store attendance and make reports
             </span>
           </header>
-          {error && <Error ignoreError={ignoreError} />}
+          {error && (
+            <Error
+              ignoreError={ignoreError}
+              message={'Incorrect username or password.'}
+            />
+          )}
           <form onSubmit={onLogin} className='login-form'>
             <input name='utf8' type='hidden' value='✔️' />
             <TextField
@@ -125,7 +130,10 @@ const Login = () => {
               fullWidth
             />
 
-            <PasswordTextField handleChangeInForm={onChange.password} />
+            <PasswordTextField
+              handleLogin={onLogin}
+              handleChangeInForm={onChange.password}
+            />
             <input
               type='hidden'
               name='loginFlow'

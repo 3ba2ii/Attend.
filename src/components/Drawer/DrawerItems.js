@@ -3,14 +3,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import CloudIcon from '@material-ui/icons/Cloud';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import PersonIcon from '@material-ui/icons/Person';
-import SchoolIcon from '@material-ui/icons/School';
-import TuneOutlinedIcon from '@material-ui/icons/TuneOutlined';
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AvatarComponent from '../Avatar/Avatar';
@@ -27,20 +19,47 @@ export function DrawerItems(classes, pathname) {
       {AvatarComponent(true)}
       <List className='navbar-list'>
         {[
-          { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
-          { text: 'My Profile', icon: <PersonIcon />, path: '/profile' },
-          { text: 'Courses', icon: <SchoolIcon />, path: '/courses' },
+          {
+            text: 'Dashboard',
+            icon: <span className='icons8-dashboard' alt={'Dashboard'} />,
+            iconActive: (
+              <span className='icons8-dashboard-active' alt={'Course'} />
+            ),
+            path: '/dashboard',
+          },
+          {
+            text: 'My Profile',
+            icon: <span className='icons8-user' alt={'My Profile'} />,
+            iconActive: (
+              <span className='icons8-user-active' alt={'My Profile'} />
+            ),
+            path: '/profile',
+          },
+          {
+            text: 'Courses',
+            icon: <span className='icons8-course' alt={'Courses'} />,
+            iconActive: (
+              <span className='icons8-course-active' alt={'Course'} />
+            ),
+            path: '/courses',
+          },
           {
             text: 'Leaderboard',
-            icon: <BarChartIcon />,
+            icon: <span className='icons8-account' alt={'Leaderboard'} />,
+            iconActive: (
+              <span className='icons8-account-active' alt={'Leaderboard'} />
+            ),
             path: '/leaderboard',
           },
           authedUser?.role?.name === 'Super Admin' && {
             text: 'Admin Panel',
-            icon: <CloudIcon />,
+            icon: <span className='icons8-cloud' alt={'Leaderboard'} />,
+            iconActive: (
+              <span className='icons8-cloud-active' alt={'Leaderboard'} />
+            ),
             path: '/admin-panel',
           },
-        ].map(({ text, icon, path }, index) => (
+        ].map(({ text, icon, iconActive, path }, index) => (
           <Link to={path} key={text + index}>
             <ListItem button>
               <ListItemIcon
@@ -49,8 +68,9 @@ export function DrawerItems(classes, pathname) {
                 }`}
               >
                 {pathname.includes(path) && <div className='active' />}
-
-                {icon}
+                <div className='drawer-icon-container'>
+                  {pathname.includes(path) ? iconActive : icon}
+                </div>
               </ListItemIcon>
               <ListItemText
                 primary={text}
@@ -67,9 +87,23 @@ export function DrawerItems(classes, pathname) {
       <Divider />
       <List className='navbar-list'>
         {[
-          { text: 'Need Help?', icon: <HelpOutlineIcon />, path: '/help' },
-          { text: 'Settings', icon: <TuneOutlinedIcon />, path: '/settings' },
-        ].map(({ text, icon, path }, index) => (
+          {
+            text: 'Need Help?',
+            icon: <span className='icons8-help' alt={'Leaderboard'} />,
+            iconActive: (
+              <span className='icons8-help-active' alt={'Leaderboard'} />
+            ),
+            path: '/help',
+          },
+          {
+            text: 'Settings',
+            icon: <span className='icons8-settings' alt={'Leaderboard'} />,
+            iconActive: (
+              <span className='icons8-settings-active' alt={'Leaderboard'} />
+            ),
+            path: '/settings',
+          },
+        ].map(({ text, icon, iconActive, path }, index) => (
           <Link to={path} key={text + index}>
             <ListItem button>
               <ListItemIcon
@@ -79,7 +113,9 @@ export function DrawerItems(classes, pathname) {
               >
                 {pathname.includes(path) && <div className='active' />}
 
-                {icon}
+                <div className='drawer-icon-container'>
+                  {pathname.includes(path) ? iconActive : icon}
+                </div>
               </ListItemIcon>
               <ListItemText
                 primary={text}

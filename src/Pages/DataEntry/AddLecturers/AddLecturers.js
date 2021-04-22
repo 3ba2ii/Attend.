@@ -1,17 +1,6 @@
 import { useMutation } from '@apollo/client';
-import {
-  CircularProgress,
-  FormHelperText,
-  IconButton,
-  MenuItem,
-} from '@material-ui/core';
-import FormControl from '@material-ui/core/FormControl';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import { CircularProgress, MenuItem } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { CREATE_LECTURER_ACCOUNT } from 'api/mutations/createLecturer';
 import { GET_USERNAMES_EMAILS } from 'api/queries/getOnlyUsernamesAndEmails';
 import CustomizedSnackbars from 'components/Alerts/Alerts';
@@ -20,7 +9,7 @@ import { ButtonWithIcon } from 'components/Buttons/Button';
 import Query from 'components/Query';
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import { addLecturerPageStyles } from 'types/styles';
 import CreateLecturerAccount from 'utlis/helpers/createLecturerAction';
 import {
@@ -189,41 +178,7 @@ export default function AddLecturersPage() {
                   error={emailError}
                   onChange={validateEmail}
                 />
-                <FormControl
-                  className={classes.textField}
-                  variant='outlined'
-                  autoComplete='new-password'
-                >
-                  <InputLabel htmlFor='outlined-adornment-password'>
-                    Password
-                  </InputLabel>
-                  <OutlinedInput
-                    id='outlined-adornment-password'
-                    type={showPassword ? 'text' : 'password'}
-                    onChange={validatePassword}
-                    endAdornment={
-                      <InputAdornment position='end'>
-                        <IconButton
-                          aria-label='toggle password visibility'
-                          onClick={() => {
-                            setShowPassword(!showPassword);
-                          }}
-                          onMouseDown={(e) => {
-                            e.preventDefault();
-                          }}
-                          edge='end'
-                        >
-                          {!showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    labelWidth={70}
-                  />
-                  <FormHelperText id='my-helper-text'>
-                    Make sure it's at least 8 characters including a number and
-                    a lowercase letter.
-                  </FormHelperText>
-                </FormControl>
+
                 <TextField
                   required
                   id='outlined-error-helper-text-english'

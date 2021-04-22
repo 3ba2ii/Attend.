@@ -9,7 +9,7 @@ const optionalProps = [
     id: 'addData123',
     title: 'Data Entry',
     subtitle: 'Add or Remove students to and from the database.',
-    img: <img src={uploadData} className='svg-img' />,
+    img: <img src={uploadData} className='svg-img' alt={'Data Entry'} />,
 
     path: 'import_students',
   },
@@ -17,14 +17,14 @@ const optionalProps = [
     id: 'assignLecturers',
     title: 'Assign Lecturers',
     subtitle: 'Assign lecturers to certain courses.',
-    img: <img src={sh} className='svg-img' />,
+    img: <img src={sh} className='svg-img' alt={'Assign Lecturers'} />,
     path: 'assign_lecturers',
   },
   {
     id: 'addLecturers',
     title: 'Add Lecturers and Assistants',
     subtitle: 'Add new lecturers and assistants to the database.',
-    img: <img src={wl} className='svg-img' />,
+    img: <img src={wl} className='svg-img' alt={'Add Lecturers'} />,
     path: 'add_lecturers_users',
   },
 ];

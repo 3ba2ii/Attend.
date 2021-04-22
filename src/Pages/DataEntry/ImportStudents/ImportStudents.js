@@ -1,6 +1,5 @@
 import { useMutation } from '@apollo/client';
 import { CircularProgress } from '@material-ui/core';
-import BackupOutlinedIcon from '@material-ui/icons/BackupOutlined';
 import { CREATE_STUDENT } from 'api/mutations/createStudent';
 import { GET_FACULTY_DATA } from 'api/queries/getFacultyData';
 import CustomizedSnackbars from 'components/Alerts/Alerts';
@@ -235,7 +234,6 @@ const ImportStudentContainer = () => {
               {ButtonWithIcon({
                 ...{
                   iconLoading: <CircularProgress color='inherit' size={20} />,
-                  iconDefault: <BackupOutlinedIcon size={24} />,
                   loading: uploadLoading,
                   label: 'Upload',
                   disabled:

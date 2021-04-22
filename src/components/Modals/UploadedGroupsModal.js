@@ -2,13 +2,11 @@ import { useQuery } from '@apollo/client';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
-import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
-import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import { GET_ACADEMIC_YEARS } from 'api/queries/getAcademicYears';
+import AreYouSureModal from 'components/Modals/AreYouSureModal';
 import SpinnerElement from 'components/Spinner/spinner';
 import React, { useCallback, useEffect, useState } from 'react';
 import { uploadedGroupsModalStyles } from 'types/styles';
-import AreYouSureModal from 'components/Modals/AreYouSureModal';
 
 export default function UploadedGroupsModal({ handleClose, open }) {
   const classes = uploadedGroupsModalStyles();
@@ -101,8 +99,10 @@ function GroupList(values, handleOpenConfirmationModal) {
               <div className='group-container-info'>
                 <span id='group-title'>{groupTitle}</span>
                 <span id='group-students-count'>
-                  <GroupOutlinedIcon fontSize={'small'} />
-                  {groupStudentsCount} Students
+                  <div className='icons8-group'></div>
+                  <span>
+                    {groupStudentsCount} Student{groupStudentsCount > 1 && 's'}
+                  </span>
                 </span>
               </div>
               <div
@@ -116,12 +116,10 @@ function GroupList(values, handleOpenConfirmationModal) {
                   })
                 }
               >
-                <DeleteOutlineOutlinedIcon
-                  style={{
-                    color: '#eb5d63',
-                    cursor: 'pointer',
-                  }}
-                />
+                <div
+                  className='icons8-trash'
+                  style={{ cursor: 'pointer' }}
+                ></div>
               </div>
             </li>
           );

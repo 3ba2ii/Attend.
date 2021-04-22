@@ -7,10 +7,6 @@ import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
-import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React, { lazy, useCallback } from 'react';
 import { useSelector } from 'react-redux';
@@ -141,12 +137,12 @@ function AppBarComponent(classes, handleDrawerToggle) {
           onClick={handleDrawerToggle}
           className={classes.menuButton}
         >
-          <MenuIcon />
+          <div className='icons8-menu'></div>
         </IconButton>
 
         <div className={classes.search}>
           <div className={classes.searchIcon}>
-            <SearchIcon fontSize={'small'} />
+            <div className='icons8-search'></div>
           </div>
           <InputBase
             placeholder='Search for courses subjects or students..'
@@ -167,7 +163,7 @@ function AppBarComponent(classes, handleDrawerToggle) {
 
         <IconButton aria-label='show new notifications' color='inherit'>
           <Badge variant='dot' color='secondary'>
-            <NotificationsNoneOutlinedIcon style={{ color: '#C2CFE0' }} />
+            <div className='icons8-notification'></div>
           </Badge>
         </IconButton>
         <IconButton
@@ -184,7 +180,7 @@ function AppBarComponent(classes, handleDrawerToggle) {
               alt: 'small-avatar',
             }}
           />
-          <ArrowDropDownIcon style={{ color: '#AEAEAE' }} />
+          <div className='icons8-expand-arrow'></div>
         </IconButton>
       </Toolbar>
     </AppBar>

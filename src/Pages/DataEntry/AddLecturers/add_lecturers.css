@@ -7,22 +7,6 @@
   padding: 8rem 5% 2rem 5%;
 }
 
-.circular-progress-bar-container {
-  padding: 2px;
-  margin-right: 5px;
-}
-
-.btns-container {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin: 1rem 0rem;
-  padding: 1rem 0rem;
-  width: 100%;
-}
-
 .add-lecturer-manually-container {
   width: 100%;
   display: flex;
@@ -32,7 +16,7 @@
   align-items: center;
 }
 .add-lecturer-form {
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -43,11 +27,11 @@
   display: flex;
   flex-flow: column;
   justify-content: center;
-  padding: 3rem;
+  padding: 2rem;
   align-items: center;
 }
 .form-uploader-xlsx-container {
-  width: 60%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,6 +54,7 @@
   position: relative;
   font-weight: 400;
   color: #4787c7;
+  text-align: center;
 }
 .input-label:before {
   content: '';
@@ -81,7 +66,7 @@
 
   background-size: 80%;
   background-repeat: no-repeat;
-  bottom: 25px;
+  bottom: 80%;
 }
 
 .input-label:after {
@@ -119,16 +104,16 @@
 }
 .icons8-check-document {
   display: inline-block;
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNjQiIGhlaWdodD0iNjQiCnZpZXdCb3g9IjAgMCAxMjggMTI4IgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik05NiwxMTlIMzJjLTUuNSwwLTEwLTQuNS0xMC0xMFYxOWMwLTUuNSw0LjUtMTAsMTAtMTBoNjRjNS41LDAsMTAsNC41LDEwLDEwdjkwQzEwNiwxMTQuNSwxMDEuNSwxMTksOTYsMTE5eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNlOWVlZjQiIGQ9Ik04NiA2Mkg0MmMtMS43IDAtMy0xLjMtMy0zczEuMy0zIDMtM2g0NGMxLjcgMCAzIDEuMyAzIDNTODcuNyA2MiA4NiA2MnpNNzYgMzJINTJjLTEuNyAwLTMtMS4zLTMtM3MxLjMtMyAzLTNoMjRjMS43IDAgMyAxLjMgMyAzUzc3LjcgMzIgNzYgMzJ6TTg2IDc3SDQyYy0xLjcgMC0zLTEuMy0zLTNzMS4zLTMgMy0zaDQ0YzEuNyAwIDMgMS4zIDMgM1M4Ny43IDc3IDg2IDc3ek03MCA5Mkg0MmMtMS43IDAtMy0xLjMtMy0zczEuMy0zIDMtM2gyOGMxLjcgMCAzIDEuMyAzIDNTNzEuNyA5MiA3MCA5MnoiPjwvcGF0aD48cGF0aCBmaWxsPSIjMWZkNGFmIiBkPSJNMTA2IDgyQTIwIDIwIDAgMSAwIDEwNiAxMjJBMjAgMjAgMCAxIDAgMTA2IDgyWiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMTkuNSw4Ny4zbC0xMy40LDE1bC00LjgtNi4yYy0xLTEuMy0yLjktMS41LTQuMi0wLjVjLTEuMywxLTEuNSwyLjktMC41LDQuMmw3LDljMC41LDAuNywxLjQsMS4xLDIuMywxLjJjMCwwLDAuMSwwLDAuMSwwYzAuOSwwLDEuNy0wLjQsMi4yLTFsMTUuMS0xN0MxMjIuMyw5MC4zLDEyMSw4OC43LDExOS41LDg3LjN6Ij48L3BhdGg+PGc+PHBhdGggZmlsbD0iIzQ0NGI1NCIgZD0iTTMyLDEyMmg1MWMxLjcsMCwzLTEuMywzLTNzLTEuMy0zLTMtM0gzMmMtMy45LDAtNy0zLjEtNy03VjE5YzAtMy45LDMuMS03LDctN2g2NGMxLjksMCwzLjYsMC43LDUsMi4xYzEuMywxLjMsMiwzLjEsMiw1bC0wLjEsNTNjMCwxLjcsMS4zLDMsMywzYzAsMCwwLDAsMCwwYzEuNywwLDMtMS4zLDMtM2wwLjEtNTNjMC0zLjUtMS4zLTYuNy0zLjgtOS4yQzEwMi43LDcuNCw5OS41LDYsOTYsNkgzMmMtNy4yLDAtMTMsNS44LTEzLDEzdjkwQzE5LDExNi4yLDI0LjgsMTIyLDMyLDEyMnoiPjwvcGF0aD48L2c+PC9zdmc+')
     50% 50% no-repeat;
   background-size: 100%;
 }
 .icons8-ball-point-pen {
   display: inline-block;
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNjQiIGhlaWdodD0iNjQiCnZpZXdCb3g9IjAgMCAxMjggMTI4IgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik00NC45LDExN2wtMTAuOCw3LjFsMC44LTEyLjljMC40LTYuMiwyLjItMTIuMiw1LjMtMTcuNmw0MC4zLTY5LjhjMi44LTQuOCw4LjktNi40LDEzLjctMy43bDAsMGM0LjgsMi44LDYuNCw4LjksMy43LDEzLjdsLTQwLjMsNjkuOEM1NC40LDEwOSw1MC4xLDExMy42LDQ0LjksMTE3eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNjMGU3ZmYiIGQ9Ik01Ny40LDk0LjljLTAuNSwwLTEtMC4xLTEuNS0wLjRjLTEuNC0wLjgtMS45LTIuNy0xLjEtNC4xbDMyLjgtNTYuOGMwLjgtMS40LDIuNy0xLjksNC4xLTEuMWMxLjQsMC44LDEuOSwyLjcsMS4xLDQuMUw2MCw5My40QzU5LjQsOTQuNCw1OC40LDk0LjksNTcuNCw5NC45eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiM0NDRiNTQiIGQ9Ik05OS45IDM2LjJsLjUtLjljMS43LTMgMi4yLTYuNSAxLjMtOS45cy0zLTYuMi02LjEtNy45Yy0zLTEuNy02LjUtMi4yLTkuOS0xLjMtMy40LjktNi4yIDMtNy45IDYuMUwzNy42IDkyLjFjLTMuMyA1LjgtNS4zIDEyLjMtNS43IDE4LjlsLS44IDEyLjljLS4xIDEuMS41IDIuMiAxLjUgMi44LjUuMyAxIC40IDEuNS40LjYgMCAxLjItLjIgMS43LS41bDEwLjgtNy4xYzUuNS0zLjcgMTAuMi04LjYgMTMuNS0xNC40bDM2LjctNjMuNmMyLjcgMi4xIDMuNSA1LjkgMS43IDlsLTIxIDM2LjRjLS44IDEuNC0uMyAzLjMgMS4xIDQuMS41LjMgMSAuNCAxLjUuNCAxIDAgMi0uNSAyLjYtMS41bDIxLTM2LjRDMTA3LjIgNDcuNSAxMDUuNCA0MCA5OS45IDM2LjJ6TTU1IDEwMi4xYy0yLjkgNC45LTYuOSA5LjItMTEuNyAxMi40bC01LjggMy44LjQtNi45Yy4zLTUuNyAyLTExLjMgNC45LTE2LjNsNDAuMy02OS44YzEuMy0yLjIgMy43LTMuNSA2LjEtMy41IDEuMiAwIDIuNC4zIDMuNS45IDEuNi45IDIuOCAyLjQgMy4zIDQuM3MuMiAzLjctLjcgNS4zTDU1IDEwMi4xek05OSAxMjdINTljLTEuNyAwLTMtMS4zLTMtM3MxLjMtMyAzLTNoNDBjMS43IDAgMyAxLjMgMyAzUzEwMC43IDEyNyA5OSAxMjd6TTExNCAxMjFBMyAzIDAgMSAwIDExNCAxMjcgMyAzIDAgMSAwIDExNCAxMjF6Ij48L3BhdGg+PC9zdmc+')
     50% 50% no-repeat;
   background-size: 100%;
@@ -136,12 +121,13 @@
 .methods-checkbox-container {
   display: flex;
   padding: 2rem;
-  gap: 3rem;
+  gap: 2.5rem;
+  overflow: scroll;
 }
 .method-check-box {
   border: 1px solid rgba(0, 0, 0, 0.219);
-  height: 250px;
-  width: 250px;
+  height: 180px;
+  width: 180px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -192,9 +178,7 @@
 }
 .active-checkbox .checkbox-input {
   border: 2px solid #109ef075;
-
   display: inline-block;
-
   background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iMjQiIGhlaWdodD0iMjQiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iIzEwOWRmMCI+PHBhdGggZD0iTTE0NS40MzI5NCwzNy45MzI5NGwtODAuOTMyOTQsODAuOTMyOTVsLTMwLjc2NjI4LC0zMC43NjYyOGwtMTAuMTM0MTEsMTAuMTM0MTFsNDAuOTAwMzksNDAuOTAwMzlsOTEuMDY3MDYsLTkxLjA2NzA1eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+')
     50% 50% no-repeat;
 
@@ -205,6 +189,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  width: 100%;
 }
 .show-formation-of-excel-file {
   font-weight: 600;
@@ -232,7 +217,7 @@
 
 .invitation-btn {
   width: 100%;
-  padding: 0.7rem 1.4rem;
+  padding: 0.7rem 2rem;
   border: 2px solid #2a98d88c;
   background: #1698e4ef;
   color: var(--very-light-white);
@@ -249,11 +234,52 @@
 .invitation-btn:active {
   color: var(--very-light-white);
 }
+.excel-invitations-btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-invitations-btn button {
+  width: 100%;
+}
 @media only screen and (min-width: 720px) {
+  .method-check-box {
+    height: 220px;
+    width: 220px;
+  }
+  .add-lecturer-form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+  }
+  .icons8-check-document {
+    width: 70px;
+    height: 70px;
+  }
+  .icons8-ball-point-pen {
+    width: 100px;
+    height: 100px;
+  }
+  .form-uploader-xlsx-container {
+    width: 80%;
+  }
+  .excel-invitations-btn {
+    width: 80%;
+  }
 }
 @media only screen and (min-width: 1024px) {
-  .btns-container {
-    flex-direction: row-reverse;
-    justify-content: flex-start;
+  .method-check-box {
+    border: 1px solid rgba(0, 0, 0, 0.219);
+    height: 250px;
+    width: 250px;
+  }
+  .form-uploader-xlsx-container {
+    width: 50%;
+  }
+  .excel-invitations-btn {
+    width: 50%;
+  }
+  .excel-invitations-btn button {
   }
 }

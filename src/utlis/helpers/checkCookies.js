@@ -5,7 +5,6 @@ export async function checkCookies({
   setLoading,
   dispatch,
   setRedirectToReferrer,
-  setMounted,
   setCheckingCookiesLoading,
   token,
   userID,
@@ -15,9 +14,6 @@ export async function checkCookies({
   dispatch(action);
   if (action.type !== FAILED_AUTHENTICATION) {
     setRedirectToReferrer(true);
-    setMounted(false);
-  } else {
-    setMounted(true);
   }
   setLoading(false);
   setCheckingCookiesLoading(false);

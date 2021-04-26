@@ -150,7 +150,6 @@ function AppBarComponent(classes, handleDrawerToggle) {
               fontSize: '.9rem',
               fontWeight: '500',
               fontFamily: 'Poppins' || 'sans-serif',
-              animation: 'none',
             }}
             classes={{
               root: classes.inputRoot,

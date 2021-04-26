@@ -6,7 +6,7 @@ import Logo from 'components/common/Logo';
 import PasswordTextField from 'components/common/PasswordTextField';
 import SpinnerElement from 'components/Spinner/spinner';
 import Cookies from 'js-cookie';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import { LoginAction } from 'redux/actions/authedAction';
@@ -16,8 +16,9 @@ import './login.css';
 
 const Login = () => {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
-  const [identifier, setIdentifier] = useState('');
-  const [password, setPassword] = useState('');
+
+  const identifier = useRef(null);
+  const password = useRef(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { state } = useLocation();
@@ -31,59 +32,45 @@ const Login = () => {
       e.preventDefault();
       setLoading(true);
       const action = await LoginAction({
-        identifier: identifier,
-        password: password,
+        identifier: identifier?.current?.value,
+        password: password?.current?.value,
         LoginMutation: loginMutation,
       });
       if (action.type === FAILED_AUTHENTICATION) {
         setError(true);
-        setLoading(false);
       } else {
         dispatch(action);
-        setLoading(false);
         setRedirectToReferrer(true);
       }
+      setLoading(false);
     },
-    [
-      dispatch,
-      setLoading,
-      setRedirectToReferrer,
-      identifier,
-      password,
-      setError,
-      loginMutation,
-    ]
+    [dispatch, setLoading, setRedirectToReferrer, setError, loginMutation]
   );
-  const onChange = {
-    email: (e) => {
-      setIdentifier(e.target.value);
-    },
-    password: (e) => {
-      setPassword(e.target.value);
-    },
-  };
+
   const ignoreError = useCallback(() => {
     setError(false);
   }, []);
 
   useEffect(() => {
     document.title = 'Attend. | Sign in';
-    const token = Cookies.get('token');
-    const userID = Cookies.get('authedUser');
 
-    if (token && userID && !mounted) {
-      checkCookies({
-        dispatch,
-        setLoading,
-        setRedirectToReferrer,
-        setMounted,
-        setCheckingCookiesLoading,
-        token,
-        userID,
-      });
-    } else {
-      setCheckingCookiesLoading(false);
-      setMounted(true);
+    try {
+      const token = Cookies.get('token');
+      const userID = Cookies.get('authedUser');
+      if (token && userID && !mounted) {
+        checkCookies({
+          dispatch,
+          setLoading,
+          setRedirectToReferrer,
+          setCheckingCookiesLoading,
+          token,
+          userID,
+        });
+      } else {
+        setCheckingCookiesLoading(false);
+      }
+    } catch (e) {
+      console.error(e.message);
     }
     return () => {
       setMounted(true);
@@ -125,15 +112,12 @@ const Login = () => {
               id='outlined-required-email'
               label='Username or Email'
               variant='outlined'
-              onChange={onChange.email}
               autoFocus
               fullWidth
+              inputRef={identifier}
             />
 
-            <PasswordTextField
-              handleLogin={onLogin}
-              handleChangeInForm={onChange.password}
-            />
+            <PasswordTextField handleLogin={onLogin} reference={password} />
             <input
               type='hidden'
               name='loginFlow'
@@ -144,10 +128,9 @@ const Login = () => {
             <div className='login-btn-container'>
               <button
                 className='login-btn'
-                data-litms-control-urn='login-submit'
                 type='submit'
                 aria-label='Sign in'
-                disabled={loading}
+                disabled={loading || checkingCookiesLoading}
               >
                 Sign in
               </button>

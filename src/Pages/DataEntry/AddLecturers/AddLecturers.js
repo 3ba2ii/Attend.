@@ -127,6 +127,10 @@ export default function AddLecturersPage() {
 function DropZone() {
   const [openModal, setOpenModal] = useState(false);
   const [xlsxFile, setFile] = useState(null);
+  console.log(
+    `🚀 ~ file: AddLecturers.js ~ line 130 ~ DropZone ~ xlsxFile`,
+    xlsxFile
+  );
   const [fileFormatError, setFileFormatError] = useState(false);
 
   const handleClose = () => {
@@ -173,9 +177,17 @@ function DropZone() {
             setFile,
             setFileFormatError,
             fileFormatError,
-            propsToCheck: 'department uploader',
+            propsToCheck: 'users-invitation',
           }}
         />
+      </div>
+      <div
+        className='invitation-btn-container excel-invitations-btn'
+        style={{ marginTop: '2rem' }}
+      >
+        <button type='submit' className='invitation-btn'>
+          <span>Send Invitations</span>
+        </button>
       </div>
     </section>
   );

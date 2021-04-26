@@ -3,13 +3,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { SignOut } from 'redux/actions/authedAction';
 import AvatarComponent from '../Avatar/Avatar';
 import Logo from '../common/Logo';
 
 export function DrawerItems(classes, pathname) {
   const { authedUser } = useSelector((state) => state.authReducer);
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -129,6 +131,35 @@ export function DrawerItems(classes, pathname) {
         ))}
       </List>
       <Divider />
+
+      <ListItem button style={{ marginTop: '24px' }}>
+        <ListItemIcon className={`list-item-icon`}>
+          <div className='drawer-icon-container'>{}</div>
+        </ListItemIcon>
+        <ListItemText
+          primary={'Monthly Report'}
+          disableTypography
+          className={`list-item-text`}
+        />
+      </ListItem>
+
+      <ListItem
+        onClick={() => {
+          const action = SignOut();
+          dispatch(action);
+        }}
+        button
+        style={{ position: 'absolute', bottom: '10px', cursor: 'pointer' }}
+      >
+        <ListItemIcon className={`list-item-icon`}>
+          <div className='drawer-icon-container'>{}</div>
+        </ListItemIcon>
+        <ListItemText
+          primary={'Logout'}
+          disableTypography
+          className={`list-item-text`}
+        />
+      </ListItem>
     </div>
   );
 }

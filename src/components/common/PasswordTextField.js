@@ -10,7 +10,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useStyles } from 'types/styles';
 
-export default function PasswordTextField({ handleChangeInForm, handleLogin }) {
+export default function PasswordTextField({ handleLogin, reference }) {
   const classes = useStyles();
   const [showPassword, setShowPassword] = React.useState(false);
   const [password, setPassword] = React.useState('');
@@ -18,7 +18,6 @@ export default function PasswordTextField({ handleChangeInForm, handleLogin }) {
   const handleChange = (event) => {
     event.preventDefault();
     setPassword(event.target.value);
-    handleChangeInForm(event);
   };
 
   const handleClickShowPassword = () => {
@@ -45,6 +44,7 @@ export default function PasswordTextField({ handleChangeInForm, handleLogin }) {
         id='standard-adornment-password'
         type={showPassword ? 'text' : 'password'}
         value={password}
+        inputRef={reference}
         onChange={handleChange}
         onKeyPress={(ev) => {
           if (ev.key === 'Enter') {

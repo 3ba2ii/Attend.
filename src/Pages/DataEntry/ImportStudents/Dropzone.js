@@ -17,7 +17,7 @@ const DropzoneContainer = ({
         result[0].hasOwnProperty(
           propsToCheck === 'student-import'
             ? 'ID' && 'اسم الطالب' && 'الرقم القومي' && 'الايميل'
-            : ''
+            : 'Email' && 'Department' && 'Role'
         )
       ) {
         setFile(result);

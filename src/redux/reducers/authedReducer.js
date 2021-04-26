@@ -19,12 +19,22 @@ const authReducer = (state = initialState, action) => {
         action
       );
 
-      Cookies.set('token', action?.authedUser?.jwt, {
-        expires: 30,
-      });
-      Cookies.set('authedUser', action?.authedUser?.id, {
-        expires: 30,
-      });
+      Cookies.set(
+        'token',
+        action?.authedUser?.jwt,
+        {
+          expires: 10,
+        },
+        { SameSite: 'None', secure: true }
+      );
+      Cookies.set(
+        'authedUser',
+        action?.authedUser?.id,
+        {
+          expires: 10,
+        },
+        { SameSite: 'None', secure: true }
+      );
       return { ...state, authedUser: { ...action.authedUser } };
 
     case SUCCESSFULLY_AUTHENTICATED_USING_COOKIES:

@@ -25,7 +25,7 @@ export const LoginAction = async ({ identifier, password, LoginMutation }) => {
 
     return {
       type: SUCCESSFULLY_AUTHENTICATED,
-      authedUser: { ...userInfo?.data?.user, jwt: data?.login?.jwt },
+      authedUser: { ...{ ...userInfo?.data?.user, jwt: data?.login?.jwt } },
     };
   } catch (err) {
     return { type: FAILED_AUTHENTICATION, error: err.message };

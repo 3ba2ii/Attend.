@@ -20,10 +20,9 @@ const DataEntryPage = () => {
   return (
     <main id='data-entry-page'>
       <header className='data-entry-header'>
-        <h3>Admin Panel 🧑🏻‍💼</h3>
-        <p className='font-weight500'>
-          Please note that this actions are only accessed by the admin and no
-          one else is authorized to access these pages and modify the data{' '}
+        <h4 className='font-weight600'>Administration Panel 👨🏼‍💼</h4>
+        <p className='font-weight400'>
+          Please note that these actions are only accessed by the admin.
         </p>
       </header>
       <SelectCardsComponent />

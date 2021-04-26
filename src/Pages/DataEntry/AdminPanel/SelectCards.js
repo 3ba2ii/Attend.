@@ -8,23 +8,27 @@ const optionalProps = [
   {
     id: 'addData123',
     title: 'Data Entry',
-    subtitle: 'Add or Remove students to and from the database.',
-    img: <img src={uploadData} className='svg-img' alt={'Data Entry'} />,
+    subtitle:
+      'Here you can import students to the database immediately using a .csv or .xlsx file, and you can delete students groups as well. ',
+    img: <img src={uploadData} alt={'Data Entry'} />,
 
     path: 'import_students',
   },
   {
     id: 'assignLecturers',
     title: 'Assign Lecturers',
-    subtitle: 'Assign lecturers to certain courses.',
-    img: <img src={sh} className='svg-img' alt={'Assign Lecturers'} />,
+    subtitle:
+      'Here you can assign lecturers and teacher assistants to courses so that they have access to take attendance for, and you can un-assign courses from them as well.',
+
+    img: <img src={sh} alt={'Assign Lecturers'} />,
     path: 'assign_lecturers',
   },
   {
     id: 'addLecturers',
     title: 'Add Lecturers and Assistants',
-    subtitle: 'Add new lecturers and assistants to the database.',
-    img: <img src={wl} className='svg-img' alt={'Add Lecturers'} />,
+    subtitle:
+      "Here you can send invitations to new lecturers' and TAs accounts using their official email address, and you can also delete some accounts.",
+    img: <img src={wl} alt={'Add Lecturers'} />,
     path: 'add_lecturers_users',
   },
 ];
@@ -39,8 +43,10 @@ const SelectCardsComponent = () => {
           key={card.id + index}
         >
           <div className='card-img-container'>{card.img}</div>
-          <h5 className='font-weight600'>{card.title}</h5>
-          <p>{card.subtitle}</p>
+          <header>
+            <h6 className='font-weight600'>{card.title}</h6>
+            <p>{card.subtitle}</p>
+          </header>
         </Link>
       ))}
     </div>

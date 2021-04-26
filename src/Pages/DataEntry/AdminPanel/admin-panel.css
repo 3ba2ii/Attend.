@@ -1,56 +1,57 @@
 #data-entry-page {
   width: 100%;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
+  display: grid;
+
+  gap: 1rem;
   position: relative;
   padding: 8rem 3% 2rem 3%;
 }
 
 .select-cards-container {
-  width: 95%;
-  height: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 38px;
-  flex-wrap: wrap;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-rows: repeat(auto-fit, 650px);
+  gap: 2.5rem;
 }
 
 .single-select-card-container {
-  flex: 1 1 250px; /*  Stretching: */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 90%;
-  box-shadow: var(--card-border-shadow);
-  cursor: pointer;
-  border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
-  transition: transform 0.5s;
-  -webkit-transition: transform 0.5s;
-  -moz-transition: transform 0.5s;
-  -ms-transition: transform 0.5s;
-  -o-transition: transform 0.5s;
   background: white;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(400px, 2fr) 1fr;
 
-  text-align: center;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%), 0 0 0 1px rgb(0 0 0 / 4%);
+  border-top: 5px solid #232f3e;
+  transition: all 0.4s ease-in;
+  -webkit-transition: all 0.4s ease-in;
+  -moz-transition: all 0.4s ease-in;
+  -ms-transition: all 0.4s ease-in;
+  -o-transition: all 0.4s ease-in;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  padding: 6%;
+  position: relative;
+  overflow: scroll;
 }
-.single-select-card-container p {
-  max-width: 90%;
-  text-align: center;
-  font-weight: 500;
+
+.single-select-card-container header {
+  grid-column: 1/2;
+  width: 100%;
+  height: 100%;
+  grid-row: 2/3;
+  display: grid;
+
+  grid-template-rows: 1fr 3fr;
+  padding: 1rem 0rem;
 }
-.single-select-card-container h5 {
-  font-size: 1.5rem;
-  margin-top: 1.5rem;
-  line-height: auto;
+.card-img-container {
+  grid-column: 1/2;
+  grid-row: 1/2;
+  display: grid;
+  place-items: center;
 }
 .single-select-card-container:hover {
   transform: scale(1.02);
@@ -60,23 +61,39 @@
   -o-transform: scale(1.02);
 }
 .card-img-container {
-  display: block;
-  max-width: 200px;
+  width: 100%;
 }
 .card-img-container img {
   width: 100%;
+}
+.input-label {
+  font-family: var(--main-font-family);
+  position: relative;
+  font-weight: 400;
+}
+.input-label:before {
+  content: '';
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698394-icon-130-cloud-upload-512.png');
+  background-size: 80%;
+  background-repeat: no-repeat;
+  top: -60px;
+}
+.input-label:after {
+  content: 'Files Supported :  .xsls  .csv';
+  position: absolute;
+  bottom: -30px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  color: #90a0b7;
 }
 
 @media only screen and (min-width: 720px) {
   #data-entry-page {
     align-items: flex-start;
-  }
-  .card-img-container {
-    display: block;
-    max-width: 220px;
-  }
-  .card-img-container img {
-    width: 100%;
   }
 
   .select-cards-container {

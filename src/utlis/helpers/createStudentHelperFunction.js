@@ -2,11 +2,9 @@ export const createStudentHelperFunction = ({
   createStudent,
   studentsFile,
   group,
-  setUploadLoading,
   setOpenSnackbar,
   setSnackbarType,
 }) => {
-  setUploadLoading(true);
   studentsFile.forEach(async (student) => {
     try {
       let StudentNameInArabic = student['اسم الطالب'];
@@ -31,6 +29,5 @@ export const createStudentHelperFunction = ({
       setOpenSnackbar(true);
       setSnackbarType('error');
     }
-    setUploadLoading(false);
   });
 };

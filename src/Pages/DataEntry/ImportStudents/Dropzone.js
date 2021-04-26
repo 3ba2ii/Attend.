@@ -4,9 +4,10 @@ import 'react-dropzone-uploader/dist/styles.css';
 import { readExcel } from 'utlis/helpers/readExcelFile';
 
 const DropzoneContainer = ({
-  setStudentsFile,
+  setFile,
   setFileFormatError,
   fileFormatError,
+  propsToCheck,
 }) => {
   const handleChangeStatus = async ({ meta, file }, status) => {
     if (status === 'done') {
@@ -14,17 +15,19 @@ const DropzoneContainer = ({
 
       if (
         result[0].hasOwnProperty(
-          'ID' && 'اسم الطالب' && 'الرقم القومي' && 'الايميل'
+          propsToCheck === 'student-import'
+            ? 'ID' && 'اسم الطالب' && 'الرقم القومي' && 'الايميل'
+            : ''
         )
       ) {
-        setStudentsFile(result);
+        setFile(result);
       } else {
         setFileFormatError('error');
         return;
       }
     }
     if (status === 'removed') {
-      setStudentsFile(null);
+      setFile(null);
       setFileFormatError(null);
     }
   };

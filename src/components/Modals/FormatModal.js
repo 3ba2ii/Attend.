@@ -5,7 +5,14 @@ import React from 'react';
 import excelFileScreenshot from 'assets/excelsheet.png';
 import { transitionFormatModalStyle } from 'types/styles';
 
-export default function TransitionsModal({ handleOpen, handleClose, open }) {
+export default function TransitionsModal({
+  handleOpen,
+  handleClose,
+  open,
+  title,
+  description,
+  exampleImage,
+}) {
   const classes = transitionFormatModalStyle();
 
   return (
@@ -24,19 +31,10 @@ export default function TransitionsModal({ handleOpen, handleClose, open }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id='transition-modal-title'>How to format the excel file?</h2>
-            <p id='transition-modal-description'>
-              Please format the excel file to only include these following
-              headers <br />
-              <b> 'اسم الطالب ,الرقم القومي ,الايميل, ID' </b>to allow the
-              system to store the data in a correct way.
-            </p>
+            <h2 id='transition-modal-title'>{title}</h2>
+            <p id='transition-modal-description'>{description}</p>
             <div className='excel-sheet-screenshot-container'>
-              <img
-                src={excelFileScreenshot}
-                alt={'excel-sheet'}
-                className='excel-sheet-screenshot'
-              />
+              {exampleImage}
             </div>
           </div>
         </Fade>

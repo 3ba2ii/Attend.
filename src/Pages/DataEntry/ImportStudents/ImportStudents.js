@@ -1,9 +1,8 @@
 import { useMutation } from '@apollo/client';
-import { CircularProgress } from '@material-ui/core';
 import { CREATE_STUDENT } from 'api/mutations/createStudent';
 import { GET_FACULTY_DATA } from 'api/queries/getFacultyData';
+import excelFileScreenshot from 'assets/excelsheet.png';
 import CustomizedSnackbars from 'components/Alerts/Alerts';
-import { ButtonWithIcon } from 'components/Buttons/Button';
 import TransitionsModal from 'components/Modals/FormatModal';
 import UploadedGroupsModal from 'components/Modals/UploadedGroupsModal';
 import Query from 'components/Query';
@@ -31,8 +30,7 @@ const ImportStudentContainer = () => {
   const [fileFormatError, setFileFormatError] = useState(null);
   const [openFormationModal, setOpenFormationModal] = useState(false);
   const [openGroupsModal, setOpenGroupsModal] = useState(false);
-  const [createStudent] = useMutation(CREATE_STUDENT);
-  const [uploadLoading, setUploadLoading] = useState(false);
+  const [createStudent, { loading }] = useMutation(CREATE_STUDENT);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarType, setSnackbarType] = useState('');
   const { state } = useLocation();
@@ -111,19 +109,11 @@ const ImportStudentContainer = () => {
         createStudent,
         studentsFile,
         group,
-        setUploadLoading,
         setOpenSnackbar,
         setSnackbarType,
       });
     },
-    [
-      createStudent,
-      studentsFile,
-      group,
-      setUploadLoading,
-      setOpenSnackbar,
-      setSnackbarType,
-    ]
+    [createStudent, studentsFile, group, setOpenSnackbar, setSnackbarType]
   );
   const fetchFaculties = useCallback(
     (data) => setFaculties(data?.faculties || []),
@@ -137,131 +127,156 @@ const ImportStudentContainer = () => {
   }
 
   return (
-    <Query query={GET_FACULTY_DATA} onCompletedFunction={fetchFaculties}>
-      {() => (
-        <main id='import-student-for-container'>
-          <header className='import-students-header'>
-            <h3>Import Students 🧑🏼‍🎓</h3>
-            <p>
-              Please fill out all the information required below to upload the
-              students to the database.
-              <br />
-              <span onClick={handleOpenGroupModal}>Show uploaded groups</span>
-            </p>
-          </header>
-          <CustomizedSnackbars
-            {...{
-              open: openSnackbar,
-              type: snackbarType || 'error',
-              message:
-                snackbarType === 'success'
-                  ? `Imported ${
-                      studentsFile?.length || ''
-                    } Students Successfully!`
-                  : 'There was an error uploading this students file, Please try again later! ',
-              handleClose: handleCloseToaster,
-            }}
-          />
-          <form
-            className={classes.root + ' select-import-form-container'}
-            noValidate
-            autoComplete='off'
-            onSubmit={onUploadData}
-          >
-            <div>
-              <SelectFormContainer
-                {...{
-                  selected: faculty,
-                  selections: faculties,
-                  handleSelection: onSelectFaculty,
-                  label: 'Faculty',
-                  helperText: 'Please Select a Faculty',
-                  valueText: 'FacultyNameInArabic',
-                  id: 'faculty',
-                }}
-              />
+    <main id='import-student-for-container'>
+      <Query query={GET_FACULTY_DATA} onCompletedFunction={fetchFaculties}>
+        {() => (
+          <>
+            <header className='import-students-header'>
+              <h4 className='font-weight600'>Import Students 🧑🏼‍🎓</h4>
 
-              <SelectFormContainer
-                {...{
-                  selected: department,
-                  selections: departments,
-                  handleSelection: onSelectDepartment,
-                  label: 'Department',
-                  helperText: 'Please Select a Department',
-                  valueText: 'DepartmentNameInArabic',
-                  id: 'department',
-                }}
-              />
-
-              <SelectFormContainer
-                {...{
-                  selected: academicYear,
-                  selections: academicYears,
-                  handleSelection: onSelectAcademicYear,
-                  label: 'Academic Year',
-                  helperText: 'Please Select an Academic Year',
-                  valueText: 'AcademicYearInArabic',
-                  id: 'academic-year',
-                }}
-              />
-
-              <SelectFormContainer
-                {...{
-                  selected: group,
-                  selections: groups,
-                  handleSelection: onSelectGroup,
-                  label: 'Group',
-                  helperText:
-                    'Please Select a Group; if none select the first group',
-                  valueText: 'GroupNumber',
-                  id: 'group',
-                }}
-              />
-            </div>
-
-            <DropzoneContainer
-              setStudentsFile={setStudentsFile}
-              fileFormatError={fileFormatError}
-              setFileFormatError={setFileFormatError}
+              <p>
+                Please fill out all the information required below to upload the
+                students to the database.
+                <br />
+                <span onClick={handleOpenGroupModal}>Show uploaded groups</span>
+              </p>
+            </header>
+            <CustomizedSnackbars
+              {...{
+                open: openSnackbar,
+                type: snackbarType || 'error',
+                message:
+                  snackbarType === 'success'
+                    ? `Imported ${
+                        studentsFile?.length || ''
+                      } Students Successfully!`
+                    : 'There was an error uploading this students file, Please try again later! ',
+                handleClose: handleCloseToaster,
+              }}
             />
-            <div className='show-formation-of-excel-file' onClick={handleOpen}>
-              Show how the Excel File should be formatted?
-            </div>
-            <div className='btns-container btns-cont-end'>
-              <Link className='cancel-btn' to={'/admin-panel'}>
-                <span>Cancel</span>
-              </Link>
-              {ButtonWithIcon({
-                ...{
-                  iconLoading: <CircularProgress color='inherit' size={20} />,
-                  loading: uploadLoading,
-                  label: 'Upload',
-                  disabled:
+            <form
+              className={classes.root + ' select-import-form-container'}
+              noValidate
+              autoComplete='off'
+              onSubmit={onUploadData}
+            >
+              <div>
+                <SelectFormContainer
+                  {...{
+                    selected: faculty,
+                    selections: faculties,
+                    handleSelection: onSelectFaculty,
+                    label: 'Faculty',
+                    helperText: 'Please Select a Faculty',
+                    valueText: 'FacultyNameInArabic',
+                    id: 'faculty',
+                  }}
+                />
+
+                <SelectFormContainer
+                  {...{
+                    selected: department,
+                    selections: departments,
+                    handleSelection: onSelectDepartment,
+                    label: 'Department',
+                    helperText: 'Please Select a Department',
+                    valueText: 'DepartmentNameInArabic',
+                    id: 'department',
+                  }}
+                />
+
+                <SelectFormContainer
+                  {...{
+                    selected: academicYear,
+                    selections: academicYears,
+                    handleSelection: onSelectAcademicYear,
+                    label: 'Academic Year',
+                    helperText: 'Please Select an Academic Year',
+                    valueText: 'AcademicYearInArabic',
+                    id: 'academic-year',
+                  }}
+                />
+
+                <SelectFormContainer
+                  {...{
+                    selected: group,
+                    selections: groups,
+                    handleSelection: onSelectGroup,
+                    label: 'Group',
+                    helperText:
+                      'Please Select a Group; if none select the first group',
+                    valueText: 'GroupNumber',
+                    id: 'group',
+                  }}
+                />
+              </div>
+
+              <DropzoneContainer
+                setFile={setStudentsFile}
+                propsToCheck={'student-import'}
+                fileFormatError={fileFormatError}
+                setFileFormatError={setFileFormatError}
+              />
+              <div
+                className='show-formation-of-excel-file'
+                onClick={handleOpen}
+              >
+                How to format the excel file?
+              </div>
+              <div className='upload-btn-container'>
+                <Link className='cancel-btn' to={'/admin-panel'}>
+                  <span>Back</span>
+                </Link>
+
+                <button
+                  className='upload-students-btn'
+                  type='submit'
+                  disabled={
                     fileFormatError ||
                     !studentsFile ||
                     !group ||
                     !academicYear ||
                     !department ||
-                    !faculty,
-                },
-              })}
-            </div>
-          </form>
-          <TransitionsModal
-            handleClose={handleClose}
-            handleOpen={handleOpen}
-            open={openFormationModal}
-          />
-          {openGroupsModal && (
-            <UploadedGroupsModal
-              handleClose={handleCloseGroupModal}
-              handleOpen={handleOpenGroupModal}
-              open={openGroupsModal}
+                    !faculty ||
+                    loading
+                  }
+                >
+                  <span>Upload</span>
+                </button>
+              </div>
+            </form>
+            <TransitionsModal
+              handleClose={handleClose}
+              handleOpen={handleOpen}
+              open={openFormationModal}
+              description={
+                <>
+                  Please format the excel file to only include these following
+                  headers <br />
+                  <b> 'اسم الطالب ,الرقم القومي ,الايميل, ID' </b>to allow the
+                  system to store the data in a correct way.
+                </>
+              }
+              title={'How to format the excel file?'}
+              exampleImage={
+                <img
+                  src={excelFileScreenshot}
+                  alt={'excel-sheet'}
+                  className='excel-sheet-screenshot'
+                />
+              }
             />
-          )}
-        </main>
-      )}
-    </Query>
+            {openGroupsModal && (
+              <UploadedGroupsModal
+                handleClose={handleCloseGroupModal}
+                handleOpen={handleOpenGroupModal}
+                open={openGroupsModal}
+              />
+            )}
+          </>
+        )}
+      </Query>
+    </main>
   );
 };
 

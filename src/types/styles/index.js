@@ -45,21 +45,17 @@ export const addLecturerPageStyles = makeStyles((theme) => ({
 export const importFormsStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(15),
+    paddingRight: theme.spacing(3),
+    width: '90%',
+
+    position: 'relative',
 
     '& .MuiTextField-root': {
       width: '100%',
       margin: theme.spacing(2, 2, 2, 0),
 
       [theme.breakpoints.up('md')]: {
-        margin: theme.spacing(1.5, 5, 2, 0),
-        width: '50ch',
-      },
-      [theme.breakpoints.up('lg')]: {
-        width: '60ch',
-      },
-      [theme.breakpoints.up('xl')]: {
-        width: '80ch',
+        width: 'calc(50% - 32px)',
       },
     },
   },
@@ -287,7 +283,7 @@ export const areYouSureModalStyles = makeStyles((theme) => ({
   },
   root: {
     '& > *': {
-      margin: theme.spacing(1),
+      margin: theme.spacing(1, 0),
       width: '100%',
       outline: 'none',
     },

@@ -24,7 +24,7 @@
   font-size: 1rem;
   color: var(--very-light-white);
   font-weight: 500;
-  background: #0a66c2;
+  background: var(--button-bg-color);
   border-radius: 28px;
   -webkit-border-radius: 28px;
   -moz-border-radius: 28px;

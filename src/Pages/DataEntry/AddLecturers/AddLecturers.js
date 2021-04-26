@@ -1,103 +1,32 @@
-import { useMutation } from '@apollo/client';
-import { CircularProgress, MenuItem } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import { CREATE_LECTURER_ACCOUNT } from 'api/mutations/createLecturer';
 import { GET_USERNAMES_EMAILS } from 'api/queries/getOnlyUsernamesAndEmails';
+import excelFileScreenshot from 'assets/excelsheet.png';
 import CustomizedSnackbars from 'components/Alerts/Alerts';
-import LimitTags from 'components/AutoComplete/AutoCompleteLimiteTags';
-import { ButtonWithIcon } from 'components/Buttons/Button';
+import TransitionsModal from 'components/Modals/FormatModal';
 import Query from 'components/Query';
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
-import { addLecturerPageStyles } from 'types/styles';
-import CreateLecturerAccount from 'utlis/helpers/createLecturerAction';
-import {
-  validateArabicName,
-  validateEnglishName,
-} from 'utlis/validation/validation';
+import DropzoneContainer from '../ImportStudents/Dropzone';
 import './add_lecturers.css';
+import { InvitationForm } from './InvitationForm';
 
 export default function AddLecturersPage() {
-  const user = useSelector((state) => state?.authReducer?.authedUser);
+  const {
+    authedUser: { LecturerNameInEnglish, role, id },
+  } = useSelector((state) => state?.authReducer);
+
   const { state } = useLocation();
-  const classes = addLecturerPageStyles();
-  const [currentUsers, setCurrentUsers] = useState([]);
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [nameInEnglish, setNameInEnglish] = useState('');
-  const [nameInArabic, setNameInArabic] = useState('');
-  const [TeachingRole, setRole] = useState('');
-  const [department, setDepartment] = useState(null);
-  const [usernameError, setUsernameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [nameInEnglishError, setNameInEnglishError] = useState(false);
-  const [nameInArabicError, setNameInArabicError] = useState(false);
-  const [submitLoading, setSubmitLoading] = useState(false);
+  const [currentUsersEmail, setCurrentUsersEmails] = useState([]);
+
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarType, setSnackbarType] = useState('');
 
-  const [createLecturer] = useMutation(CREATE_LECTURER_ACCOUNT);
+  const [checkedMethod, setCheckedMethod] = useState(null);
 
-  const validateUsername = (e) => {
-    setUsername(e.target.value);
-    const found = currentUsers.find((x) => x.username === e.target.value);
-    if (found) setUsernameError(true);
-    else {
-      setUsernameError(false);
-    }
-  };
-  const validateEmail = (e) => {
-    setEmail(e.target.value);
-    const found = currentUsers.find((x) => x.email === e.target.value);
-    if (found) setEmailError(true);
-    else {
-      setEmailError(false);
-    }
-  };
-  const validatePassword = (e) => {
-    setPassword(e.target.value);
-  };
-  const validateNameInEnglish = (e) => {
-    setNameInEnglish(e.target.value);
-    let isValid = validateEnglishName(e.target.value);
-    if (!isValid) setNameInEnglishError(true);
-    else setNameInEnglishError(false);
-  };
-
-  const validateNameInArabic = (e) => {
-    setNameInArabic(e.target.value);
-    let isValid = validateArabicName(e.target.value);
-    if (!isValid) setNameInArabicError(true);
-    else setNameInArabicError(false);
-  };
-
-  const onSelectRole = (e) => {
-    setRole(e.target.value);
-  };
-  const onSelectDepartment = (e, value) => {
-    setDepartment(value);
-  };
-  const onSubmitCreate = (e) => {
-    e.preventDefault();
-    CreateLecturerAccount(
-      {
-        username,
-        email,
-        password,
-        nameInEnglish,
-        nameInArabic,
-        department,
-        TeachingRole,
-      },
-      createLecturer,
-      setSubmitLoading,
-      setOpenSnackbar,
-      setSnackbarType
-    );
-  };
+  /* setFile,
+  setFileFormatError,
+  fileFormatError,
+  propsToCheck, */
 
   const handleClose = (e, reason) => {
     if (reason === 'clickaway') {
@@ -108,26 +37,26 @@ export default function AddLecturersPage() {
   };
 
   const fetchUsers = useCallback(
-    ({ users }) => {
-      setCurrentUsers(users);
+    ({ users, departments, roles }) => {
+      setCurrentUsersEmails(users.map((u) => u.email));
     },
-    [setCurrentUsers]
+    [setCurrentUsersEmails]
   );
-  if (user?.role?.name !== 'Super Admin') {
+  if (role?.name !== 'Super Admin') {
     return <Redirect to={state?.from || '/dashboard'} />;
   }
 
   return (
     <Query query={GET_USERNAMES_EMAILS} onCompletedFunction={fetchUsers}>
-      {({ data }) => {
+      {({ data: { roles, departments } }) => {
         return (
           <main id='add-lecturers-page'>
             <header className='import-students-header'>
-              <h3>Add Lecturers 🧑‍🏫</h3>
+              <h4 className='font-weight600'>Invite Lecturers and TAs 🧑‍🏫</h4>
+
               <p>
-                Please fill out all the information required below to add the
-                lecturers and assistants to the database so that they can
-                sign-in later.
+                Fill the information below to send invitations for the users so
+                that they can register.
                 <br />
               </p>
             </header>
@@ -142,115 +71,112 @@ export default function AddLecturersPage() {
                 handleClose,
               }}
             />
-            <form
-              className={classes.root}
-              noValidate
-              autoComplete='off'
-              onSubmit={onSubmitCreate}
-            >
-              <div>
-                <TextField
-                  required
-                  autoComplete='username'
-                  id='outlined-error-helper-text-username'
-                  label='Username'
-                  helperText={
-                    usernameError
-                      ? 'This username is already taken.'
-                      : 'Please select a unique username.'
-                  }
-                  variant='outlined'
-                  error={usernameError}
-                  onChange={validateUsername}
-                />
-                <TextField
-                  required
-                  type='email'
-                  autoComplete='email'
-                  id='outlined-error-helper-text-email'
-                  label='Email'
-                  helperText={
-                    emailError
-                      ? 'This email is already taken.'
-                      : 'Please select a unique email.'
-                  }
-                  variant='outlined'
-                  error={emailError}
-                  onChange={validateEmail}
-                />
-
-                <TextField
-                  required
-                  id='outlined-error-helper-text-english'
-                  label='Lecturer Name in English'
-                  helperText={
-                    nameInEnglishError
-                      ? 'The name should only include english characters.'
-                      : "Please type the lecturer's name (in English)."
-                  }
-                  variant='outlined'
-                  error={nameInEnglishError}
-                  onChange={validateNameInEnglish}
-                />
-                <TextField
-                  required
-                  id='outlined-error-helper-text-arabic'
-                  label='Lecturer Name in Arabic'
-                  onChange={validateNameInArabic}
-                  helperText={
-                    nameInArabicError
-                      ? 'The name should only include Arabic characters.'
-                      : "Please type the lecturer's name (in Arabic)."
-                  }
-                  variant='outlined'
-                  error={nameInArabicError}
-                />
-                <TextField
-                  id='filled-select-currency'
-                  select
-                  required
-                  label='Select Role'
-                  value={TeachingRole}
-                  onChange={onSelectRole}
-                  helperText='Please select a role for the lecturer'
-                  variant='outlined'
+            <section className='add-lecturer-method'>
+              <h3>How do you want to send invitations?</h3>
+              <div className='methods-checkbox-container'>
+                <div
+                  className={`method-check-box ${
+                    checkedMethod === 'manually' && 'active-checkbox'
+                  }`}
+                  type='checkbox'
+                  onClick={() => {
+                    setCheckedMethod('manually');
+                  }}
                 >
-                  {[
-                    { label: 'Lecturer', value: 'lecturer' },
-                    { label: 'Teacher Assistant', value: 'TA' },
-                  ].map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <LimitTags {...{ onSelectDepartment }} />
+                  <span className='checkbox-input' />
+                  <div className='icons8-ball-point-pen' />
+                  <span className='font-weight500'>Manually</span>
+                </div>
+                <div
+                  className={`method-check-box ${
+                    checkedMethod === 'excel-sheet' && 'active-checkbox'
+                  }`}
+                  type='checkbox'
+                  onClick={() => {
+                    setCheckedMethod('excel-sheet');
+                  }}
+                >
+                  <span className='checkbox-input' />
+                  <div className='icons8-check-document' />
+                  <span className='font-weight500'>Excel Sheet</span>
+                </div>
               </div>
-
-              <div className='btns-container'>
-                {ButtonWithIcon({
-                  ...{
-                    iconLoading: <CircularProgress color='inherit' size={22} />,
-                    loading: submitLoading,
-                    label: 'Create Account',
-                    disabled:
-                      !department ||
-                      nameInEnglishError ||
-                      nameInArabicError ||
-                      usernameError ||
-                      emailError ||
-                      !nameInEnglish ||
-                      !nameInArabic ||
-                      !TeachingRole ||
-                      !password ||
-                      submitLoading,
-                  },
-                })}
-              </div>
-            </form>
+            </section>
+            <section className='main-content'>
+              <>
+                {checkedMethod === 'manually' && (
+                  <InvitationForm
+                    {...{
+                      roles,
+                      departments,
+                      currentUsersEmail,
+                      LecturerNameInEnglish,
+                      id,
+                    }}
+                  />
+                )}
+                {checkedMethod === 'excel-sheet' && <DropZone />}
+              </>
+            </section>
           </main>
         );
       }}
     </Query>
+  );
+}
+function DropZone() {
+  const [openModal, setOpenModal] = useState(false);
+  const [xlsxFile, setFile] = useState(null);
+  const [fileFormatError, setFileFormatError] = useState(false);
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+  return (
+    <section className='form-excel-wrapper'>
+      <div style={{ width: '400px' }}>
+        <TransitionsModal
+          handleClose={handleClose}
+          open={openModal}
+          description={
+            <>
+              Please format the excel file to only include these following
+              headers <br />
+              <b> 'اسم الطالب ,الرقم القومي ,الايميل, ID' </b>to allow the
+              system to store the data in a correct way.
+            </>
+          }
+          title={'How to format the excel file?'}
+          exampleImage={
+            <img
+              src={excelFileScreenshot}
+              alt={'excel-sheet'}
+              className='excel-sheet-screenshot'
+            />
+          }
+        />
+      </div>
+      <div className='form-uploader-xlsx-container'>
+        <header>
+          <h3>Format the excel file correctly and upload it</h3>
+          <span
+            className='show-formation-of-excel-file'
+            onClick={() => {
+              setOpenModal(true);
+            }}
+          >
+            How to format the excel file?
+          </span>
+        </header>
+        <DropzoneContainer
+          {...{
+            setFile,
+            setFileFormatError,
+            fileFormatError,
+            propsToCheck: 'department uploader',
+          }}
+        />
+      </div>
+    </section>
   );
 }

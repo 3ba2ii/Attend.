@@ -13,6 +13,8 @@
   --main-compare-green-color: #31c977;
   --main-compare-red-color: #e47c67;
 
+  --button-bg-color: #0a66c2;
+
   --card-border-shadow: 0px 6px 18px rgba(0, 0, 0, 0.29);
   --arabic-font-family: Arial, Helvetica, sans-serif;
   --main-font-family: 'Poppins', sans-serif;
@@ -91,6 +93,7 @@ p {
   color: var(--secondary-color);
   font-size: clamp(0.7rem, 0.7rem + 0.5vmin, 1.5rem);
   font-weight: 400;
+  -webkit-text-size-adjust: 100%;
 }
 
 img {
@@ -119,8 +122,8 @@ button {
   border: 0;
 }
 button:hover {
-  filter: brightness(115%);
-  -webkit-filter: brightness(115%);
+  filter: brightness(110%);
+  -webkit-filter: brightness(110%);
 }
 button:disabled {
   opacity: 0.7;
@@ -131,6 +134,8 @@ button:disabled {
 }
 button:active {
   color: inherit;
+  filter: brightness(98%);
+  -webkit-filter: brightness(98%);
 }
 .line-clamp {
   display: -webkit-box;

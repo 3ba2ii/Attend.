@@ -3,8 +3,17 @@ import { gql } from '@apollo/client';
 export const GET_USERNAMES_EMAILS = gql`
   query {
     users {
-      username
       email
+    }
+    departments {
+      id
+      DepartmentNameInEnglish
+      DepartmentNameInArabic
+    }
+    roles {
+      id
+      name
+      type
     }
   }
 `;

@@ -20,19 +20,16 @@ export default function AreYouSureModal({
   const { groupTitle, id } = groupInfo;
   const [fieldText, setFieldText] = useState('');
   const [students, setStudents] = useState([]);
-  const [deleteStudents, { loading: mutationLoading }] = useMutation(
-    DELETE_STUDENT_BY_GROUP,
-    {
-      onCompleted(_) {
-        refetch().then(() => {
-          handleClose();
-        });
-      },
-      onError(err) {
-        console.error(err);
-      },
-    }
-  );
+  const [deleteStudents, { loading }] = useMutation(DELETE_STUDENT_BY_GROUP, {
+    onCompleted(_) {
+      refetch().then(() => {
+        handleClose();
+      });
+    },
+    onError(err) {
+      console.error(err);
+    },
+  });
   const fetchStudents = useCallback(
     (data) => setStudents(data?.students || []),
     [setStudents]
@@ -93,9 +90,9 @@ export default function AreYouSureModal({
                   <button
                     type='submit'
                     className='submit-delete-group-btn'
-                    disabled={fieldText !== groupTitle || mutationLoading}
+                    disabled={fieldText !== groupTitle || loading}
                   >
-                    {mutationLoading ? (
+                    {loading ? (
                       <CircularProgress
                         style={{ color: '#eb5d63' }}
                         size={25}

@@ -15,5 +15,11 @@ export const GET_USERNAMES_EMAILS = gql`
       name
       type
     }
+
+    userInvitations {
+      id
+      email
+      isUsed
+    }
   }
 `;

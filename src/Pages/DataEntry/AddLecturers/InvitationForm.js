@@ -5,24 +5,26 @@ import {
   CREATE_INVITATION,
   UPDATE_INVITATION_DATE,
 } from 'api/mutations/createInvitation';
-import { GET_USER_INVITATION_WITH_EMAIL } from 'api/queries/getInvitationWithEmail';
 import React, { useState } from 'react';
-import client from 'utlis/apollo/apolloClient';
-import { sendInvitationEmail } from './sendInvitationEmail';
+import { useSelector } from 'react-redux';
+import { handleSubmitInvitationForm } from 'utlis/helpers/invtiationOperations/invitationOperations';
 
 export function InvitationForm({
   roles,
   departments,
   currentUsersEmail,
-  LecturerNameInEnglish,
-  id,
+  userInvitations,
+  setOpenSnackbar,
+  setSnackbarType,
 }) {
+  const {
+    authedUser: { LecturerNameInEnglish, id },
+  } = useSelector((state) => state?.authReducer);
+
   const [email, setEmail] = useState(null);
   const [selectedRole, setRole] = useState('');
   const [department, setDepartment] = useState('');
   const [emailError, setEmailError] = useState(false);
-  const [departmentName, setDepartmentName] = useState('');
-  const [roleName, setRoleName] = useState('');
   const [createInvitation, { loading }] = useMutation(CREATE_INVITATION);
   const [updateInvitationDate, { loading: updateLoading }] = useMutation(
     UPDATE_INVITATION_DATE
@@ -34,73 +36,30 @@ export function InvitationForm({
     }
   };
 
-  const onSelectRole = ({ id, children }) => {
-    if (id && children) {
-      setRole(id);
-      setRoleName(children.props.children);
-    }
+  const onSelectRole = (e) => {
+    setRole(e.target.value);
   };
-  const onSelectDepartment = ({ id, children }) => {
-    if (id && children) {
-      setDepartment(id);
-      setDepartmentName(children.props.children);
-    }
+  const onSelectDepartment = (e) => {
+    setDepartment(e.target.value);
   };
   const onSubmitInvitationForm = async (e) => {
     e.preventDefault();
+
     if (emailError) return;
     try {
-      let tokenID;
-      const {
-        data: { userInvitations },
-      } = await client.query({
-        query: GET_USER_INVITATION_WITH_EMAIL,
-        variables: {
-          email,
-        },
-      });
-
-      if (!userInvitations.length) {
-        const {
-          data: {
-            createUserInvitation: {
-              userInvitation: { id: invitationID },
-            },
-          },
-        } = await createInvitation({
-          variables: {
-            email,
-            role: selectedRole,
-            user: id,
-            department,
-            latest_invitation_time: new Date(),
-          },
-        });
-        tokenID = invitationID;
-      } else {
-        if (userInvitations[0].isUsed) {
-          console.log('Not Valid');
-          return;
-        }
-        tokenID = userInvitations[0].id;
-        updateInvitationDate({
-          variables: {
-            id: tokenID,
-            latest_invitation_time: new Date(),
-            department,
-            role: selectedRole,
-            user: id,
-          },
-        });
-      }
-
-      sendInvitationEmail({
+      await handleSubmitInvitationForm({
+        departments,
+        roles,
+        department,
         email,
-        token: tokenID,
-        department: departmentName,
-        teaching_role: roleName,
-        name: LecturerNameInEnglish,
-        prefix: 'Dr. ',
+        selectedRole,
+        userInvitations,
+        userID: id,
+        LecturerNameInEnglish,
+        createInvitation,
+        updateInvitationDate,
+        setOpenSnackbar,
+        setSnackbarType,
       });
     } catch (e) {
       console.error(e.message);
@@ -144,11 +103,9 @@ export function InvitationForm({
           value={selectedRole}
           onChange={onSelectRole}
           variant='outlined'
-          onChange={(e, children) =>
-            onSelectRole({ id: e.target.value, children })
-          }
+          onChange={onSelectRole}
         >
-          {roles.map(({ id, name, type }) => {
+          {roles.map(({ id, name }) => {
             return (
               ['Lecturer', 'Teacher Assistant'].includes(name) && (
                 <MenuItem key={id} value={id}>
@@ -164,9 +121,7 @@ export function InvitationForm({
           required
           label='Department'
           value={department}
-          onChange={(e, children) =>
-            onSelectDepartment({ id: e.target.value, children })
-          }
+          onChange={onSelectDepartment}
           variant='outlined'
         >
           {departments.map(({ id, DepartmentNameInEnglish }) => (

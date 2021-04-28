@@ -75,6 +75,9 @@ export const drawerStyles = makeStyles((theme) => ({
     },
   },
   appBar: {
+    root: {
+      background: '#fff',
+    },
     display: 'flex',
     backgroundColor: '#fff',
 
@@ -82,9 +85,12 @@ export const drawerStyles = makeStyles((theme) => ({
     justifyContent: 'center',
 
     height: appBarHeight,
+    '& .MuiAppBar-root': {
+      background: '#fff',
+    },
     [theme.breakpoints.up('sm')]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      backgroundColor: 'white',
+      backgroundColor: '#fff',
       marginLeft: drawerWidth,
     },
   },

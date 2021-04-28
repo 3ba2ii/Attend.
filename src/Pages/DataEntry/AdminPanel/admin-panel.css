@@ -66,31 +66,6 @@
 .card-img-container img {
   width: 100%;
 }
-.input-label {
-  font-family: var(--main-font-family);
-  position: relative;
-  font-weight: 400;
-}
-.input-label:before {
-  content: '';
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  background: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698394-icon-130-cloud-upload-512.png');
-  background-size: 80%;
-  background-repeat: no-repeat;
-  top: -60px;
-}
-.input-label:after {
-  content: 'Files Supported :  .xsls  .csv';
-  position: absolute;
-  bottom: -30px;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 24px;
-  color: #90a0b7;
-}
-
 @media only screen and (min-width: 720px) {
   #data-entry-page {
     align-items: flex-start;

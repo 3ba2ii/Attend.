@@ -9,13 +9,6 @@
 .import-students-header p {
   font-weight: 500;
 }
-.dropzone-wrapper {
-  width: 100%;
-  margin-right: 100%;
-  margin-top: 32px;
-  border: 2px dashed #90a0b7;
-  padding: 6rem 0rem 5rem 0rem;
-}
 
 .dropzone-error {
   border: 2px dashed rgba(158, 28, 35, 0.5);
@@ -43,30 +36,7 @@
 
   position: relative;
 }
-.input-label {
-  font-family: var(--main-font-family);
-  position: relative;
-  font-weight: 400;
-}
-.input-label:before {
-  content: '';
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  background: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698394-icon-130-cloud-upload-512.png');
-  background-size: 80%;
-  background-repeat: no-repeat;
-  top: -60px;
-}
-.input-label:after {
-  content: 'Files Supported :  .xsls  .csv';
-  position: absolute;
-  bottom: -30px;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 24px;
-  color: #90a0b7;
-}
+
 .show-formation-of-excel-file {
   font-weight: 500;
   color: var(--color-link-text);
@@ -246,11 +216,6 @@
   margin: 2rem 0rem;
 }
 @media only screen and (min-width: 720px) {
-  .dropzone-wrapper {
-    width: 100%;
-    display: block;
-    position: relative;
-  }
   .submit-btn-container {
     font-size: 0.875rem;
     width: fit-content;
@@ -268,10 +233,6 @@
 /* Desktop */
 
 @media only screen and (min-width: 1024px) {
-  .dropzone-wrapper {
-    width: 100%;
-  }
-
   .upload-btn-container {
     width: 100%;
 

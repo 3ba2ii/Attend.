@@ -59,7 +59,7 @@ export function DrawerItems(classes, pathname) {
             iconActive: (
               <span className='icons8-cloud-active' alt={'Leaderboard'} />
             ),
-            path: '/admin-panel',
+            path: '/admin_panel',
           },
         ].map(({ text, icon, iconActive, path }, index) => (
           <Link to={path} key={text + index}>

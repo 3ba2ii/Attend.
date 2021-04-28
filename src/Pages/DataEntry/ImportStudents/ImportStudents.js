@@ -13,7 +13,7 @@ import { importFormsStyles } from 'types/styles';
 import { createStudentHelperFunction } from 'utlis/helpers/createStudentHelperFunction';
 import { handleChangesAndReturnNextState } from 'utlis/helpers/handleChangesAndReturnNextState';
 import { SelectFormContainer } from '../AdminPanel/SelectFormContainer';
-import DropzoneContainer from './Dropzone';
+import DropzoneContainer from '../../../components/Dropzone/Dropzone';
 import './import_student.css';
 
 const ImportStudentContainer = () => {
@@ -224,7 +224,7 @@ const ImportStudentContainer = () => {
                 How to format the excel file?
               </div>
               <div className='upload-btn-container'>
-                <Link className='cancel-btn' to={'/admin-panel'}>
+                <Link className='cancel-btn' to={'/admin_panel'}>
                   <span>Back</span>
                 </Link>
 

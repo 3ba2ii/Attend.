@@ -18,6 +18,7 @@
   --card-border-shadow: 0px 6px 18px rgba(0, 0, 0, 0.29);
   --arabic-font-family: Arial, Helvetica, sans-serif;
   --main-font-family: 'Poppins', sans-serif;
+  --secondary-font-family: system-ui, 'Helvetica', 'Arial', sans-serif;
 
   --transparent-white: hsla(0, 0%, 100%, 0.75);
   --very-light-white: hsl(0, 0%, 95%);
@@ -269,6 +270,9 @@ button:active {
 
 .MuiInputLabel-outlined.Mui-focused {
   color: #1a73e8 !important;
+}
+.MuiAlert-message {
+  font-family: var(--secondary-font-family);
 }
 @keyframes spin {
   to {

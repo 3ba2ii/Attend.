@@ -89,26 +89,26 @@ function ResponsiveDrawer(props) {
         <Switch>
           <Route exact path={'/'} component={DashboardPage} />
           <Route path={'/dashboard'} component={DashboardPage} />
-          <Route exact path={'/admin-panel'} component={DataEntryPage} />
+          <Route exact path={'/admin_panel'} component={DataEntryPage} />
           <Route
             exact
-            path={`/admin-panel/import_students`}
+            path={`/admin_panel/import_students`}
             component={ImportStudentContainer}
           />
 
           <Route
             exact
-            path={'/admin-panel/add_lecturers_users'}
+            path={'/admin_panel/invite_users'}
             component={AddLecturersPage}
           />
           <Route
             exact
-            path={'/admin-panel/assign_lecturers'}
+            path={'/admin_panel/assign_lecturers'}
             component={AssignLecturersPage}
           />
           <Route
             exact
-            path={'/admin-panel/assign_lecturers/:courseID'}
+            path={'/admin_panel/assign_lecturers/:courseID'}
             component={AssignLecturerToCourse}
           />
           <Route path={'/courses'} render={() => <div>Hello</div>} />

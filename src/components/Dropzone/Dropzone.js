@@ -2,7 +2,7 @@ import React from 'react';
 import Dropzone from 'react-dropzone-uploader';
 import 'react-dropzone-uploader/dist/styles.css';
 import { readExcel } from 'utlis/helpers/readExcelFile';
-
+import './dropzone.css';
 const DropzoneContainer = ({
   setFile,
   setFileFormatError,

@@ -1,14 +1,13 @@
 import { GET_USERNAMES_EMAILS } from 'api/queries/getOnlyUsernamesAndEmails';
-import excelFileScreenshot from 'assets/excelsheet.png';
 import CustomizedSnackbars from 'components/Alerts/Alerts';
-import TransitionsModal from 'components/Modals/FormatModal';
 import Query from 'components/Query';
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
-import DropzoneContainer from '../ImportStudents/Dropzone';
 import './add_lecturers.css';
+import { DropZone } from './UsersInviationsDropZone';
 import { InvitationForm } from './InvitationForm';
+import './styled-table.css';
 
 export default function AddLecturersPage() {
   const {
@@ -17,16 +16,9 @@ export default function AddLecturersPage() {
 
   const { state } = useLocation();
   const [currentUsersEmail, setCurrentUsersEmails] = useState([]);
-
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(true);
   const [snackbarType, setSnackbarType] = useState('');
-
   const [checkedMethod, setCheckedMethod] = useState(null);
-
-  /* setFile,
-  setFileFormatError,
-  fileFormatError,
-  propsToCheck, */
 
   const handleClose = (e, reason) => {
     if (reason === 'clickaway') {
@@ -37,7 +29,7 @@ export default function AddLecturersPage() {
   };
 
   const fetchUsers = useCallback(
-    ({ users, departments, roles }) => {
+    ({ users }) => {
       setCurrentUsersEmails(users.map((u) => u.email));
     },
     [setCurrentUsersEmails]
@@ -48,7 +40,7 @@ export default function AddLecturersPage() {
 
   return (
     <Query query={GET_USERNAMES_EMAILS} onCompletedFunction={fetchUsers}>
-      {({ data: { roles, departments } }) => {
+      {({ data: { roles, departments, userInvitations } }) => {
         return (
           <main id='add-lecturers-page'>
             <header className='import-students-header'>
@@ -110,85 +102,29 @@ export default function AddLecturersPage() {
                       roles,
                       departments,
                       currentUsersEmail,
-                      LecturerNameInEnglish,
-                      id,
+                      userInvitations,
+                      setOpenSnackbar,
+                      setSnackbarType,
                     }}
                   />
                 )}
-                {checkedMethod === 'excel-sheet' && <DropZone />}
+                {checkedMethod === 'excel-sheet' && (
+                  <DropZone
+                    {...{
+                      departments,
+                      currentUsersEmail,
+                      roles,
+                      userInvitations,
+                      setOpenSnackbar,
+                      setSnackbarType,
+                    }}
+                  />
+                )}
               </>
             </section>
           </main>
         );
       }}
     </Query>
-  );
-}
-function DropZone() {
-  const [openModal, setOpenModal] = useState(false);
-  const [xlsxFile, setFile] = useState(null);
-  console.log(
-    `🚀 ~ file: AddLecturers.js ~ line 130 ~ DropZone ~ xlsxFile`,
-    xlsxFile
-  );
-  const [fileFormatError, setFileFormatError] = useState(false);
-
-  const handleClose = () => {
-    setOpenModal(false);
-  };
-  return (
-    <section className='form-excel-wrapper'>
-      <div style={{ width: '400px' }}>
-        <TransitionsModal
-          handleClose={handleClose}
-          open={openModal}
-          description={
-            <>
-              Please format the excel file to only include these following
-              headers <br />
-              <b> 'اسم الطالب ,الرقم القومي ,الايميل, ID' </b>to allow the
-              system to store the data in a correct way.
-            </>
-          }
-          title={'How to format the excel file?'}
-          exampleImage={
-            <img
-              src={excelFileScreenshot}
-              alt={'excel-sheet'}
-              className='excel-sheet-screenshot'
-            />
-          }
-        />
-      </div>
-      <div className='form-uploader-xlsx-container'>
-        <header>
-          <h3>Format the excel file correctly and upload it</h3>
-          <span
-            className='show-formation-of-excel-file'
-            onClick={() => {
-              setOpenModal(true);
-            }}
-          >
-            How to format the excel file?
-          </span>
-        </header>
-        <DropzoneContainer
-          {...{
-            setFile,
-            setFileFormatError,
-            fileFormatError,
-            propsToCheck: 'users-invitation',
-          }}
-        />
-      </div>
-      <div
-        className='invitation-btn-container excel-invitations-btn'
-        style={{ marginTop: '2rem' }}
-      >
-        <button type='submit' className='invitation-btn'>
-          <span>Send Invitations</span>
-        </button>
-      </div>
-    </section>
   );
 }

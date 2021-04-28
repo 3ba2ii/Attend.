@@ -29,7 +29,7 @@ const optionalProps = [
     subtitle:
       "Here you can send invitations to new lecturers' and TAs accounts using their official email address, and you can also delete some accounts.",
     img: <img src={wl} alt={'Add Lecturers'} />,
-    path: 'add_lecturers_users',
+    path: 'invite_users',
   },
 ];
 const SelectCardsComponent = () => {

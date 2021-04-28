@@ -61,8 +61,13 @@ export function InvitationForm({
         setOpenSnackbar,
         setSnackbarType,
       });
+
+      setSnackbarType('success');
     } catch (e) {
       console.error(e.message);
+      setSnackbarType('error');
+    } finally {
+      setOpenSnackbar(true);
     }
   };
   return (

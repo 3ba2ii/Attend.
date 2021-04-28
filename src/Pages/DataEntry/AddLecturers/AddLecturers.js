@@ -16,7 +16,7 @@ export default function AddLecturersPage() {
 
   const { state } = useLocation();
   const [currentUsersEmail, setCurrentUsersEmails] = useState([]);
-  const [openSnackbar, setOpenSnackbar] = useState(true);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarType, setSnackbarType] = useState('');
   const [checkedMethod, setCheckedMethod] = useState(null);
 
@@ -58,8 +58,8 @@ export default function AddLecturersPage() {
                 type: snackbarType || 'error',
                 message:
                   snackbarType === 'success'
-                    ? `A new account has been created successfully! `
-                    : 'There was an error creating this account, Please try again later! ',
+                    ? `Invitations Sent Successfully!`
+                    : 'There was an error sending these invitations, Please try again later!',
                 handleClose,
               }}
             />

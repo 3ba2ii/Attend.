@@ -43,7 +43,7 @@ export function DropZone({
       //1- Map over all the xlsx File
       //2- Check if there was previous invitation for that user
       //3- if an invitation exists; just add
-      xlsxFile.forEach(async ({ Email, Department, Role }) => {
+      await xlsxFile.forEach(async ({ Email, Department, Role }) => {
         await handleSubmitInvitationForm({
           departments,
           roles,
@@ -55,13 +55,14 @@ export function DropZone({
           LecturerNameInEnglish,
           createInvitation,
           updateInvitationDate,
-          setOpenSnackbar,
-          setSnackbarType,
         });
-        //Sending the email with the token
       });
+      setSnackbarType('success');
     } catch (err) {
       console.error(err.message);
+      setSnackbarType('error');
+    } finally {
+      setOpenSnackbar(true);
     }
   };
   return (
@@ -111,14 +112,14 @@ export function DropZone({
       </div>
       {xlsxFile && (
         <div className='preview-accordion-container'>
-          <Accordion elevation={false}>
+          <Accordion elevation={0}>
             <AccordionSummary
               aria-controls='panel1a-content'
               id='panel1a-header'
             >
               <div className='flex-show-preview'>
                 <span>Show Preview</span>
-                <div class='icons8-expand-arrow'></div>
+                <div className='icons8-expand-arrow'></div>
               </div>
             </AccordionSummary>
             <AccordionDetails>

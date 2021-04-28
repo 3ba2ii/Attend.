@@ -128,7 +128,7 @@ function AppBarComponent(classes, handleDrawerToggle) {
   const { authedUser } = useSelector((state) => state?.authReducer);
   const avatarClasses = avatarStyles();
   return (
-    <AppBar position='fixed' className={classes.appBar} elevation={0}>
+    <AppBar position='fixed' className={classes.appBar}>
       <Toolbar>
         <IconButton
           color='inherit'

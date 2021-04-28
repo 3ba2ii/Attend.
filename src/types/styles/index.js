@@ -78,6 +78,8 @@ export const drawerStyles = makeStyles((theme) => ({
     root: {
       background: '#fff',
     },
+    boxShadow: '-10px 10px 30px -25px rgba(0, 0, 0, .708);',
+
     display: 'flex',
     backgroundColor: '#fff',
 
@@ -105,6 +107,7 @@ export const drawerStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
+    boxShadow: '0px 10px 30px -25px rgba(0, 0, 0, .708) !important; ',
   },
 
   search: {

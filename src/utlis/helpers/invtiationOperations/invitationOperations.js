@@ -81,8 +81,6 @@ export const handleSubmitInvitationForm = async ({
   createInvitation,
   updateInvitationDate,
   LecturerNameInEnglish,
-  setOpenSnackbar,
-  setSnackbarType,
 }) => {
   try {
     let tokenID;
@@ -114,7 +112,7 @@ export const handleSubmitInvitationForm = async ({
         return false;
       }
       tokenID = userInvitation.id;
-      updateInvitationDate({
+      await updateInvitationDate({
         variables: {
           id: tokenID,
           latest_invitation_time: new Date(),
@@ -132,12 +130,8 @@ export const handleSubmitInvitationForm = async ({
       name: getFullName(LecturerNameInEnglish),
       prefix: 'Dr. ',
     });
-    setSnackbarType('success');
     return tokenID;
   } catch (err) {
     console.error(err.message);
-    setSnackbarType('error');
-  } finally {
-    setOpenSnackbar(true);
   }
 };

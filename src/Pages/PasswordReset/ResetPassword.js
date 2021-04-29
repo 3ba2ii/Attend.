@@ -129,7 +129,7 @@ const ResetPasswordPage = () => {
               onSubmit={handleSubmitChangePassword}
             >
               <label htmlFor='new-password-field' id='mail-field-label'>
-                Your new password must be different from previous user
+                Your new password must be different from your previous used
                 passwords.
               </label>
 

@@ -1,18 +1,14 @@
-import {
-  ApolloClient,
-  ApolloLink,
-  createHttpLink,
-  InMemoryCache,
-} from '@apollo/client';
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from 'apollo-link-error';
 import Cookies from 'js-cookie';
+import { createUploadLink } from 'apollo-upload-client';
 
 const uri = process.env.REACT_APP_BACKEND_URL
   ? `${process.env.REACT_APP_BACKEND_URL}/graphql`
   : 'http://localhost:1337/graphql';
 
-const httpLink = createHttpLink({
+const httpLink = createUploadLink({
   uri: uri,
 });
 const errorLink = onError(({ graphQLErrors }) => {

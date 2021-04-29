@@ -1,14 +1,15 @@
 import { gql } from '@apollo/client';
 
-export const CREATE_LECTURER_ACCOUNT = gql`
+export const CREATE_ACCOUNT = gql`
   mutation(
     $username: String!
     $email: String!
     $password: String!
     $role: ID!
+    $department: ID!
     $nameInEnglish: String!
     $nameInArabic: String!
-    $department: ID!
+    $confirmed: Boolean!
   ) {
     createUser(
       input: {
@@ -20,6 +21,7 @@ export const CREATE_LECTURER_ACCOUNT = gql`
           LecturerNameInEnglish: $nameInEnglish
           LecturerNameInArabic: $nameInArabic
           department: $department
+          confirmed: $confirmed
         }
       }
     ) {
@@ -30,6 +32,18 @@ export const CREATE_LECTURER_ACCOUNT = gql`
         role {
           name
         }
+      }
+    }
+  }
+`;
+
+export const UPDATE_USER_INVITATION_USED = gql`
+  mutation UpdateUsedUserInvitation($id: ID!, $isUsed: Boolean!) {
+    updateUserInvitation(
+      input: { data: { isUsed: $isUsed }, where: { id: $id } }
+    ) {
+      userInvitation {
+        id
       }
     }
   }

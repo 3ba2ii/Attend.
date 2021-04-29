@@ -89,6 +89,11 @@ export const handleSubmitInvitationForm = async ({
         department
       )
     );
+    console.log(
+      `🚀 ~ file: invitationOperations.js ~ line 92 ~ departmentData`,
+      departmentData
+    );
+
     const roleDate = roles.find((r) => [r.name, r.id].includes(selectedRole));
 
     if (!departmentData || !roleDate) return false;
@@ -101,9 +106,9 @@ export const handleSubmitInvitationForm = async ({
       const { invitationID } = await createNewInvitation({
         createInvitation,
         email,
-        selectedRole,
+        selectedRole: roleDate.id,
         id: userID,
-        department,
+        department: departmentData.id,
       });
       tokenID = invitationID;
     } else {
@@ -122,7 +127,7 @@ export const handleSubmitInvitationForm = async ({
         },
       });
     }
-    sendInvitationEmail({
+    await sendInvitationEmail({
       email,
       token: tokenID,
       department: departmentData.DepartmentNameInEnglish,

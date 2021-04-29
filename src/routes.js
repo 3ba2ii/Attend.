@@ -1,4 +1,5 @@
 import SpinnerElement from 'components/Spinner/spinner';
+import RegisterPage from 'pages/RegisterPage';
 import React, { lazy } from 'react';
 import { Suspense } from 'react';
 import { useSelector } from 'react-redux';
@@ -39,6 +40,8 @@ const Routes = () => (
   >
     <Switch>
       <Route path='/login' render={() => <LoginPage />} />
+      <Route path='/register/:token' render={() => <RegisterPage />} />
+
       <Route
         exact
         path='/forgot-password'

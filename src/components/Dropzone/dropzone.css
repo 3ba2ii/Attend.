@@ -24,3 +24,22 @@
   bottom: -60%;
   color: #90a0b7;
 }
+
+.drag-n-drop-container {
+  width: 100%;
+}
+
+.drag-n-drop-text-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.drag-n-drop-text-header p {
+  color: #4787c7;
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: center;
+}
+.drag-n-drop-text-header span {
+  font-weight: 500;
+}

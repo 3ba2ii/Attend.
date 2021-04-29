@@ -1,7 +1,7 @@
 import { GET_USERNAMES_EMAILS } from 'api/queries/getOnlyUsernamesAndEmails';
 import CustomizedSnackbars from 'components/Alerts/Alerts';
 import Query from 'components/Query';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import './add_lecturers.css';
@@ -16,6 +16,7 @@ export default function AddLecturersPage() {
 
   const { state } = useLocation();
   const [currentUsersEmail, setCurrentUsersEmails] = useState([]);
+  const methodRef = useRef(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarType, setSnackbarType] = useState('');
   const [checkedMethod, setCheckedMethod] = useState(null);
@@ -27,13 +28,27 @@ export default function AddLecturersPage() {
 
     setOpenSnackbar(false);
   };
+  const scrollInto = (ref) => {
+    try {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    } catch (e) {
+      console.error(e.message);
+    }
+  };
 
+  const handleChangeMethod = (pathTo) => {
+    if (pathTo) {
+      setCheckedMethod(pathTo);
+      scrollInto(methodRef);
+    }
+  };
   const fetchUsers = useCallback(
     ({ users }) => {
       setCurrentUsersEmails(users.map((u) => u.email));
     },
     [setCurrentUsersEmails]
   );
+
   if (role?.name !== 'Super Admin') {
     return <Redirect to={state?.from || '/dashboard'} />;
   }
@@ -72,7 +87,7 @@ export default function AddLecturersPage() {
                   }`}
                   type='checkbox'
                   onClick={() => {
-                    setCheckedMethod('manually');
+                    handleChangeMethod('manually');
                   }}
                 >
                   <span className='checkbox-input' />
@@ -85,7 +100,7 @@ export default function AddLecturersPage() {
                   }`}
                   type='checkbox'
                   onClick={() => {
-                    setCheckedMethod('excel-sheet');
+                    handleChangeMethod('excel-sheet');
                   }}
                 >
                   <span className='checkbox-input' />
@@ -95,7 +110,7 @@ export default function AddLecturersPage() {
               </div>
             </section>
             <section className='main-content'>
-              <>
+              <div ref={methodRef}>
                 {checkedMethod === 'manually' && (
                   <InvitationForm
                     {...{
@@ -120,7 +135,7 @@ export default function AddLecturersPage() {
                     }}
                   />
                 )}
-              </>
+              </div>
             </section>
           </main>
         );

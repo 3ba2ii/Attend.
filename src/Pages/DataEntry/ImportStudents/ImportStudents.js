@@ -3,6 +3,7 @@ import { CREATE_STUDENT } from 'api/mutations/createStudent';
 import { GET_FACULTY_DATA } from 'api/queries/getFacultyData';
 import excelFileScreenshot from 'assets/excelsheet.png';
 import CustomizedSnackbars from 'components/Alerts/Alerts';
+import DropZoneContainer from 'components/Dropzone/Dropzone';
 import TransitionsModal from 'components/Modals/FormatModal';
 import UploadedGroupsModal from 'components/Modals/UploadedGroupsModal';
 import Query from 'components/Query';
@@ -13,7 +14,6 @@ import { importFormsStyles } from 'types/styles';
 import { createStudentHelperFunction } from 'utlis/helpers/createStudentHelperFunction';
 import { handleChangesAndReturnNextState } from 'utlis/helpers/handleChangesAndReturnNextState';
 import { SelectFormContainer } from '../AdminPanel/SelectFormContainer';
-import DropzoneContainer from '../../../components/Dropzone/Dropzone';
 import './import_student.css';
 
 const ImportStudentContainer = () => {
@@ -27,14 +27,15 @@ const ImportStudentContainer = () => {
   const [group, setGroup] = useState('');
   const [groups, setGroups] = useState([]);
   const [studentsFile, setStudentsFile] = useState(null);
-  const [fileFormatError, setFileFormatError] = useState(null);
+
+  const [fileFormatError, setFileFormatError] = useState(false);
   const [openFormationModal, setOpenFormationModal] = useState(false);
   const [openGroupsModal, setOpenGroupsModal] = useState(false);
-  const [createStudent, { loading }] = useMutation(CREATE_STUDENT);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarType, setSnackbarType] = useState('');
   const { state } = useLocation();
   const user = useSelector((state) => state?.authReducer?.authedUser);
+  const [createStudent, { loading }] = useMutation(CREATE_STUDENT);
 
   const handleOpen = useCallback(() => {
     setOpenFormationModal(true);
@@ -211,11 +212,12 @@ const ImportStudentContainer = () => {
                 />
               </div>
 
-              <DropzoneContainer
-                setFile={setStudentsFile}
-                propsToCheck={'student-import'}
-                fileFormatError={fileFormatError}
-                setFileFormatError={setFileFormatError}
+              <DropZoneContainer
+                {...{
+                  setXLSXFile: setStudentsFile,
+                  propsToCheck: 'student-import',
+                  setFileFormatError,
+                }}
               />
               <div
                 className='show-formation-of-excel-file'

@@ -1,18 +1,18 @@
 import { useMutation } from '@apollo/client';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
 import {
   CREATE_INVITATION,
   UPDATE_INVITATION_DATE,
 } from 'api/mutations/createInvitation';
 import excelFileScreenshot from 'assets/excelsheet.png';
+import DropZoneContainer from 'components/Dropzone/Dropzone';
 import TransitionsModal from 'components/Modals/FormatModal';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { handleSubmitInvitationForm } from 'utlis/helpers/invtiationOperations/invitationOperations';
-import DropzoneContainer from '../../../components/Dropzone/Dropzone';
 import { DataTablePreview } from './DataTablePreview';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
 
 export function DropZone({
   departments,
@@ -27,7 +27,7 @@ export function DropZone({
   } = useSelector((state) => state?.authReducer);
 
   const [openModal, setOpenModal] = useState(false);
-  const [xlsxFile, setFile] = useState(null);
+  const [xlsxFile, setXLSXFile] = useState(null);
   const [fileFormatError, setFileFormatError] = useState(false);
   const [createInvitation, { loading }] = useMutation(CREATE_INVITATION);
   const [updateInvitationDate, { loading: updateLoading }] = useMutation(
@@ -101,12 +101,12 @@ export function DropZone({
             How to format the excel file?
           </span>
         </header>
-        <DropzoneContainer
+
+        <DropZoneContainer
           {...{
-            setFile,
+            setXLSXFile,
             setFileFormatError,
-            fileFormatError,
-            propsToCheck: 'users-invitation',
+            propsToCheck: 'invitations-props',
           }}
         />
       </div>

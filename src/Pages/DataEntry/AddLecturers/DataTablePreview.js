@@ -1,5 +1,5 @@
 import React from 'react';
-import { checkStatus } from '../../../utlis/helpers/invtiationOperations/statusValidation';
+import { checkStatus } from 'utlis/helpers/invtiationOperations/statusValidation';
 
 export const DataTablePreview = ({
   headers,
@@ -8,14 +8,34 @@ export const DataTablePreview = ({
   currentUsersEmail,
   setFileFormatError,
 }) => {
-  if (!data) return null;
-
   const departmentNames = departments.map((d) =>
     d.DepartmentNameInEnglish.toLowerCase().trim()
   );
   const handleFileFormatError = () => {
     setFileFormatError(true);
   };
+  const checkValidStatus = ({
+    email,
+    department,
+    role,
+    users,
+    departments,
+  }) => {
+    const status = checkStatus({
+      email,
+      department,
+      role,
+      users,
+      departments,
+    });
+    if (status !== 'Valid') {
+      handleFileFormatError(true);
+    }
+    return status;
+  };
+
+  if (!data) return null;
+
   return (
     <table className='styled-table'>
       <thead>
@@ -29,7 +49,7 @@ export const DataTablePreview = ({
         {data.map((d, index) => {
           const { Role, Department, Email } = d;
 
-          const status = checkStatus({
+          const status = checkValidStatus({
             email: Email,
             department: Department,
             role: Role,
@@ -37,9 +57,6 @@ export const DataTablePreview = ({
             departments: departmentNames,
           });
 
-          if (status !== 'Valid') {
-            handleFileFormatError();
-          }
           return (
             <tr key={Email + index}>
               <td>{Email}</td>

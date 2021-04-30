@@ -1,13 +1,41 @@
-import Avatar from '@material-ui/core/Avatar';
-import { randomClass } from './Avatar';
-import { avatarStyles } from 'types/styles';
+import { useEffect, useState } from 'react';
+import './avatar.css';
 
-const AvatarOrInitials = ({ url, name, className, alt }) => {
-  const classes = avatarStyles();
+const colors = [
+  { bg: '#FAE2E1', color: '#bf0e08' },
+  { bg: '#ec4c47', color: 'white' },
+  { bg: '#fae3cd', color: '#95591e' },
+  { bg: '#eae7f8', color: '#37248f' },
+  { bg: '#47b881', color: 'white' },
+  { bg: '#fae2e2', color: '#bf0e08' },
+];
+
+const AvatarOrInitials = ({ url, name, className }) => {
+  const [selectedColor, setSelectedColor] = useState({});
+  useEffect(() => {
+    const randomColor = Math.floor(Math.random() * 6);
+
+    setSelectedColor(colors[randomColor]);
+  }, []);
+  const initials = getInitials(name);
 
   if (url) {
-    return <Avatar alt={alt || 'avatar'} src={url} />;
+    return <img src={url} alt={name} className={className} />;
   }
+  return (
+    <div
+      className={`initials-container ${className}`}
+      style={{
+        color: selectedColor.color,
+        background: selectedColor.bg,
+      }}
+    >
+      {initials}
+    </div>
+  );
+};
+
+const getInitials = (name) => {
   if (name) {
     let rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu');
 
@@ -17,20 +45,7 @@ const AvatarOrInitials = ({ url, name, className, alt }) => {
       (initials.shift()?.[1] || '') + (initials.pop()?.[1] || '')
     ).toUpperCase();
 
-    return AvatarInitials(initials, className, classes);
+    return initials;
   }
 };
-
-function AvatarInitials(Initials, className, classes) {
-  const MyColorsArray = [classes.purple, classes.orange, classes.lightBlue];
-  return (
-    <Avatar
-      className={MyColorsArray[randomClass] + ` ${className || ''}`}
-      alt='avatar'
-    >
-      {Initials}
-    </Avatar>
-  );
-}
-
 export default AvatarOrInitials;

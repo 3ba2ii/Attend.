@@ -12,7 +12,7 @@ import React, { lazy, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { avatarStyles, drawerStyles } from 'types/styles/';
-import AvatarOrInitials from '../Avatar/AvatarOrInitials';
+import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
 
@@ -175,8 +175,7 @@ function AppBarComponent(classes, handleDrawerToggle) {
             {...{
               url: authedUser?.avatar?.url,
               name: authedUser?.LecturerNameInEnglish,
-              className: avatarClasses.small,
-              alt: 'small-avatar',
+              className: 'small-appbar-avatar',
             }}
           />
           <div className='icons8-expand-arrow'></div>

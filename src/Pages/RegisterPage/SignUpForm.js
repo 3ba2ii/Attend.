@@ -17,6 +17,7 @@ export const SignupForm = ({
   invitationID,
   handleNextStep,
   startAnimation,
+  setCreatedUserInfo,
 }) => {
   const [createUserAccount, { loading }] = useMutation(CREATE_ACCOUNT);
   const [updateUserInvitation, { loading: updateLoading }] = useMutation(
@@ -34,14 +35,18 @@ export const SignupForm = ({
 
     validationSchema: Yup.object({
       username: Yup.string()
-        .max(30, 'Must be 30 characters or less')
         .required('Required!')
         .test(
           'unique-username',
           'This username is already taken.',
-          (value) => !!value && !existingUsernames.includes(value)
+          (value) =>
+            !!value && !existingUsernames.includes(value?.toLowerCase())
+        )
+        .max(30, 'Must be 30 characters or less')
+        .matches(
+          /^[a-z0-9_-]{3,30}$/gim,
+          'Username must be at minimum 3 characters with no spaces'
         ),
-
       NameInEnglish: Yup.string()
         .matches(/^[a-zA-Z\s]*$/, 'Must contain only english characters')
         .min(10, 'Must be 10 characters or more')
@@ -65,12 +70,16 @@ export const SignupForm = ({
 
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
-        .required('Required!'),
+        .required('Please confirm your password!'),
     }),
 
     onSubmit: async ({ NameInArabic, NameInEnglish, username, password }) => {
       try {
-        const { data } = await createUserAccount({
+        const {
+          data: {
+            createUser: { user },
+          },
+        } = await createUserAccount({
           variables: {
             role: role.id,
             email,
@@ -82,57 +91,26 @@ export const SignupForm = ({
             confirmed: true,
           },
         });
+
         await updateUserInvitation({
           variables: {
             id: invitationID,
             isUsed: true,
           },
         });
-        handleNextStep();
-        console.log(
-          `🚀 ~ file: SignUpForm.js ~ line 61 ~ onSubmit: ~ data`,
-          data
-        );
+
+        setCreatedUserInfo(user);
+        handleNextStep(1);
       } catch (err) {
         console.error(err.message);
       }
     },
   });
 
-  /* const onUploadImage = async () => {
-    try {
-      const { data } = await uploadImageMutation({
-        variables: {
-          file: image,
-        },
-      });
-      console.log(
-        `🚀 ~ file: SignUpForm.js ~ line 62 ~ onImageChange ~ data`,
-        data
-      );
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
-  const onImageChange = async (event) => {
-    try {
-      console.log(event.target.files[0]);
-
-      setImage(event.target.files[0]);
-    } catch (err) {
-      console.error(err.message);
-    }
-  }; */
-  useEffect(() => {
-    setTimeout(() => {
-      handleNextStep();
-    }, 1000);
-  }, []);
-
   return (
     <div
       className={`first-stage-container ${
-        startAnimation && 'animation-begin-previous-stage'
+        startAnimation > 0 && 'animation-begin-previous-stage'
       }`}
     >
       {(loading || updateLoading) && <LinearProgress className='loading-bar' />}

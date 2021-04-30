@@ -3,10 +3,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { SignOut } from 'redux/actions/authedAction';
-import AvatarComponent from '../Avatar/Avatar';
+import { getFullName } from 'utlis/helpers/getFullName';
 import Logo from '../common/Logo';
 
 export function DrawerItems(classes, pathname) {
@@ -18,7 +19,24 @@ export function DrawerItems(classes, pathname) {
       <Logo className='small-logo drawer-logo' />
       <div className={classes.toolbar} />
 
-      {AvatarComponent(true)}
+      <div className='drawer-avatar-container'>
+        <AvatarOrInitials
+          {...{
+            url: authedUser?.avatar?.url,
+            name: authedUser?.LecturerNameInEnglish,
+            className: 'small-drawer-avatar',
+            alt: 'avatar',
+          }}
+        />
+
+        <div className='user-information'>
+          <span>
+            {getFullName(authedUser?.LecturerNameInEnglish) || 'username'}
+          </span>
+          <p>{authedUser?.role?.name || 'role'}</p>
+        </div>
+      </div>
+
       <List className='navbar-list'>
         {[
           {

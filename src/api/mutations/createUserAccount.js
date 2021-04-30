@@ -28,7 +28,12 @@ export const CREATE_ACCOUNT = gql`
       user {
         id
         email
+        LecturerNameInEnglish
+        LecturerNameInArabic
         username
+        department {
+          DepartmentNameInEnglish
+        }
         role {
           name
         }

@@ -91,7 +91,17 @@ export function DropZone({
       </div>
       <div className='form-uploader-xlsx-container'>
         <header>
-          <h3>Format the excel file correctly and upload it</h3>
+          <h3>
+            Download{' '}
+            <a
+              href='https://docs.google.com/spreadsheets/d/1yMOsonkn8ivy3QZPP2GG6N31KQN2pgnO87keC9QY9ng/copy'
+              target='_blank'
+              rel='noreferrer'
+            >
+              this template
+            </a>
+            , fill it, and upload
+          </h3>
           <span
             className='show-formation-of-excel-file'
             onClick={() => {

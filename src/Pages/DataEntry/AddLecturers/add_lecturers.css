@@ -38,6 +38,11 @@
   justify-content: center;
   gap: 2rem;
 }
+.form-uploader-xlsx-container header h3 a {
+  color: var(--color-link-text);
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 .preview-accordion-container {
   display: grid;

@@ -7,7 +7,7 @@ import { Error } from 'components/common/ErrorIndicator';
 import Logo from 'components/common/Logo';
 import ImageSelector from 'components/ImageSelector/ImageSelector';
 import Query from 'components/Query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import './register.css';
@@ -23,20 +23,24 @@ const RegisterPage = () => {
   const onFetchRegistrationToken = ({ userInvitation }) => {
     setTokenInfo(userInvitation);
   };
-  const onFetchErrorFunction = () => {
-    setValidToken(false);
-  };
 
   const handleNextStep = (stepNumber) => {
     setStartAnimation(stepNumber);
   };
 
-  if (!validToken) {
-    return <div>No Token</div>;
-  }
-
   if (!token) {
-    return <div>No Token</div>;
+    return (
+      <section className='expired-invitation'>
+        <h1>❌</h1>
+        <h3>Invitation Not Found</h3>
+        <p>
+          We can't find your invitation in our system, please make sure this
+          invitation is valid or{' '}
+          <a href='mailto:attend.qrsys@gmail.com'>contact us</a> to send you a
+          new one.
+        </p>
+      </section>
+    );
   }
 
   return (
@@ -45,15 +49,63 @@ const RegisterPage = () => {
         query={GET_USER_INVITATION_INFO}
         variables={{ id: token?.split('token=')[1] }}
         onCompletedFunction={onFetchRegistrationToken}
-        onErrorFunction={onFetchErrorFunction}
-        errorComponent={<>No invitations found</>}
+        errorComponent={
+          <section className='expired-invitation'>
+            <h1>❌</h1>
+            <h3>Invitation Not Found</h3>
+            <p>
+              We can't find your invitation in our system, please make sure this
+              invitation is valid or{' '}
+              <a href='mailto:attend.qrsys@gmail.com'>contact us</a> to send you
+              a new one.
+            </p>
+          </section>
+        }
       >
         {({
           data: {
-            userInvitation: { id, department, role, email },
+            userInvitation: {
+              id,
+              department,
+              role,
+              email,
+              isUsed,
+              latest_invitation_time,
+            },
             users,
           },
         }) => {
+          console.log(new Date() - new Date(latest_invitation_time));
+
+          if (
+            (new Date() - new Date(latest_invitation_time)) / (1000 * 1000) >=
+            2592
+          ) {
+            return (
+              <section className='expired-invitation'>
+                <h1>⌛️</h1>
+                <h3>Expired Invitation</h3>
+                <p>
+                  This invitation has been expired, please{' '}
+                  <a href='mailto:attend.qrsys@gmail.com'>contact us</a> to send
+                  you a new one.
+                </p>
+              </section>
+            );
+          }
+          if (isUsed) {
+            return (
+              <section className='expired-invitation'>
+                <h1>✔️</h1>
+                <h3>Already Used Invitation</h3>
+                <p>
+                  This invitation has been already used, if you have problem
+                  logging in to your account you can always{' '}
+                  <Link to='/forgot-password'>reset your password</Link>
+                </p>
+              </section>
+            );
+          }
           return (
             <>
               <Logo className='small-logo' />
@@ -82,31 +134,7 @@ const RegisterPage = () => {
                     handleNextStep={handleNextStep}
                   />
                 </section>
-                <section
-                  className={`final-register-stage ${
-                    startAnimation === 2 &&
-                    'final-register-stage-begin-animation'
-                  }`}
-                >
-                  <header>
-                    <h1>🎉</h1>
-                    <span className='bold-text-label'>
-                      Congratulations, Your account was created successfully.
-                      <br />
-                      You can now go back to login page.
-                    </span>
-                  </header>
-                  <Link style={{ width: '100%' }} to='/login'>
-                    <button
-                      type='submit'
-                      className='register-submit-btn'
-                      style={{ width: '100%' }}
-                    >
-                      <span>Go Back to Login</span>
-                      <span className='icons8-right' />
-                    </button>
-                  </Link>
-                </section>
+                <LastStage startAnimation={startAnimation} />
               </section>
             </>
           );
@@ -117,6 +145,35 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+function LastStage({ startAnimation }) {
+  return (
+    <section
+      className={`final-register-stage ${
+        startAnimation === 2 && 'final-register-stage-begin-animation'
+      }`}
+    >
+      <header>
+        <h1>🎉</h1>
+        <span className='bold-text-label'>
+          Congratulations, Your account was created successfully.
+          <br />
+          You can now go back to login page.
+        </span>
+      </header>
+      <Link style={{ width: '100%' }} to='/login'>
+        <button
+          type='submit'
+          className='register-submit-btn'
+          style={{ width: '100%' }}
+        >
+          <span>Go Back to Login</span>
+          <span className='icons8-right' />
+        </button>
+      </Link>
+    </section>
+  );
+}
 
 function UploadImageStep({ createdUserInfo, handleNextStep }) {
   const [currentImageState, setCurrentImageState] = useState(null);

@@ -36,7 +36,8 @@ html {
 }
 body {
   height: 100vh;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--main-font-family);
+  letter-spacing: 0.01rem;
   overflow-x: hidden;
 }
 

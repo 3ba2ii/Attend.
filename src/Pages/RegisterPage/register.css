@@ -6,6 +6,7 @@
   padding: 2rem 1rem;
   background: rgba(248, 248, 248, 0.657);
   height: 100vh;
+  content-visibility: auto;
 }
 
 .register-page-container {
@@ -26,11 +27,11 @@
   margin-top: 0.5rem;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease-in;
-  -webkit-transition: all 0.3s ease-in;
-  -moz-transition: all 0.3s ease-in;
-  -ms-transition: all 0.3s ease-in;
-  -o-transition: all 0.3s ease-in;
+  transition: transform 0.5s ease-in;
+  -webkit-transition: transform 0.5s ease-in;
+  -moz-transition: transform 0.5s ease-in;
+  -ms-transition: transform 0.5s ease-in;
+  -o-transition: transform 0.5s ease-in;
 }
 
 .create-account-title {
@@ -118,21 +119,21 @@
 .avatar-upload-step {
   width: 100%;
   height: 100%;
-
   padding: 2rem 2rem 0.6rem 2rem;
   position: absolute;
   top: 0;
   left: 0;
-  transition: all 0.8s ease-out;
-  -webkit-transition: all 0.8s ease-out;
-  -moz-transition: all 0.8s ease-out;
-  -ms-transition: all 0.8s ease-out;
-  -o-transition: all 0.8s ease-out;
+  transition: transform 0.5s ease-out;
+  -webkit-transition: transform 0.5s ease-out;
+  -moz-transition: transform 0.5s ease-out;
+  -ms-transition: transform 0.5s ease-out;
+  -o-transition: transform 0.5s ease-out;
   transform: translateX(200%);
   -webkit-transform: translateX(200%);
   -moz-transform: translateX(200%);
   -ms-transform: translateX(200%);
   -o-transform: translateX(200%);
+  transition-delay: 0.15s;
 }
 
 .animation-begin-next-stage {
@@ -146,11 +147,11 @@
 .first-stage-container {
   top: 0;
   left: 0;
-  transition: all 0.5s ease-out;
-  -webkit-transition: all 0.5s ease-out;
-  -moz-transition: all 0.5s ease-out;
-  -ms-transition: all 0.5s ease-out;
-  -o-transition: all 0.5s ease-out;
+  transition: transform 0.5s ease-out;
+  -webkit-transition: transform 0.5s ease-out;
+  -moz-transition: transform 0.5s ease-out;
+  -ms-transition: transform 0.5s ease-out;
+  -o-transition: transform 0.5s ease-out;
 }
 .animation-begin-previous-stage {
   transform: translateX(-120%);
@@ -158,6 +159,7 @@
   -moz-transform: translateX(-120%);
   -ms-transform: translateX(-120%);
   -o-transform: translateX(-120%);
+  transition-delay: 0.15s;
 }
 .image-uploader-step {
   width: 100%;
@@ -210,11 +212,11 @@
   position: absolute;
   top: 0;
   left: 0;
-  transition: all 0.8s ease-out;
-  -webkit-transition: all 0.8s ease-out;
-  -moz-transition: all 0.8s ease-out;
-  -ms-transition: all 0.8s ease-out;
-  -o-transition: all 0.8s ease-out;
+  transition: transform 0.5s ease-out;
+  -webkit-transition: transform 0.5s ease-out;
+  -moz-transition: transform 0.5s ease-out;
+  -ms-transition: transform 0.5s ease-out;
+  -o-transition: transform 0.5s ease-out;
   transform: translateX(200%);
   -webkit-transform: translateX(200%);
   -moz-transform: translateX(200%);
@@ -225,6 +227,7 @@
   align-items: center;
   justify-content: space-around;
   text-align: center;
+  content-visibility: auto;
 }
 .final-register-stage header {
   display: flex;
@@ -245,4 +248,16 @@
   color: var(--primary-color);
   font-weight: 600;
   font-size: 0.875rem;
+}
+.expired-invitation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  padding: 3rem 2rem;
+}
+.expired-invitation p {
+  font-size: 1.1rem;
+  max-width: 40ch;
 }

@@ -69,7 +69,7 @@ export default function PasswordTextField({ handleLogin, reference }) {
         }
         labelWidth={70}
       />
-      <Link to={'/forgot-password'} style={{ marginTop: '.5rem' }}>
+      <Link to={'/forgot-password'} style={{ marginTop: '.2rem' }}>
         <span className='forgot-password-btn'>Forgot password?</span>
       </Link>
     </FormControl>

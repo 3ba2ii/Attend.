@@ -97,7 +97,7 @@ const Login = () => {
           <header className='login-header'>
             <h3>Sign in</h3>
             <span className='sign-in-paragraph'>
-              Save time, store attendance and make reports
+              Save time, store attendance, and make reports.
             </span>
           </header>
           {error && (

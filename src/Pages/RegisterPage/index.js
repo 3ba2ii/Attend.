@@ -29,18 +29,7 @@ const RegisterPage = () => {
   };
 
   if (!token) {
-    return (
-      <section className='expired-invitation'>
-        <h1>❌</h1>
-        <h3>Invitation Not Found</h3>
-        <p>
-          We can't find your invitation in our system, please make sure this
-          invitation is valid or{' '}
-          <a href='mailto:attend.qrsys@gmail.com'>contact us</a> to send you a
-          new one.
-        </p>
-      </section>
-    );
+    return <InvalidInvitation />;
   }
 
   return (
@@ -49,18 +38,7 @@ const RegisterPage = () => {
         query={GET_USER_INVITATION_INFO}
         variables={{ id: token?.split('token=')[1] }}
         onCompletedFunction={onFetchRegistrationToken}
-        errorComponent={
-          <section className='expired-invitation'>
-            <h1>❌</h1>
-            <h3>Invitation Not Found</h3>
-            <p>
-              We can't find your invitation in our system, please make sure this
-              invitation is valid or{' '}
-              <a href='mailto:attend.qrsys@gmail.com'>contact us</a> to send you
-              a new one.
-            </p>
-          </section>
-        }
+        errorComponent={<InvalidInvitation />}
       >
         {({
           data: {
@@ -129,10 +107,30 @@ const RegisterPage = () => {
                     startAnimation === 1 && 'animation-begin-next-stage'
                   } ${startAnimation > 1 && 'animation-begin-previous-stage'}`}
                 >
-                  <UploadImageStep
-                    createdUserInfo={createdUserInfo}
-                    handleNextStep={handleNextStep}
-                  />
+                  {createdUserInfo ? (
+                    <UploadImageStep
+                      createdUserInfo={createdUserInfo}
+                      handleNextStep={handleNextStep}
+                    />
+                  ) : (
+                    <section className='expired-invitation'>
+                      <h1>❌</h1>
+                      <h3>Not a Valid Process</h3>
+                      <p>
+                        Please go back to fill the information required to
+                        create your account.
+                      </p>
+                      <button
+                        className='go-back-btn'
+                        onClick={() => {
+                          handleNextStep(0);
+                        }}
+                      >
+                        <span>Go Back</span>
+                        <span className='icons8-back'></span>
+                      </button>
+                    </section>
+                  )}
                 </section>
                 <LastStage startAnimation={startAnimation} />
               </section>
@@ -145,6 +143,21 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+const InvalidInvitation = () => {
+  return (
+    <section className='expired-invitation'>
+      <h1>❌</h1>
+      <h3>Invitation Not Found</h3>
+      <p>
+        We can't find your invitation in our system, please make sure this
+        invitation is valid or{' '}
+        <a href='mailto:attend.qrsys@gmail.com'>contact us</a> to send you a new
+        one.
+      </p>
+    </section>
+  );
+};
 
 function LastStage({ startAnimation }) {
   return (

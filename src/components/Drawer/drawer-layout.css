@@ -236,3 +236,10 @@
     50% 50% no-repeat;
   background-size: 100%;
 }
+
+.drawer-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

@@ -1,0 +1,9 @@
+#staff-main-page {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  position: relative;
+  padding: 8rem 3% 2rem 3%;
+}

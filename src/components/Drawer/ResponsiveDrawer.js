@@ -15,14 +15,14 @@ import { avatarStyles, drawerStyles } from 'types/styles/';
 import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
+import SettingsPage from 'pages/Settings/SettingsPage';
+import StaffPage from 'pages/DataEntry/Staff/StaffPage';
 
 const DashboardPage = lazy(() => import('pages/Dashboard/Dashboard'));
 const AddLecturersPage = lazy(() =>
   import('pages/DataEntry/AddLecturers/AddLecturers')
 );
-const DataEntryPage = lazy(() =>
-  import('pages/DataEntry/AdminPanel/AdminPanel')
-);
+const AdminPanel = lazy(() => import('pages/DataEntry/AdminPanel/AdminPanel'));
 const AssignLecturersPage = lazy(() =>
   import('pages/DataEntry/AssignLectures/AssignLecturers')
 );
@@ -89,7 +89,7 @@ function ResponsiveDrawer(props) {
         <Switch>
           <Route exact path={'/'} component={DashboardPage} />
           <Route path={'/dashboard'} component={DashboardPage} />
-          <Route exact path={'/admin_panel'} component={DataEntryPage} />
+          <Route exact path={'/admin_panel'} component={AdminPanel} />
           <Route
             exact
             path={`/admin_panel/import_students`}
@@ -111,11 +111,14 @@ function ResponsiveDrawer(props) {
             path={'/admin_panel/assign_lecturers/:courseID'}
             component={AssignLecturerToCourse}
           />
+          <Route path={'/admin_panel/staff'} component={StaffPage} />
+
           <Route path={'/courses'} render={() => <div>Hello</div>} />
+
           <Route path={'/profile'} render={() => <div>Hello</div>} />
           <Route path={'/leaderboard'} render={() => <div>leader-board</div>} />
           <Route path={'/help'} render={() => <div>Hello</div>} />
-          <Route path={'/settings'} render={() => <div>Hello</div>} />
+          <Route path={'/settings'} render={() => <SettingsPage />} />
           <Route path='/404' component={NotFound404} />
           <Redirect to='/404' />
         </Switch>

@@ -85,4 +85,8 @@
 /* Desktop */
 
 @media only screen and (min-width: 1024px) {
+  .select-cards-container {
+    grid-template-columns: repeat(3, minmax(calc(100% / 4), 1fr));
+    grid-template-rows: repeat(auto-fit, 650px);
+  }
 }

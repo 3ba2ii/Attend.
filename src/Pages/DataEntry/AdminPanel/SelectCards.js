@@ -31,6 +31,14 @@ const optionalProps = [
     img: <img src={wl} alt={'Add Lecturers'} />,
     path: 'invite_users',
   },
+  {
+    id: 'staff',
+    title: 'Staff & Users',
+    subtitle:
+      "Here you can send invitations to new lecturers' and TAs accounts using their official email address, and you can also delete some accounts.",
+    img: <img src={wl} alt={'Staff'} />,
+    path: 'staff',
+  },
 ];
 const SelectCardsComponent = () => {
   const { url } = useRouteMatch();

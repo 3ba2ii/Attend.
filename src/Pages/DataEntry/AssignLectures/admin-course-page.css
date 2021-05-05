@@ -1,0 +1,141 @@
+#assign-lecturers-to-courses-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  height: minmax(100vh, 100%);
+  padding: 7rem 3% 2rem 5%;
+}
+
+.course-assign-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 1rem;
+}
+.course-name-with-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.course-details-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.course-details-info h4 {
+  font-weight: 600;
+}
+.course-details-info span {
+  font-weight: 500;
+  color: var(--secondary-color);
+}
+.chart-container {
+  grid-column: 1/3;
+  grid-row: 2/3;
+  height: 100%;
+}
+.courses-settings {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.courses-settings p {
+  font-weight: 500;
+}
+.icons8-dots-loading {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNDgiIGhlaWdodD0iNDgiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iIzkwYTBiNyI+PHBhdGggZD0iTTEzOS43NSwxMDcuNWMtMTEuODU3MjUsMCAtMjEuNSwtOS42NDI3NSAtMjEuNSwtMjEuNWMwLC0xMS44NTcyNSA5LjY0Mjc1LC0yMS41IDIxLjUsLTIxLjVjMTEuODU3MjUsMCAyMS41LDkuNjQyNzUgMjEuNSwyMS41YzAsMTEuODU3MjUgLTkuNjQyNzUsMjEuNSAtMjEuNSwyMS41ek0zMi4yNSwxMDcuNWMtMTEuODU3MjUsMCAtMjEuNSwtOS42NDI3NSAtMjEuNSwtMjEuNWMwLC0xMS44NTcyNSA5LjY0Mjc1LC0yMS41IDIxLjUsLTIxLjVjMTEuODU3MjUsMCAyMS41LDkuNjQyNzUgMjEuNSwyMS41YzAsMTEuODU3MjUgLTkuNjQyNzUsMjEuNSAtMjEuNSwyMS41ek04NiwxMDcuNWMtMTEuODU3MjUsMCAtMjEuNSwtOS42NDI3NSAtMjEuNSwtMjEuNWMwLC0xMS44NTcyNSA5LjY0Mjc1LC0yMS41IDIxLjUsLTIxLjVjMTEuODU3MjUsMCAyMS41LDkuNjQyNzUgMjEuNSwyMS41YzAsMTEuODU3MjUgLTkuNjQyNzUsMjEuNSAtMjEuNSwyMS41eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+')
+    50% 50% no-repeat;
+  background-size: 100%;
+}
+.course-info-grid-container {
+  height: 100%;
+  width: 100%;
+
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  grid-template-columns: 3fr 1.8fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.course-info-grid-container > * {
+  width: 100%;
+  height: 100%;
+}
+.actions-container {
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+.students-with-rates-chart {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+.attendance-per-lecture-chart {
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+
+.statistical-charts-data {
+  grid-column: 2/3;
+  grid-row: 2/3;
+}
+/* ACTIONS CONTAINER */
+.actions-container {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.2rem;
+}
+.actions-container li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #fff;
+  border: 0.3px solid rgba(143, 158, 184, 0.3);
+  box-shadow: 0px 6px 18px -3px rgba(0, 0, 0, 0.29);
+  border-radius: 20px;
+  cursor: pointer;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  transition: transform 0.2s ease-in-out;
+  -webkit-transition: transform 0.2s ease-in-out;
+  -moz-transition: transform 0.2s ease-in-out;
+  -ms-transition: transform 0.2s ease-in-out;
+  -o-transition: transform 0.2s ease-in-out;
+}
+.actions-container li:hover {
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
+}
+.action-img-container img {
+  width: 50px;
+  height: 50px;
+}
+.action-header-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.action-header-container span {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+.action-header-container p {
+  font-size: 0.8rem;
+}

@@ -8,11 +8,14 @@ export const GET_COURSE_DATA = gql`
       CourseNameInArabic
       CourseNameInEnglish
       OverallScore
-      academic_years {
+      academic_year {
         AcademicYearInArabic
         AcademicYearInEnglish
         YearNumber
         id
+        department {
+          DepartmentNameInEnglish
+        }
       }
       terms {
         TermNumber

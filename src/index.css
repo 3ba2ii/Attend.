@@ -7,7 +7,7 @@
 
   --color-link-text: #109cf1;
   --color-alert-error-bg: #ffe3e6;
-  --dark-font-color: #192a3e;
+  --dark-font-color: #334d6e;
   --primary-color: #192a3e;
   --secondary-color: #6c7c90;
   --main-compare-green-color: #31c977;
@@ -15,7 +15,7 @@
 
   --button-bg-color: #0a66c2;
 
-  --card-border-shadow: 0px 6px 18px rgba(0, 0, 0, 0.29);
+  --card-border-shadow: 5px 6px 18px rgba(0, 0, 0, 0.29);
   --arabic-font-family: Arial, Helvetica, sans-serif;
   --main-font-family: 'Poppins', sans-serif;
   --secondary-font-family: system-ui, 'Helvetica', 'Arial', sans-serif;
@@ -288,4 +288,8 @@ button:active {
     margin-top: -8px;
     right: 13px;
   }
+}
+
+.rdt_TableCell > * {
+  font-family: var(--secondary-font-family);
 }

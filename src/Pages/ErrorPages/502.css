@@ -1,14 +1,14 @@
 #bad-gateway-page {
   width: 100vw;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 20;
+  z-index: 2000;
   gap: 2rem;
   background: white;
 }

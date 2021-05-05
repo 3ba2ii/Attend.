@@ -51,7 +51,8 @@
   margin-bottom: 25px;
 }
 
-.course-card-container img {
+.course-card-container img,
+.admin-card-container img {
   display: block;
   width: 100%;
   max-width: 40px;
@@ -164,6 +165,36 @@
     50% 50% no-repeat;
   background-size: 100%;
 }
+
+.admin-card-container {
+  position: relative;
+  width: clamp(210px, 210px + 1vw, 320px);
+  height: clamp(200px, 200px + 1vh + 0.5vw, 310px);
+  display: inline-block;
+  margin: 32px 32px;
+  margin-left: 0;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+
+  padding: 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+.admin-card-container header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  top: 50px;
+}
+.content-card {
+  position: relative;
+}
+
 @media only screen and (min-width: 720px) {
 }
 /* Desktop */

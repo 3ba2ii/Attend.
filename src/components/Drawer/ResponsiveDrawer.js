@@ -17,6 +17,7 @@ import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
 import SettingsPage from 'pages/Settings/SettingsPage';
 import StaffPage from 'pages/DataEntry/Staff/StaffPage';
+import { AdminDashboard } from 'pages/Dashboard/Dashboard';
 
 const DashboardPage = lazy(() => import('pages/Dashboard/Dashboard'));
 const AddLecturersPage = lazy(() =>
@@ -35,6 +36,12 @@ const ImportStudentContainer = lazy(() =>
 const NotFound404 = lazy(() => import('pages/ErrorPages/404'));
 function ResponsiveDrawer(props) {
   const { window } = props;
+  const {
+    authedUser: {
+      role: { name },
+    },
+  } = useSelector((state) => state.authReducer);
+
   const classes = drawerStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -87,8 +94,21 @@ function ResponsiveDrawer(props) {
       </nav>
       <main className={classes.content}>
         <Switch>
-          <Route exact path={'/'} component={DashboardPage} />
-          <Route path={'/dashboard'} component={DashboardPage} />
+          <Route
+            path={'/'}
+            exact
+            render={() => {
+              if (name === 'Super Admin') return <AdminDashboard />;
+              return <DashboardPage />;
+            }}
+          />
+          <Route
+            path={'/dashboard'}
+            render={() => {
+              if (name === 'Super Admin') return <AdminDashboard />;
+              return <DashboardPage />;
+            }}
+          />
           <Route exact path={'/admin_panel'} component={AdminPanel} />
           <Route
             exact
@@ -128,8 +148,9 @@ function ResponsiveDrawer(props) {
 }
 
 function AppBarComponent(classes, handleDrawerToggle) {
-  const { authedUser } = useSelector((state) => state?.authReducer);
-  const avatarClasses = avatarStyles();
+  const {
+    authedUser: { avatar, LecturerNameInEnglish, role },
+  } = useSelector((state) => state?.authReducer);
   return (
     <AppBar position='fixed' className={classes.appBar}>
       <Toolbar>
@@ -176,11 +197,15 @@ function AppBarComponent(classes, handleDrawerToggle) {
         >
           <AvatarOrInitials
             {...{
-              url: authedUser?.avatar?.url,
-              name: authedUser?.LecturerNameInEnglish,
+              url: avatar?.url,
+              name: LecturerNameInEnglish,
               className: 'small-appbar-avatar',
             }}
           />
+          <span className='greeting-appbar'>
+            Hello, {role === 'Teacher Assistant' ? 'TA.' : 'Dr.'}{' '}
+            {LecturerNameInEnglish.trim().split(' ')[0]}
+          </span>
           <div className='icons8-expand-arrow'></div>
         </IconButton>
       </Toolbar>

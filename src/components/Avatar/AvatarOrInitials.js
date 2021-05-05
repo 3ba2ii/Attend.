@@ -16,7 +16,7 @@ const AvatarOrInitials = ({ url, name, className }) => {
     const randomColor = Math.floor(Math.random() * 6);
 
     setSelectedColor(colors[randomColor]);
-  }, []);
+  }, [name]);
   const initials = getInitials(name);
 
   if (url) {

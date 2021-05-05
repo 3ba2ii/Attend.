@@ -10,12 +10,12 @@ const Query = ({
   onErrorFunction,
   errorComponent,
 }) => {
-  const { data, loading, error, refetch } = useQuery(
+  const { data, loading, error, refetch, fetchMore } = useQuery(
     query,
     {
       variables: variables,
       onCompleted(data) {
-        if (onCompletedFunction) onCompletedFunction(data);
+        if (onCompletedFunction) onCompletedFunction(data, fetchMore);
       },
       onError(e) {
         console.error(e.message);
@@ -37,6 +37,6 @@ const Query = ({
   if (error && errorComponent) return errorComponent;
 
   if (error) return <BadGatewayPage />;
-  return children({ data, refetch, loading, error });
+  return children({ data, refetch, loading, error, fetchMore });
 };
 export default Query;

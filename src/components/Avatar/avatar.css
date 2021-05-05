@@ -48,7 +48,8 @@
   box-shadow: 0px 4px 8px -4px rgba(0, 0, 0, 0.65);
   aspect-ratio: 1;
 }
-.select-picture-avatar {
+.select-picture-avatar,
+.course-img-avatar {
   cursor: pointer;
   width: clamp(110px, 110px + 1vw, 200px) !important;
   height: clamp(110px, 110px + 1vw, 200px) !important;
@@ -71,4 +72,29 @@
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
   box-shadow: 0px 4px 8px -4px rgba(0, 0, 0, 0.65);
+}
+.small-staff-table-avatar {
+  width: clamp(18px, 18px + 1vw, 40px);
+  height: clamp(18px, 18px + 1vw, 40px);
+  font-size: 1.2rem !important;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  aspect-ratio: 1;
+}
+.top-user-avatar {
+  width: clamp(40px, 40px + 1vw, 45px);
+  height: clamp(40px, 40px + 1vw, 45px);
+  font-size: 1rem !important;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  aspect-ratio: 1;
+}
+.course-img-avatar {
+  box-shadow: none;
 }

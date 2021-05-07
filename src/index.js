@@ -19,6 +19,7 @@ const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(logger))
 );
+
 const THEME = createMuiTheme({
   typography: {
     fontFamily: `"system-ui", "Helvetica", "Arial", sans-serif`,

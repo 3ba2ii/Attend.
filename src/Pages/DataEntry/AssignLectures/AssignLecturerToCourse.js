@@ -1,30 +1,99 @@
 import { GET_COURSE_DATA } from 'api/queries/getCourseData';
-import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
-import Query from 'components/Query';
-import { useParams } from 'react-router-dom';
+import { GET_COURSE_STUDENTS_ATTENDANCE_RATES } from 'api/queries/getCourseStudentsAttendanceRates';
 import downloadReportSVG from 'assets/downloadReport.svg';
 import manualAssignSVG from 'assets/manualAssignment.svg';
 import topStudentsSVG from 'assets/TopStudents.svg';
+import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
+import Query from 'components/Query';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './admin-course-page.css';
+import { AttendancePerLectureChart } from './AttendancePerLectureChart';
+import { CourseStudentsWithAttendancePercentageChart } from './CourseStudentsWithAttendancePercentageChart';
+import gradSVG from 'assets/grad.svg';
+import overallStatics from 'assets/overall-statics.svg';
+import { formatDistance } from 'date-fns';
 
 const AssignLecturerToCourse = () => {
   const { courseID } = useParams();
+  const [students, setStudents] = useState({});
+  const [lecturesCount, setLecturesCount] = useState(0);
+  const [labelsDataSet, setLabelDataSet] = useState({
+    'Below 20%': 0,
+    '20% - 40%': 0,
+    '40% - 60%': 0,
+    '60% - 80%': 0,
+    'Above 80%': 0,
+  });
+
+  const onDataFetched = ({
+    course: {
+      academic_year: { groups },
+    },
+    lectures,
+  }) => {
+    try {
+      let studentsArr = {};
+      groups.forEach(({ students }) =>
+        students.map(({ id }) => {
+          studentsArr[id] = 0;
+        })
+      );
+
+      let lecturesCountSet = new Set([]);
+
+      lectures.forEach(({ attendances, LectureNumber }) => {
+        lecturesCountSet.add(LectureNumber);
+        attendances.forEach(({ student: { id } }) => {
+          studentsArr[id] += 1;
+        });
+      });
+
+      const count = lecturesCountSet.size;
+      setLecturesCount(count);
+      setStudents(studentsArr);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
+    let finalResults = {
+      'Below 20%': 0,
+      '20% - 40%': 0,
+      '40% - 60%': 0,
+      '60% - 80%': 0,
+      'Above 80%': 0,
+    };
+    for (const [key, value] of Object.entries(students)) {
+      const percentage = ((Number(value) / lecturesCount) * 100).toFixed();
+
+      if (percentage > 80) {
+        finalResults['Above 80%'] += 1;
+      } else if (percentage > 60 && percentage <= 80) {
+        finalResults['60% - 80%'] += 1;
+      } else if (percentage > 40 && percentage <= 60) {
+        finalResults['40% - 60%'] += 1;
+      } else if (percentage > 20 && percentage <= 40) {
+        finalResults['20% - 40%'] += 1;
+      } else {
+        finalResults['Below 20%'] += 1;
+      }
+    }
+
+    setLabelDataSet(finalResults);
+  }, [students, lecturesCount]);
 
   return (
     <Query query={GET_COURSE_DATA} variables={{ id: courseID }}>
-      {({ data }) => {
-        console.log(
-          `🚀 ~ file: AssignLecturerToCourse.js ~ line 13 ~ AssignLecturerToCourse ~ data`,
-          data
-        );
+      {({ data: { course } }) => {
         const {
           CourseAvatar,
           CourseNameInEnglish,
-          CourseNameInArabic,
           academic_year,
           CourseID,
           users,
-        } = data?.course;
+        } = course;
 
         const {
           AcademicYearInEnglish,
@@ -52,53 +121,70 @@ const AssignLecturerToCourse = () => {
                   <span>{CourseID}</span>
                 </div>
               </header>
-              <div className='courses-settings'>
-                <p>Course Settings</p>
-                <span className='icons8-dots-loading'></span>
+              <div className='course-settings'>
+                <span className='icons8-settings-course'></span>
               </div>
             </section>
 
-            <section className='course-info-grid-container'>
-              <ul className='actions-container'>
-                {courseActionsInfo.map(
-                  ({ actionIcon, actionSubtitle, actionTitle }, index) => {
-                    return (
-                      <li
-                        key={actionTitle + index}
-                        className='single-action-card'
-                      >
-                        <div className='action-img-container'>{actionIcon}</div>
-                        <header className='action-header-container'>
-                          <span>{actionTitle}</span>
-                          <p>{actionSubtitle}</p>
-                        </header>
-                      </li>
-                    );
-                  }
-                )}
-              </ul>
-              <div className='students-with-rates-chart'>
-                Exercitation in veniam adipisicing velit sint aute elit aute
-                proident. Incididunt eiusmod cillum culpa ullamco reprehenderit
-                nisi qui cillum. Fugiat incididunt aliquip sint proident
-                adipisicing esse sint dolore sunt eiusmod qui velit ipsum ea.
-                Velit duis irure
-              </div>
+            <Query
+              query={GET_COURSE_STUDENTS_ATTENDANCE_RATES}
+              onCompletedFunction={onDataFetched}
+              variables={{
+                id: courseID,
+              }}
+            >
+              {({ data: { lectures } }) => {
+                return (
+                  <section className='course-info-grid-container'>
+                    <ul className='actions-container'>
+                      {courseActionsInfo.map(
+                        (
+                          { actionIcon, actionSubtitle, actionTitle },
+                          index
+                        ) => {
+                          return (
+                            <li
+                              key={actionTitle + index}
+                              className='single-action-card'
+                            >
+                              <div className='action-img-container'>
+                                {actionIcon}
+                              </div>
+                              <header className='action-header-container'>
+                                <span>{actionTitle}</span>
+                                <p>{actionSubtitle}</p>
+                              </header>
+                            </li>
+                          );
+                        }
+                      )}
+                    </ul>
+                    <div className='students-with-rates-chart'>
+                      <CourseStudentsWithAttendancePercentageChart
+                        labelsDataSet={labelsDataSet}
+                        lectures={lectures}
+                        studentsLength={Object.keys(students).length}
+                      />
+                    </div>
 
-              <div className='attendance-per-lecture-chart'>
-                Cupidatat pariatur qui in ipsum nostrud laboris duis ut ea est
-                in ullamco. Do nostrud fugiat dolore quis dolore fugiat id
-                labore. Magna laboris sit ex exercitation officia dolor aliquip
-                esse eu. Ipsum et non fugiat elit sint commodo cupidatat velit
-                proident. Ipsum deserunt
-              </div>
+                    <div className='attendance-per-lecture-chart'>
+                      <AttendancePerLectureChart
+                        lectures={lectures}
+                        studentsLength={Object.keys(students).length}
+                      />
+                    </div>
 
-              <div className='statistical-charts-data'>
-                <span>Action 1</span>
-                <span>Action 2</span>
-                <span>Action 3</span>
-              </div>
-            </section>
+                    <ul className='statistical-charts-data'>
+                      <CourseStaticsInfo
+                        lectures={lectures}
+                        studentsLength={Object.keys(students).length}
+                        users={users}
+                      />
+                    </ul>
+                  </section>
+                );
+              }}
+            </Query>
           </main>
         );
       }}
@@ -108,8 +194,127 @@ const AssignLecturerToCourse = () => {
 
 export default AssignLecturerToCourse;
 
-const CourseStudentsWithAttendancePercentageChart = ({ courseID }) => {};
+const computeOverAllAttendance = ({ lectures, studentsLength }) => {
+  try {
+    const count = lectures.length;
+    let result = 0;
+    lectures.forEach(({ attendances }) => {
+      result += (attendances.length / studentsLength) * 100;
+    });
+    return (result / count).toFixed(0);
+  } catch (e) {
+    console.error(e.message);
+    return 0;
+  }
+};
 
+const CourseStaticsInfo = ({ lectures, studentsLength, users }) => {
+  try {
+    const courseStaticsInfo = [
+      {
+        infoImg: <img src={gradSVG} alt='Lectures' />,
+        infoTitle: 'Lectures',
+        infoData: lectures.length,
+        infoDataText: (
+          <>
+            Last Lecture:{' '}
+            {new Date(
+              lectures[lectures?.length - 1]?.LectureDateTime
+            )?.toLocaleDateString()}{' '}
+            <br />{' '}
+            {formatDistance(
+              new Date(lectures[lectures?.length - 1]?.LectureDateTime),
+              new Date(),
+              { addSuffix: true }
+            )}
+          </>
+        ),
+      },
+      {
+        infoImg: <img src={overallStatics} alt='Overall Attendance' />,
+        infoTitle: 'Tot. Attendance',
+        infoData: `${computeOverAllAttendance({ lectures, studentsLength })}%`,
+        infoDataText: `With a total of ${lectures.length} lectures`,
+      },
+      {
+        infoImg: <img src={overallStatics} alt='Lecturers' />,
+        infoTitle: 'Lecturers',
+        infoData: (
+          <span>
+            {' '}
+            {
+              users.filter((u) =>
+                ['Super Admin', 'Lecturer'].includes(u.role.name)
+              ).length
+            }
+            <p style={{ margin: '6px 0px' }}>Lecturers</p>
+          </span>
+        ),
+        infoDataText: (
+          <div className='users-images-container'>
+            {users
+              .filter((u) => ['Super Admin', 'Lecturer'].includes(u.role.name))
+              .map(({ avatar, LecturerNameInEnglish }) => (
+                <AvatarOrInitials
+                  url={avatar.url}
+                  name={LecturerNameInEnglish}
+                  className='small-card-avatars'
+                />
+              ))}
+          </div>
+        ),
+      },
+      {
+        infoImg: <img src={overallStatics} alt='TAs' />,
+        infoTitle: 'TAs',
+        infoData: (
+          <span>
+            {' '}
+            {
+              users.filter((u) => ['Teacher Assistant'].includes(u.role.name))
+                .length
+            }
+            <p style={{ margin: '6px 0px' }}>TAs</p>
+          </span>
+        ),
+        infoDataText: (
+          <div className='users-images-container'>
+            {users
+              .filter((u) => ['Teacher Assistant'].includes(u.role.name))
+              .map(({ avatar, LecturerNameInEnglish }) => (
+                <AvatarOrInitials
+                  url={avatar.url}
+                  name={LecturerNameInEnglish}
+                  className='small-card-avatars'
+                />
+              ))}
+          </div>
+        ),
+      },
+    ];
+    return (
+      <>
+        {courseStaticsInfo.map(
+          ({ infoImg, infoTitle, infoData, infoDataText }) => (
+            <li key={infoTitle} className='single-statics-card'>
+              <div className='img-with-title-container'>
+                <div className='img-container'>{infoImg}</div>
+                <h6>{infoTitle}</h6>
+              </div>
+              <header>
+                <h3>{infoData}</h3>
+                <p>{infoDataText}</p>
+              </header>
+            </li>
+          )
+        )}
+      </>
+    );
+  } catch (e) {
+    console.error(e.message);
+    return <div>No data found</div>;
+  }
+};
 const courseActionsInfo = [
   {
     actionIcon: <img src={downloadReportSVG} alt='downloadReport' />,

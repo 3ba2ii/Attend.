@@ -97,4 +97,18 @@
 }
 .course-img-avatar {
   box-shadow: none;
+  object-fit: contain;
+}
+.small-card-avatars {
+  width: clamp(20px, 20px + 1vw, 30px);
+  height: clamp(20px, 20px + 1vw, 30px);
+  font-size: 1rem !important;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  aspect-ratio: 1;
+  padding: 1px;
+  border: 1px solid rgb(64, 106, 219);
 }

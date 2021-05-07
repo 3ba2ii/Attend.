@@ -12,11 +12,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 0rem 1rem;
+  position: relative;
 }
 .course-name-with-info {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
+  text-align: center;
 }
 
 .course-details-info {
@@ -37,69 +40,70 @@
   height: 100%;
 }
 .courses-settings {
+  position: absolute;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  right: 1rem;
+  top: 0;
 }
 
 .courses-settings p {
-  font-weight: 500;
+  font-weight: 400;
+  font-size: 0.8rem;
 }
 .icons8-dots-loading {
   display: inline-block;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNDgiIGhlaWdodD0iNDgiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iIzkwYTBiNyI+PHBhdGggZD0iTTEzOS43NSwxMDcuNWMtMTEuODU3MjUsMCAtMjEuNSwtOS42NDI3NSAtMjEuNSwtMjEuNWMwLC0xMS44NTcyNSA5LjY0Mjc1LC0yMS41IDIxLjUsLTIxLjVjMTEuODU3MjUsMCAyMS41LDkuNjQyNzUgMjEuNSwyMS41YzAsMTEuODU3MjUgLTkuNjQyNzUsMjEuNSAtMjEuNSwyMS41ek0zMi4yNSwxMDcuNWMtMTEuODU3MjUsMCAtMjEuNSwtOS42NDI3NSAtMjEuNSwtMjEuNWMwLC0xMS44NTcyNSA5LjY0Mjc1LC0yMS41IDIxLjUsLTIxLjVjMTEuODU3MjUsMCAyMS41LDkuNjQyNzUgMjEuNSwyMS41YzAsMTEuODU3MjUgLTkuNjQyNzUsMjEuNSAtMjEuNSwyMS41ek04NiwxMDcuNWMtMTEuODU3MjUsMCAtMjEuNSwtOS42NDI3NSAtMjEuNSwtMjEuNWMwLC0xMS44NTcyNSA5LjY0Mjc1LC0yMS41IDIxLjUsLTIxLjVjMTEuODU3MjUsMCAyMS41LDkuNjQyNzUgMjEuNSwyMS41YzAsMTEuODU3MjUgLTkuNjQyNzUsMjEuNSAtMjEuNSwyMS41eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+')
     50% 50% no-repeat;
   background-size: 100%;
+}
+.icons8-settings-course {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNjQiIGhlaWdodD0iNjQiCnZpZXdCb3g9IjAgMCAxMjggMTI4IgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxwYXRoIGZpbGw9IiNjYWRiZWEiIGQ9Ik0xMDYuOSw1NS4zYy0wLjgtMi44LTEuOC01LjQtMy4yLTcuOWw4LjgtOC44TDk5LjgsMjZsLTguOCw4LjhjLTQuOS0yLjgtMTAuNS00LjMtMTYuMy00LjRsLTMuMi0xMmwtMTcuMyw0LjZsMy4yLDEyYy01LDIuOS05LjEsNy4xLTExLjksMTEuOWwtMTItMy4yTDI5LDYxLjFsMTIsMy4yYzAsMi44LDAuNCw1LjYsMS4xLDguNGMwLjgsMi44LDEuOCw1LjQsMy4yLDcuOWwtOC44LDguOEw0OS4yLDEwMmw4LjgtOC44YzQuOSwyLjgsMTAuNSw0LjMsMTYuMyw0LjRsMy4yLDEybDE3LjMtNC42bC0zLjItMTJjNS0yLjksOS4xLTcuMSwxMS45LTExLjlsMTIsMy4ybDQuNi0xNy4zbC0xMi0zLjJDMTA4LjEsNjAuOSwxMDcuNyw1OC4xLDEwNi45LDU1LjN6IE03OC42LDc5LjFjLTguNCwyLjItMTYuOS0yLjctMTkuMi0xMS4xczIuNy0xNi45LDExLjEtMTkuMmM4LjQtMi4yLDE2LjksMi43LDE5LjIsMTEuMUM5MS45LDY4LjMsODYuOSw3Ni45LDc4LjYsNzkuMXoiPjwvcGF0aD48cGF0aCBmaWxsPSIjZmZmIiBkPSJNOTYuOSw1NS4zYy0wLjgtMi44LTEuOC01LjQtMy4yLTcuOWw4LjgtOC44TDg5LjgsMjZsLTguOCw4LjhjLTQuOS0yLjgtMTAuNS00LjMtMTYuMy00LjRsLTMuMi0xMmwtMTcuMyw0LjZsMy4yLDEyYy01LDIuOS05LjEsNy4xLTExLjksMTEuOWwtMTItMy4yTDE5LDYxLjFsMTIsMy4yYzAsMi44LDAuNCw1LjYsMS4xLDguNGMwLjgsMi44LDEuOCw1LjQsMy4yLDcuOWwtOC44LDguOEwzOS4yLDEwMmw4LjgtOC44YzQuOSwyLjgsMTAuNSw0LjMsMTYuMyw0LjRsMy4yLDEybDE3LjMtNC42bC0zLjItMTJjNS0yLjksOS4xLTcuMSwxMS45LTExLjlsMTIsMy4ybDQuNi0xNy4zbC0xMi0zLjJDOTguMSw2MC45LDk3LjcsNTguMSw5Ni45LDU1LjN6IE02OC42LDc5LjFjLTguNCwyLjItMTYuOS0yLjctMTkuMi0xMS4xczIuNy0xNi45LDExLjEtMTkuMmM4LjQtMi4yLDE2LjksMi43LDE5LjIsMTEuMUM4MS45LDY4LjMsNzYuOSw3Ni45LDY4LjYsNzkuMXoiPjwvcGF0aD48cGF0aCBmaWxsPSIjM2Y0YTU0IiBkPSJNNjcuNSwxMTIuNWMtMS4zLDAtMi41LTAuOS0yLjktMi4ybC0yLjYtOS44Yy00LjYtMC4zLTkuMi0xLjYtMTMuNC0zLjZsLTcuMiw3LjJjLTEuMiwxLjItMy4xLDEuMi00LjIsMEwyNC40LDkxLjRjLTEuMi0xLjItMS4yLTMuMSwwLTQuMmw3LjItNy4yYy0xLTIuMS0xLjgtNC4zLTIuNC02LjVjLTAuNi0yLjMtMS00LjYtMS4yLTYuOUwxOC4yLDY0Yy0wLjgtMC4yLTEuNC0wLjctMS44LTEuNHMtMC41LTEuNS0wLjMtMi4zTDIwLjcsNDNjMC4yLTAuOCwwLjctMS40LDEuNC0xLjhjMC43LTAuNCwxLjUtMC41LDIuMy0wLjNsOS44LDIuNmMyLjYtMy45LDUuOS03LjIsOS44LTkuOGwtMi42LTkuOGMtMC40LTEuNiwwLjUtMy4yLDIuMS0zLjdsMTcuMy00LjZjMS42LTAuNCwzLjIsMC41LDMuNywyLjFsMi42LDkuOGM0LjYsMC4zLDkuMiwxLjYsMTMuNCwzLjZsNy4yLTcuMmMxLjEtMS4xLDMuMS0xLjEsNC4yLDBsMTIuNywxMi43YzEuMiwxLjIsMS4yLDMuMSwwLDQuMkw5Ny40LDQ4YzEsMi4xLDEuOCw0LjMsMi40LDYuNWMwLjYsMi4zLDEsNC42LDEuMiw2LjlsOS44LDIuNmMxLjYsMC40LDIuNSwyLjEsMi4xLDMuN0wxMDguMyw4NWMtMC4yLDAuOC0wLjcsMS40LTEuNCwxLjhjLTAuNywwLjQtMS41LDAuNS0yLjMsMC4zbC05LjgtMi42Yy0yLjYsMy45LTUuOSw3LjItOS44LDkuOGwyLjYsOS44YzAuNCwxLjYtMC41LDMuMi0yLjEsMy43bC0xNy4zLDQuNkM2OCwxMTIuNSw2Ny43LDExMi41LDY3LjUsMTEyLjV6IE00OCw5MC4yYzAuNSwwLDEsMC4xLDEuNSwwLjRjNC41LDIuNiw5LjYsMy45LDE0LjgsNGMxLjMsMCwyLjUsMC45LDIuOSwyLjJsMi40LDkuMWwxMS41LTMuMWwtMi40LTkuMWMtMC4zLTEuMywwLjItMi43LDEuNC0zLjRjNC41LTIuNiw4LjItNi40LDEwLjgtMTAuOGMwLjctMS4yLDIuMS0xLjcsMy40LTEuNGw5LjEsMi40bDMuMS0xMS41bC05LjEtMi40Yy0xLjMtMC4zLTIuMi0xLjUtMi4yLTIuOWMwLTIuNi0wLjQtNS4yLTEtNy43bDAsMGMtMC43LTIuNS0xLjctNC45LTIuOS03LjJjLTAuNy0xLjItMC41LTIuNiwwLjUtMy42bDYuNi02LjZsLTguNC04LjRsLTYuNiw2LjZjLTEsMS0yLjQsMS4yLTMuNiwwLjVjLTQuNS0yLjYtOS42LTMuOS0xNC44LTRjLTEuMywwLTIuNS0wLjktMi45LTIuMmwtMi40LTkuMUw0OCwyNS4ybDIuNCw5LjFjMC4zLDEuMy0wLjIsMi43LTEuNCwzLjRjLTQuNSwyLjYtOC4yLDYuNC0xMC44LDEwLjhjLTAuNywxLjItMi4xLDEuNy0zLjQsMS40bC05LjEtMi40bC0zLjEsMTEuNWw5LjEsMi40YzEuMywwLjMsMi4yLDEuNSwyLjIsMi45YzAsMi42LDAuNCw1LjIsMSw3LjdjMC43LDIuNSwxLjcsNC45LDIuOSw3LjJjMC43LDEuMiwwLjUsMi42LTAuNSwzLjZsLTYuNiw2LjZsOC40LDguNGw2LjctNi42QzQ2LjQsOTAuNSw0Ny4yLDkwLjIsNDgsOTAuMnogTTY0LjUsODIuN2MtMy4yLDAtNi40LTAuOC05LjMtMi41Yy00LjMtMi41LTcuNC02LjUtOC43LTExLjNjLTEuMy00LjgtMC42LTkuOCwxLjktMTQuMmMyLjUtNC4zLDYuNS03LjQsMTEuMy04LjdjOS45LTIuNywyMC4yLDMuMywyMi45LDEzLjJjMS4zLDQuOCwwLjYsOS44LTEuOSwxNC4yYy0yLjUsNC4zLTYuNSw3LjQtMTEuMyw4LjdsMCwwQzY3LjcsODIuNSw2Ni4xLDgyLjcsNjQuNSw4Mi43eiBNNjguNiw3OS4xTDY4LjYsNzkuMUw2OC42LDc5LjF6IE02NC41LDUxLjNjLTEuMSwwLTIuMiwwLjEtMy4zLDAuNGMtMy4zLDAuOS02LDMtNy43LDUuOWMtMS43LDIuOS0yLjEsNi4zLTEuMyw5LjZjMC45LDMuMywzLDYsNS45LDcuN2MyLjksMS43LDYuMywyLjEsOS42LDEuM2wwLDBjMy4zLTAuOSw2LTMsNy43LTUuOWMxLjctMi45LDIuMS02LjMsMS4zLTkuNkM3NS4yLDU1LjEsNzAuMSw1MS4zLDY0LjUsNTEuM3oiPjwvcGF0aD48L3N2Zz4=')
+    50% 50% no-repeat;
+  background-size: 100%;
+
+  cursor: pointer;
 }
 .course-info-grid-container {
   height: 100%;
   width: 100%;
 
-  display: grid;
-  grid-template-rows: 1fr 2fr;
-  grid-template-columns: 3fr 1.8fr;
-  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   margin-top: 3rem;
 }
+
 .course-info-grid-container > * {
   width: 100%;
   height: 100%;
 }
-.actions-container {
-  grid-column: 1/2;
-  grid-row: 1/2;
-}
-.students-with-rates-chart {
-  grid-column: 2/3;
-  grid-row: 1/2;
-}
-.attendance-per-lecture-chart {
-  grid-column: 1/2;
-  grid-row: 2/3;
-}
 
-.statistical-charts-data {
-  grid-column: 2/3;
-  grid-row: 2/3;
-}
 /* ACTIONS CONTAINER */
 .actions-container {
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1.2rem;
+  overflow: auto;
+  padding: 2rem 0rem;
 }
 .actions-container li {
+  height: 250px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
   background: #fff;
   border: 0.3px solid rgba(143, 158, 184, 0.3);
   box-shadow: 0px 6px 18px -3px rgba(0, 0, 0, 0.29);
@@ -138,4 +142,259 @@
 }
 .action-header-container p {
   font-size: 0.8rem;
+}
+/* STUDENTS_WITH_ATTENDANCE_RATES_CHART */
+.students-with-rates-chart {
+  background: #fff;
+  /*DesignShadow*/
+  box-shadow: 0px 6px 18px -3px rgba(0, 0, 0, 0.29);
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+.doughnut-chart {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  max-width: 450px;
+  display: none;
+}
+.doughnut-chart span {
+  position: absolute;
+  left: 250px;
+  top: 30px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.attendance-per-lecture-chart {
+  width: 100%;
+  height: 100%;
+
+  background: #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem 1rem 2rem;
+  box-shadow: 0px 6px 18px -3px rgba(0, 0, 0, 0.29);
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+
+  max-height: 400px;
+}
+.attendance-per-lecture-chart-container {
+  width: 100%;
+  height: 100%;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.attendance-per-lecture-chart-container header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.attendance-per-lecture-chart-container header aside {
+  position: relative;
+  height: fit-content;
+}
+
+.attendance-per-lecture-chart-container header aside div {
+  display: flex;
+}
+.attendance-per-lecture-chart-container header .MuiInput-underline::before,
+.MuiInput-underline::after {
+  border-bottom: 0 !important;
+}
+
+.attendance-per-lecture-chart-container header .MuiInput-underline {
+  color: var(--color-link-text);
+  font-size: 0.8rem;
+  width: fit-content;
+  font-weight: 500;
+}
+.attendance-per-lecture-chart-container .chartjs-render-monitor {
+  transform: scale(0.8);
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  -o-transform: scale(0.8);
+}
+.statistical-charts-data {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  overflow: auto;
+  height: 100%;
+  max-height: 400px;
+}
+.statistical-charts-data > * {
+  height: 100%;
+  aspect-ratio: 9 / 7.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  position: relative;
+  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+  box-shadow: 0px 6px 18px -3px rgba(0, 0, 0, 0.29);
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+.single-statics-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+.users-images-container {
+}
+.single-statics-card header h3 span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.single-statics-card .img-container {
+  width: 40px;
+}
+.img-with-title-container {
+  display: flex;
+  background: #000;
+  width: 100%;
+  background: #fff;
+  align-items: center;
+  gap: 1rem;
+}
+.img-with-title-container h6 {
+  font-size: 0.9rem;
+}
+.single-statics-card header {
+  width: 100%;
+}
+.single-statics-card header h3 {
+  line-height: 16px;
+}
+.single-statics-card header p {
+  font-size: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.users-images-container {
+  display: flex;
+}
+@media only screen and (min-width: 720px) {
+  .courses-settings {
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+  }
+  .course-name-with-info {
+    text-align: left;
+  }
+}
+/* Desktop */
+
+@media only screen and (min-width: 1024px) {
+  .course-name-with-info {
+    flex-direction: row;
+  }
+  .course-info-grid-container {
+    height: 100%;
+    width: 100%;
+
+    display: grid;
+    grid-template-rows: 0.8fr 2fr;
+    grid-template-columns: 3fr 1.8fr;
+    gap: 2rem;
+    margin-top: 3rem;
+    overflow: auto;
+    padding: 0rem 1rem;
+  }
+
+  .actions-container {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  .students-with-rates-chart {
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+  .attendance-per-lecture-chart {
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+
+  .statistical-charts-data {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    gap: 1rem;
+
+    overflow: unset;
+  }
+
+  .doughnut-chart {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    max-width: 450px;
+  }
+
+  .doughnut-chart .chartjs-render-monitor {
+    position: absolute;
+    left: -50px;
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+  }
+  .attendance-per-lecture-chart-container .chartjs-render-monitor {
+    transform: scale(0.85);
+    -webkit-transform: scale(0.85);
+    -moz-transform: scale(0.85);
+    -ms-transform: scale(0.85);
+    -o-transform: scale(0.85);
+  }
+  .actions-container {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.2rem;
+    overflow: unset;
+    padding: 0rem 0rem;
+  }
+  .actions-container li {
+    height: 100%;
+    width: 100%;
+    padding: 2rem 1rem;
+    max-width: 300px;
+  }
 }

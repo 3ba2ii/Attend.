@@ -21,9 +21,12 @@ export const GET_COURSE_DATA = gql`
         TermNumber
       }
       users(sort: "LecturerNameInArabic:asc") {
+        id
         LecturerNameInArabic
         LecturerNameInEnglish
-        id
+        avatar {
+          url
+        }
         role {
           type
           name

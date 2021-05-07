@@ -4,12 +4,7 @@ import { Doughnut } from 'react-chartjs-2';
 export const CourseStudentsWithAttendancePercentageChart = ({
   labelsDataSet,
   studentsLength,
-  lectures,
 }) => {
-  console.log(
-    `🚀 ~ file: CourseStudentsWithAttendancePercentageChart.js ~ line 9 ~ lectures`,
-    lectures
-  );
   const DData = {
     labels: Object.keys(labelsDataSet),
 

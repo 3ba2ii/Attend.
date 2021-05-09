@@ -18,7 +18,6 @@ export function SelectFormContainer({
       label={label}
       value={selected}
       onChange={handleSelection}
-      helperText={helperText}
       variant='outlined'
       required
       disabled={!selections || selections?.length === 0}

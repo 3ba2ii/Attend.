@@ -310,8 +310,12 @@ export const transitionFormatModalStyle = makeStyles((theme) => ({
     outline: 'none',
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(8),
-    borderRadius: 20,
+    padding: theme.spacing(5),
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: '300px',
+    width: 'fit-content',
+    borderRadius: 16,
   },
 }));
 

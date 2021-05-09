@@ -209,18 +209,9 @@ const TopUsersComponent = () => {
   return (
     <Query query={GET_TOP_USERS_PER_LECTURES}>
       {({ data: { users } }) => {
-        console.log(
-          `🚀 ~ file: Dashboard.js ~ line 207 ~ TopUsersComponent ~ data`,
-          users[0].lectures.length
-        );
-
         const topLecturerUsers = users.slice().sort((a, b) => {
           return b.lectures.length - a.lectures.length;
         });
-        console.log(
-          `🚀 ~ file: Dashboard.js ~ line 218 ~ topLecturerUsers ~ topLecturerUsers`,
-          topLecturerUsers
-        );
 
         return (
           <section className='top-users-list-container'>

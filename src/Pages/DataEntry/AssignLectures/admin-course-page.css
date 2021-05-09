@@ -17,9 +17,7 @@
 .course-name-with-info {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 1rem;
-  text-align: center;
 }
 
 .course-details-info {
@@ -39,36 +37,29 @@
   grid-row: 2/3;
   height: 100%;
 }
-.courses-settings {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  right: 1rem;
-  top: 0;
-}
 
-.courses-settings p {
-  font-weight: 400;
-  font-size: 0.8rem;
-}
-.icons8-dots-loading {
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNDgiIGhlaWdodD0iNDgiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iIzkwYTBiNyI+PHBhdGggZD0iTTEzOS43NSwxMDcuNWMtMTEuODU3MjUsMCAtMjEuNSwtOS42NDI3NSAtMjEuNSwtMjEuNWMwLC0xMS44NTcyNSA5LjY0Mjc1LC0yMS41IDIxLjUsLTIxLjVjMTEuODU3MjUsMCAyMS41LDkuNjQyNzUgMjEuNSwyMS41YzAsMTEuODU3MjUgLTkuNjQyNzUsMjEuNSAtMjEuNSwyMS41ek0zMi4yNSwxMDcuNWMtMTEuODU3MjUsMCAtMjEuNSwtOS42NDI3NSAtMjEuNSwtMjEuNWMwLC0xMS44NTcyNSA5LjY0Mjc1LC0yMS41IDIxLjUsLTIxLjVjMTEuODU3MjUsMCAyMS41LDkuNjQyNzUgMjEuNSwyMS41YzAsMTEuODU3MjUgLTkuNjQyNzUsMjEuNSAtMjEuNSwyMS41ek04NiwxMDcuNWMtMTEuODU3MjUsMCAtMjEuNSwtOS42NDI3NSAtMjEuNSwtMjEuNWMwLC0xMS44NTcyNSA5LjY0Mjc1LC0yMS41IDIxLjUsLTIxLjVjMTEuODU3MjUsMCAyMS41LDkuNjQyNzUgMjEuNSwyMS41YzAsMTEuODU3MjUgLTkuNjQyNzUsMjEuNSAtMjEuNSwyMS41eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+')
-    50% 50% no-repeat;
-  background-size: 100%;
-}
-.icons8-settings-course {
-  display: inline-block;
-  width: 35px;
-  height: 35px;
-  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNjQiIGhlaWdodD0iNjQiCnZpZXdCb3g9IjAgMCAxMjggMTI4IgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxwYXRoIGZpbGw9IiNjYWRiZWEiIGQ9Ik0xMDYuOSw1NS4zYy0wLjgtMi44LTEuOC01LjQtMy4yLTcuOWw4LjgtOC44TDk5LjgsMjZsLTguOCw4LjhjLTQuOS0yLjgtMTAuNS00LjMtMTYuMy00LjRsLTMuMi0xMmwtMTcuMyw0LjZsMy4yLDEyYy01LDIuOS05LjEsNy4xLTExLjksMTEuOWwtMTItMy4yTDI5LDYxLjFsMTIsMy4yYzAsMi44LDAuNCw1LjYsMS4xLDguNGMwLjgsMi44LDEuOCw1LjQsMy4yLDcuOWwtOC44LDguOEw0OS4yLDEwMmw4LjgtOC44YzQuOSwyLjgsMTAuNSw0LjMsMTYuMyw0LjRsMy4yLDEybDE3LjMtNC42bC0zLjItMTJjNS0yLjksOS4xLTcuMSwxMS45LTExLjlsMTIsMy4ybDQuNi0xNy4zbC0xMi0zLjJDMTA4LjEsNjAuOSwxMDcuNyw1OC4xLDEwNi45LDU1LjN6IE03OC42LDc5LjFjLTguNCwyLjItMTYuOS0yLjctMTkuMi0xMS4xczIuNy0xNi45LDExLjEtMTkuMmM4LjQtMi4yLDE2LjksMi43LDE5LjIsMTEuMUM5MS45LDY4LjMsODYuOSw3Ni45LDc4LjYsNzkuMXoiPjwvcGF0aD48cGF0aCBmaWxsPSIjZmZmIiBkPSJNOTYuOSw1NS4zYy0wLjgtMi44LTEuOC01LjQtMy4yLTcuOWw4LjgtOC44TDg5LjgsMjZsLTguOCw4LjhjLTQuOS0yLjgtMTAuNS00LjMtMTYuMy00LjRsLTMuMi0xMmwtMTcuMyw0LjZsMy4yLDEyYy01LDIuOS05LjEsNy4xLTExLjksMTEuOWwtMTItMy4yTDE5LDYxLjFsMTIsMy4yYzAsMi44LDAuNCw1LjYsMS4xLDguNGMwLjgsMi44LDEuOCw1LjQsMy4yLDcuOWwtOC44LDguOEwzOS4yLDEwMmw4LjgtOC44YzQuOSwyLjgsMTAuNSw0LjMsMTYuMyw0LjRsMy4yLDEybDE3LjMtNC42bC0zLjItMTJjNS0yLjksOS4xLTcuMSwxMS45LTExLjlsMTIsMy4ybDQuNi0xNy4zbC0xMi0zLjJDOTguMSw2MC45LDk3LjcsNTguMSw5Ni45LDU1LjN6IE02OC42LDc5LjFjLTguNCwyLjItMTYuOS0yLjctMTkuMi0xMS4xczIuNy0xNi45LDExLjEtMTkuMmM4LjQtMi4yLDE2LjksMi43LDE5LjIsMTEuMUM4MS45LDY4LjMsNzYuOSw3Ni45LDY4LjYsNzkuMXoiPjwvcGF0aD48cGF0aCBmaWxsPSIjM2Y0YTU0IiBkPSJNNjcuNSwxMTIuNWMtMS4zLDAtMi41LTAuOS0yLjktMi4ybC0yLjYtOS44Yy00LjYtMC4zLTkuMi0xLjYtMTMuNC0zLjZsLTcuMiw3LjJjLTEuMiwxLjItMy4xLDEuMi00LjIsMEwyNC40LDkxLjRjLTEuMi0xLjItMS4yLTMuMSwwLTQuMmw3LjItNy4yYy0xLTIuMS0xLjgtNC4zLTIuNC02LjVjLTAuNi0yLjMtMS00LjYtMS4yLTYuOUwxOC4yLDY0Yy0wLjgtMC4yLTEuNC0wLjctMS44LTEuNHMtMC41LTEuNS0wLjMtMi4zTDIwLjcsNDNjMC4yLTAuOCwwLjctMS40LDEuNC0xLjhjMC43LTAuNCwxLjUtMC41LDIuMy0wLjNsOS44LDIuNmMyLjYtMy45LDUuOS03LjIsOS44LTkuOGwtMi42LTkuOGMtMC40LTEuNiwwLjUtMy4yLDIuMS0zLjdsMTcuMy00LjZjMS42LTAuNCwzLjIsMC41LDMuNywyLjFsMi42LDkuOGM0LjYsMC4zLDkuMiwxLjYsMTMuNCwzLjZsNy4yLTcuMmMxLjEtMS4xLDMuMS0xLjEsNC4yLDBsMTIuNywxMi43YzEuMiwxLjIsMS4yLDMuMSwwLDQuMkw5Ny40LDQ4YzEsMi4xLDEuOCw0LjMsMi40LDYuNWMwLjYsMi4zLDEsNC42LDEuMiw2LjlsOS44LDIuNmMxLjYsMC40LDIuNSwyLjEsMi4xLDMuN0wxMDguMyw4NWMtMC4yLDAuOC0wLjcsMS40LTEuNCwxLjhjLTAuNywwLjQtMS41LDAuNS0yLjMsMC4zbC05LjgtMi42Yy0yLjYsMy45LTUuOSw3LjItOS44LDkuOGwyLjYsOS44YzAuNCwxLjYtMC41LDMuMi0yLjEsMy43bC0xNy4zLDQuNkM2OCwxMTIuNSw2Ny43LDExMi41LDY3LjUsMTEyLjV6IE00OCw5MC4yYzAuNSwwLDEsMC4xLDEuNSwwLjRjNC41LDIuNiw5LjYsMy45LDE0LjgsNGMxLjMsMCwyLjUsMC45LDIuOSwyLjJsMi40LDkuMWwxMS41LTMuMWwtMi40LTkuMWMtMC4zLTEuMywwLjItMi43LDEuNC0zLjRjNC41LTIuNiw4LjItNi40LDEwLjgtMTAuOGMwLjctMS4yLDIuMS0xLjcsMy40LTEuNGw5LjEsMi40bDMuMS0xMS41bC05LjEtMi40Yy0xLjMtMC4zLTIuMi0xLjUtMi4yLTIuOWMwLTIuNi0wLjQtNS4yLTEtNy43bDAsMGMtMC43LTIuNS0xLjctNC45LTIuOS03LjJjLTAuNy0xLjItMC41LTIuNiwwLjUtMy42bDYuNi02LjZsLTguNC04LjRsLTYuNiw2LjZjLTEsMS0yLjQsMS4yLTMuNiwwLjVjLTQuNS0yLjYtOS42LTMuOS0xNC44LTRjLTEuMywwLTIuNS0wLjktMi45LTIuMmwtMi40LTkuMUw0OCwyNS4ybDIuNCw5LjFjMC4zLDEuMy0wLjIsMi43LTEuNCwzLjRjLTQuNSwyLjYtOC4yLDYuNC0xMC44LDEwLjhjLTAuNywxLjItMi4xLDEuNy0zLjQsMS40bC05LjEtMi40bC0zLjEsMTEuNWw5LjEsMi40YzEuMywwLjMsMi4yLDEuNSwyLjIsMi45YzAsMi42LDAuNCw1LjIsMSw3LjdjMC43LDIuNSwxLjcsNC45LDIuOSw3LjJjMC43LDEuMiwwLjUsMi42LTAuNSwzLjZsLTYuNiw2LjZsOC40LDguNGw2LjctNi42QzQ2LjQsOTAuNSw0Ny4yLDkwLjIsNDgsOTAuMnogTTY0LjUsODIuN2MtMy4yLDAtNi40LTAuOC05LjMtMi41Yy00LjMtMi41LTcuNC02LjUtOC43LTExLjNjLTEuMy00LjgtMC42LTkuOCwxLjktMTQuMmMyLjUtNC4zLDYuNS03LjQsMTEuMy04LjdjOS45LTIuNywyMC4yLDMuMywyMi45LDEzLjJjMS4zLDQuOCwwLjYsOS44LTEuOSwxNC4yYy0yLjUsNC4zLTYuNSw3LjQtMTEuMyw4LjdsMCwwQzY3LjcsODIuNSw2Ni4xLDgyLjcsNjQuNSw4Mi43eiBNNjguNiw3OS4xTDY4LjYsNzkuMUw2OC42LDc5LjF6IE02NC41LDUxLjNjLTEuMSwwLTIuMiwwLjEtMy4zLDAuNGMtMy4zLDAuOS02LDMtNy43LDUuOWMtMS43LDIuOS0yLjEsNi4zLTEuMyw5LjZjMC45LDMuMywzLDYsNS45LDcuN2MyLjksMS43LDYuMywyLjEsOS42LDEuM2wwLDBjMy4zLTAuOSw2LTMsNy43LTUuOWMxLjctMi45LDIuMS02LjMsMS4zLTkuNkM3NS4yLDU1LjEsNzAuMSw1MS4zLDY0LjUsNTEuM3oiPjwvcGF0aD48L3N2Zz4=')
-    50% 50% no-repeat;
-  background-size: 100%;
+/* SECTION -- COURSE SETTINGS */
+.course-settings {
+  color: var(--color-link-text);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--color-link-text);
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  transition: background 0.3s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background 0.3s ease-in-out, color 0.2s ease-in-out;
+  -moz-transition: background 0.3s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background 0.3s ease-in-out, color 0.2s ease-in-out;
+  -o-transition: background 0.3s ease-in-out, color 0.2s ease-in-out;
 
-  cursor: pointer;
+  white-space: nowrap;
+}
+.course-settings:hover {
+  color: var(--very-light-white);
+  background: var(--color-link-text);
 }
 .course-info-grid-container {
   height: 100%;
@@ -172,25 +163,24 @@
   font-weight: 500;
 }
 
+/* Attendance Per Lecture Chart */
 .attendance-per-lecture-chart {
   width: 100%;
   height: 100%;
-
   background: #fff;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem 2rem 1rem 2rem;
+  padding: 1.5rem 2rem 2rem 2rem;
   box-shadow: 0px 6px 18px -3px rgba(0, 0, 0, 0.29);
-  border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
-
-  max-height: 400px;
+  border-radius: 16px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -ms-border-radius: 16px;
+  -o-border-radius: 16px;
+  max-height: 420px;
 }
 .attendance-per-lecture-chart-container {
   width: 100%;
@@ -223,12 +213,18 @@
 }
 
 .attendance-per-lecture-chart-container header .MuiInput-underline {
-  color: var(--color-link-text);
   font-size: 0.8rem;
   width: fit-content;
   font-weight: 500;
 }
+.MuiNativeSelect-select.MuiNativeSelect-select {
+  padding-right: 16px !important;
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .attendance-per-lecture-chart-container .chartjs-render-monitor {
+  padding-bottom: 1rem;
+
   transform: scale(0.8);
   -webkit-transform: scale(0.8);
   -moz-transform: scale(0.8);
@@ -240,7 +236,6 @@
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  overflow: auto;
   height: 100%;
   max-height: 400px;
 }
@@ -253,7 +248,7 @@
   justify-content: center;
   background: #fff;
   position: relative;
-  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
   box-shadow: 0px 6px 18px -3px rgba(0, 0, 0, 0.29);
   border-radius: 20px;
   -webkit-border-radius: 20px;
@@ -267,12 +262,14 @@
   justify-content: space-between;
   position: relative;
 }
-.users-images-container {
-}
+
 .single-statics-card header h3 span {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+.single-statics-card header h3 span p {
+  font-size: 0.7rem;
 }
 .single-statics-card .img-container {
   width: 40px;
@@ -291,17 +288,66 @@
 .single-statics-card header {
   width: 100%;
 }
-.single-statics-card header h3 {
-  line-height: 16px;
-}
-.single-statics-card header p {
+
+.info-data-text {
   font-size: 0.7rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  color: var(--secondary-color);
 }
 .users-images-container {
   display: flex;
+}
+
+.manipulate-lecturer-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+  gap: 1rem;
+
+  position: relative;
+}
+
+.manipulate-lecturer-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.manipulate-lecturer-container form header {
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+.modify-settings-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin: 1rem 0rem 0rem;
+}
+.modify-settings-btn {
+  padding: 0.5rem 2rem;
+  background: var(--button-bg-color);
+  color: var(--very-light-white);
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  font-weight: 600;
+}
+
+.icons8-multiply {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  cursor: pointer;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iMjQiIGhlaWdodD0iMjQiCnZpZXdCb3g9IjAgMCAyNCAyNCIKc3R5bGU9IiBmaWxsOiMwMDAwMDA7Ij48cGF0aCBkPSJNIDUuNzA3MDMxMiA0LjI5Mjk2ODggTCA0LjI5Mjk2ODggNS43MDcwMzEyIEwgMTAuNTg1OTM4IDEyIEwgNC4yOTI5Njg4IDE4LjI5Mjk2OSBMIDUuNzA3MDMxMiAxOS43MDcwMzEgTCAxMiAxMy40MTQwNjIgTCAxOC4yOTI5NjkgMTkuNzA3MDMxIEwgMTkuNzA3MDMxIDE4LjI5Mjk2OSBMIDEzLjQxNDA2MiAxMiBMIDE5LjcwNzAzMSA1LjcwNzAzMTIgTCAxOC4yOTI5NjkgNC4yOTI5Njg4IEwgMTIgMTAuNTg1OTM4IEwgNS43MDcwMzEyIDQuMjkyOTY4OCB6Ij48L3BhdGg+PC9zdmc+')
+    50% 50% no-repeat;
+  background-size: 100%;
 }
 @media only screen and (min-width: 720px) {
   .courses-settings {
@@ -377,11 +423,11 @@
     -o-transform: scale(0.9);
   }
   .attendance-per-lecture-chart-container .chartjs-render-monitor {
-    transform: scale(0.85);
-    -webkit-transform: scale(0.85);
-    -moz-transform: scale(0.85);
-    -ms-transform: scale(0.85);
-    -o-transform: scale(0.85);
+    transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    -o-transform: scale(0.95);
   }
   .actions-container {
     display: grid;

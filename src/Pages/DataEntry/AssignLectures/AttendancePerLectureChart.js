@@ -1,113 +1,7 @@
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import { NativeSelect } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-export const AttendancePerLectureChart = ({ lectures, studentsLength }) => {
-  const [displayedData, setDisplayedData] = useState();
-
-  const [filter, setCurrentFilter] = useState('month');
-
-  const data = displayedData
-    ? {
-        labels:
-          displayedData?.map(
-            ({ LectureNumber }) => `Lecture ${LectureNumber}`
-          ) || [],
-        datasets: [
-          {
-            label: ' Att. Rate',
-
-            fill: true,
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 3,
-            pointHitRadius: 20,
-            backgroundColor: ['rgba(54, 162, 235, 0.05)'],
-            fill: true,
-            borderColor: 'rgba(54, 162, 235, 1)',
-            lineTension: 0,
-
-            pointHoverBorderColor: 'rgba(54, 162, 235, 1)',
-            data:
-              displayedData?.map((lecture) => {
-                let res = {
-                  y:
-                    (lecture?.attendances?.length / Number(studentsLength)) *
-                    100,
-                  lecture,
-                };
-                return res;
-              }) || [],
-            lineTension: 0,
-          },
-        ],
-      }
-    : {};
-
-  useEffect(() => {
-    let filterDate = new Date();
-    const today = new Date();
-    try {
-      switch (filter) {
-        case 'week':
-          filterDate = new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            today.getDate() - 7
-          );
-          break;
-
-        case 'month':
-          filterDate = new Date(
-            today.getFullYear(),
-            today.getMonth() - 1,
-            today.getDate()
-          );
-          break;
-
-        case '3 months':
-          filterDate = new Date(
-            today.getFullYear(),
-            today.getMonth() - 3,
-            today.getDate()
-          );
-          break;
-        default:
-          break;
-      }
-
-      const filteredData = getFilteredDataResult({
-        data: lectures,
-        filterTime: filterDate,
-      });
-
-      setDisplayedData(filteredData);
-    } catch (e) {
-      console.error(e.message);
-    }
-  }, [filter, lectures]);
-  return (
-    <div className='attendance-per-lecture-chart-container'>
-      <header>
-        <h5>Attendance Per Lecture</h5>
-        <aside>
-          <SimpleSelect setCurrentFilter={setCurrentFilter} />
-        </aside>
-      </header>
-      <Line data={data} options={lineOptions} />
-    </div>
-  );
-};
 function SimpleSelect({ setCurrentFilter }) {
   const [filter, setFilter] = React.useState('month');
 
@@ -118,16 +12,11 @@ function SimpleSelect({ setCurrentFilter }) {
 
   return (
     <div>
-      <Select
-        labelId='demo-simple-select-label'
-        id='demo-simple-select'
-        value={filter}
-        onChange={handleChange}
-      >
-        <MenuItem value={'week'}>Last Week</MenuItem>
-        <MenuItem value={'month'}>Last Month</MenuItem>
-        <MenuItem value={'3 months'}>Last 3 Months</MenuItem>
-      </Select>
+      <NativeSelect id='select' value={filter} onChange={handleChange}>
+        <option value={'week'}>Last Week</option>
+        <option value={'month'}>Last Month</option>
+        <option value={'3 months'}>Last 3 Months</option>
+      </NativeSelect>
     </div>
   );
 }
@@ -224,4 +113,107 @@ const lineOptions = {
       },
     },
   },
+};
+
+export const AttendancePerLectureChart = ({ lectures, studentsLength }) => {
+  const [displayedData, setDisplayedData] = useState();
+
+  const [filter, setCurrentFilter] = useState('month');
+
+  const data = displayedData
+    ? {
+        labels:
+          displayedData?.map(
+            ({ LectureNumber }) => `Lecture ${LectureNumber}`
+          ) || [],
+        datasets: [
+          {
+            label: ' Att. Rate',
+
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+
+            pointHoverBorderWidth: 2,
+            pointRadius: 3,
+            pointHitRadius: 20,
+            backgroundColor: ['rgba(54, 162, 235, 0.05)'],
+            fill: true,
+            borderColor: 'rgba(54, 162, 235, 1)',
+            lineTension: 0,
+
+            pointHoverBorderColor: 'rgba(54, 162, 235, 1)',
+            data:
+              displayedData?.map((lecture) => {
+                let res = {
+                  y:
+                    (lecture?.attendances?.length / Number(studentsLength)) *
+                    100,
+                  lecture,
+                };
+                return res;
+              }) || [],
+          },
+        ],
+      }
+    : {};
+
+  useEffect(() => {
+    let filterDate = new Date();
+    const today = new Date();
+    try {
+      switch (filter) {
+        case 'week':
+          filterDate = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate() - 7
+          );
+          break;
+
+        case 'month':
+          filterDate = new Date(
+            today.getFullYear(),
+            today.getMonth() - 1,
+            today.getDate()
+          );
+          break;
+
+        case '3 months':
+          filterDate = new Date(
+            today.getFullYear(),
+            today.getMonth() - 3,
+            today.getDate()
+          );
+          break;
+        default:
+          break;
+      }
+
+      const filteredData = getFilteredDataResult({
+        data: lectures,
+        filterTime: filterDate,
+      });
+
+      setDisplayedData(filteredData);
+    } catch (e) {
+      console.error(e.message);
+    }
+  }, [filter, lectures]);
+  return (
+    <div className='attendance-per-lecture-chart-container'>
+      <header>
+        <h5>Attendance Per Lecture</h5>
+        <aside>
+          <SimpleSelect setCurrentFilter={setCurrentFilter} />
+        </aside>
+      </header>
+      <Line data={data} options={lineOptions} />
+    </div>
+  );
 };

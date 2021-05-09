@@ -1,3 +1,6 @@
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import Modal from '@material-ui/core/Modal';
 import { GET_COURSE_DATA } from 'api/queries/getCourseData';
 import { GET_COURSE_STUDENTS_ATTENDANCE_RATES } from 'api/queries/getCourseStudentsAttendanceRates';
 import downloadReportSVG from 'assets/downloadReport.svg';
@@ -5,11 +8,13 @@ import manualAssignSVG from 'assets/manualAssignment.svg';
 import topStudentsSVG from 'assets/TopStudents.svg';
 import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import Query from 'components/Query';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { transitionFormatModalStyle } from 'types/styles';
 import './admin-course-page.css';
 import { AttendancePerLectureChart } from './AttendancePerLectureChart';
-import { CourseStaticsInfo } from './computeOverAllAttendance';
+import { SettingsModal } from './CourseSettingsModal';
+import { CourseStaticsInfo } from './CourseStaticsInfoCards';
 import { CourseStudentsWithAttendancePercentageChart } from './CourseStudentsWithAttendancePercentageChart';
 
 const AssignLecturerToCourse = () => {
@@ -23,6 +28,7 @@ const AssignLecturerToCourse = () => {
     '60% - 80%': 0,
     'Above 80%': 0,
   });
+  const [openModal, setOpenModal] = useState('');
 
   const onDataFetched = ({
     course: {
@@ -33,7 +39,7 @@ const AssignLecturerToCourse = () => {
     try {
       let studentsArr = {};
       groups.forEach(({ students }) =>
-        students.map(({ id }) => {
+        students.forEach(({ id }) => {
           studentsArr[id] = 0;
         })
       );
@@ -56,6 +62,8 @@ const AssignLecturerToCourse = () => {
   };
 
   useEffect(() => {
+    document.title = 'Attend. | Course Page';
+
     let finalResults = {
       'Below 20%': 0,
       '20% - 40%': 0,
@@ -63,7 +71,7 @@ const AssignLecturerToCourse = () => {
       '60% - 80%': 0,
       'Above 80%': 0,
     };
-    for (const [key, value] of Object.entries(students)) {
+    for (const [, value] of Object.entries(students)) {
       const percentage = ((Number(value) / lecturesCount) * 100).toFixed();
 
       if (percentage > 80) {
@@ -119,9 +127,14 @@ const AssignLecturerToCourse = () => {
                   <span>{CourseID}</span>
                 </div>
               </header>
-              <div className='course-settings'>
-                <span className='icons8-settings-course'></span>
-              </div>
+              <button
+                className='course-settings'
+                onClick={() => {
+                  setOpenModal('settings');
+                }}
+              >
+                Edit Settings
+              </button>
             </section>
 
             <Query
@@ -142,7 +155,7 @@ const AssignLecturerToCourse = () => {
                         ) => {
                           return (
                             <li
-                              key={actionTitle + index}
+                              key={actionTitle + actionSubtitle + index}
                               className='single-action-card'
                             >
                               <div className='action-img-container'>
@@ -183,6 +196,21 @@ const AssignLecturerToCourse = () => {
                 );
               }}
             </Query>
+            <TransitionalModalChildren
+              {...{
+                open: Boolean(openModal),
+                handleClose: () => {
+                  setOpenModal(false);
+                },
+              }}
+            >
+              <SettingsModal
+                courseID={courseID}
+                handleClose={() => {
+                  setOpenModal(false);
+                }}
+              />
+            </TransitionalModalChildren>
           </main>
         );
       }}
@@ -191,6 +219,29 @@ const AssignLecturerToCourse = () => {
 };
 
 export default AssignLecturerToCourse;
+
+const TransitionalModalChildren = ({ open, handleClose, children }) => {
+  const classes = transitionFormatModalStyle();
+
+  return (
+    <Modal
+      aria-labelledby='How to format the excel file?'
+      aria-describedby='Excel file formation'
+      className={classes.modal}
+      open={open}
+      onClose={handleClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={open}>
+        <div className={classes.paper}>{children}</div>
+      </Fade>
+    </Modal>
+  );
+};
 
 const courseActionsInfo = [
   {

@@ -7,7 +7,7 @@ import { Error } from 'components/common/ErrorIndicator';
 import Logo from 'components/common/Logo';
 import ImageSelector from 'components/ImageSelector/ImageSelector';
 import Query from 'components/Query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import './register.css';
@@ -15,14 +15,8 @@ import { SignupForm } from './SignUpForm';
 
 const RegisterPage = () => {
   let { token } = useParams();
-  const [tokenInfo, setTokenInfo] = useState({});
-  const [validToken, setValidToken] = useState(true);
   const [startAnimation, setStartAnimation] = useState(0);
   const [createdUserInfo, setCreatedUserInfo] = useState(null);
-
-  const onFetchRegistrationToken = ({ userInvitation }) => {
-    setTokenInfo(userInvitation);
-  };
 
   const handleNextStep = (stepNumber) => {
     setStartAnimation(stepNumber);
@@ -37,7 +31,6 @@ const RegisterPage = () => {
       <Query
         query={GET_USER_INVITATION_INFO}
         variables={{ id: token?.split('token=')[1] }}
-        onCompletedFunction={onFetchRegistrationToken}
         errorComponent={<InvalidInvitation />}
       >
         {({
@@ -53,8 +46,6 @@ const RegisterPage = () => {
             users,
           },
         }) => {
-          console.log(new Date() - new Date(latest_invitation_time));
-
           if (
             (new Date() - new Date(latest_invitation_time)) / (1000 * 1000) >=
             2592
@@ -232,7 +223,6 @@ function UploadImageStep({ createdUserInfo, handleNextStep }) {
             avatar: id,
           },
         });
-        console.log('DONEEEE');
         handleNextOrSkip(2);
       }
     } catch (err) {

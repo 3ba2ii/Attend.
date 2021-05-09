@@ -21,31 +21,47 @@ export const CourseStaticsInfo = ({ lectures, studentsLength, users }) => {
   try {
     const courseStaticsInfo = [
       {
+        id: 'lectures-card',
         infoImg: <img src={gradSVG} alt='Lectures' />,
         infoTitle: 'Lectures',
         infoData: lectures.length,
         infoDataText: (
           <>
-            Last Lecture:{' '}
-            {new Date(
-              lectures[lectures?.length - 1]?.LectureDateTime
-            )?.toLocaleDateString()}{' '}
+            {lectures.length
+              ? ' Last Lecture: ' +
+                new Date(
+                  lectures[lectures?.length - 1]?.LectureDateTime
+                )?.toLocaleDateString()
+              : ''}{' '}
             <br />{' '}
-            {formatDistance(
-              new Date(lectures[lectures?.length - 1]?.LectureDateTime),
-              new Date(),
-              { addSuffix: true }
-            )}
+            {lectures.length
+              ? formatDistance(
+                  new Date(lectures[lectures?.length - 1]?.LectureDateTime),
+                  new Date(),
+                  { addSuffix: true }
+                )
+              : 'No lecture yet'}
           </>
         ),
       },
       {
+        id: 'overall-attendance-card',
+
         infoImg: <img src={overallStatics} alt='Overall Attendance' />,
         infoTitle: 'Tot. Attendance',
-        infoData: `${computeOverAllAttendance({ lectures, studentsLength })}%`,
-        infoDataText: `With a total of ${lectures.length} lectures`,
+        infoData: `${
+          lectures.length &&
+          computeOverAllAttendance({ lectures, studentsLength }) + '%'
+        }`,
+        infoDataText: `${
+          lectures.length
+            ? `With a total of ${lectures.length} lectures`
+            : 'No lectures yet'
+        }`,
       },
       {
+        id: 'lecturers-count-card',
+
         infoImg: <img src={overallStatics} alt='Lecturers' />,
         infoTitle: 'Lecturers',
         infoData: (
@@ -65,8 +81,9 @@ export const CourseStaticsInfo = ({ lectures, studentsLength, users }) => {
               .filter((u) =>
                 ['Super Admin', 'Lecturer'].includes(u?.role?.name)
               )
-              .map(({ avatar, LecturerNameInEnglish }) => (
+              .map(({ avatar, LecturerNameInEnglish, index }) => (
                 <AvatarOrInitials
+                  key={LecturerNameInEnglish + index}
                   url={avatar?.url}
                   name={LecturerNameInEnglish}
                   className='small-card-avatars'
@@ -76,6 +93,7 @@ export const CourseStaticsInfo = ({ lectures, studentsLength, users }) => {
         ),
       },
       {
+        id: 'tas-count-card',
         infoImg: <img src={overallStatics} alt='TAs' />,
         infoTitle: 'TAs',
         infoData: (
@@ -92,8 +110,9 @@ export const CourseStaticsInfo = ({ lectures, studentsLength, users }) => {
           <div className='users-images-container'>
             {users
               .filter((u) => ['Teacher Assistant'].includes(u?.role?.name))
-              .map(({ avatar, LecturerNameInEnglish }) => (
+              .map(({ avatar, LecturerNameInEnglish }, index) => (
                 <AvatarOrInitials
+                  key={LecturerNameInEnglish + index}
                   url={avatar?.url}
                   name={LecturerNameInEnglish}
                   className='small-card-avatars'
@@ -106,15 +125,15 @@ export const CourseStaticsInfo = ({ lectures, studentsLength, users }) => {
     return (
       <>
         {courseStaticsInfo.map(
-          ({ infoImg, infoTitle, infoData, infoDataText }) => (
-            <li key={infoTitle} className='single-statics-card'>
+          ({ id, infoImg, infoTitle, infoData, infoDataText }, index) => (
+            <li key={id + index} className='single-statics-card'>
               <div className='img-with-title-container'>
                 <div className='img-container'>{infoImg}</div>
                 <h6>{infoTitle}</h6>
               </div>
               <header>
                 <h3>{infoData}</h3>
-                <p>{infoDataText}</p>
+                <aside className='info-data-text'>{infoDataText}</aside>
               </header>
             </li>
           )

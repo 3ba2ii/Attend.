@@ -15,7 +15,7 @@ const Query = ({
     {
       variables: variables,
       onCompleted(data) {
-        if (onCompletedFunction) onCompletedFunction(data, fetchMore);
+        if (onCompletedFunction) onCompletedFunction(data, fetchMore, refetch);
       },
       onError(e) {
         console.error(e.message);

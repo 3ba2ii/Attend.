@@ -351,7 +351,6 @@
 }
 
 .lectures-card-container {
-  background: #000;
   position: relative;
   transition: scale 0.3s ease-out;
   -webkit-transition: scale 0.3s ease-out;

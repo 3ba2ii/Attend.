@@ -108,7 +108,6 @@ export function InvitationForm({
           value={selectedRole}
           onChange={onSelectRole}
           variant='outlined'
-          onChange={onSelectRole}
         >
           {roles.map(({ id, name }) => {
             return (

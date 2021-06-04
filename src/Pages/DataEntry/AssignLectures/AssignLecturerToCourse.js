@@ -130,7 +130,7 @@ const AssignLecturerToCourse = () => {
               <button
                 className='course-settings'
                 onClick={() => {
-                  setOpenModal('settings');
+                  setOpenModal('settings-modal');
                 }}
               >
                 Edit Settings
@@ -190,24 +190,35 @@ const AssignLecturerToCourse = () => {
                         lectures={lectures}
                         studentsLength={Object.keys(students).length}
                         users={users}
+                        setOpenModal={setOpenModal}
                       />
                     </ul>
+                    <TransitionalModalChildren
+                      {...{
+                        open: Boolean(openModal === 'lectures-modal'),
+                        handleClose: () => {
+                          setOpenModal('');
+                        },
+                      }}
+                    >
+                      <LecturesDeletionModal lectures={lectures} />
+                    </TransitionalModalChildren>
                   </section>
                 );
               }}
             </Query>
             <TransitionalModalChildren
               {...{
-                open: Boolean(openModal),
+                open: Boolean(openModal === 'settings-modal'),
                 handleClose: () => {
-                  setOpenModal(false);
+                  setOpenModal('');
                 },
               }}
             >
               <SettingsModal
                 courseID={courseID}
                 handleClose={() => {
-                  setOpenModal(false);
+                  setOpenModal('');
                 }}
               />
             </TransitionalModalChildren>
@@ -220,6 +231,13 @@ const AssignLecturerToCourse = () => {
 
 export default AssignLecturerToCourse;
 
+const LecturesDeletionModal = ({ lectures }) => {
+  console.log(
+    `🚀 ~ file: AssignLecturerToCourse.js ~ line 234 ~ LecturesDeletionModal ~ lectures`,
+    lectures
+  );
+  return <section className='manipulate-lecturer-container'>Hello</section>;
+};
 const TransitionalModalChildren = ({ open, handleClose, children }) => {
   const classes = transitionFormatModalStyle();
 

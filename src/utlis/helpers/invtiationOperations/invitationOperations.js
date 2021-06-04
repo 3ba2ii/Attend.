@@ -47,7 +47,7 @@ export async function sendInvitationEmail({
   try {
     await axios
       .post(
-        'http://localhost:1337/invitation-email',
+        `${process.env.REACT_APP_BACKEND_URL}/invitation-email`,
         {
           email,
           token,

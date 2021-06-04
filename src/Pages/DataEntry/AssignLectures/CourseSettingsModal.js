@@ -94,6 +94,9 @@ export const SettingsModal = ({ courseID, handleClose }) => {
     setSelectedTAs(newValues);
   };
   const handleSavingSettings = async () => {
+    if (!window.confirm(`Are you sure you want to save these changes?`)) {
+      return;
+    }
     try {
       const unAssignedLecturers = checkUnassignedUsers({
         previouslySelectedUsers: currentAssignedUsers.lecturers,
@@ -223,7 +226,7 @@ export const SettingsModal = ({ courseID, handleClose }) => {
                 onClick={handleSavingSettings}
                 disabled={loading || createUserPrefLoading || updateLoading}
               >
-                Save
+                Save Changes
               </button>
             </div>
           </section>

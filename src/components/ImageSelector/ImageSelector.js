@@ -55,7 +55,7 @@ export default function ImageSelector({
 
   useEffect(() => {
     setCurrentImageState(state);
-  }, [state]);
+  }, [state, setCurrentImageState]);
   return (
     <div className='image-selector-container'>
       <div className='select-image-avatar-container'>

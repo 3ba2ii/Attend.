@@ -95,7 +95,7 @@ function DropZoneContainer({ setXLSXFile, setFileFormatError, propsToCheck }) {
     return () => {
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     };
-  }, [files]);
+  }, [files, propsToCheck, setFileFormatError, setXLSXFile]);
   return (
     <section className='drag-n-drop-container'>
       <div {...getRootProps({ style })}>

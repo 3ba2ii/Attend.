@@ -17,7 +17,12 @@ const computeOverAllAttendance = ({ lectures, studentsLength }) => {
     return 0;
   }
 };
-export const CourseStaticsInfo = ({ lectures, studentsLength, users }) => {
+export const CourseStaticsInfo = ({
+  lectures,
+  studentsLength,
+  users,
+  setOpenModal,
+}) => {
   try {
     const courseStaticsInfo = [
       {
@@ -126,7 +131,17 @@ export const CourseStaticsInfo = ({ lectures, studentsLength, users }) => {
       <>
         {courseStaticsInfo.map(
           ({ id, infoImg, infoTitle, infoData, infoDataText }, index) => (
-            <li key={id + index} className='single-statics-card'>
+            <li
+              key={id + index}
+              className={`single-statics-card ${
+                id === 'lectures-card' ? 'lectures-card-container' : ''
+              }`}
+              onClick={() => {
+                if (id === 'lectures-card') {
+                  setOpenModal('lectures-modal');
+                }
+              }}
+            >
               <div className='img-with-title-container'>
                 <div className='img-container'>{infoImg}</div>
                 <h6>{infoTitle}</h6>

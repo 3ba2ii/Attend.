@@ -326,7 +326,7 @@
   margin: 1rem 0rem 0rem;
 }
 .modify-settings-btn {
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1.5rem;
   background: var(--button-bg-color);
   color: var(--very-light-white);
   border-radius: 4px;
@@ -348,6 +348,23 @@
   background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iMjQiIGhlaWdodD0iMjQiCnZpZXdCb3g9IjAgMCAyNCAyNCIKc3R5bGU9IiBmaWxsOiMwMDAwMDA7Ij48cGF0aCBkPSJNIDUuNzA3MDMxMiA0LjI5Mjk2ODggTCA0LjI5Mjk2ODggNS43MDcwMzEyIEwgMTAuNTg1OTM4IDEyIEwgNC4yOTI5Njg4IDE4LjI5Mjk2OSBMIDUuNzA3MDMxMiAxOS43MDcwMzEgTCAxMiAxMy40MTQwNjIgTCAxOC4yOTI5NjkgMTkuNzA3MDMxIEwgMTkuNzA3MDMxIDE4LjI5Mjk2OSBMIDEzLjQxNDA2MiAxMiBMIDE5LjcwNzAzMSA1LjcwNzAzMTIgTCAxOC4yOTI5NjkgNC4yOTI5Njg4IEwgMTIgMTAuNTg1OTM4IEwgNS43MDcwMzEyIDQuMjkyOTY4OCB6Ij48L3BhdGg+PC9zdmc+')
     50% 50% no-repeat;
   background-size: 100%;
+}
+
+.lectures-card-container {
+  background: #000;
+  position: relative;
+  transition: scale 0.3s ease-out;
+  -webkit-transition: scale 0.3s ease-out;
+  -moz-transition: scale 0.3s ease-out;
+  -ms-transition: scale 0.3s ease-out;
+  -o-transition: scale 0.3s ease-out;
+}
+.lectures-card-container:hover {
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
 }
 @media only screen and (min-width: 720px) {
   .courses-settings {

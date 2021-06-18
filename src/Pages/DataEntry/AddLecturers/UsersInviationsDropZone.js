@@ -6,9 +6,7 @@ import {
   CREATE_INVITATION,
   UPDATE_INVITATION_DATE,
 } from 'api/mutations/createInvitation';
-import excelFileScreenshot from 'assets/excelsheet.png';
 import DropZoneContainer from 'components/Dropzone/Dropzone';
-import TransitionsModal from 'components/Modals/FormatModal';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { handleSubmitInvitationForm } from 'utlis/helpers/invtiationOperations/invitationOperations';
@@ -26,16 +24,13 @@ export function DropZone({
     authedUser: { LecturerNameInEnglish, id },
   } = useSelector((state) => state?.authReducer);
 
-  const [openModal, setOpenModal] = useState(false);
   const [xlsxFile, setXLSXFile] = useState(null);
   const [fileFormatError, setFileFormatError] = useState(false);
   const [createInvitation, { loading }] = useMutation(CREATE_INVITATION);
   const [updateInvitationDate, { loading: updateLoading }] = useMutation(
     UPDATE_INVITATION_DATE
   );
-  const handleClose = () => {
-    setOpenModal(false);
-  };
+
   const handleSubmitFile = async (e) => {
     if (!xlsxFile) return;
     e.preventDefault();
@@ -67,28 +62,7 @@ export function DropZone({
   };
   return (
     <section className='form-excel-wrapper'>
-      <div style={{ width: '400px' }}>
-        <TransitionsModal
-          handleClose={handleClose}
-          open={openModal}
-          description={
-            <>
-              Please format the excel file to only include these following
-              headers <br />
-              <b> 'اسم الطالب ,الرقم القومي ,الايميل, ID' </b>to allow the
-              system to store the data in a correct way.
-            </>
-          }
-          title={'How to format the excel file?'}
-          exampleImage={
-            <img
-              src={excelFileScreenshot}
-              alt={'excel-sheet'}
-              className='excel-sheet-screenshot'
-            />
-          }
-        />
-      </div>
+      <div style={{ width: '400px' }}></div>
       <div className='form-uploader-xlsx-container'>
         <header>
           <h3>
@@ -102,14 +76,6 @@ export function DropZone({
             </a>
             , fill it, and upload
           </h3>
-          <span
-            className='show-formation-of-excel-file'
-            onClick={() => {
-              setOpenModal(true);
-            }}
-          >
-            How to format the excel file?
-          </span>
         </header>
 
         <DropZoneContainer

@@ -1,6 +1,7 @@
 import { NativeSelect } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import { filterDataWithDate } from '../../../utlis/helpers/filterDataWithDate';
 
 function SimpleSelect({ setCurrentFilter }) {
   const [filter, setFilter] = React.useState('month');
@@ -20,100 +21,6 @@ function SimpleSelect({ setCurrentFilter }) {
     </div>
   );
 }
-const getFilteredDataResult = ({ data, filterTime }) => {
-  try {
-    const filteredData = data.filter(
-      ({ LectureDateTime }) => new Date(LectureDateTime) >= new Date(filterTime)
-    );
-    return filteredData;
-  } catch (err) {
-    console.error(err.message);
-    return data;
-  }
-};
-const lineOptions = {
-  maintainAspectRatio: true,
-  gridLines: {
-    display: false,
-  },
-
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          beginAtZero: true,
-          min: 0,
-          max: 100,
-          stepSize: 20,
-          fontSize: 12,
-          fontFamily: 'Poppins',
-          fontColor: '#334d6e',
-          callback: function (value) {
-            return '%' + value;
-          },
-          ticks: {
-            beginAtZero: true,
-            suggestedMax: 110,
-          },
-        },
-      },
-    ],
-    xAxes: [
-      {
-        ticks: {
-          fontSize: 12,
-          fontFamily: 'Poppins',
-          fontColor: '#334d6e',
-          fontWeight: 600,
-        },
-        callback: function (value, index, values) {
-          return 'Lecture' + value;
-        },
-      },
-    ],
-  },
-  legend: {
-    display: false,
-    usePointStyle: true,
-  },
-  tooltips: {
-    mode: 'index',
-    position: 'average',
-
-    backgroundColor: '#344D6D',
-    callbacks: {
-      title: function (tooltipItem, _) {
-        try {
-          const { xLabel } = tooltipItem[0];
-
-          return xLabel;
-        } catch (e) {
-          console.error(e.message);
-          return 'Attendance Rate';
-        }
-      },
-      afterTitle: function (tooltipItem, { datasets }) {
-        try {
-          const { index } = tooltipItem[0];
-
-          const { LectureDateTime, LectureName } = datasets[0].data[
-            index
-          ].lecture;
-
-          return `${LectureName} - ${new Date(
-            LectureDateTime
-          ).toLocaleDateString()}`;
-        } catch (e) {
-          console.error(e.message);
-          return 'Attendance Rate';
-        }
-      },
-      label: function (tooltipItem, _) {
-        return ' Att. Rate: ' + Number(tooltipItem.yLabel).toFixed(1) + '%';
-      },
-    },
-  },
-};
 
 export const AttendancePerLectureChart = ({ lectures, studentsLength }) => {
   const [displayedData, setDisplayedData] = useState();
@@ -195,7 +102,7 @@ export const AttendancePerLectureChart = ({ lectures, studentsLength }) => {
           break;
       }
 
-      const filteredData = getFilteredDataResult({
+      const filteredData = filterDataWithDate({
         data: lectures,
         filterTime: filterDate,
       });
@@ -216,4 +123,87 @@ export const AttendancePerLectureChart = ({ lectures, studentsLength }) => {
       <Line data={data} options={lineOptions} />
     </div>
   );
+};
+
+const lineOptions = {
+  maintainAspectRatio: true,
+  gridLines: {
+    display: false,
+  },
+
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+          min: 0,
+          max: 100,
+          stepSize: 20,
+          fontSize: 12,
+          fontFamily: 'Poppins',
+          fontColor: '#334d6e',
+          callback: function (value) {
+            return '%' + value;
+          },
+          ticks: {
+            beginAtZero: true,
+            suggestedMax: 110,
+          },
+        },
+      },
+    ],
+    xAxes: [
+      {
+        ticks: {
+          fontSize: 12,
+          fontFamily: 'Poppins',
+          fontColor: '#334d6e',
+          fontWeight: 600,
+        },
+        callback: function (value, index, values) {
+          return 'Lecture' + value;
+        },
+      },
+    ],
+  },
+  legend: {
+    display: false,
+    usePointStyle: true,
+  },
+  tooltips: {
+    mode: 'index',
+    position: 'average',
+
+    backgroundColor: '#344D6D',
+    callbacks: {
+      title: function (tooltipItem, _) {
+        try {
+          const { xLabel } = tooltipItem[0];
+
+          return xLabel;
+        } catch (e) {
+          console.error(e.message);
+          return 'Attendance Rate';
+        }
+      },
+      afterTitle: function (tooltipItem, { datasets }) {
+        try {
+          const { index } = tooltipItem[0];
+
+          const { LectureDateTime, LectureName } =
+            datasets[0].data[index].lecture;
+
+          return `${LectureName} - ${new Date(
+            LectureDateTime
+          ).toLocaleDateString()}`;
+        } catch (e) {
+          console.error(e.message);
+          return 'Attendance Rate';
+        }
+      },
+      label: function (tooltipItem, _) {
+        return ' Att. Rate: ' + Number(tooltipItem.yLabel).toFixed(1) + '%';
+      },
+    },
+  },
 };

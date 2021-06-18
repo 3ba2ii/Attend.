@@ -1,5 +1,5 @@
 import React from 'react';
-import DoughnutChart from 'components/Charts/DoughnutChart';
+import { DoughnutChart } from 'components/Charts/DoughnutChart';
 
 const DoughnutCard = () => {
   return (

@@ -15,9 +15,9 @@ import './admin-course-page.css';
 import { AttendancePerLectureChart } from './AttendancePerLectureChart';
 import { SettingsModal } from './CourseSettingsModal';
 import { CourseStaticsInfo } from './CourseStaticsInfoCards';
-import { CourseStudentsWithAttendancePercentageChart } from './CourseStudentsWithAttendancePercentageChart';
+import { DoughnutChart } from '../../../components/Charts/DoughnutChart';
 
-const AssignLecturerToCourse = () => {
+const CoursePage = () => {
   const { courseID } = useParams();
   const [students, setStudents] = useState({});
   const [lecturesCount, setLecturesCount] = useState(0);
@@ -171,10 +171,11 @@ const AssignLecturerToCourse = () => {
                       )}
                     </ul>
                     <div className='students-with-rates-chart'>
-                      <CourseStudentsWithAttendancePercentageChart
+                      <DoughnutChart
                         labelsDataSet={labelsDataSet}
                         lectures={lectures}
                         studentsLength={Object.keys(students).length}
+                        options={DoughnutChartOptions}
                       />
                     </div>
 
@@ -229,11 +230,9 @@ const AssignLecturerToCourse = () => {
   );
 };
 
-export default AssignLecturerToCourse;
-
 const LecturesDeletionModal = ({ lectures }) => {
   console.log(
-    `🚀 ~ file: AssignLecturerToCourse.js ~ line 234 ~ LecturesDeletionModal ~ lectures`,
+    `🚀 ~ file: CoursePage.js ~ line 234 ~ LecturesDeletionModal ~ lectures`,
     lectures
   );
   return <section className='manipulate-lecturer-container'>Hello</section>;
@@ -279,3 +278,47 @@ const courseActionsInfo = [
     actionSubtitle: 'Students with the highest attendance rates',
   },
 ];
+
+const DoughnutChartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  responsiveAnimationDuration: 0,
+
+  layout: {
+    padding: {
+      left: 0,
+      right: 0,
+      top: 10,
+      bottom: 0,
+    },
+  },
+
+  legend: {
+    align: 'end',
+    position: 'right',
+
+    labels: {
+      fontSize: 14,
+      usePointStyle: true,
+      boxWidth: 7,
+    },
+  },
+  tooltips: {
+    position: 'average',
+
+    backgroundColor: '#344D6D',
+    callbacks: {
+      label: function (tooltipItem, data) {
+        return (
+          ' Att. Rate: ' +
+          Number(data.datasets[0].data[tooltipItem.index]).toFixed(1) +
+          '%'
+        );
+      },
+      title: function (tooltipItem, data) {
+        return data.labels[tooltipItem[0].index];
+      },
+    },
+  },
+};
+export default CoursePage;

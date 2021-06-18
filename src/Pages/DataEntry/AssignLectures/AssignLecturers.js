@@ -151,11 +151,6 @@ const AssignLecturersPage = () => {
               academicYear &&
               term &&
               courses.length > 0 && <CoursesCardsContainer courses={courses} />}
-            {/* {courses.length === 0 && (
-              <div className='no-courses-img'>
-                <img src={searching} alt='searching...' />
-              </div>
-            )} */}
           </main>
         );
       }}

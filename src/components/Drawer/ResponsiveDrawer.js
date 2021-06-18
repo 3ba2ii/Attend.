@@ -27,8 +27,8 @@ const AdminPanel = lazy(() => import('pages/DataEntry/AdminPanel/AdminPanel'));
 const AssignLecturersPage = lazy(() =>
   import('pages/DataEntry/AssignLectures/AssignLecturers')
 );
-const AssignLecturerToCourse = lazy(() =>
-  import('pages/DataEntry/AssignLectures/AssignLecturerToCourse')
+const CoursePage = lazy(() =>
+  import('pages/DataEntry/AssignLectures/CoursePage')
 );
 const ImportStudentContainer = lazy(() =>
   import('pages/DataEntry/ImportStudents/ImportStudents')
@@ -129,7 +129,7 @@ function ResponsiveDrawer(props) {
           <Route
             exact
             path={'/admin_panel/assign_lecturers/:courseID'}
-            component={AssignLecturerToCourse}
+            component={CoursePage}
           />
           <Route path={'/admin_panel/staff'} component={StaffPage} />
 

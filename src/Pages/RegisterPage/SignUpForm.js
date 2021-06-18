@@ -6,7 +6,7 @@ import {
   UPDATE_USER_INVITATION_USED,
 } from 'api/mutations/createUserAccount';
 import { useFormik } from 'formik';
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 
 export const SignupForm = ({

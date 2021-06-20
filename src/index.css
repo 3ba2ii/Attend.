@@ -7,9 +7,10 @@
 
   --color-link-text: #109cf1;
   --color-alert-error-bg: #ffe3e6;
-  --dark-font-color: #334d6e;
+  --third-color: #334d6e;
   --primary-color: #192a3e;
   --secondary-color: #6c7c90;
+  --fourth-color: #8f9eb8;
   --main-compare-green-color: #31c977;
   --main-compare-red-color: #e47c67;
 
@@ -80,7 +81,7 @@ h6 {
 }
 
 .dark-font-color {
-  color: var(--dark-font-color);
+  color: var(--third-color);
 }
 .font-weight400 {
   font-weight: 400;

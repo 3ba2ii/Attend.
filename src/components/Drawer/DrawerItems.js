@@ -156,7 +156,7 @@ const drawerNavOptions = ({ authedUser }) => [
   {
     text: 'Courses',
     icon: <span className='icons8-course' alt={'Courses'} />,
-    iconActive: <span className='icons8-course-active' alt={'Course'} />,
+    iconActive: <span className='icons8-course-active' alt={'Courses'} />,
     path: '/courses',
   },
   {
@@ -167,8 +167,8 @@ const drawerNavOptions = ({ authedUser }) => [
   },
   authedUser?.role?.name === 'Super Admin' && {
     text: 'Admin Panel',
-    icon: <span className='icons8-cloud' alt={'Leaderboard'} />,
-    iconActive: <span className='icons8-cloud-active' alt={'Leaderboard'} />,
+    icon: <span className='icons8-cloud' alt={'Admin Panel'} />,
+    iconActive: <span className='icons8-cloud-active' alt={'Admin Panel'} />,
     path: '/admin_panel',
   },
 ];

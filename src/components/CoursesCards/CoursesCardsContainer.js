@@ -15,7 +15,7 @@ const CoursesCardsContainer = ({ courses }) => {
           index
         ) => {
           return (
-            <Link to={`/admin_panel/assign_lecturers/${id}`} key={id}>
+            <Link to={`/admin_panel/courses/${id}`} key={id}>
               <li key={id + index}>
                 <div className='single-course-card-container'>
                   <div className='single-course-card-img'>

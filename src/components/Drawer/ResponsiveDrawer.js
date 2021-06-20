@@ -7,17 +7,18 @@ import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
+import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
+import { CoursePage } from 'pages/CoursePage/CoursePage';
+import { AdminDashboard } from 'pages/Dashboard/Dashboard';
+import StaffPage from 'pages/DataEntry/Staff/StaffPage';
+import SettingsPage from 'pages/Settings/SettingsPage';
 import PropTypes from 'prop-types';
 import React, { lazy, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import { avatarStyles, drawerStyles } from 'types/styles/';
-import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
+import { drawerStyles } from 'types/styles/';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
-import SettingsPage from 'pages/Settings/SettingsPage';
-import StaffPage from 'pages/DataEntry/Staff/StaffPage';
-import { AdminDashboard } from 'pages/Dashboard/Dashboard';
 
 const DashboardPage = lazy(() => import('pages/Dashboard/Dashboard'));
 const AddLecturersPage = lazy(() =>
@@ -27,9 +28,7 @@ const AdminPanel = lazy(() => import('pages/DataEntry/AdminPanel/AdminPanel'));
 const AssignLecturersPage = lazy(() =>
   import('pages/DataEntry/AssignLectures/AssignLecturers')
 );
-const CoursePage = lazy(() =>
-  import('pages/DataEntry/AssignLectures/CoursePage')
-);
+
 const ImportStudentContainer = lazy(() =>
   import('pages/DataEntry/ImportStudents/ImportStudents')
 );
@@ -123,18 +122,16 @@ function ResponsiveDrawer(props) {
           />
           <Route
             exact
-            path={'/admin_panel/assign_lecturers'}
+            path={'/admin_panel/courses'}
             component={AssignLecturersPage}
           />
           <Route
             exact
-            path={'/admin_panel/assign_lecturers/:courseID'}
+            path={'/admin_panel/courses/:courseID'}
             component={CoursePage}
           />
           <Route path={'/admin_panel/staff'} component={StaffPage} />
-
           <Route path={'/courses'} render={() => <div>Hello</div>} />
-
           <Route path={'/profile'} render={() => <div>Hello</div>} />
           <Route path={'/leaderboard'} render={() => <div>leader-board</div>} />
           <Route path={'/help'} render={() => <div>Hello</div>} />
@@ -202,10 +199,7 @@ function AppBarComponent(classes, handleDrawerToggle) {
               className: 'small-appbar-avatar',
             }}
           />
-          <span className='greeting-appbar'>
-            Hello, {role === 'Teacher Assistant' ? 'TA.' : 'Dr.'}{' '}
-            {LecturerNameInEnglish.trim().split(' ')[0]}
-          </span>
+
           <div className='icons8-expand-arrow'></div>
         </IconButton>
       </Toolbar>

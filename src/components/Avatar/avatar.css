@@ -37,8 +37,8 @@
 }
 
 .small-appbar-avatar {
-  width: clamp(20px, 20px + 1vw, 50px) !important;
-  height: clamp(20px, 20px + 1vw, 50px) !important;
+  width: 40px;
+  height: 40px;
   font-size: 1.2rem !important;
   border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -47,12 +47,14 @@
   -o-border-radius: 50%;
   box-shadow: 0px 4px 8px -4px rgba(0, 0, 0, 0.65);
   aspect-ratio: 1;
+  padding: 1px;
+  border: 1px solid rgba(0, 0, 0, 0.513);
 }
 .select-picture-avatar,
 .course-img-avatar {
   cursor: pointer;
-  width: clamp(110px, 110px + 1vw, 200px) !important;
-  height: clamp(110px, 110px + 1vw, 200px) !important;
+  width: clamp(80px, 80px + 1vw, 200px) !important;
+  height: clamp(80px, 80px + 1vw, 200px) !important;
   font-size: 1.5rem !important;
   border-radius: 5px;
   -webkit-border-radius: 5px;

@@ -15,13 +15,13 @@ const optionalProps = [
     path: 'import_students',
   },
   {
-    id: 'assignLecturers',
+    id: 'assign_courses',
     title: 'Assign Courses',
     subtitle:
       'Here you can assign lecturers and teacher assistants to courses so that they have access to take attendance for, and you can un-assign courses from them as well.',
 
-    img: <img src={sh} alt={'Assign Lecturers'} />,
-    path: 'assign_lecturers',
+    img: <img src={sh} alt={'Assign Courses'} />,
+    path: 'courses',
   },
   {
     id: 'addLecturers',

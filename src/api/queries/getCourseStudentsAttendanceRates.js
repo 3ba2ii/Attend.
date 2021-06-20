@@ -1,11 +1,24 @@
 import { gql } from '@apollo/client';
 
 export const GET_COURSE_STUDENTS_ATTENDANCE_RATES = gql`
-  query MyQuery($id: ID!) {
+  query COURSE_STUDENT_INFO($id: ID!) {
     lectures(where: { course: $id }, sort: "LectureDateTime:desc") {
+      id
       LectureNumber
       LectureName
       LectureDateTime
+      users_permissions_user {
+        LecturerNameInEnglish
+        avatar {
+          url
+        }
+        role {
+          name
+        }
+      }
+      groups {
+        GroupNumber
+      }
       attendances {
         student {
           id
@@ -13,8 +26,18 @@ export const GET_COURSE_STUDENTS_ATTENDANCE_RATES = gql`
       }
     }
     sections(where: { course: $id }, sort: "SectionDateTime:desc") {
+      id
       SectionNumber
       SectionDateTime
+      users_permissions_user {
+        LecturerNameInEnglish
+        avatar {
+          url
+        }
+      }
+      groups {
+        GroupNumber
+      }
       attendances {
         student {
           id

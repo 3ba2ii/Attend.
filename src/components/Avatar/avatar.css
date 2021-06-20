@@ -114,3 +114,14 @@
   padding: 1px;
   border: 1px solid rgb(64, 106, 219);
 }
+.activities-avatar {
+  width: clamp(40px, 40px + 1vw, 50px);
+  height: clamp(40px, 40px + 1vw, 50px);
+  font-size: 1rem !important;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  aspect-ratio: 1;
+}

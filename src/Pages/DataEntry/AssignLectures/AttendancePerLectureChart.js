@@ -1,7 +1,7 @@
 import { NativeSelect } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
 import { filterDataWithDate } from '../../../utlis/helpers/filterDataWithDate';
+import { Bar } from 'react-chartjs-2';
 
 function SimpleSelect({ setCurrentFilter }) {
   const [filter, setFilter] = React.useState('month');
@@ -22,41 +22,34 @@ function SimpleSelect({ setCurrentFilter }) {
   );
 }
 
-export const AttendancePerLectureChart = ({ lectures, studentsLength }) => {
+export const AttendancePerLectureChart = ({
+  lectures,
+  studentsLength,
+  __typename,
+}) => {
   const [displayedData, setDisplayedData] = useState();
+  console.log(
+    `🚀 ~ file: AttendancePerLectureChart.js ~ line 27 ~ AttendancePerLectureChart ~ displayedData`,
+    displayedData
+  );
 
   const [filter, setCurrentFilter] = useState('month');
 
   const data = displayedData
     ? {
         labels:
-          displayedData?.map(
-            ({ LectureNumber }) => `Lecture ${LectureNumber}`
+          Object.values(displayedData).map(
+            ({ LectureNumber, SectionNumber }) =>
+              `${__typename} ${LectureNumber || SectionNumber}`
           ) || [],
+
         datasets: [
           {
-            label: ' Att. Rate',
-
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-
-            pointHoverBorderWidth: 2,
-            pointRadius: 3,
-            pointHitRadius: 20,
-            backgroundColor: ['rgba(54, 162, 235, 0.05)'],
-            fill: true,
-            borderColor: 'rgba(54, 162, 235, 1)',
-            lineTension: 0,
-
-            pointHoverBorderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.3)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
             data:
-              displayedData?.map((lecture) => {
+              Object.values(displayedData)?.map((lecture) => {
                 let res = {
                   y:
                     (lecture?.attendances?.length / Number(studentsLength)) *
@@ -103,7 +96,7 @@ export const AttendancePerLectureChart = ({ lectures, studentsLength }) => {
       }
 
       const filteredData = filterDataWithDate({
-        data: lectures,
+        data: Object.values(lectures),
         filterTime: filterDate,
       });
 
@@ -115,18 +108,19 @@ export const AttendancePerLectureChart = ({ lectures, studentsLength }) => {
   return (
     <div className='attendance-per-lecture-chart-container'>
       <header>
-        <h5>Attendance Per Lecture</h5>
+        <h6>Attendance Per Lecture</h6>
         <aside>
           <SimpleSelect setCurrentFilter={setCurrentFilter} />
         </aside>
       </header>
-      <Line data={data} options={lineOptions} />
+      <Bar data={data} options={lineOptions} />
     </div>
   );
 };
 
 const lineOptions = {
   maintainAspectRatio: true,
+  responsive: true,
   gridLines: {
     display: false,
   },

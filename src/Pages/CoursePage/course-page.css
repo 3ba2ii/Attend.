@@ -116,6 +116,7 @@
 
 .course-header-section {
   grid-row: 1/2;
+  grid-column: 1/-1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -178,15 +179,89 @@
   font-weight: 400;
   font-size: 0.7rem;
 }
+#course-chart-2nd-row {
+  grid-row: 3/4;
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  max-height: 450px;
+  gap: 2rem;
+}
+#attendance-per-lecture-chart {
+  grid-column: 1/2;
+  background: #fefefe;
+  /*cardstroke*/
+  border: 1px solid rgba(227, 227, 227, 0.62);
+  box-sizing: border-box;
+  /*card*/
+  box-shadow: 6px 6px 10px rgba(177, 174, 174, 0.17);
+  border-radius: 8px;
+  padding: 24px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  height: 100%;
+}
+.attendance-per-lecture-chart-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#attendance-per-lecture-chart canvas {
+  width: 100% !important;
+}
+#activities-chart {
+  grid-column: 2/3;
+
+  background: #fefefe;
+  /*cardstroke*/
+  border: 1px solid rgba(227, 227, 227, 0.62);
+  box-sizing: border-box;
+  /*card*/
+  box-shadow: 6px 6px 10px rgba(177, 174, 174, 0.17);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 100%;
+  width: 100%;
+  padding: 24px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+#activities-chart h6 {
+  margin-bottom: 24px;
+}
+
+.single-activity {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem 0rem;
+  border-bottom: 0.5px solid rgba(143, 158, 184, 0.4);
+  color: var(--fourth-color);
+  align-items: center;
+}
+.meeting-info span:nth-child(1) {
+  color: var(--third-color);
+  font-weight: 500;
+}
+.meeting-date {
+  display: flex;
+  gap: 6px;
+}
+.meeting-date aside {
+  color: #0596ee;
+  cursor: pointer;
+}
 
 @media only screen and (min-width: 720px) {
-  .course-header-section {
-    grid-row: 1/2;
-    grid-column: 1/-1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
 }
 /* Desktop */
 

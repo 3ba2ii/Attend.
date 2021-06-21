@@ -1,6 +1,3 @@
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import Modal from '@material-ui/core/Modal';
 import { GET_COURSE_DATA } from 'api/queries/getCourseData';
 import { GET_COURSE_STUDENTS_ATTENDANCE_RATES } from 'api/queries/getCourseStudentsAttendanceRates';
 import downloadReportSVG from 'assets/downloadReport.svg';
@@ -10,12 +7,12 @@ import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import Query from 'components/Query';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { transitionFormatModalStyle } from 'types/styles';
 import './admin-course-page.css';
-import { AttendancePerLectureChart } from './AttendancePerLectureChart';
+import { AttendancePerLectureChart } from '../../CoursePage/AttendancePerLectureChart';
 import { SettingsModal } from './CourseSettingsModal';
 import { CourseStaticsInfo } from './CourseStaticsInfoCards';
 import { DoughnutChart } from '../../../components/Charts/DoughnutChart';
+import { TransitionalModalChildren } from './TransitionalModalChildren';
 
 const CoursePage = () => {
   const { courseID } = useParams();
@@ -231,35 +228,8 @@ const CoursePage = () => {
 };
 
 const LecturesDeletionModal = ({ lectures }) => {
-  console.log(
-    `🚀 ~ file: CoursePage.js ~ line 234 ~ LecturesDeletionModal ~ lectures`,
-    lectures
-  );
   return <section className='manipulate-lecturer-container'>Hello</section>;
 };
-const TransitionalModalChildren = ({ open, handleClose, children }) => {
-  const classes = transitionFormatModalStyle();
-
-  return (
-    <Modal
-      aria-labelledby='How to format the excel file?'
-      aria-describedby='Excel file formation'
-      className={classes.modal}
-      open={open}
-      onClose={handleClose}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }}
-    >
-      <Fade in={open}>
-        <div className={classes.paper}>{children}</div>
-      </Fade>
-    </Modal>
-  );
-};
-
 const courseActionsInfo = [
   {
     actionIcon: <img src={downloadReportSVG} alt='downloadReport' />,

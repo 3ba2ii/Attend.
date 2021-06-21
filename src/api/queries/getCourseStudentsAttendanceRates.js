@@ -28,6 +28,7 @@ export const GET_COURSE_STUDENTS_ATTENDANCE_RATES = gql`
     sections(where: { course: $id }, sort: "SectionDateTime:desc") {
       id
       SectionNumber
+      SectionName
       SectionDateTime
       users_permissions_user {
         LecturerNameInEnglish

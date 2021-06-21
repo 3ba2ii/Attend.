@@ -89,10 +89,6 @@ export const handleSubmitInvitationForm = async ({
         department
       )
     );
-    console.log(
-      `🚀 ~ file: invitationOperations.js ~ line 92 ~ departmentData`,
-      departmentData
-    );
 
     const roleDate = roles.find((r) => [r.name, r.id].includes(selectedRole));
 

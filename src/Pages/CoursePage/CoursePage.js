@@ -3,14 +3,19 @@ import { GET_COURSE_STUDENTS_ATTENDANCE_RATES } from 'api/queries/getCourseStude
 import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import Query from 'components/Query';
 import { formatDistance, format } from 'date-fns';
-import { AttendancePerLectureChart } from 'pages/DataEntry/AssignLectures/AttendancePerLectureChart';
+import { AttendancePerLectureChart } from 'pages/CoursePage/AttendancePerLectureChart';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { DoughnutChart } from 'components/Charts/DoughnutChart';
+
 import {
   computeGrowth,
   computeOverallAttendanceRate,
 } from 'utlis/helpers/computeAttendance';
 import './course-page.css';
+import { TransitionalModalChildren } from 'pages/DataEntry/AssignLectures/TransitionalModalChildren';
+import { SettingsModal } from 'pages/DataEntry/AssignLectures/CourseSettingsModal';
 
 export const CoursePage = () => {
   const { courseID } = useParams();
@@ -19,6 +24,15 @@ export const CoursePage = () => {
 
   const [processedLectures, setProcessedLectures] = useState({});
   const [processedSections, setProcessedSections] = useState({});
+  const [openModal, setOpenModal] = useState('');
+
+  const [labelsDataSet, setLabelDataSet] = useState({
+    'Below 20%': 0,
+    '20% - 40%': 0,
+    '40% - 60%': 0,
+    '60% - 80%': 0,
+    'Above 80%': 0,
+  });
 
   const onDataFetched = ({
     course: {
@@ -74,6 +88,7 @@ export const CoursePage = () => {
       });
 
       setProcessedLectures(lecturesCountSet);
+      setProcessedSections(sectionsCountSet);
       setStudents(studentsLectureAttendanceCount);
       setStudentsSection(studentsSectionAttendanceCount);
     } catch (err) {
@@ -81,6 +96,35 @@ export const CoursePage = () => {
     }
   };
 
+  useEffect(() => {
+    document.title = 'Attend. | Course Page';
+
+    let finalResults = {
+      'Below 20%': 0,
+      '20% - 40%': 0,
+      '40% - 60%': 0,
+      '60% - 80%': 0,
+      'Above 80%': 0,
+    };
+    const lecturesCount = Object.keys(processedLectures).length;
+    for (const [, value] of Object.entries(students)) {
+      const percentage = ((Number(value) / lecturesCount) * 100).toFixed();
+
+      if (percentage > 80) {
+        finalResults['Above 80%'] += 1;
+      } else if (percentage > 60 && percentage <= 80) {
+        finalResults['60% - 80%'] += 1;
+      } else if (percentage > 40 && percentage <= 60) {
+        finalResults['40% - 60%'] += 1;
+      } else if (percentage > 20 && percentage <= 40) {
+        finalResults['20% - 40%'] += 1;
+      } else {
+        finalResults['Below 20%'] += 1;
+      }
+    }
+
+    setLabelDataSet(finalResults);
+  }, [students]);
   return (
     <main id='main-course-page'>
       <Query query={GET_COURSE_DATA} variables={{ id: courseID }}>
@@ -123,7 +167,12 @@ export const CoursePage = () => {
                     <span>Export Reports</span>
                   </button>
                 </div>
-                <button className='btn-with-icon course-settings-btn'>
+                <button
+                  className='btn-with-icon course-settings-btn'
+                  onClick={() => {
+                    setOpenModal('settings-modal');
+                  }}
+                >
                   <div className='icons8-tune'></div>
                   <span>View Settings</span>
                 </button>
@@ -140,12 +189,6 @@ export const CoursePage = () => {
         }}
       >
         {({ data: { lectures: dataLectures, sections } }) => {
-          console.log(
-            `🚀 ~ file: CoursePage.js ~ line 361 ~ CoursePage ~ dataLectures`,
-            sections,
-            dataLectures
-          );
-
           const concatenatedMeetings = dataLectures
             .concat(sections)
             .sort(
@@ -153,10 +196,7 @@ export const CoursePage = () => {
                 new Date(b.LectureDateTime || b.SectionDateTime) -
                 new Date(a.LectureDateTime || a.SectionDateTime)
             );
-          console.log(
-            `🚀 ~ file: CoursePage.js ~ line 154 ~ CoursePage ~ concatenatedMeetings`,
-            concatenatedMeetings
-          );
+
           const { LectureDateTime } = dataLectures[0];
           const { SectionDateTime } = sections[0];
           const studentsLength = Object.keys(students).length;
@@ -196,7 +236,7 @@ export const CoursePage = () => {
                 </div>
                 <div className='statistics-card-container overall-attendance-card'>
                   <header>
-                    <h6>Tot. Attendance</h6>
+                    <h6>Avg. Attendance</h6>
                   </header>
                   <aside>
                     <h3>
@@ -290,6 +330,7 @@ export const CoursePage = () => {
 
               <section id='course-chart-2nd-row'>
                 <section id='attendance-per-lecture-chart'>
+                  <h6>Attendance Per Lecture</h6>
                   <AttendancePerLectureChart
                     lectures={processedLectures}
                     studentsLength={studentsLength}
@@ -342,12 +383,83 @@ export const CoursePage = () => {
                   })}
                 </ul>
               </section>
+
+              <section id='third-row-section'>
+                <section id='students-with-attendance-rates'>
+                  <h6>Students Percentage with Attendance Rates</h6>
+
+                  <DoughnutChart
+                    labelsDataSet={labelsDataSet}
+                    lectures={dataLectures}
+                    studentsLength={studentsLength}
+                    options={DoughnutChartOptions}
+                  />
+                </section>
+                <section id='attendance-per-section-chart'>
+                  <h6>Attendance Per Section</h6>
+                  <AttendancePerLectureChart
+                    lectures={processedSections}
+                    studentsLength={studentsLength}
+                    __typename={'Section'}
+                  />
+                </section>
+              </section>
             </>
           );
         }}
       </Query>
+      {/* Transitional Modal Children */}
+      <TransitionalModalChildren
+        {...{
+          open: Boolean(openModal === 'settings-modal'),
+          handleClose: () => {
+            setOpenModal('');
+          },
+        }}
+      >
+        <SettingsModal
+          courseID={courseID}
+          handleClose={() => {
+            setOpenModal('');
+          }}
+        />
+      </TransitionalModalChildren>
     </main>
   );
+};
+
+const DoughnutChartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+
+  legend: {
+    align: 'center',
+    position: 'right',
+
+    labels: {
+      fontSize: 18,
+      usePointStyle: true,
+      boxWidth: 7,
+      fontWeight: 600,
+    },
+  },
+  tooltips: {
+    position: 'average',
+
+    backgroundColor: '#344D6D',
+    callbacks: {
+      label: function (tooltipItem, data) {
+        return (
+          ' Students Percentage ' +
+          Number(data.datasets[0].data[tooltipItem.index]).toFixed(1) +
+          '%'
+        );
+      },
+      title: function (tooltipItem, data) {
+        return data.labels[tooltipItem[0].index];
+      },
+    },
+  },
 };
 const reducer = (accumulator, currentValue) =>
   accumulator + ' & ' + currentValue;
@@ -357,17 +469,4 @@ const extractGroupsName = (groupNumbers) => {
       ? `groups ${groupNumbers.reduce(reducer)}`
       : `group ${groupNumbers[0]}`;
   return groupsName;
-};
-const formatMeetingInfo = ({
-  meetingNumber,
-  groups,
-  name,
-  role,
-  date,
-  attendances,
-}) => {
-  try {
-  } catch (e) {
-    console.error(e.message);
-  }
 };

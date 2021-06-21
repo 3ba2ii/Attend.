@@ -1,6 +1,6 @@
 import { NativeSelect } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { filterDataWithDate } from '../../../utlis/helpers/filterDataWithDate';
+import { filterDataWithDate } from '../../utlis/helpers/filterDataWithDate';
 import { Bar } from 'react-chartjs-2';
 
 function SimpleSelect({ setCurrentFilter }) {
@@ -12,13 +12,16 @@ function SimpleSelect({ setCurrentFilter }) {
   };
 
   return (
-    <div>
-      <NativeSelect id='select' value={filter} onChange={handleChange}>
-        <option value={'week'}>Last Week</option>
-        <option value={'month'}>Last Month</option>
-        <option value={'3 months'}>Last 3 Months</option>
-      </NativeSelect>
-    </div>
+    <NativeSelect
+      id='select-filter'
+      className='select-filter-container'
+      value={filter}
+      onChange={handleChange}
+    >
+      <option value={'week'}>Last Week</option>
+      <option value={'month'}>Last Month</option>
+      <option value={'3 months'}>Last 3 Months</option>
+    </NativeSelect>
   );
 }
 
@@ -28,10 +31,6 @@ export const AttendancePerLectureChart = ({
   __typename,
 }) => {
   const [displayedData, setDisplayedData] = useState();
-  console.log(
-    `🚀 ~ file: AttendancePerLectureChart.js ~ line 27 ~ AttendancePerLectureChart ~ displayedData`,
-    displayedData
-  );
 
   const [filter, setCurrentFilter] = useState('month');
 
@@ -45,16 +44,22 @@ export const AttendancePerLectureChart = ({
 
         datasets: [
           {
-            backgroundColor: 'rgba(255, 99, 132, 0.3)',
-            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor:
+              __typename === 'Lecture'
+                ? 'rgba(255, 99, 132, 0.3)'
+                : 'rgba(54, 162, 235, 0.2)',
+            borderColor:
+              __typename === 'Lecture'
+                ? 'rgba(255, 99, 132, 1)'
+                : 'rgba(54, 162, 235, 1)',
             borderWidth: 1,
             data:
-              Object.values(displayedData)?.map((lecture) => {
+              Object.values(displayedData)?.map((meeting) => {
                 let res = {
                   y:
-                    (lecture?.attendances?.length / Number(studentsLength)) *
+                    (meeting?.attendances?.length / Number(studentsLength)) *
                     100,
-                  lecture,
+                  meeting,
                 };
                 return res;
               }) || [],
@@ -107,12 +112,8 @@ export const AttendancePerLectureChart = ({
   }, [filter, lectures]);
   return (
     <div className='attendance-per-lecture-chart-container'>
-      <header>
-        <h6>Attendance Per Lecture</h6>
-        <aside>
-          <SimpleSelect setCurrentFilter={setCurrentFilter} />
-        </aside>
-      </header>
+      <SimpleSelect setCurrentFilter={setCurrentFilter} />
+
       <Bar data={data} options={lineOptions} />
     </div>
   );
@@ -121,9 +122,6 @@ export const AttendancePerLectureChart = ({
 const lineOptions = {
   maintainAspectRatio: true,
   responsive: true,
-  gridLines: {
-    display: false,
-  },
 
   scales: {
     yAxes: [
@@ -184,11 +182,11 @@ const lineOptions = {
         try {
           const { index } = tooltipItem[0];
 
-          const { LectureDateTime, LectureName } =
-            datasets[0].data[index].lecture;
+          const { LectureDateTime, LectureName, SectionDateTime, SectionName } =
+            datasets[0].data[index].meeting;
 
-          return `${LectureName} - ${new Date(
-            LectureDateTime
+          return `${LectureName || SectionName} - ${new Date(
+            LectureDateTime || SectionDateTime
           ).toLocaleDateString()}`;
         } catch (e) {
           console.error(e.message);

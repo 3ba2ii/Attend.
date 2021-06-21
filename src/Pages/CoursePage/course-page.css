@@ -9,11 +9,28 @@
 }
 #main-course-page {
   display: grid;
-  grid-template-rows: 1fr 1fr 3fr 3fr;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr fit-content 3fr 3fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2.5rem;
 }
-
+/* SECTION: Course Info HEADER  */
+.course-header-section {
+  grid-row: 1/2;
+  grid-column: 1/-1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.course-header-section aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-end;
+}
+.course-header-section aside button {
+  padding: 0.6rem 1.1rem;
+  color: var(--third-color);
+}
 .course-header-section header {
   display: flex;
   align-items: center;
@@ -95,51 +112,24 @@
   display: flex;
   align-items: flex-end;
 }
+
 .buttons-container-flex {
   display: flex;
-  gap: 1rem;
-}
-.growth {
-  display: flex;
-  gap: 0.3rem;
-  align-items: center;
-}
-.positive-growth {
-  color: #31c977 !important;
-
-  font-weight: 500 !important;
-}
-.negative-growth {
-  color: #e47c67 !important;
-  font-weight: 500 !important;
-}
-
-.course-header-section {
-  grid-row: 1/2;
-  grid-column: 1/-1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.course-header-section aside {
-  display: flex;
   flex-direction: column;
-  gap: 1rem;
-  align-items: flex-end;
+  gap: 0.5rem;
 }
-.course-header-section aside button {
-  padding: 0.6rem 1.1rem;
-  color: var(--third-color);
-}
+
+/* SECTION : Course Statics Cards (2nd Row) */
 #course-statics-cards-section {
   grid-row: 2/3;
   grid-column: 1/-1;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
-  gap: 2rem;
+  gap: 1rem;
   overflow-x: auto;
   width: 100%;
+  height: fit-content;
 }
 .statistics-card-container {
   padding: 1.5rem 2rem;
@@ -179,17 +169,31 @@
   font-weight: 400;
   font-size: 0.7rem;
 }
+.growth {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+.positive-growth {
+  color: #31c977 !important;
+
+  font-weight: 500 !important;
+}
+.negative-growth {
+  color: #e47c67 !important;
+  font-weight: 500 !important;
+}
+
+/* Course Charts (Attendance Per Lecture and Latest Activities Row) */
 #course-chart-2nd-row {
   grid-row: 3/4;
   grid-column: 1/-1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-
-  max-height: 450px;
   gap: 2rem;
+
+  display: grid;
+  grid-template-rows: minmax(1fr, 450px) minmax(1fr, 450px);
 }
 #attendance-per-lecture-chart {
-  grid-column: 1/2;
   background: #fefefe;
   /*cardstroke*/
   border: 1px solid rgba(227, 227, 227, 0.62);
@@ -203,20 +207,21 @@
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
   height: 100%;
+  max-height: 450px;
+  position: relative;
+}
+
+#attendance-per-lecture-chart canvas {
+  width: 100% !important;
 }
 .attendance-per-lecture-chart-container {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-#attendance-per-lecture-chart canvas {
-  width: 100% !important;
+  justify-content: space-around;
 }
 #activities-chart {
-  grid-column: 2/3;
-
   background: #fefefe;
   /*cardstroke*/
   border: 1px solid rgba(227, 227, 227, 0.62);
@@ -227,7 +232,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  max-height: 100%;
+  max-height: 450px;
   width: 100%;
   padding: 24px;
   -webkit-border-radius: 8px;
@@ -261,9 +266,161 @@
   cursor: pointer;
 }
 
+.select-filter-container {
+  position: absolute !important;
+  width: fit-content;
+  right: 24px;
+  top: 5%;
+  font-size: 0.8rem !important;
+}
+
+/* Last Course Row */
+#third-row-section {
+  grid-column: 1/-1;
+  grid-row: 4/5;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 2rem;
+}
+#students-with-attendance-rates {
+  background: #fefefe;
+  /*cardstroke*/
+  border: 1px solid rgba(227, 227, 227, 0.62);
+  box-sizing: border-box;
+  /*card*/
+  box-shadow: 6px 6px 10px rgba(177, 174, 174, 0.17);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 100%;
+  width: 100%;
+  padding: 24px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  position: relative;
+}
+.doughnut-chart-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 20px;
+}
+#attendance-per-section-chart {
+  background: #fefefe;
+  /*cardstroke*/
+  border: 1px solid rgba(227, 227, 227, 0.62);
+  box-sizing: border-box;
+  /*card*/
+  box-shadow: 6px 6px 10px rgba(177, 174, 174, 0.17);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 100%;
+  width: 100%;
+  padding: 24px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  position: relative;
+}
+
+/* MODIFY Setting Modal Button */
+.modify-settings-btn {
+  padding: 0.5rem 1.5rem;
+  background: var(--button-bg-color);
+  color: var(--very-light-white);
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  font-weight: 600;
+}
+
+.manipulate-lecturer-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+  gap: 1rem;
+
+  position: relative;
+}
+
+.manipulate-lecturer-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.manipulate-lecturer-container form header {
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+.modify-settings-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin: 1rem 0rem 0rem;
+}
+.modify-settings-btn {
+  padding: 0.5rem 1.5rem;
+  background: var(--button-bg-color);
+  color: var(--very-light-white);
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  font-weight: 600;
+}
+
+.btn-with-icon span {
+  display: none;
+}
+
 @media only screen and (min-width: 720px) {
 }
 /* Desktop */
 
 @media only screen and (min-width: 1024px) {
+  .btn-with-icon span {
+    display: block;
+  }
+  .buttons-container-flex {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  #course-statics-cards-section {
+    gap: 2rem;
+  }
+  #course-chart-2nd-row {
+    grid-row: 3/4;
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+
+    max-height: 450px;
+    gap: 2rem;
+  }
+
+  #attendance-per-lecture-chart {
+    grid-column: 1/2;
+  }
+  #activities-chart {
+    grid-column: 2/3;
+  }
+  #third-row-section {
+    grid-column: 1/-1;
+    grid-row: 4/5;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 2rem;
+  }
 }

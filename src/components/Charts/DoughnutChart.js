@@ -24,11 +24,7 @@ export const DoughnutChart = ({ labelsDataSet, studentsLength, options }) => {
   };
 
   return (
-    <div className='doughnut-chart'>
-      <span>
-        Students with
-        <br /> Attendance Rates:
-      </span>
+    <div className='doughnut-chart-container'>
       <Doughnut data={DData} options={options} />
     </div>
   );

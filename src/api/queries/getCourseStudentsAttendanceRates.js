@@ -21,6 +21,7 @@ export const GET_COURSE_STUDENTS_ATTENDANCE_RATES = gql`
       }
       attendances {
         student {
+          StudentNameInArabic
           id
         }
       }
@@ -41,6 +42,7 @@ export const GET_COURSE_STUDENTS_ATTENDANCE_RATES = gql`
       }
       attendances {
         student {
+          StudentNameInArabic
           id
         }
       }

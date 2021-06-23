@@ -4,10 +4,7 @@ export const filterDataWithDate = ({ data, filterTime }) => {
       ({ LectureDateTime, SectionDateTime }) =>
         new Date(LectureDateTime || SectionDateTime) >= new Date(filterTime)
     );
-    console.log(
-      `🚀 ~ file: filterDataWithDate.js ~ line 7 ~ filterDataWithDate ~ filteredData`,
-      filteredData
-    );
+
     return filteredData;
   } catch (err) {
     console.error(err.message);

@@ -122,12 +122,12 @@ function ResponsiveDrawer(props) {
           />
           <Route
             exact
-            path={'/admin_panel/courses'}
+            path={'/admin_panel/admin_courses'}
             component={AssignLecturersPage}
           />
           <Route
             exact
-            path={'/admin_panel/courses/:courseID'}
+            path={'/admin_panel/admin_courses/:courseID'}
             component={CoursePage}
           />
           <Route path={'/admin_panel/staff'} component={StaffPage} />

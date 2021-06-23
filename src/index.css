@@ -23,6 +23,15 @@
 
   --transparent-white: hsla(0, 0%, 100%, 0.75);
   --very-light-white: hsl(0, 0%, 95%);
+
+  /* Transitions Elements */
+  --bg: hsl(0, 0%, 95%);
+  --bg-accent: #484a4d;
+  --text-color: #dadce1;
+  --nav-size: 60px;
+  --border: 1px solid #474a4d44;
+  --border-radius: 8px;
+  --speed: 500ms;
 }
 * {
   margin: 0;

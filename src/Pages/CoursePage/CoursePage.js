@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DoughnutChart } from 'components/Charts/DoughnutChart';
-
 import {
   computeGrowth,
   computeOverallAttendanceRate,
@@ -16,14 +15,22 @@ import {
 import './course-page.css';
 import { TransitionalModalChildren } from 'pages/DataEntry/AssignLectures/TransitionalModalChildren';
 import { SettingsModal } from 'pages/DataEntry/AssignLectures/CourseSettingsModal';
+import { DropdownMenu } from './DropdownMenu';
+import { extractGroupsName } from './getGroupsName';
 
 export const CoursePage = () => {
   const { courseID } = useParams();
   const [students, setStudents] = useState({});
+  const [openExportMenu, setOpenExportMenu] = useState(false);
+  const [openAssignStudentMenu, setOpenAssignStudentMenu] = useState(false);
+
   const [studentsSection, setStudentsSection] = useState({});
 
   const [processedLectures, setProcessedLectures] = useState({});
   const [processedSections, setProcessedSections] = useState({});
+  const [unprocessedLectures, setUnProcessedLectures] = useState({});
+  const [unprocessedSections, setUnProcessedSections] = useState({});
+
   const [openModal, setOpenModal] = useState('');
 
   const [labelsDataSet, setLabelDataSet] = useState({
@@ -42,6 +49,8 @@ export const CoursePage = () => {
     sections,
   }) => {
     try {
+      setUnProcessedSections(sections);
+      setUnProcessedLectures(lectures);
       let studentsLectureAttendanceCount = {};
       let studentsSectionAttendanceCount = {};
 
@@ -158,14 +167,32 @@ export const CoursePage = () => {
               </header>
               <aside>
                 <div className='buttons-container-flex'>
-                  <button className='btn-with-icon'>
+                  <button
+                    className='btn-with-icon'
+                    onClick={() => {
+                      setOpenAssignStudentMenu(!openAssignStudentMenu);
+                      setOpenExportMenu(false);
+                    }}
+                  >
                     <div className='icons8-user-add'></div>
                     <span>Manual Assign</span>
                   </button>
-                  <button className='btn-with-icon'>
+                  <button
+                    className='btn-with-icon'
+                    onClick={() => {
+                      setOpenExportMenu(!openExportMenu);
+                      setOpenAssignStudentMenu(false);
+                    }}
+                  >
                     <div className='icons8-share-rounded'></div>
                     <span>Export Reports</span>
                   </button>
+                  {openExportMenu && (
+                    <DropdownMenu
+                      lectures={unprocessedLectures}
+                      sections={unprocessedSections}
+                    />
+                  )}
                 </div>
                 <button
                   className='btn-with-icon course-settings-btn'
@@ -437,10 +464,10 @@ const DoughnutChartOptions = {
     position: 'right',
 
     labels: {
-      fontSize: 18,
+      fontSize: 16,
       usePointStyle: true,
-      boxWidth: 7,
-      fontWeight: 600,
+      boxWidth: 8,
+      fontColor: '#344D6D',
     },
   },
   tooltips: {
@@ -460,13 +487,4 @@ const DoughnutChartOptions = {
       },
     },
   },
-};
-const reducer = (accumulator, currentValue) =>
-  accumulator + ' & ' + currentValue;
-const extractGroupsName = (groupNumbers) => {
-  const groupsName =
-    groupNumbers.length > 1
-      ? `groups ${groupNumbers.reduce(reducer)}`
-      : `group ${groupNumbers[0]}`;
-  return groupsName;
 };

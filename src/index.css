@@ -303,3 +303,7 @@ button:active {
 .rdt_TableCell > * {
   font-family: var(--secondary-font-family);
 }
+.extract-report-form .MuiFormControl-root label {
+  z-index: 100;
+  background: rgb(255, 255, 255);
+}

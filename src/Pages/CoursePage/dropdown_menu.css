@@ -69,8 +69,7 @@
   padding: 0.5rem 0.5rem 0.5rem 0rem;
   color: var(--third-color);
   font-weight: 500;
-
-  margin: 0.5rem 0rem;
+  margin: 0rem 0rem 0.8rem 0rem;
   align-items: center;
 }
 
@@ -171,6 +170,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0rem;
+  gap: 1rem;
+}
+.report-option-space-between input {
+  width: 100%;
 }
 .report-option-space-between label {
   color: var(--third-color);
@@ -199,6 +202,11 @@
   justify-content: center;
   gap: 6px;
   padding: 0.5rem 0rem;
+  margin: 1rem 0rem;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
 }
 .extract-report-button span {
   color: var(--very-light-white);
@@ -215,4 +223,28 @@
 .extract-report-button:hover {
   filter: brightness(105%);
   -webkit-filter: brightness(105%);
+}
+.report-name-input-field {
+  padding: 2px 8px;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  min-height: 38px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+.report-name-input-field:target {
+  border-color: #2684ff;
+}
+.options-container {
+  display: flex;
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+  color: var(--third-color);
+  opacity: 0.75;
+  justify-content: space-between;
 }

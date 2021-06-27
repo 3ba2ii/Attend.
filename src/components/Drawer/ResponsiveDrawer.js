@@ -98,14 +98,14 @@ function ResponsiveDrawer(props) {
             exact
             render={() => {
               if (name === 'Super Admin') return <AdminDashboard />;
-              return <DashboardPage />;
+              return <div>Hello</div>;
             }}
           />
           <Route
             path={'/dashboard'}
             render={() => {
               if (name === 'Super Admin') return <AdminDashboard />;
-              return <DashboardPage />;
+              return <div>Hello</div>;
             }}
           />
           <Route exact path={'/admin_panel'} component={AdminPanel} />

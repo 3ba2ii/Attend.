@@ -1,31 +1,31 @@
-export const computeOverallAttendanceRate = ({ lectures, studentsLength }) => {
+export const computeOverallAttendanceRate = ({ data, studentsLength }) => {
   try {
-    const count = lectures.length;
+    const count = data.length;
 
     let result = 0;
-    lectures.forEach(({ attendances }) => {
+    data.forEach(({ attendances }) => {
       result += (attendances.length / studentsLength) * 100;
     });
-    return (result / count).toFixed(0);
+    return (result / count).toFixed(1);
   } catch (e) {
     console.error(e.message);
     return 0;
   }
 };
 
-export const computeGrowth = ({ lectures, studentsLength }) => {
-  const sortedLectures = lectures
+export const computeGrowth = ({ data, studentsLength }) => {
+  const sortedLectures = data
     .slice()
     .sort((a, b) => new Date(b.LectureDateTime) - new Date(a.LectureDateTime));
 
   const totalAttendance = computeOverallAttendanceRate({
-    lectures,
+    data,
     studentsLength,
   });
   const totalAttendanceWithoutLastLecture = computeOverallAttendanceRate({
-    lectures: sortedLectures.slice(1, lectures.length),
+    data: sortedLectures.slice(1, data.length),
     studentsLength,
   });
 
-  return totalAttendance - totalAttendanceWithoutLastLecture;
+  return (totalAttendance - totalAttendanceWithoutLastLecture).toFixed(1);
 };

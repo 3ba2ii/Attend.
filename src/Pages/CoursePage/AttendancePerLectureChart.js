@@ -1,7 +1,9 @@
 import { NativeSelect } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import { filterDataWithDate } from '../../utlis/helpers/filterDataWithDate';
+import { format } from 'date-fns';
+import React, { useContext, useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
+import { filterDataWithDate } from 'utlis/helpers/filterDataWithDate';
+import { CoursePageContext } from './CoursePage';
 
 function SimpleSelect({ setCurrentFilter }) {
   const [filter, setFilter] = React.useState('month');
@@ -25,13 +27,11 @@ function SimpleSelect({ setCurrentFilter }) {
   );
 }
 
-export const AttendancePerLectureChart = ({
-  lectures,
-  studentsLength,
-  __typename,
-}) => {
+export const AttendancePerLectureChart = ({ __typename }) => {
+  const { studentsData, processedLectures, processedSections } =
+    useContext(CoursePageContext);
+  const studentsLength = Object.keys(studentsData)?.length;
   const [displayedData, setDisplayedData] = useState();
-
   const [filter, setCurrentFilter] = useState('month');
 
   const data = displayedData
@@ -80,7 +80,6 @@ export const AttendancePerLectureChart = ({
             today.getDate() - 7
           );
           break;
-
         case 'month':
           filterDate = new Date(
             today.getFullYear(),
@@ -101,7 +100,10 @@ export const AttendancePerLectureChart = ({
       }
 
       const filteredData = filterDataWithDate({
-        data: Object.values(lectures),
+        data:
+          __typename === 'Lecture'
+            ? Object.values(processedLectures)
+            : Object.values(processedSections),
         filterTime: filterDate,
       });
 
@@ -109,7 +111,7 @@ export const AttendancePerLectureChart = ({
     } catch (e) {
       console.error(e.message);
     }
-  }, [filter, lectures]);
+  }, [filter, __typename, processedLectures, processedSections]);
   return (
     <div className='attendance-per-lecture-chart-container'>
       <SimpleSelect setCurrentFilter={setCurrentFilter} />
@@ -182,12 +184,13 @@ const lineOptions = {
         try {
           const { index } = tooltipItem[0];
 
-          const { LectureDateTime, LectureName, SectionDateTime, SectionName } =
+          const { LectureDateTime, SectionDateTime } =
             datasets[0].data[index].meeting;
 
-          return `${LectureName || SectionName} - ${new Date(
-            LectureDateTime || SectionDateTime
-          ).toLocaleDateString()}`;
+          return `${format(
+            new Date(LectureDateTime || SectionDateTime),
+            'dd MMM yyyy'
+          )}`;
         } catch (e) {
           console.error(e.message);
           return 'Attendance Rate';

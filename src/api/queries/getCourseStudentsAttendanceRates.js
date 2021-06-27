@@ -50,7 +50,9 @@ export const GET_COURSE_STUDENTS_ATTENDANCE_RATES = gql`
     course(id: $id) {
       academic_year {
         groups {
-          students {
+          students(sort: "StudentNameInArabic") {
+            StudentNameInArabic
+            StudentOfficialEmail
             id
           }
         }

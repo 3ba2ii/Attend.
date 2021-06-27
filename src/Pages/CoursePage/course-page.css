@@ -385,6 +385,28 @@
   display: none;
 }
 
+.alert-enter {
+  opacity: 0;
+  transform: scale(0.9) !important;
+  -webkit-transform: scale(0.9) !important;
+  -moz-transform: scale(0.9) !important;
+  -ms-transform: scale(0.9) !important;
+  -o-transform: scale(0.9) !important;
+}
+.alert-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.alert-exit {
+  opacity: 1;
+}
+.alert-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+
 @media only screen and (min-width: 720px) {
 }
 /* Desktop */

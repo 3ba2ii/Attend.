@@ -170,6 +170,7 @@
   color: var(--secondary-color);
   font-weight: 400;
   font-size: 0.7rem;
+  white-space: nowrap;
 }
 .growth {
   display: flex;

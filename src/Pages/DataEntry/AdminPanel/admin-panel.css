@@ -89,6 +89,7 @@
 @media only screen and (min-width: 720px) {
   #data-entry-page {
     align-items: flex-start;
+    justify-content: center;
   }
 
   .single-select-card-container:hover {

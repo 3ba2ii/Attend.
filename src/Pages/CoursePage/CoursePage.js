@@ -1,23 +1,21 @@
 import { GET_COURSE_DATA } from 'api/queries/getCourseData';
 import { GET_COURSE_STUDENTS_ATTENDANCE_RATES } from 'api/queries/getCourseStudentsAttendanceRates';
 import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
-import Query from 'components/Query';
-import { formatDistance, format } from 'date-fns';
-import { AttendancePerLectureChart } from 'pages/CoursePage/AttendancePerLectureChart';
-import { createContext, useEffect } from 'react';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { DoughnutChart } from 'components/Charts/DoughnutChart';
+import Query from 'components/Query';
+import { format, formatDistance } from 'date-fns';
+import { AttendancePerLectureChart } from 'pages/CoursePage/AttendancePerLectureChart';
+import { SettingsModal } from 'pages/DataEntry/AssignLectures/CourseSettingsModal';
+import { TransitionalModalChildren } from 'pages/DataEntry/AssignLectures/TransitionalModalChildren';
+import { createContext, useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   computeGrowth,
   computeOverallAttendanceRate,
 } from 'utlis/helpers/computeAttendance';
 import './course-page.css';
-import { TransitionalModalChildren } from 'pages/DataEntry/AssignLectures/TransitionalModalChildren';
-import { SettingsModal } from 'pages/DataEntry/AssignLectures/CourseSettingsModal';
-import { extractGroupsName } from './getGroupsName';
 import { DropdownMenu } from './DropdownMenu';
-import { CSSTransition } from 'react-transition-group';
+import { extractGroupsName } from './getGroupsName';
 
 export const CoursePageContext = createContext();
 
@@ -34,7 +32,7 @@ export const CoursePage = () => {
   const [studentsData, setStudentsData] = useState({});
   const [processedLectures, setProcessedLectures] = useState([]);
   const [processedSections, setProcessedSections] = useState({});
-
+  const exportReportNode = useRef();
   const [openModal, setOpenModal] = useState('');
 
   const onDataFetched = ({
@@ -118,9 +116,23 @@ export const CoursePage = () => {
       console.error(err.message);
     }
   };
+  const handleClick = (e) => {
+    if (exportReportNode?.current?.contains(e.target)) {
+      // inside click
+      return;
+    }
+    // outside click
+    setOpenExportMenu(false);
+  };
 
   useEffect(() => {
     document.title = 'Attend. | Course Page';
+    // add when mounted
+    document.addEventListener('mousedown', handleClick);
+    // return function to be called when unmounted
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+    };
   }, [processedLectures]);
   return (
     <main id='main-course-page'>
@@ -189,7 +201,12 @@ export const CoursePage = () => {
                       <span>Export Reports</span>
                     </button>
 
-                    {openExportMenu && <DropdownMenu />}
+                    {openExportMenu && (
+                      <DropdownMenu
+                        CourseNameInEnglish={CourseNameInEnglish}
+                        exportReportNode={exportReportNode}
+                      />
+                    )}
                   </div>
                   <button
                     className='btn-with-icon course-settings-btn'
@@ -222,7 +239,7 @@ export const CoursePage = () => {
               );
 
             const LectureDateTime = dataLectures[0]?.LectureDateTime;
-            const SectionDateTime = sections?.length?.SectionDateTime;
+            const SectionDateTime = sections?.[0]?.SectionDateTime;
             const studentsLength = Object.keys(studentsData).length;
             const avgAttendancePerLecture = computeOverallAttendanceRate({
               data: Object.values(processedLectures),
@@ -251,8 +268,7 @@ export const CoursePage = () => {
                     <aside>
                       <h3>{dataLectures.length}</h3>
                       <span>
-                        Last Lecture:
-                        {LastLectureDateTime}
+                        Last Lecture: {' ' + LastLectureDateTime}
                         <br />
                         {LastLectureDistance}
                       </span>

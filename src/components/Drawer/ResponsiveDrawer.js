@@ -19,7 +19,7 @@ import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { drawerStyles } from 'types/styles/';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
-
+import { CoursesPage } from 'pages/CoursesPage/CoursesPage';
 const DashboardPage = lazy(() => import('pages/Dashboard/Dashboard'));
 const AddLecturersPage = lazy(() =>
   import('pages/DataEntry/AddLecturers/AddLecturers')
@@ -130,8 +130,10 @@ function ResponsiveDrawer(props) {
             path={'/admin_panel/admin_courses/:courseID'}
             component={CoursePage}
           />
+          <Route exact path={'/courses/:courseID'} component={CoursePage} />
           <Route path={'/admin_panel/staff'} component={StaffPage} />
-          <Route path={'/courses'} render={() => <div>Hello</div>} />
+          <Route path={'/courses'} render={() => <CoursesPage />} />
+
           <Route path={'/profile'} render={() => <div>Hello</div>} />
           <Route path={'/leaderboard'} render={() => <div>leader-board</div>} />
           <Route path={'/help'} render={() => <div>Hello</div>} />

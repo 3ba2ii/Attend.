@@ -1,21 +1,13 @@
 import { Link } from 'react-router-dom';
-
-const CoursesCardsContainer = ({ courses }) => {
+import 'pages/DataEntry/AssignLectures/assign-lecturers.css';
+const CoursesCardsContainer = ({ courses, path }) => {
+  const coursePath = path ? path : '/admin_panel/admin_courses';
   return (
     <ul className='courses-card-grid-container'>
       {courses.map(
-        (
-          {
-            CourseID,
-            CourseNameInArabic,
-            CourseNameInEnglish,
-            CourseAvatar,
-            id,
-          },
-          index
-        ) => {
+        ({ CourseID, CourseNameInEnglish, CourseAvatar, id }, index) => {
           return (
-            <Link to={`/admin_panel/admin_courses/${id}`} key={id}>
+            <Link to={`${coursePath}/${id}`} key={id}>
               <li key={id + index}>
                 <div className='single-course-card-container'>
                   <div className='single-course-card-img'>

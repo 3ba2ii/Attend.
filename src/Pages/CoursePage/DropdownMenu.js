@@ -15,7 +15,9 @@ import makeAnimated from 'react-select/animated';
 import { CSSTransition } from 'react-transition-group';
 import { CoursePageContext } from './CoursePage';
 import './dropdown_menu.css';
-import { extractGroupsName } from './getGroupsName';
+import { extractGroupsName } from '../../utlis/helpers/getGroupsName';
+import { groupDataByMonths } from '../../utlis/helpers/groupDataByMonths';
+import { DropdownItem } from './DropdownItem';
 
 const SelectComponent = ({ options, handleChange, isMulti, __typename }) => {
   const animatedComponents = useMemo(() => makeAnimated(), []);
@@ -37,16 +39,11 @@ export const DropdownMenuContext = createContext();
 export const DropdownMenu = ({ CourseNameInEnglish, exportReportNode }) => {
   const [activeMenu, setActiveMenu] = useState('main');
   const [menuHeight, setMenuHeight] = useState(null);
-  const {
-    studentsData,
-    processedLectures,
-    processedSections,
-    unprocessedLectures,
-  } = useContext(CoursePageContext);
+  const { studentsData, processedLectures, processedSections } =
+    useContext(CoursePageContext);
   const [formattedCSVData, setFormattedCSVData] = useState([]);
   const [reportName, setReportName] = useState('');
   const [points, setPoints] = useState('');
-  const [dataPerMonth, setDataPerMonth] = useState([]);
 
   //Data should be formatted like this
   // {name : Ahmed, Course Name : Pattern Recognition, Email: aghonem2011@gmail.com,
@@ -305,26 +302,13 @@ export const DropdownMenu = ({ CourseNameInEnglish, exportReportNode }) => {
     return dataPerMonth;
   };
   const handleDatePerMonthSelection = (values) => {
-    console.log(
-      `🚀 ~ file: DropdownMenu.js ~ line 312 ~ handleDatePerMonthSelection ~ values`,
-      values
-    );
-
     let meetings = [];
     values.forEach(({ info }) => {
-      console.log(
-        `🚀 ~ file: DropdownMenu.js ~ line 314 ~ values.forEach ~ meetings`,
-        info
-      );
-
-      Object.values(info).map((meeting) => {
+      Object.values(info).forEach((meeting) => {
         meetings.push({ info: meeting });
       });
     });
-    console.log(
-      `🚀 ~ file: DropdownMenu.js ~ line 314 ~ handleDatePerMonthSelection ~ meetings`,
-      meetings
-    );
+
     handleMeetingSelection(meetings);
   };
   useEffect(() => {
@@ -551,56 +535,11 @@ export const DropdownMenu = ({ CourseNameInEnglish, exportReportNode }) => {
             <form className={`extract-report-form`}>
               <SelectComponent
                 {...{
-                  options:
-                    state.__typename === 'Lecture'
-                      ? Object.values(processedLectures).map(
-                          ({
-                            id,
-                            LectureNumber,
-                            LectureName,
-                            groups,
-                            ...rest
-                          }) => {
-                            const groupsName = extractGroupsName(
-                              groups.map((g) => g.GroupNumber)
-                            );
-                            return {
-                              info: {
-                                id,
-                                LectureNumber,
-                                LectureName,
-                                groups,
-                                ...rest,
-                              },
-                              value: id,
-                              label: `Lecture ${LectureNumber} - ${groupsName}`,
-                            };
-                          }
-                        )
-                      : Object.values(processedSections).map(
-                          ({
-                            id,
-                            SectionNumber,
-                            SectionName,
-                            groups,
-                            ...rest
-                          }) => {
-                            const groupsName = extractGroupsName(
-                              groups.map((g) => g.GroupNumber)
-                            );
-                            return {
-                              info: {
-                                id,
-                                SectionNumber,
-                                SectionName,
-                                groups,
-                                ...rest,
-                              },
-                              value: id,
-                              label: `Section ${SectionNumber} - ${groupsName}`,
-                            };
-                          }
-                        ),
+                  options: getSelectComponentOptions(
+                    state,
+                    processedLectures,
+                    processedSections
+                  ),
                   isMulti: state.multiplicity === 'multiple',
                   __typename: state.__typename,
                   handleChange: handleMeetingSelection,
@@ -697,71 +636,46 @@ export const DropdownMenu = ({ CourseNameInEnglish, exportReportNode }) => {
   );
 };
 
-const groupDataByMonths = (data) => {
-  var output = {};
-
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-
-  //1- iterate over lectures and get the month of each lecture
-  //2- check if its already in the output
-  //2.1 if it is there
-  /*    append in to the list
-    2.2 else 
-      create a month and add the lecture
-
-  */
-  data.forEach((meeting) => {
-    const LectureDateTime = meeting?.LectureDateTime;
-    const SectionDateTime = meeting?.SectionDateTime;
-    const monthNumber = new Date(LectureDateTime || SectionDateTime).getMonth();
-
-    const monthName = months[monthNumber];
-
-    if (output?.hasOwnProperty(monthName)) {
-      output[monthName] = output[monthName].concat({
-        ...meeting,
-        monthName,
-        monthNumber,
-      });
-    } else {
-      output[monthName] = [{ ...meeting, monthName, monthNumber }];
-    }
-  });
-  return output;
-};
-export function DropdownItem({
-  goToMenu,
-  leftIcon,
-  rightIcon,
-  onSelectAction,
-  children,
-}) {
-  const { setActiveMenu } = useContext(DropdownMenuContext);
-  return (
-    <a
-      href='#'
-      className='menu-item'
-      onClick={() => {
-        goToMenu && setActiveMenu(goToMenu);
-        onSelectAction && onSelectAction();
-      }}
-    >
-      {leftIcon && <span className='icon-button'>{leftIcon}</span>}
-      {children}
-      {rightIcon && <span className='icon-right'>{rightIcon}</span>}
-    </a>
-  );
+function getSelectComponentOptions(
+  state,
+  processedLectures,
+  processedSections
+) {
+  return state.__typename === 'Lecture'
+    ? Object.values(processedLectures).map(
+        ({ id, LectureNumber, LectureName, groups, ...rest }) => {
+          const groupsName = extractGroupsName(
+            groups.map((g) => g.GroupNumber)
+          );
+          return {
+            info: {
+              id,
+              LectureNumber,
+              LectureName,
+              groups,
+              ...rest,
+            },
+            value: id,
+            label: `Lecture ${LectureNumber} - ${groupsName}`,
+          };
+        }
+      )
+    : Object.values(processedSections).map(
+        ({ id, SectionNumber, SectionName, groups, ...rest }) => {
+          const groupsName = extractGroupsName(
+            groups.map((g) => g.GroupNumber)
+          );
+          return {
+            info: {
+              id,
+              SectionNumber,
+              SectionName,
+              groups,
+              ...rest,
+            },
+            value: id,
+            label: `Section ${SectionNumber} - ${groupsName}`,
+          };
+        }
+      );
 }

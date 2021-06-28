@@ -13,9 +13,9 @@ import {
   computeGrowth,
   computeOverallAttendanceRate,
 } from 'utlis/helpers/computeAttendance';
-import './course-page.css';
+import { extractGroupsName } from '../../utlis/helpers/getGroupsName';
 import { DropdownMenu } from './DropdownMenu';
-import { extractGroupsName } from './getGroupsName';
+import './course-page.css';
 
 export const CoursePageContext = createContext();
 

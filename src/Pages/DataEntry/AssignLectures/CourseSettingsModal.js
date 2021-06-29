@@ -8,7 +8,8 @@ import {
 } from 'api/mutations/updateCourseUsers';
 import { GET_USERS_AND_COURSES_FULL_INFO } from 'api/queries/getUsersFullInfo';
 import Query from 'components/Query';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const checkUnassignedUsers = ({
   previouslySelectedUsers,
@@ -44,6 +45,14 @@ export const SettingsModal = ({ courseID, handleClose }) => {
     lecturers: [],
     TA: [],
   });
+  const {
+    authedUser: {
+      role: { name },
+    },
+  } = useSelector((state) => state.authReducer);
+
+  const isAdmin = useMemo(() => name === 'Super Admin', [name]);
+
   let refetchRef = useRef(null);
 
   const [selectedLecturers, setSelectedLecturers] = useState([]);
@@ -164,62 +173,64 @@ export const SettingsModal = ({ courseID, handleClose }) => {
             <header className='main-header-container'>
               <h4 className='font-weight600'>Settings</h4>
             </header>
-            <form onSubmit={handleSavingSettings}>
-              <div>
-                <header>
-                  <span className='font-weight500'>Lecturers</span>
-                </header>
-                <Autocomplete
-                  onChange={onChangeLecturers}
-                  id='multiple-limit-tags-lecturer'
-                  options={
-                    users.filter((u) => u?.role?.name === 'Lecturer') || []
-                  }
-                  fullWidth
-                  multiple
-                  size='small'
-                  defaultValue={users.filter((u) => {
-                    const courseUsersID = course.users
-                      .filter((u) => u?.role?.name === 'Lecturer')
-                      .map((u) => u.id);
-                    return courseUsersID.includes(u.id);
-                  })}
-                  getOptionLabel={(user) => user?.LecturerNameInArabic}
-                  groupBy={(user) => user.department.DepartmentNameInArabic}
-                  renderInput={(params) => (
-                    <TextField {...params} variant='outlined' size='small' />
-                  )}
-                />
-              </div>
-              <div>
-                <header>
-                  <span className='font-weight500'>Teacher Assistants</span>
-                </header>
-                <Autocomplete
-                  onChange={onChangeTAs}
-                  id='multiple-limit-tags-ta'
-                  options={
-                    users.filter(
-                      (u) => u?.role?.name === 'Teacher Assistant'
-                    ) || []
-                  }
-                  fullWidth
-                  multiple
-                  size='small'
-                  defaultValue={users.filter((u) => {
-                    const courseUsersID = course.users
-                      .filter((u) => u?.role?.name === 'Teacher Assistant')
-                      .map((u) => u.id);
-                    return courseUsersID.includes(u.id);
-                  })}
-                  getOptionLabel={(user) => user?.LecturerNameInArabic}
-                  groupBy={(user) => user.department.DepartmentNameInArabic}
-                  renderInput={(params) => (
-                    <TextField {...params} variant='outlined' size='small' />
-                  )}
-                />
-              </div>
-            </form>
+            {isAdmin && (
+              <form onSubmit={handleSavingSettings}>
+                <div>
+                  <header>
+                    <span className='font-weight500'>Lecturers</span>
+                  </header>
+                  <Autocomplete
+                    onChange={onChangeLecturers}
+                    id='multiple-limit-tags-lecturer'
+                    options={
+                      users.filter((u) => u?.role?.name === 'Lecturer') || []
+                    }
+                    fullWidth
+                    multiple
+                    size='small'
+                    defaultValue={users.filter((u) => {
+                      const courseUsersID = course.users
+                        .filter((u) => u?.role?.name === 'Lecturer')
+                        .map((u) => u.id);
+                      return courseUsersID.includes(u.id);
+                    })}
+                    getOptionLabel={(user) => user?.LecturerNameInArabic}
+                    groupBy={(user) => user.department.DepartmentNameInArabic}
+                    renderInput={(params) => (
+                      <TextField {...params} variant='outlined' size='small' />
+                    )}
+                  />
+                </div>
+                <div>
+                  <header>
+                    <span className='font-weight500'>Teacher Assistants</span>
+                  </header>
+                  <Autocomplete
+                    onChange={onChangeTAs}
+                    id='multiple-limit-tags-ta'
+                    options={
+                      users.filter(
+                        (u) => u?.role?.name === 'Teacher Assistant'
+                      ) || []
+                    }
+                    fullWidth
+                    multiple
+                    size='small'
+                    defaultValue={users.filter((u) => {
+                      const courseUsersID = course.users
+                        .filter((u) => u?.role?.name === 'Teacher Assistant')
+                        .map((u) => u.id);
+                      return courseUsersID.includes(u.id);
+                    })}
+                    getOptionLabel={(user) => user?.LecturerNameInArabic}
+                    groupBy={(user) => user.department.DepartmentNameInArabic}
+                    renderInput={(params) => (
+                      <TextField {...params} variant='outlined' size='small' />
+                    )}
+                  />
+                </div>
+              </form>
+            )}
             <div className='modify-settings-container'>
               <button
                 className='modify-settings-btn'

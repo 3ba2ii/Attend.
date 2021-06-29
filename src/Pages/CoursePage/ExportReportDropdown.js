@@ -7,36 +7,20 @@ import { ReactComponent as PeriodIcon } from 'assets/icons/period.svg';
 import { ReactComponent as ReportIcon } from 'assets/icons/report.svg';
 import { ReactComponent as RightArrowIcon } from 'assets/icons/right_arrow.svg';
 import { ReactComponent as SumIcon } from 'assets/icons/sum.svg';
-import { useCallback } from 'react';
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { CSVLink } from 'react-csv';
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
 import { CSSTransition } from 'react-transition-group';
-import { CoursePageContext } from './CoursePage';
-import './dropdown_menu.css';
 import { extractGroupsName } from '../../utlis/helpers/getGroupsName';
 import { groupDataByMonths } from '../../utlis/helpers/groupDataByMonths';
+import { CoursePageContext } from './CoursePage';
 import { DropdownItem } from './DropdownItem';
+import './dropdown_menu.css';
+import { SelectComponent } from './SelectComponent';
 
-const SelectComponent = ({ options, handleChange, isMulti, __typename }) => {
-  const animatedComponents = useMemo(() => makeAnimated(), []);
-
-  return (
-    <Select
-      options={options}
-      className='basic-multi-select'
-      classNamePrefix='select'
-      components={animatedComponents}
-      isMulti={isMulti}
-      onChange={handleChange}
-      placeholder={`Select ${__typename}...`}
-    />
-  );
-};
-
-export const DropdownMenuContext = createContext();
-export const DropdownMenu = ({ CourseNameInEnglish, exportReportNode }) => {
+export const ExportReportDropdown = ({
+  CourseNameInEnglish,
+  exportReportNode,
+}) => {
   const [activeMenu, setActiveMenu] = useState('main');
   const [menuHeight, setMenuHeight] = useState(null);
   const { studentsData, processedLectures, processedSections } =
@@ -398,223 +382,163 @@ export const DropdownMenu = ({ CourseNameInEnglish, exportReportNode }) => {
     );
   };
   return (
-    <DropdownMenuContext.Provider value={{ activeMenu, setActiveMenu }}>
-      <div
-        className='dropdown'
-        ref={exportReportNode}
-        style={{
-          height: menuHeight,
-          overflowY: 'auto',
-        }}
+    <div
+      className='dropdown'
+      ref={exportReportNode}
+      style={{
+        height: menuHeight,
+        overflowY: 'auto',
+      }}
+    >
+      <CSSTransition
+        in={activeMenu === 'main'}
+        unmountOnExit
+        timeout={500}
+        classNames={'menu-primary'}
+        onEnter={calcHeight}
       >
-        <CSSTransition
-          in={activeMenu === 'main'}
-          unmountOnExit
-          timeout={500}
-          classNames={'menu-primary'}
-          onEnter={calcHeight}
-        >
-          <div className='menu'>
-            <DropdownItem>
-              <h6>Report Type</h6>
-            </DropdownItem>
-            <DropdownItem
-              goToMenu='secondary'
-              leftIcon={<ReportIcon />}
-              rightIcon={<RightArrowIcon />}
-              onSelectAction={() => {
-                handleStateChange('__typename', 'Lecture');
-              }}
-            >
-              Lecture
-            </DropdownItem>
-            <DropdownItem
-              goToMenu='secondary'
-              leftIcon={<LapIcon />}
-              rightIcon={<RightArrowIcon />}
-              onSelectAction={() => {
-                handleStateChange('__typename', 'Section');
-              }}
-            >
-              Section
-            </DropdownItem>
-          </div>
-        </CSSTransition>
-        <CSSTransition
-          in={activeMenu === 'secondary'}
-          unmountOnExit
-          timeout={500}
-          classNames={'menu-secondary'}
-          onEnter={calcHeight}
-        >
-          <div className='menu'>
-            <DropdownItem leftIcon={<LeftArrowIcon />} goToMenu='main'>
-              <h6>Report Type</h6>
-            </DropdownItem>
-            <DropdownItem
-              leftIcon={<ReportIcon />}
-              rightIcon={<RightArrowIcon />}
-              goToMenu='third-menu'
-              onSelectAction={() => {
-                handleStateChange('multiplicity', 'single');
-                handleStateChange('reportVariety', 'single meeting');
-                setState({ ...state, multiplicity: 'single' });
-              }}
-            >
-              <div className='select-report-type-wrapper'>
-                <span>Single {state.__typename} Report</span>
-                <p>Reports only for a single {state.__typename}</p>
-              </div>
-            </DropdownItem>
-            <DropdownItem
-              leftIcon={<MultipleReports />}
-              rightIcon={<RightArrowIcon />}
-              onSelectAction={() => {
-                handleStateChange('multiplicity', 'multiple');
-                handleStateChange('reportVariety', 'multiple meetings');
-                setState({ ...state, multiplicity: 'multiple' });
-              }}
-              goToMenu='third-menu'
-            >
-              <div className='select-report-type-wrapper'>
-                <span>Multiple {state.__typename}s Report</span>
-                <p>Reports for multiple {state.__typename}s</p>
-              </div>
-            </DropdownItem>
-            <DropdownItem
-              leftIcon={<PeriodIcon />}
-              rightIcon={<RightArrowIcon />}
-              onSelectAction={() => {
-                handleStateChange('multiplicity', 'multiple');
-                handleStateChange('reportVariety', 'period');
-              }}
-            >
-              <div className='select-report-type-wrapper'>
-                <span>Period Report</span>
-                <p>Reports for {state.__typename}s in between two dates</p>
-              </div>
-            </DropdownItem>
-            <DropdownItem
-              leftIcon={<CalendarIcon />}
-              rightIcon={<RightArrowIcon />}
-              goToMenu={'monthly-report-menu'}
-              onSelectAction={handleDataPerMonth}
-            >
-              <div className='select-report-type-wrapper'>
-                <span>Monthly Report</span>
-                <p>Report includes all the {state.__typename}s for a month</p>
-              </div>
-            </DropdownItem>
-            <DropdownItem
-              leftIcon={<SumIcon />}
-              rightIcon={<RightArrowIcon />}
-              goToMenu='overall-year-menu'
-              onSelectAction={handleOverallReportSelection}
-            >
-              <div className='select-report-type-wrapper'>
-                <span>Overall Year Report</span>
-                <p>
-                  Report includes attendances for all the {state.__typename}s
-                </p>
-              </div>
-            </DropdownItem>
-          </div>
-        </CSSTransition>
+        <div className='menu'>
+          <DropdownItem setActiveMenu={setActiveMenu}>
+            <h6>Report Type</h6>
+          </DropdownItem>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            goToMenu='secondary'
+            leftIcon={<ReportIcon />}
+            rightIcon={<RightArrowIcon />}
+            onSelectAction={() => {
+              handleStateChange('__typename', 'Lecture');
+            }}
+          >
+            Lecture
+          </DropdownItem>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            goToMenu='secondary'
+            leftIcon={<LapIcon />}
+            rightIcon={<RightArrowIcon />}
+            onSelectAction={() => {
+              handleStateChange('__typename', 'Section');
+            }}
+          >
+            Section
+          </DropdownItem>
+        </div>
+      </CSSTransition>
+      <CSSTransition
+        in={activeMenu === 'secondary'}
+        unmountOnExit
+        timeout={500}
+        classNames={'menu-secondary'}
+        onEnter={calcHeight}
+      >
+        <div className='menu'>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<LeftArrowIcon />}
+            goToMenu='main'
+          >
+            <h6>Report Type</h6>
+          </DropdownItem>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<ReportIcon />}
+            rightIcon={<RightArrowIcon />}
+            goToMenu='third-menu'
+            onSelectAction={() => {
+              handleStateChange('multiplicity', 'single');
+              handleStateChange('reportVariety', 'single meeting');
+              setState({ ...state, multiplicity: 'single' });
+            }}
+          >
+            <div className='select-report-type-wrapper'>
+              <span>Single {state.__typename} Report</span>
+              <p>Reports only for a single {state.__typename}</p>
+            </div>
+          </DropdownItem>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<MultipleReports />}
+            rightIcon={<RightArrowIcon />}
+            onSelectAction={() => {
+              handleStateChange('multiplicity', 'multiple');
+              handleStateChange('reportVariety', 'multiple meetings');
+              setState({ ...state, multiplicity: 'multiple' });
+            }}
+            goToMenu='third-menu'
+          >
+            <div className='select-report-type-wrapper'>
+              <span>Multiple {state.__typename}s Report</span>
+              <p>Reports for multiple {state.__typename}s</p>
+            </div>
+          </DropdownItem>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<PeriodIcon />}
+            rightIcon={<RightArrowIcon />}
+            onSelectAction={() => {
+              handleStateChange('multiplicity', 'multiple');
+              handleStateChange('reportVariety', 'period');
+            }}
+          >
+            <div className='select-report-type-wrapper'>
+              <span>Period Report</span>
+              <p>Reports for {state.__typename}s in between two dates</p>
+            </div>
+          </DropdownItem>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<CalendarIcon />}
+            rightIcon={<RightArrowIcon />}
+            goToMenu={'monthly-report-menu'}
+            onSelectAction={handleDataPerMonth}
+          >
+            <div className='select-report-type-wrapper'>
+              <span>Monthly Report</span>
+              <p>Report includes all the {state.__typename}s for a month</p>
+            </div>
+          </DropdownItem>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<SumIcon />}
+            rightIcon={<RightArrowIcon />}
+            goToMenu='overall-year-menu'
+            onSelectAction={handleOverallReportSelection}
+          >
+            <div className='select-report-type-wrapper'>
+              <span>Overall Year Report</span>
+              <p>Report includes attendances for all the {state.__typename}s</p>
+            </div>
+          </DropdownItem>
+        </div>
+      </CSSTransition>
 
-        <CSSTransition
-          in={activeMenu === 'third-menu'}
-          unmountOnExit
-          timeout={500}
-          classNames={'menu-third'}
-          onEnter={calcHeight}
-        >
-          <div className='menu'>
-            <DropdownItem leftIcon={<LeftArrowIcon />} goToMenu='secondary'>
-              <h6>Report Options</h6>
-            </DropdownItem>
-            <form className={`extract-report-form`}>
-              <SelectComponent
-                {...{
-                  options: getSelectComponentOptions(
-                    state,
-                    processedLectures,
-                    processedSections
-                  ),
-                  isMulti: state.multiplicity === 'multiple',
-                  __typename: state.__typename,
-                  handleChange: handleMeetingSelection,
-                }}
-              />
-              {ReportOptionsContainer()}
-              <CSVLink
-                filename={reportName + '.csv' || 'Attendance Report.csv'}
-                data={formattedCSVData || []}
-                headers={headers}
-                type='submit'
-              >
-                <div className='extract-report-button'>
-                  <div className='icons8-share-rounded-white'></div>
-                  <span>Extract Report</span>
-                </div>
-              </CSVLink>
-            </form>
-          </div>
-        </CSSTransition>
-
-        <CSSTransition
-          in={activeMenu === 'overall-year-menu'}
-          unmountOnExit
-          timeout={500}
-          classNames={'menu-third'}
-          onEnter={calcHeight}
-        >
-          <div className='menu'>
-            <DropdownItem leftIcon={<LeftArrowIcon />} goToMenu='secondary'>
-              <h6>Overall Year Report</h6>
-            </DropdownItem>
-            {ReportOptionsContainer()}
-            <CSVLink
-              filename={reportName + '.csv' || 'Attendance Report'}
-              data={formattedCSVData || []}
-              headers={headers}
-              type='submit'
-            >
-              <div className='extract-report-button'>
-                <div className='icons8-share-rounded-white'></div>
-                <span>Extract Report</span>
-              </div>
-            </CSVLink>
-          </div>
-        </CSSTransition>
-
-        <CSSTransition
-          in={activeMenu === 'monthly-report-menu'}
-          unmountOnExit
-          timeout={500}
-          classNames={'menu-third'}
-          onEnter={calcHeight}
-        >
-          <div className='menu'>
-            <DropdownItem leftIcon={<LeftArrowIcon />} goToMenu='secondary'>
-              <h6>Monthly Report</h6>
-            </DropdownItem>
-
+      <CSSTransition
+        in={activeMenu === 'third-menu'}
+        unmountOnExit
+        timeout={500}
+        classNames={'menu-third'}
+        onEnter={calcHeight}
+      >
+        <div className='menu'>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<LeftArrowIcon />}
+            goToMenu='secondary'
+          >
+            <h6>Report Options</h6>
+          </DropdownItem>
+          <form className={`extract-report-form`}>
             <SelectComponent
               {...{
-                options: Object.entries(handleDataPerMonth()).map(
-                  ([label, value]) => {
-                    return {
-                      info: {
-                        ...value,
-                      },
-                      value: label,
-                      label: `${label}`,
-                    };
-                  }
+                options: getSelectComponentOptions(
+                  state,
+                  processedLectures,
+                  processedSections
                 ),
-                isMulti: true,
+                isMulti: state.multiplicity === 'multiple',
                 __typename: state.__typename,
-                handleChange: handleDatePerMonthSelection,
+                handleChange: handleMeetingSelection,
               }}
             />
             {ReportOptionsContainer()}
@@ -629,14 +553,93 @@ export const DropdownMenu = ({ CourseNameInEnglish, exportReportNode }) => {
                 <span>Extract Report</span>
               </div>
             </CSVLink>
-          </div>
-        </CSSTransition>
-      </div>
-    </DropdownMenuContext.Provider>
+          </form>
+        </div>
+      </CSSTransition>
+
+      <CSSTransition
+        in={activeMenu === 'overall-year-menu'}
+        unmountOnExit
+        timeout={500}
+        classNames={'menu-third'}
+        onEnter={calcHeight}
+      >
+        <div className='menu'>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<LeftArrowIcon />}
+            goToMenu='secondary'
+          >
+            <h6>Overall Year Report</h6>
+          </DropdownItem>
+          {ReportOptionsContainer()}
+          <CSVLink
+            filename={reportName + '.csv' || 'Attendance Report'}
+            data={formattedCSVData || []}
+            headers={headers}
+            type='submit'
+          >
+            <div className='extract-report-button'>
+              <div className='icons8-share-rounded-white'></div>
+              <span>Extract Report</span>
+            </div>
+          </CSVLink>
+        </div>
+      </CSSTransition>
+
+      <CSSTransition
+        in={activeMenu === 'monthly-report-menu'}
+        unmountOnExit
+        timeout={500}
+        classNames={'menu-third'}
+        onEnter={calcHeight}
+      >
+        <div className='menu'>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<LeftArrowIcon />}
+            goToMenu='secondary'
+          >
+            <h6>Monthly Report</h6>
+          </DropdownItem>
+
+          <SelectComponent
+            {...{
+              options: Object.entries(handleDataPerMonth()).map(
+                ([label, value]) => {
+                  return {
+                    info: {
+                      ...value,
+                    },
+                    value: label,
+                    label: `${label}`,
+                  };
+                }
+              ),
+              isMulti: true,
+              __typename: state.__typename,
+              handleChange: handleDatePerMonthSelection,
+            }}
+          />
+          {ReportOptionsContainer()}
+          <CSVLink
+            filename={reportName + '.csv' || 'Attendance Report.csv'}
+            data={formattedCSVData || []}
+            headers={headers}
+            type='submit'
+          >
+            <div className='extract-report-button'>
+              <div className='icons8-share-rounded-white'></div>
+              <span>Extract Report</span>
+            </div>
+          </CSVLink>
+        </div>
+      </CSSTransition>
+    </div>
   );
 };
 
-function getSelectComponentOptions(
+export function getSelectComponentOptions(
   state,
   processedLectures,
   processedSections

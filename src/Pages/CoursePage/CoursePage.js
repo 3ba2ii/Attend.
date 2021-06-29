@@ -14,8 +14,9 @@ import {
   computeOverallAttendanceRate,
 } from 'utlis/helpers/computeAttendance';
 import { extractGroupsName } from '../../utlis/helpers/getGroupsName';
-import { DropdownMenu } from './DropdownMenu';
 import './course-page.css';
+import { ExportReportDropdown } from './ExportReportDropdown';
+import { ManualAssignDropdown } from './ManualAssignDropdown';
 
 export const CoursePageContext = createContext();
 
@@ -202,9 +203,15 @@ export const CoursePage = () => {
                     </button>
 
                     {openExportMenu && (
-                      <DropdownMenu
+                      <ExportReportDropdown
                         CourseNameInEnglish={CourseNameInEnglish}
                         exportReportNode={exportReportNode}
+                      />
+                    )}
+
+                    {openAssignStudentMenu && (
+                      <ManualAssignDropdown
+                        setOpenAssignStudentMenu={setOpenAssignStudentMenu}
                       />
                     )}
                   </div>
@@ -230,6 +237,7 @@ export const CoursePage = () => {
           }}
         >
           {({ data: { lectures: dataLectures, sections } }) => {
+            console.log(dataLectures, sections);
             const concatenatedMeetings = dataLectures
               .concat(sections)
               .sort(
@@ -238,9 +246,14 @@ export const CoursePage = () => {
                   new Date(a.LectureDateTime || a.SectionDateTime)
               );
 
-            const LectureDateTime = dataLectures[0]?.LectureDateTime;
+            const LectureDateTime = dataLectures?.[0]?.LectureDateTime;
             const SectionDateTime = sections?.[0]?.SectionDateTime;
-            const studentsLength = Object.keys(studentsData).length;
+
+            const studentsLength = Object.keys(studentsData)?.length;
+            console.log(
+              `🚀 ~ file: CoursePage.js ~ line 251 ~ CoursePage ~ studentsData`,
+              studentsLength
+            );
             const avgAttendancePerLecture = computeOverallAttendanceRate({
               data: Object.values(processedLectures),
               studentsLength,
@@ -250,13 +263,14 @@ export const CoursePage = () => {
               studentsLength,
             });
 
-            const LastLectureDateTime =
-              format(new Date(LectureDateTime), 'dd. MMMM. yyyy') ||
-              'No lectures yet';
-            const LastLectureDistance =
-              formatDistance(new Date(LectureDateTime), new Date(), {
-                addSuffix: true,
-              }) || '';
+            const LastLectureDateTime = LectureDateTime
+              ? format(new Date(LectureDateTime), 'dd. MMMM. yyyy')
+              : 'No lecture yet';
+            const LastLectureDistance = LectureDateTime
+              ? formatDistance(new Date(LectureDateTime), new Date(), {
+                  addSuffix: true,
+                })
+              : '';
 
             return (
               <>
@@ -286,7 +300,7 @@ export const CoursePage = () => {
                       </h3>
 
                       <span className='growth'>
-                        {growth >= 0 ? (
+                        {growth !== 0 && growth >= 0 ? (
                           <svg
                             width='16'
                             height='16'
@@ -482,7 +496,6 @@ function LatestActivitiesComponent({ concatenatedMeetings }) {
               new Date(LectureDateTime || SectionDateTime),
               'dd MMM yyyy p'
             )}
-            .<aside>Download Report</aside>
           </span>
         </header>
       </li>

@@ -1,14 +1,11 @@
-import { useContext } from 'react';
-import { DropdownMenuContext } from './DropdownMenu';
-
 export function DropdownItem({
   goToMenu,
   leftIcon,
   rightIcon,
   onSelectAction,
   children,
+  setActiveMenu,
 }) {
-  const { setActiveMenu } = useContext(DropdownMenuContext);
   return (
     <a
       href='#'

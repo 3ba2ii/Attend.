@@ -97,6 +97,6 @@
     display: grid;
     grid-gap: 2rem;
 
-    grid-template-columns: repeat(5, minmax(calc(100% / 4.5), 1fr));
+    grid-template-columns: repeat(5, minmax(calc(100% / 6), 1fr));
   }
 }

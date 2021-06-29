@@ -1,4 +1,7 @@
 export const computeOverallAttendanceRate = ({ data, studentsLength }) => {
+  if (studentsLength === 0 || data?.length === 0) {
+    return 0;
+  }
   try {
     const count = data.length;
 
@@ -14,6 +17,9 @@ export const computeOverallAttendanceRate = ({ data, studentsLength }) => {
 };
 
 export const computeGrowth = ({ data, studentsLength }) => {
+  if (studentsLength === 0) {
+    return 0;
+  }
   const sortedLectures = data
     .slice()
     .sort((a, b) => new Date(b.LectureDateTime) - new Date(a.LectureDateTime));

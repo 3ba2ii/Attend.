@@ -53,6 +53,7 @@ export const GET_COURSE_STUDENTS_ATTENDANCE_RATES = gql`
           students(sort: "StudentNameInArabic") {
             StudentNameInArabic
             StudentOfficialEmail
+            NationalID
             id
           }
         }

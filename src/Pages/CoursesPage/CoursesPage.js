@@ -5,6 +5,7 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getFullName } from 'utlis/helpers/getFullName';
 import './courses-page.css';
+
 export const CoursesPage = () => {
   const {
     authedUser: { id, LecturerNameInEnglish, role },

@@ -36,7 +36,7 @@ export function DrawerItems(classes, pathname) {
           </div>
         </div>
         <List className='navbar-list'>
-          {drawerNavOptions({ authedUser }).map(
+          {drawerNavOptions({ authedUser }).forEach(
             ({ text, icon, iconActive, path }, index) => {
               if (path)
                 return (

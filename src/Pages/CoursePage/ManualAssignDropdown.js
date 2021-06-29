@@ -10,7 +10,8 @@ import { ReactComponent as LapIcon } from 'assets/icons/lap.svg';
 import { ReactComponent as LeftArrowIcon } from 'assets/icons/left_arrow.svg';
 import { ReactComponent as ReportIcon } from 'assets/icons/report.svg';
 import { ReactComponent as RightArrowIcon } from 'assets/icons/right_arrow.svg';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import { CoursePageContext } from './CoursePage';
 import { DropdownItem } from './DropdownItem';
@@ -20,6 +21,13 @@ import { SelectComponent } from './SelectComponent';
 export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
   const { studentsData, processedLectures, processedSections } =
     useContext(CoursePageContext);
+  const {
+    authedUser: {
+      role: { name },
+    },
+  } = useSelector((state) => state.authReducer);
+
+  const isLecturer = useMemo(() => name !== 'Teacher Assistant', [name]);
 
   const [assignStudentToLecture, { loading }] = useMutation(
     ASSIGN_STUDENT_TO_LECTURE,
@@ -55,7 +63,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
   const [activeMenu, setActiveMenu] = useState('main');
   const [menuHeight, setMenuHeight] = useState(null);
   const [identifier, setIdentifer] = useState('');
-  const [identifierError, setidentifierError] = useState('');
+  const [identifierError, setIdentifierError] = useState('');
 
   function calcHeight(el) {
     const height =
@@ -89,35 +97,35 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
         const regexp = new RegExp(/^[\u0621-\u064A\s\p{N}]+$/);
 
         if (!regexp.test(identifier.trim())) {
-          setidentifierError('The name must only include arabic characters');
+          setIdentifierError('The name must only include arabic characters');
           return;
         } else if (identifier.length < 8) {
-          setidentifierError('The name must be more than 8 characters');
+          setIdentifierError('The name must be more than 8 characters');
           return;
         }
-        setidentifierError('');
+        setIdentifierError('');
         break;
       case 'national-id':
         const regexpNat = new RegExp(/^\d+$/);
 
         if (!regexpNat.test(identifier.trim())) {
-          setidentifierError('National must contain digits only');
+          setIdentifierError('National must contain digits only');
           return;
         }
         if (identifier.trim().length !== 14) {
-          setidentifierError('National ID must 14 digits');
+          setIdentifierError('National ID must 14 digits');
           return;
         }
-        setidentifierError('');
+        setIdentifierError('');
         break;
       case 'email-address':
         const re =
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!re.test(String(identifier).toLowerCase().trim())) {
-          setidentifierError('Please provide a valid email address.');
+          setIdentifierError('Please provide a valid email address.');
           return;
         }
-        setidentifierError('');
+        setIdentifierError('');
         break;
 
       default:
@@ -140,7 +148,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
 
       var isAttended;
       var isFound;
-      setidentifierError('');
+      setIdentifierError('');
       switch (state.__assignBy) {
         case 'full-name':
           isAttended = attendedStudentsInfo.some(
@@ -149,7 +157,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
               identifier.toLowerCase().trim()
           );
           if (isAttended) {
-            setidentifierError(
+            setIdentifierError(
               `Student has already attended this ${state.__typename}`
             );
             return;
@@ -160,7 +168,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
               identifier.toLowerCase().trim()
           );
           if (!isFound) {
-            setidentifierError(`Student is not recognized`);
+            setIdentifierError(`Student is not recognized`);
             return;
           }
           break;
@@ -171,7 +179,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
           );
 
           if (isAttended) {
-            setidentifierError(
+            setIdentifierError(
               `Student has already attended this ${state.__typename}`
             );
             return;
@@ -181,7 +189,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
               NationalID.toLowerCase().trim() === identifier.trim()
           );
           if (!isFound) {
-            setidentifierError(`Student is not recognized`);
+            setIdentifierError(`Student is not recognized`);
             return;
           }
           break;
@@ -193,7 +201,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
           );
 
           if (isAttended) {
-            setidentifierError(
+            setIdentifierError(
               `Student has already attended this ${state.__typename}`
             );
             return;
@@ -203,7 +211,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
               StudentOfficialEmail.toLowerCase().trim() === identifier.trim()
           );
           if (!isFound) {
-            setidentifierError(`Student is not recognized`);
+            setIdentifierError(`Student is not recognized`);
             return;
           }
         default:
@@ -252,7 +260,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
 
       if (__typename === 'Lecture') {
         addedStudentsIDs.forEach(async (id) => {
-          const { data } = await assignStudentToLecture({
+          await assignStudentToLecture({
             variables: {
               timestamp: new Date(),
               student: id,
@@ -262,7 +270,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
         });
       } else if (__typename === 'Section') {
         addedStudentsIDs.forEach(async (id) => {
-          const { data } = await assignStudentToSection({
+          await assignStudentToSection({
             variables: {
               timestamp: new Date(),
               student: id,
@@ -346,15 +354,18 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
           >
             <h6>Assign Student To</h6>
           </DropdownItem>
-          <DropdownItem
-            setActiveMenu={setActiveMenu}
-            goToMenu='third-menu'
-            leftIcon={<ReportIcon />}
-            rightIcon={<RightArrowIcon />}
-            onSelectAction={() => handleStateChange('__typename', 'Lecture')}
-          >
-            Lecture
-          </DropdownItem>
+
+          {isLecturer && (
+            <DropdownItem
+              setActiveMenu={setActiveMenu}
+              goToMenu='third-menu'
+              leftIcon={<ReportIcon />}
+              rightIcon={<RightArrowIcon />}
+              onSelectAction={() => handleStateChange('__typename', 'Lecture')}
+            >
+              Lecture
+            </DropdownItem>
+          )}
           <DropdownItem
             setActiveMenu={setActiveMenu}
             goToMenu='third-menu'
@@ -376,7 +387,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
         onEntered={() => {
           setState({ ...state, students: {}, meetings: [] });
           setIdentifer('');
-          setidentifierError('');
+          setIdentifierError('');
         }}
       >
         <div className='menu'>

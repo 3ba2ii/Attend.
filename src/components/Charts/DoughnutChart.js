@@ -26,24 +26,35 @@ export const DoughnutChart = ({ options }) => {
     };
     const lecturesCount = Object.keys(processedLectures).length;
 
-    Object.values(studentsData).forEach(({ course: { lectures } }) => {
-      const percentage = (
-        (Number(lectures.size) / lecturesCount) *
-        100
-      ).toFixed();
+    console.table(
+      `🚀 ~ file: DoughnutChart.js ~ line 30 ~ Object.values ~ studentsData`,
+      studentsData
+    );
+    Object.values(studentsData).forEach(
+      ({ StudentNameInArabic, course: { lectures } }) => {
+        const percentage = (
+          (Number(lectures.size) / lecturesCount) *
+          100
+        ).toFixed();
+        console.log(
+          `🚀 ~ file: DoughnutChart.js ~ line 34 ~ Object.values ~ percentage`,
+          StudentNameInArabic,
+          percentage
+        );
 
-      if (percentage > 80) {
-        finalResults['Above 80%'] += 1;
-      } else if (percentage > 60 && percentage <= 80) {
-        finalResults['60% - 80%'] += 1;
-      } else if (percentage > 40 && percentage <= 60) {
-        finalResults['40% - 60%'] += 1;
-      } else if (percentage >= 20 && percentage <= 40) {
-        finalResults['20% - 40%'] += 1;
-      } else {
-        finalResults['Below 20%'] += 1;
+        if (percentage > 80) {
+          finalResults['Above 80%'] += 1;
+        } else if (percentage >= 60 && percentage < 80) {
+          finalResults['60% - 80%'] += 1;
+        } else if (percentage >= 40 && percentage < 60) {
+          finalResults['40% - 60%'] += 1;
+        } else if (percentage >= 20 && percentage < 40) {
+          finalResults['20% - 40%'] += 1;
+        } else {
+          finalResults['Below 20%'] += 1;
+        }
       }
-    });
+    );
     setLabelDataSet(finalResults);
   }, [studentsData]);
   const DData = {

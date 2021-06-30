@@ -112,10 +112,13 @@ export const ExportReportDropdown = ({
             .filter((value) => meetingsNumbers.includes(value))
             .sort();
           const attended = intersected.length;
+
           const pointPerLecture = points || 1;
           const grade = pointPerLecture * attended;
-          const attendanceRate =
-            (attended / meetingsNumbers.length).toFixed(1) * 100;
+          const attendanceRate = (
+            (attended / meetingsNumbers.length) *
+            100
+          ).toFixed(1);
 
           let tempStudentData = {
             name: StudentNameInArabic,

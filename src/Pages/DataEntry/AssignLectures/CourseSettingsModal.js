@@ -86,7 +86,9 @@ export const SettingsModal = ({ courseID, handleClose }) => {
       if (refetch) {
         refetchRef.current = refetch;
       }
-      const lecturers = course.users.filter((u) => u.role.name === 'Lecturer');
+      const lecturers = course.users.filter(
+        (u) => u.role.name !== 'Teacher Assistant'
+      );
       const TA = course.users.filter(
         (u) => u.role.name === 'Teacher Assistant'
       );
@@ -183,7 +185,9 @@ export const SettingsModal = ({ courseID, handleClose }) => {
                     onChange={onChangeLecturers}
                     id='multiple-limit-tags-lecturer'
                     options={
-                      users.filter((u) => u?.role?.name === 'Lecturer') || []
+                      users.filter(
+                        (u) => u?.role?.name !== 'Teacher Assistant'
+                      ) || []
                     }
                     fullWidth
                     multiple

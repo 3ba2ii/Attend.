@@ -9,6 +9,7 @@ import { SettingsModal } from 'pages/DataEntry/AssignLectures/CourseSettingsModa
 import { TransitionalModalChildren } from 'pages/DataEntry/AssignLectures/TransitionalModalChildren';
 import { createContext, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 import {
   computeGrowth,
   computeOverallAttendanceRate,
@@ -201,19 +202,27 @@ export const CoursePage = () => {
                       <div className='icons8-share-rounded'></div>
                       <span>Export Reports</span>
                     </button>
-
-                    {openExportMenu && (
+                    <CSSTransition
+                      in={openAssignStudentMenu}
+                      unmountOnExit
+                      timeout={500}
+                      classNames={'identifier-error'}
+                    >
+                      <ManualAssignDropdown
+                        setOpenAssignStudentMenu={setOpenAssignStudentMenu}
+                      />
+                    </CSSTransition>
+                    <CSSTransition
+                      in={openExportMenu}
+                      unmountOnExit
+                      timeout={500}
+                      classNames={'identifier-error'}
+                    >
                       <ExportReportDropdown
                         CourseNameInEnglish={CourseNameInEnglish}
                         exportReportNode={exportReportNode}
                       />
-                    )}
-
-                    {openAssignStudentMenu && (
-                      <ManualAssignDropdown
-                        setOpenAssignStudentMenu={setOpenAssignStudentMenu}
-                      />
-                    )}
+                    </CSSTransition>
                   </div>
                   <button
                     className='btn-with-icon course-settings-btn'
@@ -258,8 +267,16 @@ export const CoursePage = () => {
               data: Object.values(processedLectures),
               studentsLength,
             });
+            const avgAttendancePerSection = computeOverallAttendanceRate({
+              data: Object.values(processedSections),
+              studentsLength,
+            });
             const growth = computeGrowth({
               data: Object.values(processedLectures),
+              studentsLength,
+            });
+            const sectionGrowth = computeGrowth({
+              data: Object.values(processedSections),
               studentsLength,
             });
 
@@ -288,56 +305,12 @@ export const CoursePage = () => {
                       </span>
                     </aside>
                   </div>
-                  <div className='statistics-card-container overall-attendance-card'>
-                    <header>
-                      <h6>Avg. Attendance</h6>
-                    </header>
-                    <aside>
-                      <h3>
-                        {processedLectures
-                          ? avgAttendancePerLecture + '%'
-                          : 'No lectures yet'}
-                      </h3>
-
-                      <span className='growth'>
-                        {growth !== 0 && growth >= 0 ? (
-                          <svg
-                            width='16'
-                            height='16'
-                            viewBox='0 0 14 14'
-                            fill='none'
-                            xmlns='http://www.w3.org/2000/svg'
-                          >
-                            <path
-                              d='M8.06302 8.74972C8.18671 8.87789 8.35447 8.94991 8.52941 8.94994H8.91597C9.09091 8.94991 9.25867 8.87789 9.38235 8.74972L12.4874 5.53319L14 7.10011V3H10.042L11.5546 4.56693L8.72269 7.50056L6.74369 5.4505C6.62001 5.32234 6.45225 5.25032 6.27731 5.25028H5.89075C5.71581 5.25032 5.54805 5.32234 5.42437 5.4505L1 10.0337L1.93276 11L6.08403 6.69967L8.06302 8.74972Z'
-                              fill='#31C977'
-                            />
-                          </svg>
-                        ) : (
-                          <svg
-                            width='14'
-                            height='14'
-                            viewBox='0 0 14 14'
-                            fill='none'
-                            xmlns='http://www.w3.org/2000/svg'
-                          >
-                            <path
-                              d='M8.06302 5.25028C8.1867 5.12211 8.35447 5.05009 8.52941 5.05006H8.91597C9.09091 5.05009 9.25867 5.12211 9.38235 5.25028L12.4874 8.46681L14 6.89989V11H10.042L11.5546 9.43307L8.72269 6.49944L6.74369 8.5495C6.62001 8.67766 6.45225 8.74968 6.27731 8.74972H5.89075C5.71581 8.74968 5.54805 8.67766 5.42437 8.5495L1 3.96626L1.93276 3L6.08403 7.30033L8.06302 5.25028Z'
-                              fill='#E47C67'
-                            />
-                          </svg>
-                        )}
-
-                        <span
-                          className={`${
-                            growth >= 0 ? 'positive-growth' : 'negative-growth'
-                          } `}
-                        >
-                          {growth + '% vs last lecture'}
-                        </span>
-                      </span>
-                    </aside>
-                  </div>
+                  {AvgAttendance({
+                    data: processedLectures,
+                    avgAttendance: avgAttendancePerLecture,
+                    growth,
+                    __typename: 'Lecture',
+                  })}
                   <div className='statistics-card-container'>
                     <header>
                       <h6>Total Sections</h6>
@@ -364,19 +337,12 @@ export const CoursePage = () => {
                       </span>
                     </aside>
                   </div>
-                  <div className='statistics-card-container'>
-                    <header>
-                      <h6>Avg. Attendance</h6>
-                    </header>
-                    <aside>
-                      <h3>{dataLectures.length}</h3>
-
-                      <span>
-                        Last Lecture : 20.11.2021
-                        <br />3 days ago
-                      </span>
-                    </aside>
-                  </div>
+                  {AvgAttendance({
+                    data: processedSections,
+                    avgAttendance: avgAttendancePerSection,
+                    growth: sectionGrowth,
+                    __typename: 'Section',
+                  })}
                 </section>
 
                 <section id='course-chart-2nd-row'>
@@ -461,6 +427,59 @@ const DoughnutChartOptions = {
     },
   },
 };
+function AvgAttendance({ data, avgAttendance, growth, __typename }) {
+  return (
+    <div className='statistics-card-container overall-attendance-card'>
+      <header>
+        <h6>
+          Avg. Attendance <span>Per {__typename}</span>
+        </h6>
+      </header>
+      <aside>
+        <h3>{data ? avgAttendance + '%' : 'No lectures yet'}</h3>
+
+        <span className='growth'>
+          {growth !== 0 && growth >= 0 ? (
+            <svg
+              width='16'
+              height='16'
+              viewBox='0 0 14 14'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M8.06302 8.74972C8.18671 8.87789 8.35447 8.94991 8.52941 8.94994H8.91597C9.09091 8.94991 9.25867 8.87789 9.38235 8.74972L12.4874 5.53319L14 7.10011V3H10.042L11.5546 4.56693L8.72269 7.50056L6.74369 5.4505C6.62001 5.32234 6.45225 5.25032 6.27731 5.25028H5.89075C5.71581 5.25032 5.54805 5.32234 5.42437 5.4505L1 10.0337L1.93276 11L6.08403 6.69967L8.06302 8.74972Z'
+                fill='#31C977'
+              />
+            </svg>
+          ) : (
+            <svg
+              width='14'
+              height='14'
+              viewBox='0 0 14 14'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M8.06302 5.25028C8.1867 5.12211 8.35447 5.05009 8.52941 5.05006H8.91597C9.09091 5.05009 9.25867 5.12211 9.38235 5.25028L12.4874 8.46681L14 6.89989V11H10.042L11.5546 9.43307L8.72269 6.49944L6.74369 8.5495C6.62001 8.67766 6.45225 8.74968 6.27731 8.74972H5.89075C5.71581 8.74968 5.54805 8.67766 5.42437 8.5495L1 3.96626L1.93276 3L6.08403 7.30033L8.06302 5.25028Z'
+                fill='#E47C67'
+              />
+            </svg>
+          )}
+
+          <span
+            className={`${
+              growth >= 0 ? 'positive-growth' : 'negative-growth'
+            } `}
+          >
+            {growth + '% vs last lecture'}
+          </span>
+        </span>
+      </aside>
+    </div>
+  );
+}
+
 function LatestActivitiesComponent({ concatenatedMeetings }) {
   return concatenatedMeetings.slice(0, 10).map((meeting) => {
     const {

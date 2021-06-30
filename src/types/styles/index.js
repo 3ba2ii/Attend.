@@ -315,7 +315,7 @@ export const transitionFormatModalStyle = makeStyles((theme) => ({
     flexDirection: 'column',
     minWidth: '300px',
     width: 'fit-content',
-    borderRadius: 16,
+    borderRadius: 6,
   },
 }));
 

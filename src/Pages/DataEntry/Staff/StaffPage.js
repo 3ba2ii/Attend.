@@ -156,11 +156,18 @@ export default function StaffPage() {
                   <CSVLink
                     filename={'users.csv'}
                     data={usersData.map(
-                      ({ LecturerNameInArabic, email, username, role }) => {
+                      ({
+                        LecturerNameInArabic,
+                        email,
+                        username,
+                        role,
+                        department,
+                      }) => {
                         return {
                           Name: LecturerNameInArabic,
                           Email: email,
                           Username: username,
+                          Department: department?.DepartmentNameInEnglish,
                           Role: role?.name,
                         };
                       }

@@ -153,11 +153,19 @@
   position: relative;
   margin: 5px 0px;
 }
-
+.statistics-card-container header {
+  position: relative;
+  width: 100%;
+  white-space: nowrap;
+}
 .statistics-card-container header h6 {
   color: var(--fourth-color);
 }
-
+.statistics-card-container header span {
+  color: var(--secondary-color);
+  font-size: 0.6rem;
+  font-weight: 500;
+}
 .statistics-card-container aside {
   display: flex;
   align-items: center;

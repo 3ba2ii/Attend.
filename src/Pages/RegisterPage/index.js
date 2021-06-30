@@ -13,6 +13,14 @@ import { Link } from 'react-router-dom';
 import './register.css';
 import { SignupForm } from './SignUpForm';
 
+const defaultUserInvitation = {
+  id: null,
+  department: null,
+  role: null,
+  email: null,
+  isUsed: null,
+  latest_invitation_time: null,
+};
 const RegisterPage = () => {
   let { token } = useParams();
   const [startAnimation, setStartAnimation] = useState(0);
@@ -33,19 +41,28 @@ const RegisterPage = () => {
         variables={{ id: token?.split('token=')[1] }}
         errorComponent={<InvalidInvitation />}
       >
-        {({
-          data: {
-            userInvitation: {
-              id,
-              department,
-              role,
-              email,
-              isUsed,
-              latest_invitation_time,
-            },
-            users,
-          },
-        }) => {
+        {({ data: { userInvitation, users } }) => {
+          const {
+            id,
+            department,
+            role,
+            email,
+            isUsed,
+            latest_invitation_time,
+          } = userInvitation || defaultUserInvitation;
+          if (!id) {
+            return (
+              <section className='expired-invitation'>
+                <h1>❌</h1>
+                <h3>Not Found Invitation</h3>
+                <p>
+                  We could not find your invitation, please{' '}
+                  <a href='mailto:attend.qrsys@gmail.com'>contact us</a> to send
+                  you a new one.
+                </p>
+              </section>
+            );
+          }
           if (
             (new Date() - new Date(latest_invitation_time)) / (1000 * 1000) >=
             2592
@@ -183,9 +200,8 @@ function UploadImageStep({ createdUserInfo, handleNextStep }) {
   const [currentImageState, setCurrentImageState] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [uploadImageMutation, { loading }] = useMutation(UPLOAD_IMAGE);
-  const [updateUserAvatar, { loading: updateAvatarLoading }] = useMutation(
-    UPDATE_USER_AVATAR
-  );
+  const [updateUserAvatar, { loading: updateAvatarLoading }] =
+    useMutation(UPDATE_USER_AVATAR);
 
   const onUploadImage = async () => {
     try {

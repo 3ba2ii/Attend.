@@ -34,8 +34,8 @@
 .dropdown {
   position: absolute;
   top: 40px;
-  left: -200px;
-  width: 420px;
+  left: -300px;
+  width: 350px;
   z-index: 2;
   transform: translateX(0%);
   border-radius: var(--border-radius);
@@ -127,11 +127,13 @@
 /* THIRD MENU */
 
 .menu-third-enter {
-  transform: translateX(-110%);
-  -webkit-transform: translateX(-110%);
-  -moz-transform: translateX(-110%);
-  -ms-transform: translateX(-110%);
-  -o-transform: translateX(-110%);
+  position: absolute;
+  top: 24px;
+  transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  -o-transform: translateX(-100%);
 }
 .menu-third-enter-active {
   transform: translateX(0%);
@@ -332,3 +334,11 @@
   align-items: center;
   justify-content: space-between;
 }
+
+@media only screen and (min-width: 720px) {
+  .dropdown {
+    left: -200px;
+    width: 420px;
+  }
+}
+/* Desktop */

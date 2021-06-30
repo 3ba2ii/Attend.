@@ -12,6 +12,7 @@ const colors = [
 
 const AvatarOrInitials = ({ url, name, className }) => {
   const [selectedColor, setSelectedColor] = useState({});
+
   useEffect(() => {
     const randomColor = Math.floor(Math.random() * 6);
 

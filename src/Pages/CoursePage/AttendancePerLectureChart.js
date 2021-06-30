@@ -32,6 +32,10 @@ export const AttendancePerLectureChart = ({ __typename }) => {
     useContext(CoursePageContext);
   const studentsLength = Object.keys(studentsData)?.length;
   const [displayedData, setDisplayedData] = useState();
+  console.log(
+    `🚀 ~ file: AttendancePerLectureChart.js ~ line 35 ~ AttendancePerLectureChart ~ displayedData`,
+    displayedData
+  );
   const [filter, setCurrentFilter] = useState('month');
 
   const data = displayedData

@@ -21,6 +21,7 @@ import { SelectComponent } from './SelectComponent';
 export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
   const { studentsData, processedLectures, processedSections } =
     useContext(CoursePageContext);
+
   const {
     authedUser: {
       role: { name },
@@ -33,18 +34,19 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
     ASSIGN_STUDENT_TO_LECTURE,
     {
       onCompleted(_) {
-        setOpenAssignStudentMenu(false);
+        window.location.reload();
       },
       onError(err) {
         console.error(err);
       },
     }
   );
+
   const [assignStudentToSection, { loading: sectionLoading }] = useMutation(
     ASSIGN_STUDENT_TO_SECTION,
     {
       onCompleted(_) {
-        setOpenAssignStudentMenu(false);
+        window.location.reload();
       },
       onError(err) {
         console.error(err);
@@ -253,6 +255,7 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
   };
   const assignStudents = async (e) => {
     e.preventDefault();
+    if (Boolean(identifierError) && !state.students.length) return;
     try {
       const { __typename, students, meetings } = state;
       const addedStudentsIDs = Object.keys(students);
@@ -467,7 +470,6 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
               type='submit'
               className='save-changes-button'
               disabled={
-                Boolean(identifierError) ||
                 !Boolean(state?.meetings?.length) ||
                 identifier === '' ||
                 !Boolean(Object.keys(state?.students)?.length) ||

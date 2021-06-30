@@ -7,8 +7,9 @@ import { format, formatDistance } from 'date-fns';
 import { AttendancePerLectureChart } from 'pages/CoursePage/AttendancePerLectureChart';
 import { SettingsModal } from 'pages/DataEntry/AssignLectures/CourseSettingsModal';
 import { TransitionalModalChildren } from 'pages/DataEntry/AssignLectures/TransitionalModalChildren';
-import { createContext, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { createContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Redirect, useParams } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import {
   computeGrowth,
@@ -23,20 +24,21 @@ export const CoursePageContext = createContext();
 
 export const CoursePage = () => {
   const { courseID } = useParams();
-
-  //{id : {id,name,email,course:{courseID,lectures:[1,2,3,4],section:[1,2,3,4]},...rest}}
   const [openExportMenu, setOpenExportMenu] = useState(false);
   const [openAssignStudentMenu, setOpenAssignStudentMenu] = useState(false);
-
   const [unprocessedLectures, setUnProcessedLectures] = useState({});
-
   const [unprocessedSections, setUnProcessedSections] = useState({});
-
+  const {
+    authedUser: {
+      role: { name },
+    },
+  } = useSelector((state) => state.authReducer);
   const [studentsData, setStudentsData] = useState({});
   const [processedLectures, setProcessedLectures] = useState([]);
   const [processedSections, setProcessedSections] = useState({});
   const exportReportNode = useRef();
   const [openModal, setOpenModal] = useState('');
+  const isAdmin = useMemo(() => name === 'Super Admin', [name]);
 
   const onDataFetched = ({
     course: {
@@ -137,6 +139,10 @@ export const CoursePage = () => {
       document.removeEventListener('mousedown', handleClick);
     };
   }, [processedLectures]);
+
+  if (!isAdmin) {
+    return <Redirect to='/404' />;
+  }
   return (
     <main id='main-course-page'>
       <CoursePageContext.Provider

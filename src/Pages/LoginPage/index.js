@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 import { LoginAction } from 'redux/actions/authedAction';
 import { FAILED_AUTHENTICATION } from 'types/constants/redux-constants';
 import { checkCookies } from 'utlis/helpers/checkCookies';
@@ -100,12 +101,19 @@ const Login = () => {
               Save time, store attendance, and make reports.
             </span>
           </header>
-          {error && (
+
+          <CSSTransition
+            in={error}
+            unmountOnExit
+            timeout={500}
+            classNames={'identifier-error'}
+          >
             <Error
               ignoreError={ignoreError}
               message={'Incorrect username or password.'}
             />
-          )}
+          </CSSTransition>
+
           <form onSubmit={onLogin} className='login-form'>
             <input name='utf8' type='hidden' value='✔️' />
             <TextField

@@ -15,6 +15,8 @@ import {
   computeGrowth,
   computeOverallAttendanceRate,
 } from 'utlis/helpers/computeAttendance';
+import { useLocation } from 'react-router-dom';
+
 import { extractGroupsName } from '../../utlis/helpers/getGroupsName';
 import './course-page.css';
 import { ExportReportDropdown } from './ExportReportDropdown';
@@ -24,6 +26,11 @@ export const CoursePageContext = createContext();
 
 export const CoursePage = () => {
   const { courseID } = useParams();
+  const { pathname } = useLocation();
+  console.log(
+    `🚀 ~ file: CoursePage.js ~ line 30 ~ CoursePage ~ pathname`,
+    pathname
+  );
   const [openExportMenu, setOpenExportMenu] = useState(false);
   const [openAssignStudentMenu, setOpenAssignStudentMenu] = useState(false);
   const [unprocessedLectures, setUnProcessedLectures] = useState({});
@@ -140,7 +147,7 @@ export const CoursePage = () => {
     };
   }, [processedLectures]);
 
-  if (!isAdmin) {
+  if (!isAdmin && pathname.includes('/admin_panel')) {
     return <Redirect to='/404' />;
   }
   return (

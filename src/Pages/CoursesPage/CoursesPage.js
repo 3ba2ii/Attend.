@@ -32,10 +32,6 @@ export const CoursesPage = () => {
             user: { courses },
           },
         }) => {
-          console.log(
-            `🚀 ~ file: CoursesPage.js ~ line 17 ~ CoursesPage ~ user`,
-            courses
-          );
           return (
             <div>
               <CoursesCardsContainer courses={courses} path={'/courses'} />

@@ -9,14 +9,29 @@ const colors = [
   { bg: '#47b881', color: 'white' },
   { bg: '#fae2e2', color: '#bf0e08' },
 ];
-
+//A -> Z = 65 -> 90
+// أ -> ي
+const alphabets =
+  'abcdefghijklmnopqrstuvwxyzأبجدهوزحطيكلمنسعفصقرشتثخذضظغأ0123456789';
 const AvatarOrInitials = ({ url, name, className }) => {
   const [selectedColor, setSelectedColor] = useState({});
 
   useEffect(() => {
-    const randomColor = Math.floor(Math.random() * 6);
+    let colorIndex = 0;
+    let selectedColor = colors[5];
+    if (name && !url) {
+      if (alphabets.includes(name.toLowerCase().charAt(0))) {
+        colorIndex = alphabets.indexOf(name.charAt(0).toLowerCase());
+      }
+    }
 
-    setSelectedColor(colors[randomColor]);
+    if (colorIndex >= 0 && colorIndex < 13) selectedColor = colors[0];
+    else if (colorIndex >= 13 && colorIndex < 26) selectedColor = colors[1];
+    else if (colorIndex >= 26 && colorIndex < 39) selectedColor = colors[2];
+    else if (colorIndex >= 39 && colorIndex < 52) selectedColor = colors[3];
+    else if (colorIndex >= 52 && colorIndex < 65) selectedColor = colors[4];
+
+    setSelectedColor(selectedColor);
   }, [name]);
   const initials = getInitials(name);
 

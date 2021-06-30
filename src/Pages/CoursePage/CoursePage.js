@@ -29,6 +29,7 @@ export const CoursePage = () => {
   const [openAssignStudentMenu, setOpenAssignStudentMenu] = useState(false);
 
   const [unprocessedLectures, setUnProcessedLectures] = useState({});
+
   const [unprocessedSections, setUnProcessedSections] = useState({});
 
   const [studentsData, setStudentsData] = useState({});
@@ -246,7 +247,6 @@ export const CoursePage = () => {
           }}
         >
           {({ data: { lectures: dataLectures, sections } }) => {
-            console.log(dataLectures, sections);
             const concatenatedMeetings = dataLectures
               .concat(sections)
               .sort(
@@ -259,10 +259,7 @@ export const CoursePage = () => {
             const SectionDateTime = sections?.[0]?.SectionDateTime;
 
             const studentsLength = Object.keys(studentsData)?.length;
-            console.log(
-              `🚀 ~ file: CoursePage.js ~ line 251 ~ CoursePage ~ studentsData`,
-              studentsLength
-            );
+
             const avgAttendancePerLecture = computeOverallAttendanceRate({
               data: Object.values(processedLectures),
               studentsLength,

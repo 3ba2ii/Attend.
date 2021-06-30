@@ -12,8 +12,7 @@ export const DoughnutChart = ({ options }) => {
     '60% - 80%': 0,
     'Above 80%': 0,
   });
-  const { studentsData, processedLectures, processedSections } =
-    useContext(CoursePageContext);
+  const { studentsData, processedLectures } = useContext(CoursePageContext);
 
   const studentsLength = Object.keys(studentsData)?.length || 1;
 
@@ -26,6 +25,7 @@ export const DoughnutChart = ({ options }) => {
       'Above 80%': 0,
     };
     const lecturesCount = Object.keys(processedLectures).length;
+
     Object.values(studentsData).forEach(({ course: { lectures } }) => {
       const percentage = (
         (Number(lectures.size) / lecturesCount) *
@@ -38,7 +38,7 @@ export const DoughnutChart = ({ options }) => {
         finalResults['60% - 80%'] += 1;
       } else if (percentage > 40 && percentage <= 60) {
         finalResults['40% - 60%'] += 1;
-      } else if (percentage > 20 && percentage <= 40) {
+      } else if (percentage >= 20 && percentage <= 40) {
         finalResults['20% - 40%'] += 1;
       } else {
         finalResults['Below 20%'] += 1;

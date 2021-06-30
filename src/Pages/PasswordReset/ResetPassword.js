@@ -115,6 +115,7 @@ const ResetPasswordPage = () => {
                   marginLeft: '1rem',
                 }}
               />
+
               {error && (
                 <Error
                   ignoreError={ignoreError}

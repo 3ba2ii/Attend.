@@ -9,7 +9,6 @@ import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import { CoursePage } from 'pages/CoursePage/CoursePage';
-import { AdminDashboard } from 'pages/Dashboard/Dashboard';
 import StaffPage from 'pages/DataEntry/Staff/StaffPage';
 import SettingsPage from 'pages/Settings/SettingsPage';
 import PropTypes from 'prop-types';
@@ -20,7 +19,6 @@ import { drawerStyles } from 'types/styles/';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
 import { CoursesPage } from 'pages/CoursesPage/CoursesPage';
-const DashboardPage = lazy(() => import('pages/Dashboard/Dashboard'));
 const AddLecturersPage = lazy(() =>
   import('pages/DataEntry/AddLecturers/AddLecturers')
 );
@@ -97,14 +95,12 @@ function ResponsiveDrawer(props) {
             path={'/'}
             exact
             render={() => {
-              if (name === 'Super Admin') return <AdminDashboard />;
               return <div>Hello</div>;
             }}
           />
           <Route
             path={'/dashboard'}
             render={() => {
-              if (name === 'Super Admin') return <AdminDashboard />;
               return <div>Hello</div>;
             }}
           />

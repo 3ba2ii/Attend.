@@ -79,7 +79,7 @@ const Login = () => {
   }, [dispatch, mounted]);
 
   if (redirectToReferrer) {
-    return <Redirect to={state?.from || '/dashboard'} />;
+    return <Redirect to={state?.from || '/courses'} />;
   }
   if (checkingCookiesLoading) {
     return (

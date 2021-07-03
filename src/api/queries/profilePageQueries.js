@@ -3,12 +3,15 @@ import { gql } from '@apollo/client';
 export const GET_USER_FULLY_DETAILED_QUERY = gql`
   query userFullyDetailedQuery($username: String!) {
     users(where: { username: $username }) {
+      id
       LecturerNameInEnglish
       LecturerNameInArabic
       confirmed
       email
-      id
       username
+      isContactInfoPublic
+      isPrivateAccount
+      isActivitiesCoursesPublic
       department {
         id
         DepartmentNameInEnglish

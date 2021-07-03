@@ -1,130 +1,77 @@
 #settings-page-container {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 3rem;
   position: relative;
-  padding: 8rem 3% 2rem 3%;
+  padding: 10% 3% 2rem 20%;
 }
-.settings-page-content {
+#settings-page-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 0.2fr 1fr;
   height: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
 }
-.left-column-section {
-  display: grid;
-  grid-template-rows: 1fr 3fr 1fr;
-}
-.settings-page-content h6 {
-  font-weight: 600;
-}
-.account-information-section {
+#settings-page-container header {
+  grid-column: 1/2;
   grid-row: 1/2;
+  height: 100%;
+}
+#settings-page-container ul {
+  grid-column: 1/2;
+  height: 100%;
+}
+#settings-page-container ul {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-}
-.image-with-info-container {
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-}
-.image-with-info-container aside {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-.image-with-info-container aside span:nth-of-type(2) {
-  color: var(--secondary-color);
+  font-size: 1.2rem;
   font-weight: 500;
+  color: var(--secondary-color);
+  border-right: 1px solid rgba(98, 98, 98, 0.342);
+  padding-right: 2rem;
+  -webkit-border-right: 1px solid #000;
+  -moz-border-right: 1px solid #000;
+  -ms-border-right: 1px solid #000;
+  -o-border-right: 1px solid #000;
+  height: 100%;
 }
-.information-user-form-section {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 350px;
-  gap: 1rem;
-}
-.information-user-form-section label {
-  font-weight: 600;
-}
-.input-field-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-  width: 100%;
-}
-.input-field {
-  display: flex;
-  align-items: center;
-  position: relative;
-  width: 100%;
-}
-.input-field input {
-  width: 100%;
-  padding: 0.5rem 0.8rem;
-  background: rgba(216, 219, 224, 0.4);
-  outline: none;
-  outline: 1px solid rgba(0, 0, 0, 0.185);
-  border: none;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  font-size: 12px;
-}
-.icons8-edit {
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iMjQiIGhlaWdodD0iMjQiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iIzM0NDk1ZSI+PHBhdGggZD0iTTEyOSwxNC4zMzMzM2wtMTcuMzAwNzgsMTcuMzAwNzhsMjguNjY2NjcsMjguNjY2NjdsMTcuMzAwNzgsLTE3LjMwMDc4ek0xMDAuODc5MjMsNDIuNDU0MWwtNzkuMzc5MjMsNzkuMzc5MjN2MjguNjY2NjdoMjguNjY2NjdsNzkuMzc5MjMsLTc5LjM3OTIzeiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+')
-    50% 50% no-repeat;
-  background-size: 100%;
-  position: absolute;
-  right: 10px;
+#settings-page-container ul li {
+  padding: 0.6rem 0.7rem;
+  white-space: nowrap;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
   cursor: pointer;
 }
-.security-and-login-section {
-  grid-row: 2/3;
+.selected-tap {
+  color: var(--primary-color);
+  font-weight: 600;
+  background: var(--card-background-blue-color);
+}
+.settings-section {
+  display: grid;
+  grid-template-rows: 0.2fr 1fr;
+  grid-template-columns: 1fr;
+}
+.edit-profile-form {
+  width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width: 100%;
-  justify-content: center;
+  height: 100%;
+  justify-content: space-around;
 }
-
-.change-password-form {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-}
-.change-password-form p {
-  max-width: 40ch;
-  font-size: 14px;
-  margin-right: 3rem;
-}
-.icons8-chevron-right {
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iMzAiIGhlaWdodD0iMzAiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iIzM0NDk1ZSI+PHBhdGggZD0iTTY4LjgsMTU0LjhoLTExLjQ2NjY3Yy0yLjIxMzA3LDAgLTQuMjMxMiwtMS4yNzg1MyAtNS4xODI5MywtMy4yNzk0N2MtMC45NTE3MywtMi4wMDA5MyAtMC42NTkzMywtNC4zNjg4IDAuNzQ1MzMsLTYuMDg4OGw0OC42MzAxMywtNTkuNDMxNzNsLTQ4LjYzMDEzLC01OS40Mzc0N2MtMS40MDQ2NywtMS43MTQyNyAtMS42OTEzMywtNC4wODIxMyAtMC43NDUzMywtNi4wODg4YzAuOTQ2LC0yLjAwNjY3IDIuOTY5ODcsLTMuMjczNzMgNS4xODI5MywtMy4yNzM3M2gxMS40NjY2N2MxLjcyLDAgMy4zNDgyNywwLjc3NCA0LjQzNzYsMi4xMDQxM2w1MS42LDYzLjA2NjY3YzEuNzI1NzMsMi4xMTU2IDEuNzI1NzMsNS4xNDg1MyAwLDcuMjY0MTNsLTUxLjYsNjMuMDY2NjdjLTEuMDg5MzMsMS4zMjQ0IC0yLjcxNzYsMi4wOTg0IC00LjQzNzYsMi4wOTg0eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+')
-    50% 50% no-repeat;
-  background-size: 100%;
-}
-.change-password-form:hover p {
-  text-decoration: underline;
-}
-.report-a-problem {
-  grid-row: 3/4;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  color: var(--secondary-color);
-}
-.report-a-problem a {
-  color: var(--color-link-text);
-  font-weight: 500;
+.save-changes-btn {
+  padding: 0.8rem 1rem;
+  width: fit-content;
+  max-width: 180px;
+  background: #0c75ff;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 600;
+  margin-top: 50px;
 }

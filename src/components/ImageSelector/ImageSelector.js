@@ -8,13 +8,16 @@ import './image-selector.css';
 export default function ImageSelector({
   createdUserInfo,
   setCurrentImageState,
+  defaultImage,
+  includeUserInfo = true,
+  imageClassName = 'select-picture-avatar',
 }) {
   const [state, setState] = React.useState({
     cropperOpen: false,
     img: null,
     zoom: 2,
     rotate: 0,
-    croppedImg: '',
+    croppedImg: defaultImage || '',
   });
 
   const editorRef = React.useRef(null);
@@ -64,11 +67,10 @@ export default function ImageSelector({
             {...{
               url: state.croppedImg,
               name: createdUserInfo?.LecturerNameInEnglish,
-              className: 'select-picture-avatar',
+              className: imageClassName,
               alt: 'avatar',
             }}
           />
-          <p>Maximum Size: 2 MB</p>
         </label>
 
         <input
@@ -79,16 +81,18 @@ export default function ImageSelector({
           className='select-image-input-ref'
           ref={inputRef}
         />
-        <div className='user-information select-image-user-info'>
-          <span>
-            {getFullName(createdUserInfo?.LecturerNameInEnglish) || ''}
-          </span>
-          <span>
-            {createdUserInfo?.department?.DepartmentNameInEnglish +
-              ' Department' || ''}
-          </span>
-          <p>{createdUserInfo?.role?.name || 'role'}</p>
-        </div>
+        {includeUserInfo && (
+          <div className='user-information select-image-user-info'>
+            <span>
+              {getFullName(createdUserInfo?.LecturerNameInEnglish) || ''}
+            </span>
+            <span>
+              {createdUserInfo?.department?.DepartmentNameInEnglish +
+                ' Department' || ''}
+            </span>
+            <p>{createdUserInfo?.role?.name || 'role'}</p>
+          </div>
+        )}
       </div>
 
       {state.cropperOpen && (

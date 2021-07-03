@@ -4,7 +4,7 @@
   width: 100%;
   position: relative;
   height: 100%;
-  padding: 7rem 3% 2rem 5%;
+  padding: 7rem 3% 2rem 4%;
 }
 #profile-page-main {
   display: grid;
@@ -180,6 +180,15 @@
   justify-content: center;
 }
 .meetings-count {
+}
+.course-name-with-avatar span {
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--primary-color);
+}
+.meetings-count span {
+  font-size: 0.8rem;
+  color: var(--secondary-color);
 }
 .course-list-item:visited {
   color: var(--primary-color);

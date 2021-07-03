@@ -39,10 +39,6 @@ export const CoursePage = () => {
   } = useSelector((state) => state.authReducer);
   const [studentsData, setStudentsData] = useState({});
   const [processedLectures, setProcessedLectures] = useState([]);
-  console.log(
-    `🚀 ~ file: CoursePage.js ~ line 42 ~ CoursePage ~ processedLectures`,
-    processedLectures
-  );
 
   const [processedSections, setProcessedSections] = useState({});
   const exportReportNode = useRef();

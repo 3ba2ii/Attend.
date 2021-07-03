@@ -44,6 +44,8 @@
   transform: translate(-50%, -50%);
   width: 60%;
   height: 98%;
+  max-width: 500px;
+  max-height: 520px;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -16,15 +16,11 @@ import { extractGroupsName } from 'utlis/helpers/getGroupsName';
 import './profile-page.css';
 
 function getDateWithoutTime(dateTime) {
-  console.log(
-    `🚀 ~ file: ProfilePage.js ~ line 16 ~ getDateWithoutTime ~ dateTime`,
-    dateTime
-  );
   var date = new Date(dateTime);
   date.setHours(0, 0, 0, 0);
   return date;
 }
-const groupDataByDate = ({ data, __typename }) => {
+const groupDataByDate = ({ data }) => {
   let resultData = {};
   data.forEach(({ LectureDateTime, SectionDateTime }) => {
     const meetingDateOnly = new Date(
@@ -105,6 +101,9 @@ export const ProfilePage = () => {
           sections,
           role,
           coverImage,
+          isContactInfoPublic,
+          isPrivateAccount,
+          isActivitiesCoursesPublic,
         } = users?.[0] || defaultData;
 
         if (!id) return <h1>404 Error Not Found</h1>;
@@ -255,7 +254,7 @@ export const ProfilePage = () => {
                           className='course-list-item'
                           href={`http://localhost:3000/courses/${courseID}`}
                         >
-                          <div>
+                          <div className='course-name-with-avatar'>
                             <AvatarOrInitials
                               url={avatarURL}
                               name={CourseName}
@@ -265,7 +264,7 @@ export const ProfilePage = () => {
                           </div>
                           <span className='meetings-count'>
                             <h5>{meetings?.length || ''}</h5>
-                            {meetings?.[0]?.__typename + 's' || ''}
+                            <span>{__typename + 's' || ''}</span>
                           </span>
                         </a>
                       );
@@ -295,16 +294,22 @@ export const ProfilePage = () => {
               />
             </section>
             <section id='side-section'>
-              <section className='page-card-section connect-card'>
-                <h6>Monthly Reports</h6>
-              </section>
-              <section className='page-card-section connect-card'>
-                <h6>Connect</h6>
-                <a href={`mailto:${email}`} className='menu-item'>
-                  <span className='icon-button'>{<EmailIcon />}</span>
-                  {email}
-                </a>
-              </section>
+              {(isAdmin || isAuthedUserProfile) && (
+                <section className='page-card-section connect-card'>
+                  <h6>Monthly Reports</h6>
+                </section>
+              )}
+              {(isAdmin ||
+                isAuthedUserProfile ||
+                (!isAuthedUserProfile && isContactInfoPublic)) && (
+                <section className='page-card-section connect-card'>
+                  <h6>Connect</h6>
+                  <a href={`mailto:${email}`} className='menu-item'>
+                    <span className='icon-button'>{<EmailIcon />}</span>
+                    {email}
+                  </a>
+                </section>
+              )}
               <section className='page-card-section connect-card'>
                 <h6>Similar Profiles</h6>
                 <Query

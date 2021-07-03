@@ -13,12 +13,17 @@ export const GET_USER_BY_ID = gql`
       username
       isMailNotificationsUsed
       isOverallSystemNotificationUsed
+      isActivitiesCoursesPublic
+      isPrivateAccount
+      isContactInfoPublic
+      PhoneNumber
       role {
         name
         type
         id
       }
       avatar {
+        id
         url
       }
     }

@@ -27,10 +27,7 @@ export const CoursePageContext = createContext();
 export const CoursePage = () => {
   const { courseID } = useParams();
   const { pathname } = useLocation();
-  console.log(
-    `🚀 ~ file: CoursePage.js ~ line 30 ~ CoursePage ~ pathname`,
-    pathname
-  );
+
   const [openExportMenu, setOpenExportMenu] = useState(false);
   const [openAssignStudentMenu, setOpenAssignStudentMenu] = useState(false);
   const [unprocessedLectures, setUnProcessedLectures] = useState({});
@@ -42,6 +39,11 @@ export const CoursePage = () => {
   } = useSelector((state) => state.authReducer);
   const [studentsData, setStudentsData] = useState({});
   const [processedLectures, setProcessedLectures] = useState([]);
+  console.log(
+    `🚀 ~ file: CoursePage.js ~ line 42 ~ CoursePage ~ processedLectures`,
+    processedLectures
+  );
+
   const [processedSections, setProcessedSections] = useState({});
   const exportReportNode = useRef();
   const [openModal, setOpenModal] = useState('');

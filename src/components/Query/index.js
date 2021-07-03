@@ -9,6 +9,7 @@ const Query = ({
   onCompletedFunction,
   onErrorFunction,
   errorComponent,
+  loadingComponent,
 }) => {
   const { data, loading, error, refetch, fetchMore } = useQuery(
     query,
@@ -28,6 +29,7 @@ const Query = ({
   );
 
   if (loading) {
+    if (loadingComponent) return loadingComponent;
     return (
       <div className='center-spinner'>
         <SpinnerElement />

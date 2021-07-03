@@ -286,6 +286,22 @@ button:active {
 .MuiAlert-message {
   font-family: var(--secondary-font-family);
 }
+a {
+  color: inherit;
+}
+.primary-color {
+  color: var(--primary-color);
+}
+.secondary-color {
+  color: var(--secondary-color);
+}
+.third-color {
+  color: var(--third-color);
+}
+.fourth-color {
+  color: var(--fourth-color);
+}
+
 @keyframes spin {
   to {
     transform: rotate(359deg);

@@ -9,7 +9,9 @@ import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import { CoursePage } from 'pages/CoursePage/CoursePage';
+import { CoursesPage } from 'pages/CoursesPage/CoursesPage';
 import StaffPage from 'pages/DataEntry/Staff/StaffPage';
+import { ProfilePage } from 'pages/MyProfilePage/ProfilePage';
 import SettingsPage from 'pages/Settings/SettingsPage';
 import PropTypes from 'prop-types';
 import React, { lazy, useCallback } from 'react';
@@ -18,7 +20,6 @@ import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { drawerStyles } from 'types/styles/';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
-import { CoursesPage } from 'pages/CoursesPage/CoursesPage';
 const AddLecturersPage = lazy(() =>
   import('pages/DataEntry/AddLecturers/AddLecturers')
 );
@@ -128,9 +129,9 @@ function ResponsiveDrawer(props) {
           />
           <Route exact path={'/courses/:courseID'} component={CoursePage} />
           <Route path={'/admin_panel/staff'} component={StaffPage} />
-          <Route path={'/courses'} render={() => <CoursesPage />} />
+          <Route path={'/courses'} component={CoursesPage} />
 
-          <Route path={'/profile'} render={() => <div>Hello</div>} />
+          <Route path={'/profile/:username'} component={ProfilePage} />
           <Route path={'/leaderboard'} render={() => <div>leader-board</div>} />
           <Route path={'/help'} render={() => <div>Hello</div>} />
           <Route path={'/settings'} render={() => <SettingsPage />} />

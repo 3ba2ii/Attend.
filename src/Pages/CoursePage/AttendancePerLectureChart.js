@@ -23,6 +23,7 @@ function SimpleSelect({ setCurrentFilter }) {
       <option value={'week'}>Last Week</option>
       <option value={'month'}>Last Month</option>
       <option value={'3 months'}>Last 3 Months</option>
+      <option value={'all'}>All</option>
     </NativeSelect>
   );
 }
@@ -97,6 +98,7 @@ export const AttendancePerLectureChart = ({ __typename }) => {
           );
           break;
         default:
+          filterDate = null;
           break;
       }
 

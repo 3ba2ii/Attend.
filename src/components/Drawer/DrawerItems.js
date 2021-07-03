@@ -151,7 +151,7 @@ const drawerNavOptions = ({ authedUser }) => [
     text: 'My Profile',
     icon: <span className='icons8-user' alt={'My Profile'} />,
     iconActive: <span className='icons8-user-active' alt={'My Profile'} />,
-    path: '/profile',
+    path: `/profile/${authedUser.username}`,
   },
   {
     text: 'Courses',

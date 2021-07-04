@@ -65,7 +65,7 @@ export const SignupForm = ({
         .min(8, 'Password is too short - should be 8 chars minimum.')
         .matches(
           /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/,
-          'Password can only contain Latin letters.'
+          'Password must contain at least two characters and numbers.'
         ),
 
       confirmPassword: Yup.string()

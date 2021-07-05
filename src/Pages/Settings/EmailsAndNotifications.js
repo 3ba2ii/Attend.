@@ -46,7 +46,10 @@ export const EmailsAndNotifications = () => {
       <section className='preferences-list-container'>
         <div className='single-preference'>
           <div className='title-with-subtitle-pref'>
-            <h6 className='third-color'>Creating {__typename}s Emails</h6>
+            <span className='third-color font-weight500 one-rem-fon-size'>
+              Creating {__typename}s Emails
+            </span>
+
             <span className='secondary-color subtitle-pref'>
               You can turn on or off emails received on creating new lectures
             </span>
@@ -62,9 +65,10 @@ export const EmailsAndNotifications = () => {
 
         <div className='single-preference'>
           <div className='title-with-subtitle-pref'>
-            <h6 className='third-color'>
+            <span className='third-color font-weight500 one-rem-fon-size'>
               Students’ Attendance Alerts Notifications
-            </h6>
+            </span>
+
             <span className='secondary-color subtitle-pref'>
               You can turn on or off students’ attendance alert notifications
               for all the the courses

@@ -12,6 +12,7 @@ export const GET_USER_FULLY_DETAILED_QUERY = gql`
       isContactInfoPublic
       isPrivateAccount
       isActivitiesCoursesPublic
+      PhoneNumber
       department {
         id
         DepartmentNameInEnglish

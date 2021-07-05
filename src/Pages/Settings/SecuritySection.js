@@ -92,7 +92,7 @@ export const SecuritySection = () => {
               setShowChangePasswordForm(!showChangePasswordForm);
             }}
           >
-            <span className='third-color font-weight500'>
+            <span className='third-color font-weight500 one-rem-fon-size'>
               Change your Password
             </span>
             <span className='secondary-color subtitle-pref'>

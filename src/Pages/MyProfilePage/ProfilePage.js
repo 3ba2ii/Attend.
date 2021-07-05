@@ -3,6 +3,7 @@ import { GET_DEPARTMENT_USERS } from 'api/queries/getDepartmentUsers';
 import { GET_USER_FULLY_DETAILED_QUERY } from 'api/queries/profilePageQueries';
 import defaultCoverImage from 'assets/bg.jpeg';
 import { ReactComponent as EmailIcon } from 'assets/icons/email.svg';
+import { ReactComponent as PhoneIcon } from 'assets/icons/phone.svg';
 import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import { UserWithAvatarLoader } from 'components/Loaders';
 import Query from 'components/Query';
@@ -50,6 +51,15 @@ const defaultData = {
 
 export const ProfilePage = () => {
   const { username } = useParams();
+  const [userPreferences, setUserPreferences] = useState({
+    isContactInfoPublic: false,
+    isPrivateAccount: false,
+    isActivitiesCoursesPublic: false,
+  });
+  console.log(
+    `🚀 ~ file: ProfilePage.js ~ line 54 ~ ProfilePage ~ userPreferences`,
+    userPreferences
+  );
 
   const {
     authedUser: {
@@ -58,6 +68,7 @@ export const ProfilePage = () => {
       role: { name },
     },
   } = useSelector((state) => state.authReducer);
+
   const [shuffledUsers, setShuffledUsers] = useState([]);
 
   const isAdmin = useMemo(() => name === 'Super Admin', [name]);
@@ -66,6 +77,29 @@ export const ProfilePage = () => {
     () => username.toLowerCase() === authedUserUsername.toLowerCase(),
     [username, authedUserUsername]
   );
+
+  const isContactInfoVisible = useMemo(() => {
+    if (isAdmin || isAuthedUserProfile || userPreferences.isContactInfoPublic)
+      return true;
+    return false;
+  }, [isAdmin, isAuthedUserProfile, userPreferences.isContactInfoPublic]);
+
+  const isPrivateAccount = useMemo(() => {
+    if (isAdmin || isAuthedUserProfile || !userPreferences.isPrivateAccount)
+      return true;
+    return false;
+  }, [isAdmin, isAuthedUserProfile, userPreferences.isPrivateAccount]);
+
+  const isActivitiesCoursesPublic = useMemo(() => {
+    if (
+      isAdmin ||
+      isAuthedUserProfile ||
+      userPreferences.isActivitiesCoursesPublic
+    )
+      return true;
+    return false;
+  }, [isAdmin, isAuthedUserProfile, userPreferences.isActivitiesCoursesPublic]);
+
   const onFetchingUsers = ({ department }) => {
     const { users } = department || {};
     const usersWithoutCurrentUser = users.filter(
@@ -75,6 +109,21 @@ export const ProfilePage = () => {
     setShuffledUsers(shuffledArray);
   };
 
+  const onFetchUserData = ({ users }) => {
+    const {
+      LecturerNameInEnglish,
+      isContactInfoPublic,
+      isPrivateAccount,
+      isActivitiesCoursesPublic,
+    } = users?.[0] || defaultData;
+    document.title = LecturerNameInEnglish;
+
+    setUserPreferences({
+      isContactInfoPublic,
+      isPrivateAccount,
+      isActivitiesCoursesPublic,
+    });
+  };
   useEffect(() => {
     document.title = 'Profile';
   }, []);
@@ -85,10 +134,7 @@ export const ProfilePage = () => {
     <Query
       query={GET_USER_FULLY_DETAILED_QUERY}
       variables={{ username: username || '' }}
-      onCompletedFunction={({ users }) => {
-        const { LecturerNameInEnglish } = users?.[0] || defaultData;
-        document.title = LecturerNameInEnglish;
-      }}
+      onCompletedFunction={onFetchUserData}
     >
       {({ data: { users } }) => {
         const {
@@ -101,9 +147,7 @@ export const ProfilePage = () => {
           sections,
           role,
           coverImage,
-          isContactInfoPublic,
-          isPrivateAccount,
-          isActivitiesCoursesPublic,
+          PhoneNumber,
         } = users?.[0] || defaultData;
 
         if (!id) return <h1>404 Error Not Found</h1>;
@@ -177,186 +221,209 @@ export const ProfilePage = () => {
                 )}
               </header>
             </section>
-            <section id='activities-courses-section'>
-              <section className='page-card-section' id='activities-section'>
-                <h5>Activities</h5>
-                <ul className='activities-list'>
-                  {selectedMeetings
-                    .slice(0, 15)
-                    .map(
-                      (
-                        {
-                          __typename,
-                          id,
-                          LectureNumber,
-                          SectionNumber,
-                          LectureDateTime,
-                          SectionDateTime,
-                          course,
-                          groups,
-                        },
-                        index
-                      ) => {
-                        const groupsName = extractGroupsName(
-                          groups.map((g) => g.GroupNumber)
-                        );
+            {isPrivateAccount && (
+              <>
+                {isActivitiesCoursesPublic && (
+                  <>
+                    <section id='activities-courses-section'>
+                      <section
+                        className='page-card-section'
+                        id='activities-section'
+                      >
+                        <h5>Activities</h5>
+                        <ul className='activities-list'>
+                          {selectedMeetings
+                            .slice(0, 15)
+                            .map(
+                              (
+                                {
+                                  __typename,
+                                  id,
+                                  LectureNumber,
+                                  SectionNumber,
+                                  LectureDateTime,
+                                  SectionDateTime,
+                                  course,
+                                  groups,
+                                },
+                                index
+                              ) => {
+                                const groupsName = extractGroupsName(
+                                  groups.map((g) => g.GroupNumber)
+                                );
 
-                        const presenter = isAuthedUserProfile
-                          ? 'You'
-                          : __typename === 'Section'
-                          ? `TA. ${LecturerNameInEnglish}`
-                          : `DR. ${LecturerNameInEnglish}`;
+                                const presenter = isAuthedUserProfile
+                                  ? 'You'
+                                  : __typename === 'Section'
+                                  ? `TA. ${LecturerNameInEnglish}`
+                                  : `DR. ${LecturerNameInEnglish}`;
 
-                        return (
-                          <li key={index + id}>
-                            <span>
-                              {`${presenter} created a ${__typename} ${
-                                LectureNumber || SectionNumber
-                              } for ${groupsName} for `}
-                              <span style={{ fontWeight: 500 }}>
-                                {course?.CourseNameInEnglish}
-                              </span>
-                              <span className='activities-meeting-date'>
-                                &nbsp;
-                                {'at ' +
-                                  format(
-                                    new Date(
-                                      LectureDateTime || SectionDateTime
-                                    ),
-                                    'dd MMM yyyy p'
-                                  )}
-                                .
-                              </span>
-                              <a
-                                href={`http://localhost:3000/courses/${course?.id}`}
-                              >
-                                &nbsp; Learn More
-                              </a>
-                            </span>
-                          </li>
-                        );
-                      }
-                    )}
-                </ul>
-              </section>
-              <section className='page-card-section' id='courses-section'>
-                <h5>Meetings</h5>
-                <ul className='course-meetings-list'>
-                  {Object.entries(meetingsPerCourse).map(
-                    ([CourseName, meetings], index) => {
-                      const avatarURL =
-                        meetings?.[0]?.course.CourseAvatar?.url || null;
-                      const courseID = meetings?.[0]?.course?.id || '';
+                                return (
+                                  <li key={index + id}>
+                                    <span>
+                                      {`${presenter} created a ${__typename} ${
+                                        LectureNumber || SectionNumber
+                                      } for ${groupsName} for `}
+                                      <span style={{ fontWeight: 500 }}>
+                                        {course?.CourseNameInEnglish}
+                                      </span>
+                                      <span className='activities-meeting-date'>
+                                        &nbsp;
+                                        {'at ' +
+                                          format(
+                                            new Date(
+                                              LectureDateTime || SectionDateTime
+                                            ),
+                                            'dd MMM yyyy p'
+                                          )}
+                                        .
+                                      </span>
+                                      <a
+                                        href={`http://localhost:3000/courses/${course?.id}`}
+                                      >
+                                        &nbsp; Learn More
+                                      </a>
+                                    </span>
+                                  </li>
+                                );
+                              }
+                            )}
+                        </ul>
+                      </section>
+                      <section
+                        className='page-card-section'
+                        id='courses-section'
+                      >
+                        <h5>Meetings</h5>
+                        <ul className='course-meetings-list'>
+                          {Object.entries(meetingsPerCourse).map(
+                            ([CourseName, meetings], index) => {
+                              const avatarURL =
+                                meetings?.[0]?.course.CourseAvatar?.url || null;
+                              const courseID = meetings?.[0]?.course?.id || '';
 
-                      return (
-                        <a
-                          key={CourseName + index}
-                          className='course-list-item'
-                          href={`http://localhost:3000/courses/${courseID}`}
-                        >
-                          <div className='course-name-with-avatar'>
-                            <AvatarOrInitials
-                              url={avatarURL}
-                              name={CourseName}
-                              className='course-avatar-profile-page'
-                            />
-                            <span>{CourseName}</span>
-                          </div>
-                          <span className='meetings-count'>
-                            <h5>{meetings?.length || ''}</h5>
-                            <span>{__typename + 's' || ''}</span>
-                          </span>
-                        </a>
-                      );
-                    }
-                  )}
-                </ul>
-              </section>
-            </section>
-            <section
-              className='page-card-section'
-              id='user-calendar-chart-section'
-            >
-              <h5>{__typename}s Heatmap</h5>
-              <span>{`Total of ${selectedMeetings?.length} ${__typename}s`}</span>
-
-              <Chart
-                chartType='Calendar'
-                width='100%'
-                data={data}
-                options={{
-                  calendar: {},
-                  colorAxis: {
-                    minValue: 1,
-                    colors: ['#ACE7AE', '#386C3E'],
-                  },
-                }}
-              />
-            </section>
-            <section id='side-section'>
-              {(isAdmin || isAuthedUserProfile) && (
-                <section className='page-card-section connect-card'>
-                  <h6>Monthly Reports</h6>
-                </section>
-              )}
-              {(isAdmin ||
-                isAuthedUserProfile ||
-                (!isAuthedUserProfile && isContactInfoPublic)) && (
-                <section className='page-card-section connect-card'>
-                  <h6>Connect</h6>
-                  <a href={`mailto:${email}`} className='menu-item'>
-                    <span className='icon-button'>{<EmailIcon />}</span>
-                    {email}
-                  </a>
-                </section>
-              )}
-              <section className='page-card-section connect-card'>
-                <h6>Similar Profiles</h6>
-                <Query
-                  query={GET_DEPARTMENT_USERS}
-                  variables={{ id: departmentID || '' }}
-                  onCompletedFunction={onFetchingUsers}
-                  loadingComponent={<UserWithAvatarLoader />}
-                >
-                  {({}) => {
-                    return (
-                      <ul className='similar-profiles-users'>
-                        {shuffledUsers
-                          .slice(0, 5)
-                          .map(
-                            (
-                              { username, LecturerNameInEnglish, avatar, role },
-                              index
-                            ) => {
                               return (
                                 <a
-                                  className='similar-profile-user'
-                                  href={`http://localhost:3000/profile/${username}`}
-                                  key={username + index}
+                                  key={CourseName + index}
+                                  className='course-list-item'
+                                  href={`http://localhost:3000/courses/${courseID}`}
                                 >
-                                  <AvatarOrInitials
-                                    name={LecturerNameInEnglish}
-                                    url={avatar?.url}
-                                    className='top-user-avatar'
-                                  />
-                                  <div>
-                                    <span className='font-weight500 third-color'>
-                                      {LecturerNameInEnglish}
-                                    </span>
-                                    <span className='font-weight400 secondary-color'>
-                                      {role?.name}
-                                    </span>
+                                  <div className='course-name-with-avatar'>
+                                    <AvatarOrInitials
+                                      url={avatarURL}
+                                      name={CourseName}
+                                      className='course-avatar-profile-page'
+                                    />
+                                    <span>{CourseName}</span>
                                   </div>
+                                  <span className='meetings-count'>
+                                    <h5>{meetings?.length || ''}</h5>
+                                    <span>{__typename + 's' || ''}</span>
+                                  </span>
                                 </a>
                               );
                             }
                           )}
-                      </ul>
-                    );
-                  }}
-                </Query>
-              </section>
-            </section>
+                        </ul>
+                      </section>
+                    </section>
+                    <section
+                      className='page-card-section'
+                      id='user-calendar-chart-section'
+                    >
+                      <h5>{__typename}s Heatmap</h5>
+                      <span>{`Total of ${selectedMeetings?.length} ${__typename}s`}</span>
+
+                      <Chart
+                        chartType='Calendar'
+                        width='100%'
+                        data={data}
+                        options={{
+                          calendar: {},
+                          colorAxis: {
+                            minValue: 1,
+                            colors: ['#ACE7AE', '#386C3E'],
+                          },
+                        }}
+                      />
+                    </section>
+                  </>
+                )}
+                <section id='side-section'>
+                  {(isAdmin || isAuthedUserProfile) && (
+                    <section className='page-card-section connect-card'>
+                      <h6>Monthly Reports</h6>
+                    </section>
+                  )}
+                  {isContactInfoVisible && (
+                    <section className='page-card-section connect-card'>
+                      <h6>Connect</h6>
+                      <a href={`mailto:${email}`} className='menu-item'>
+                        <span className='icon-button'>{<EmailIcon />}</span>
+                        {email}
+                      </a>
+                      {PhoneNumber && (
+                        <a href={`tel:+2${PhoneNumber}`} className='menu-item'>
+                          <span className='icon-button'>{<PhoneIcon />}</span>
+                          +2{PhoneNumber}
+                        </a>
+                      )}
+                    </section>
+                  )}
+                  <section className='page-card-section connect-card'>
+                    <h6>Similar Profiles</h6>
+                    <Query
+                      query={GET_DEPARTMENT_USERS}
+                      variables={{ id: departmentID || '' }}
+                      onCompletedFunction={onFetchingUsers}
+                      loadingComponent={<UserWithAvatarLoader />}
+                    >
+                      {({}) => {
+                        return (
+                          <ul className='similar-profiles-users'>
+                            {shuffledUsers
+                              .slice(0, 5)
+                              .map(
+                                (
+                                  {
+                                    username,
+                                    LecturerNameInEnglish,
+                                    avatar,
+                                    role,
+                                  },
+                                  index
+                                ) => {
+                                  return (
+                                    <a
+                                      className='similar-profile-user'
+                                      href={`http://localhost:3000/profile/${username}`}
+                                      key={username + index}
+                                    >
+                                      <AvatarOrInitials
+                                        name={LecturerNameInEnglish}
+                                        url={avatar?.url}
+                                        className='top-user-avatar'
+                                      />
+                                      <div>
+                                        <span className='font-weight500 third-color'>
+                                          {LecturerNameInEnglish}
+                                        </span>
+                                        <span className='font-weight400 secondary-color'>
+                                          {role?.name}
+                                        </span>
+                                      </div>
+                                    </a>
+                                  );
+                                }
+                              )}
+                          </ul>
+                        );
+                      }}
+                    </Query>
+                  </section>
+                </section>
+              </>
+            )}
           </main>
         );
       }}

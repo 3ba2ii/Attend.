@@ -82,14 +82,15 @@ export const PrivacyAndSecurity = () => {
     },
     {
       title: 'Show your Activities & Courses',
-      subtitle: 'Let users see your activities and courses sections',
+      subtitle:
+        'By enabling this, users see your activities and courses sections',
       handleChange: handleChangeActivitiesAndCoursesPref,
       switchStateName: 'show-activities-and-courses',
     },
     {
       title: 'Contact Information',
       subtitle:
-        'Let users see your contact information like email and phone number',
+        'By enabling this, users can see your contact information like email and phone number',
       handleChange: handleChangeContactInfoPref,
       switchStateName: 'is-contact-info-public',
     },
@@ -106,7 +107,9 @@ export const PrivacyAndSecurity = () => {
           ({ title, subtitle, switchStateName, handleChange }, index) => (
             <div key={title + index} className='single-preference'>
               <div className='title-with-subtitle-pref'>
-                <span className='third-color font-weight500'>{title}</span>
+                <span className='third-color font-weight500 one-rem-fon-size'>
+                  {title}
+                </span>
                 <span className='secondary-color subtitle-pref'>
                   {subtitle}
                 </span>

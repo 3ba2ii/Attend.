@@ -301,6 +301,7 @@ export const ExportReportDropdown = ({
   useEffect(() => {
     handleExportedDataChange();
   }, [state, handleExportedDataChange]);
+
   const ReportOptionsContainer = () => {
     return (
       <div>

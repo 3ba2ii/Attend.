@@ -4,6 +4,7 @@ import {
 } from 'api/mutations/getStudentInfo';
 import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import Query from 'components/Query';
+import { CSSTransition } from 'react-transition-group';
 import { format, formatDistance } from 'date-fns';
 import {
   AvgAttendanceComponent,
@@ -17,6 +18,7 @@ import Chart from 'react-google-charts';
 import { useParams } from 'react-router-dom';
 import { groupDataByMonths } from 'utlis/helpers/groupDataByMonths.js';
 import './student-page.css';
+import { StudentExportMenu } from './StudentExportReportMenu';
 
 const defaultStudent = {
   id: null,
@@ -29,10 +31,8 @@ const defaultStudent = {
 export const StudentPage = () => {
   const { studentID } = useParams();
   const [studentCourseInfo, setStudentCourseInfo] = useState({});
-  console.log(
-    `🚀 ~ file: index.js ~ line 32 ~ StudentPage ~ studentCourseInfo`,
-    studentCourseInfo
-  );
+  const [openExportMenu, setOpenExportMenu] = useState(false);
+
   const [studentPersonalInfo, setStudentPersonalInfo] = useState({});
 
   const [studentMeetings, setStudentMeetings] = useState({
@@ -152,6 +152,31 @@ export const StudentPage = () => {
                   <span>Email: {StudentOfficialEmail}</span>
                 </div>
               </header>
+
+              <aside>
+                <div className='buttons-container-flex'>
+                  <button
+                    className='btn-with-icon'
+                    onClick={() => {
+                      setOpenExportMenu(!openExportMenu);
+                    }}
+                  >
+                    <div className='icons8-share-rounded'></div>
+                    <span>Export Reports</span>
+                  </button>
+                </div>
+                <CSSTransition
+                  in={openExportMenu}
+                  unmountOnExit
+                  timeout={500}
+                  classNames={'identifier-error'}
+                >
+                  <StudentExportMenu
+                    studentCourseInfo={studentCourseInfo}
+                    studentPersonalInfo={studentPersonalInfo}
+                  />
+                </CSSTransition>
+              </aside>
             </section>
           );
         }}

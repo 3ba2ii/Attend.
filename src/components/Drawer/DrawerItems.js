@@ -109,16 +109,6 @@ export function DrawerItems(classes, pathname) {
           ))}
         </List>
         <Divider />
-        <ListItem button style={{ marginTop: '24px' }}>
-          <ListItemIcon className={`list-item-icon`}>
-            <div className='drawer-icon-container'>{}</div>
-          </ListItemIcon>
-          <ListItemText
-            primary={'Monthly Report'}
-            disableTypography
-            className={`list-item-text`}
-          />
-        </ListItem>
       </div>
       <ListItem
         onClick={() => {

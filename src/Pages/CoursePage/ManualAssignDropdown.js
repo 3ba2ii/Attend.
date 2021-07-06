@@ -18,10 +18,14 @@ import { DropdownItem } from './DropdownItem';
 import { getSelectComponentOptions } from './ExportReportDropdown';
 import { SelectComponent } from './SelectComponent';
 
-export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
+export const ManualAssignDropdown = () => {
   const { studentsData, processedLectures, processedSections } =
     useContext(CoursePageContext);
 
+  console.log(
+    `🚀 ~ file: ManualAssignDropdown.js ~ line 23 ~ ManualAssignDropdown ~ processedLectures`,
+    processedLectures
+  );
   const {
     authedUser: {
       role: { name },
@@ -461,7 +465,12 @@ export const ManualAssignDropdown = ({ setOpenAssignStudentMenu }) => {
                 timeout={300}
                 classNames={'identifier-error'}
               >
-                <span className='identifier-error'>{identifierError}</span>
+                <span
+                  className='identifier-error'
+                  style={{ top: '42px', zIndex: 'auto' }}
+                >
+                  {identifierError}
+                </span>
               </CSSTransition>
             </div>
             {}

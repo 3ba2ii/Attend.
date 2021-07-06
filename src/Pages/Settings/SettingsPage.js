@@ -39,7 +39,7 @@ const SettingsPage = () => {
       }}
     >
       <main id='settings-page-container'>
-        <header>
+        <header className='settings-page-header'>
           <h1 className='font-weight600 third-color'>Settings</h1>
         </header>
         <ul className='settings-elements'>

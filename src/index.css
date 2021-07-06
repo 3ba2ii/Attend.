@@ -50,6 +50,7 @@ body {
   font-family: var(--main-font-family);
   letter-spacing: 0.01rem;
   overflow-x: hidden;
+  background: #f5f6f8 !important;
 }
 
 h1 {

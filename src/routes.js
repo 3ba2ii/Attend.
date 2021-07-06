@@ -1,7 +1,6 @@
 import SpinnerElement from 'components/Spinner/spinner';
 import RegisterPage from 'pages/RegisterPage';
-import React, { lazy } from 'react';
-import { Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ResponsiveDrawer from './components/Drawer/ResponsiveDrawer';

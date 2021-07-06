@@ -13,6 +13,7 @@ import { CoursesPage } from 'pages/CoursesPage/CoursesPage';
 import StaffPage from 'pages/DataEntry/Staff/StaffPage';
 import { ProfilePage } from 'pages/MyProfilePage/ProfilePage';
 import SettingsPage from 'pages/Settings/SettingsPage';
+import { StudentPage } from 'pages/StudentPage';
 import PropTypes from 'prop-types';
 import React, { lazy, useCallback } from 'react';
 import { useSelector } from 'react-redux';
@@ -132,6 +133,12 @@ function ResponsiveDrawer(props) {
           <Route path={'/courses'} component={CoursesPage} />
 
           <Route path={'/profile/:username'} component={ProfilePage} />
+          <Route
+            exact
+            path='/student/:studentID'
+            render={() => <StudentPage />}
+          />
+
           <Route path={'/leaderboard'} render={() => <div>leader-board</div>} />
           <Route path={'/help'} render={() => <div>Hello</div>} />
           <Route path={'/settings'} render={() => <SettingsPage />} />

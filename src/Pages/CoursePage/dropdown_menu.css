@@ -71,6 +71,10 @@
   font-weight: 500;
   margin: 0rem 0rem 0.8rem 0rem;
   align-items: center;
+  -webkit-transition: background var(--speed);
+  -moz-transition: background var(--speed);
+  -ms-transition: background var(--speed);
+  -o-transition: background var(--speed);
 }
 
 .menu-item .icon-button {

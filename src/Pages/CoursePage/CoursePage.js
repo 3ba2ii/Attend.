@@ -311,7 +311,7 @@ export const CoursePage = () => {
                   <MeetingStaticCard
                     {...{
                       data: dataLectures,
-                      dataLength: dataLectures?.length,
+                      dataLength: Object.values(processedLectures)?.length,
                       LastMeeting: LastLectureDateTime,
                       LastMeetingDistance: LastLectureDistance,
                       title: 'Total Lectures',
@@ -327,6 +327,7 @@ export const CoursePage = () => {
                   <MeetingStaticCard
                     {...{
                       data: sections,
+                      dataLength: Object.values(processedSections)?.length,
                       LastMeeting: LastSectionDateTime,
                       LastMeetingDistance: LastSectionDistance,
                       title: 'Total Sections',

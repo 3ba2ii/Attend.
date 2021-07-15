@@ -57,10 +57,6 @@ export const ProfilePage = () => {
     isPrivateAccount: false,
     isActivitiesCoursesPublic: false,
   });
-  console.log(
-    `🚀 ~ file: ProfilePage.js ~ line 54 ~ ProfilePage ~ userPreferences`,
-    userPreferences
-  );
 
   const {
     authedUser: {
@@ -360,11 +356,6 @@ export const ProfilePage = () => {
                     </>
                   )}
                   <section id='side-section'>
-                    {(isAdmin || isAuthedUserProfile) && (
-                      <section className='page-card-section connect-card'>
-                        <h6>Monthly Reports</h6>
-                      </section>
-                    )}
                     {isContactInfoVisible && (
                       <section className='page-card-section connect-card'>
                         <h6>Connect</h6>

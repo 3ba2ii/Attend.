@@ -6,7 +6,6 @@
 .login-form-container {
   width: clamp(350px, 55%, 400px);
   padding: 16px 32px;
-  background: #fff;
   margin: 0 auto;
   position: relative;
 }

@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
+import axios from 'axios';
 import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import { CoursePage } from 'pages/CoursePage/CoursePage';
 import { CoursesPage } from 'pages/CoursesPage/CoursesPage';
@@ -15,9 +16,10 @@ import { ProfilePage } from 'pages/MyProfilePage/ProfilePage';
 import SettingsPage from 'pages/Settings/SettingsPage';
 import { StudentPage } from 'pages/StudentPage';
 import PropTypes from 'prop-types';
-import React, { lazy, useCallback } from 'react';
+import React, { lazy, useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import { Link, Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 import { drawerStyles } from 'types/styles/';
 import './drawer-layout.css';
 import { DrawerItems } from './DrawerItems';
@@ -167,24 +169,7 @@ function AppBarComponent(classes, handleDrawerToggle) {
           <div className='icons8-menu'></div>
         </IconButton>
 
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <div className='icons8-search'></div>
-          </div>
-          <InputBase
-            placeholder='Search for courses subjects or students..'
-            style={{
-              fontSize: '.9rem',
-              fontWeight: '500',
-              fontFamily: 'Poppins' || 'sans-serif',
-            }}
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </div>
+        {AppBarSearch(classes)}
         <div className={classes.grow} />
 
         <IconButton aria-label='show new notifications' color='inherit'>
@@ -222,3 +207,121 @@ ResponsiveDrawer.propTypes = {
 };
 
 export default ResponsiveDrawer;
+let timerID;
+function AppBarSearch(classes) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchFieldRef = useRef(null);
+  const [isSearchbarFocused, setSearchbarFocus] = useState(false);
+  console.log(
+    `🚀 ~ file: ResponsiveDrawer.js ~ line 214 ~ AppBarSearch ~ searchFieldRef`,
+    searchFieldRef
+  );
+  const [options, setOptions] = useState([]);
+  console.log(
+    `🚀 ~ file: ResponsiveDrawer.js ~ line 213 ~ AppBarSearch ~ options`,
+    options
+  );
+
+  const onInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+  const setFocusFlag = (e) => {
+    setSearchbarFocus(true);
+  };
+  const clearFocusFlag = (e) => {
+    setSearchbarFocus(false);
+  };
+
+  const onStudentClicked = () => {
+    setSearchbarFocus(false);
+  };
+  useEffect(() => {
+    clearTimeout(timerID);
+    timerID = setTimeout(async () => {
+      const options = await fetchStudentsSuggestions(searchQuery);
+      setOptions(options || []);
+    }, 200);
+  }, [searchQuery]);
+  return (
+    <>
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <div className='icons8-search'></div>
+        </div>
+        <InputBase
+          placeholder='Search for courses subjects or students..'
+          value={searchQuery}
+          inputRef={searchFieldRef}
+          onFocus={setFocusFlag}
+          onBlur={clearFocusFlag}
+          onChange={onInputChange}
+          style={{
+            fontSize: '.9rem',
+            fontWeight: '500',
+            fontFamily: 'Poppins' || 'sans-serif',
+          }}
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+          inputProps={{ 'aria-label': 'search' }}
+        />
+      </div>
+      <CSSTransition
+        in={options.length !== 0 && isSearchbarFocused}
+        unmountOnExit
+        timeout={100}
+        classNames={'identifier-error'}
+      >
+        <ul className='search-suggestions'>
+          <small>Students</small>
+          {options.map(
+            ({ _id, StudentNameInArabic, StudentOfficialEmail }, index) => {
+              return (
+                <Link
+                  to={`/student/${_id}`}
+                  key={_id + StudentNameInArabic + index}
+                  className='student-info-search'
+                  onClick={onStudentClicked}
+                >
+                  <AvatarOrInitials
+                    name={StudentNameInArabic}
+                    className='small-drawer-avatar-search'
+                  />
+                  <div>
+                    <span>{StudentNameInArabic}</span>
+                    <span>{StudentOfficialEmail}</span>
+                  </div>
+                </Link>
+              );
+            }
+          )}
+        </ul>
+      </CSSTransition>
+    </>
+  );
+}
+
+const fetchStudentsSuggestions = async (searchQuery) => {
+  if (!searchQuery) return;
+  try {
+    const data = await axios
+      .get(
+        `https://gxon8n2vi4.execute-api.eu-central-1.amazonaws.com/default`,
+
+        {
+          params: {
+            query: searchQuery,
+          },
+        }
+      )
+      .then(({ data: { body } }) => {
+        return body;
+      });
+
+    return JSON.parse(data);
+  } catch (e) {
+    console.error(e.message);
+    return [];
+  }
+};

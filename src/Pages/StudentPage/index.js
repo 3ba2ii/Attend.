@@ -4,7 +4,6 @@ import {
 } from 'api/mutations/getStudentInfo';
 import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
 import Query from 'components/Query';
-import { CSSTransition } from 'react-transition-group';
 import { format, formatDistance } from 'date-fns';
 import {
   AvgAttendanceComponent,
@@ -16,6 +15,7 @@ import { Bar } from 'react-chartjs-2';
 import ContentLoader from 'react-content-loader';
 import Chart from 'react-google-charts';
 import { useParams } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 import { groupDataByMonths } from 'utlis/helpers/groupDataByMonths.js';
 import './student-page.css';
 import { StudentExportMenu } from './StudentExportReportMenu';
@@ -31,6 +31,10 @@ const defaultStudent = {
 export const StudentPage = () => {
   const { studentID } = useParams();
   const [studentCourseInfo, setStudentCourseInfo] = useState({});
+  console.log(
+    `🚀 ~ file: index.js ~ line 34 ~ StudentPage ~ studentCourseInfo`,
+    studentCourseInfo
+  );
   const [openExportMenu, setOpenExportMenu] = useState(false);
 
   const [studentPersonalInfo, setStudentPersonalInfo] = useState({});

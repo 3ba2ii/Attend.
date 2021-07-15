@@ -85,7 +85,7 @@ export const StudentExportMenu = ({
             formattedReport['Lecture ' + LectureNumber] = hasAttended;
           });
 
-          const attendanceRate = courseSections?.size
+          const attendanceRate = courseLectures?.size
             ? ((attendedLectures.size / courseLectures.size) * 100).toFixed(1)
             : '0';
           formattedReport['Attended'] = attendedLectures.size;
@@ -108,7 +108,6 @@ export const StudentExportMenu = ({
         collectedCSVData.push(formattedReport);
       }
     );
-    console.log(collectedCSVData);
     setFormattedCSVData(collectedCSVData);
   }, [state]);
   return (

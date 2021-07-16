@@ -1,5 +1,6 @@
 import SpinnerElement from 'components/Spinner/spinner';
 import RegisterPage from 'pages/RegisterPage';
+import { StudentPage } from 'pages/StudentPage';
 import React, { lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -50,6 +51,11 @@ const Routes = () => (
         exact
         path='/reset-password/:code'
         render={() => <ResetPasswordPage />}
+      />
+      <Route
+        exact
+        path='/public/student/:studentID'
+        render={() => <StudentPage />}
       />
       <PrivateRoute path='/'>
         <ResponsiveDrawer />

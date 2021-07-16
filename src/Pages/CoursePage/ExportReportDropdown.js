@@ -554,7 +554,7 @@ export const ExportReportDropdown = ({
             >
               <div className='extract-report-button'>
                 <div className='icons8-share-rounded-white'></div>
-                <span>Extract Report</span>
+                <span>Export Report</span>
               </div>
             </CSVLink>
           </form>
@@ -585,7 +585,7 @@ export const ExportReportDropdown = ({
           >
             <div className='extract-report-button'>
               <div className='icons8-share-rounded-white'></div>
-              <span>Extract Report</span>
+              <span>Export Report</span>
             </div>
           </CSVLink>
         </div>
@@ -634,7 +634,7 @@ export const ExportReportDropdown = ({
           >
             <div className='extract-report-button'>
               <div className='icons8-share-rounded-white'></div>
-              <span>Extract Report</span>
+              <span>Export Report</span>
             </div>
           </CSVLink>
         </div>

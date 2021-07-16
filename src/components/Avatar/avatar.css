@@ -56,11 +56,11 @@
   width: clamp(80px, 80px + 1vw, 200px) !important;
   height: clamp(80px, 80px + 1vw, 200px) !important;
   font-size: 1.5rem !important;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
+  border-radius: 16px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -ms-border-radius: 16px;
+  -o-border-radius: 16px;
   box-shadow: 0px 4px 8px -4px rgba(0, 0, 0, 0.65);
   aspect-ratio: 1;
 }
@@ -152,6 +152,17 @@
   width: clamp(20px, 20px + 1vw, 40px) !important;
   height: clamp(20px, 20px + 1vw, 40px) !important;
   font-size: 1rem !important;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  aspect-ratio: 1;
+}
+.small-notifications-avatar {
+  width: clamp(30px, 30px + 1vw, 50px) !important;
+  height: clamp(30px, 30px + 1vw, 50px) !important;
+  font-size: 1.2rem !important;
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;

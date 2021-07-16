@@ -459,7 +459,7 @@ export function AvgAttendanceComponent({
   return (
     <div className='statistics-card-container overall-attendance-card'>
       <header>
-        <h6>Avg. Attendance</h6>
+        <h6>Avg. Attendance for {__typename}s</h6>
       </header>
       <aside>
         <h3>{data ? avgAttendance + '%' : 'No lectures yet'}</h3>

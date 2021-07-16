@@ -149,12 +149,7 @@ const drawerNavOptions = ({ authedUser }) => [
     iconActive: <span className='icons8-course-active' alt={'Courses'} />,
     path: '/courses',
   },
-  {
-    text: 'Leaderboard',
-    icon: <span className='icons8-account' alt={'Leaderboard'} />,
-    iconActive: <span className='icons8-account-active' alt={'Leaderboard'} />,
-    path: '/leaderboard',
-  },
+
   authedUser?.role?.name === 'Super Admin' && {
     text: 'Admin Panel',
     icon: <span className='icons8-cloud' alt={'Admin Panel'} />,

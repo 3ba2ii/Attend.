@@ -118,3 +118,13 @@
   -ms-transition: opacity 300ms;
   -o-transition: opacity 300ms;
 }
+.sign-in-as-button {
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  align-self: start;
+  color: var(--third-color);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+}

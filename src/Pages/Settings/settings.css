@@ -194,7 +194,11 @@
   top: 15px;
   font-size: 0.8rem;
   font-weight: 500;
-  z-index: -1;
+  height: fit-content;
+}
+.change-password-form .identifier-error {
+  z-index: auto;
+  height: fit-content;
 }
 @media only screen and (min-width: 1024px) {
   #settings-page-container {

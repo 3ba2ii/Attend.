@@ -31,10 +31,7 @@ const defaultStudent = {
 export const StudentPage = () => {
   const { studentID } = useParams();
   const [studentCourseInfo, setStudentCourseInfo] = useState({});
-  console.log(
-    `🚀 ~ file: index.js ~ line 34 ~ StudentPage ~ studentCourseInfo`,
-    studentCourseInfo
-  );
+
   const [openExportMenu, setOpenExportMenu] = useState(false);
 
   const [studentPersonalInfo, setStudentPersonalInfo] = useState({});
@@ -47,16 +44,25 @@ export const StudentPage = () => {
   const onUserPersonalInfoFetched = ({ student }) => {
     setStudentPersonalInfo(student);
   };
+  /* let checkingOnly = {}; */
   const onStudentAttendanceFetched = ({ student }) => {
     try {
       const { group, attendances } = student;
       attendances.forEach(({ lecture, section, id }) => {
-        const meetingNumber = lecture?.LectureNumber || section?.SectionNumber;
+        /* const meetingNumber = lecture?.LectureNumber || section?.SectionNumber;
         const courseName =
           lecture?.course?.CourseNameInEnglish ||
-          section?.course?.CourseNameInEnglish;
-        console.log(id, meetingNumber, courseName);
+          section?.course?.CourseNameInEnglish; */
+
+        /*    if (checkingOnly.hasOwnProperty(courseName)) {
+          checkingOnly[courseName].push(meetingNumber);
+        } else {
+          checkingOnly[courseName] = [meetingNumber];
+          console.log(checkingOnly);
+        }
+        console.log(id, meetingNumber, courseName); */
       });
+      /* console.log(checkingOnly); */
 
       const studentCourses = group?.academic_year?.courses;
 
@@ -285,41 +291,43 @@ export const StudentPage = () => {
             ...displayedData,
           ];
           return (
-            <section id='course-statics-cards-section'>
-              <MeetingStaticCard
-                {...{
-                  LastMeeting: LastLectureDateTime,
-                  LastMeetingDistance: LastLectureDistance,
-                  __typename: 'Lecture',
-                  dataLength: totalAttendedLectures,
-                  title: 'Total Attended Lectures',
-                }}
-              />
-              <AvgAttendanceComponent
-                {...{
-                  data: sortedLectures,
-                  avgAttendance: avgAttendancePerLecture,
-                  growth: 0,
-                  __typename: 'Lecture',
-                }}
-              />
-              <MeetingStaticCard
-                {...{
-                  LastMeeting: LastSectionDateTime,
-                  LastMeetingDistance: LastSectionDistance,
-                  __typename: 'Section',
-                  dataLength: totalAttendedSections,
-                  title: 'Total Attended Sections',
-                }}
-              />
-              <AvgAttendanceComponent
-                {...{
-                  data: sortedSections,
-                  avgAttendance: avgAttendancePerSection,
-                  growth: 0,
-                  __typename: 'Section',
-                }}
-              />
+            <>
+              <section id='course-statics-cards-section'>
+                <MeetingStaticCard
+                  {...{
+                    LastMeeting: LastLectureDateTime,
+                    LastMeetingDistance: LastLectureDistance,
+                    __typename: 'Lecture',
+                    dataLength: totalAttendedLectures,
+                    title: 'Total Attended Lectures',
+                  }}
+                />
+                <AvgAttendanceComponent
+                  {...{
+                    data: sortedLectures,
+                    avgAttendance: avgAttendancePerLecture,
+                    growth: 0,
+                    __typename: 'Lecture',
+                  }}
+                />
+                <MeetingStaticCard
+                  {...{
+                    LastMeeting: LastSectionDateTime,
+                    LastMeetingDistance: LastSectionDistance,
+                    __typename: 'Section',
+                    dataLength: totalAttendedSections,
+                    title: 'Total Attended Sections',
+                  }}
+                />
+                <AvgAttendanceComponent
+                  {...{
+                    data: sortedSections,
+                    avgAttendance: avgAttendancePerSection,
+                    growth: 0,
+                    __typename: 'Section',
+                  }}
+                />
+              </section>
               <section id='course-chart-2nd-row'>
                 <section id='attendance-per-lecture-chart'>
                   <h6>Monthly Courses Attendance</h6>
@@ -363,7 +371,7 @@ export const StudentPage = () => {
                   />
                 </section>
               </section>
-            </section>
+            </>
           );
         }}
       </Query>

@@ -44,6 +44,9 @@ export const SecuritySection = () => {
   };
   const handleChangePassword = async (e) => {
     e.preventDefault();
+    setChangingPasswordError('');
+    setChangingPasswordSuccessful('');
+
     try {
       if (
         newPasswordRef.current.value !== confirmNewPasswordRef.current.value
@@ -114,9 +117,9 @@ export const SecuritySection = () => {
             onSubmit={handleChangePassword}
           >
             <CSSTransition
-              in={Boolean(changingPasswordError)}
+              in={Boolean(changingPasswordError !== '')}
               unmountOnExit
-              timeout={300}
+              timeout={100}
               classNames={'identifier-error'}
             >
               <span className='identifier-error'>{changingPasswordError}</span>

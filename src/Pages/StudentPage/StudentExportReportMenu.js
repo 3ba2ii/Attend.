@@ -93,7 +93,7 @@ export const StudentExportMenu = ({
           formattedReport['Course Lectures'] = courseLectures.size;
         } else if (__typename === 'Section') {
           [...courseSections].forEach((SectionNumber) => {
-            const hasAttended = attendedLectures.has(SectionNumber) ? '1' : '0';
+            const hasAttended = attendedSections.has(SectionNumber) ? '1' : '0';
             formattedReport['Section ' + SectionNumber] = hasAttended;
           });
 
@@ -194,7 +194,7 @@ export const StudentExportMenu = ({
             >
               <div className='extract-report-button'>
                 <div className='icons8-share-rounded-white'></div>
-                <span>Extract Report</span>
+                <span>Export Report</span>
               </div>
             </CSVLink>
           </form>

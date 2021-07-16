@@ -16,7 +16,6 @@
   position: relative;
 }
 #student-page #activities-chart {
-  max-height: 400px;
 }
 #student-page #attendance-per-lecture-chart {
   display: flex;
@@ -35,4 +34,7 @@
 
 #student-page .course-header-section aside .dropdown {
   left: -300px;
+}
+#student-page #activities-chart {
+  max-height: 100%;
 }

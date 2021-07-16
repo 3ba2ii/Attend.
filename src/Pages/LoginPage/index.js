@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { TextField } from '@material-ui/core';
 import { LOGIN } from 'api/mutations/login';
+import { GET_STUDENT_BY_NATIONAL_ID } from 'api/queries/getStudentWithNationalID';
 import { Error } from 'components/common/ErrorIndicator';
 import Logo from 'components/common/Logo';
 import PasswordTextField from 'components/common/PasswordTextField';
@@ -12,6 +13,7 @@ import { Redirect, useLocation } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import { LoginAction } from 'redux/actions/authedAction';
 import { FAILED_AUTHENTICATION } from 'types/constants/redux-constants';
+import client from 'utlis/apollo/apolloClient';
 import { checkCookies } from 'utlis/helpers/checkCookies';
 import './login.css';
 
@@ -23,6 +25,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { state } = useLocation();
+  const [signInAsStudent, setSignInAsStudent] = useState(false);
   const dispatch = useDispatch();
   const [mounted, setMounted] = useState(false);
   const [checkingCookiesLoading, setCheckingCookiesLoading] = useState(true);
@@ -52,6 +55,10 @@ const Login = () => {
     setError(false);
   }, []);
 
+  const onOpenStudentLogin = () => {
+    setError(false);
+    setSignInAsStudent(!signInAsStudent);
+  };
   useEffect(() => {
     document.title = 'Attend. | Sign in';
 
@@ -110,44 +117,128 @@ const Login = () => {
           >
             <Error
               ignoreError={ignoreError}
-              message={'Incorrect username or password.'}
+              message={
+                signInAsStudent
+                  ? 'Incorrect national id'
+                  : 'Incorrect username or password.'
+              }
             />
           </CSSTransition>
 
-          <form onSubmit={onLogin} className='login-form'>
-            <input name='utf8' type='hidden' value='✔️' />
-            <TextField
-              id='outlined-required-email'
-              label='Username or Email'
-              variant='outlined'
-              autoFocus
-              fullWidth
-              inputRef={identifier}
-            />
+          <form className='login-form'>
+            {signInAsStudent ? (
+              <SignInAsStudentForm setError={setError} />
+            ) : (
+              <>
+                <input name='utf8' type='hidden' value='✔️' />
+                <TextField
+                  id='outlined-required-email'
+                  label='Username or Email'
+                  variant='outlined'
+                  autoFocus
+                  fullWidth
+                  inputRef={identifier}
+                />
 
-            <PasswordTextField handleLogin={onLogin} reference={password} />
-            <input
-              type='hidden'
-              name='loginFlow'
-              id='loginFlow'
-              value='REMEMBER_ME_OPTIN'
-            />
+                <PasswordTextField handleLogin={onLogin} reference={password} />
+                <input
+                  type='hidden'
+                  name='loginFlow'
+                  id='loginFlow'
+                  value='REMEMBER_ME_OPTIN'
+                />
 
-            <div className='login-btn-container'>
-              <button
-                className='login-btn'
-                type='submit'
-                aria-label='Sign in'
-                disabled={loading || checkingCookiesLoading}
-              >
-                Sign in
-              </button>
-            </div>
+                <div className='login-btn-container'>
+                  <button
+                    className='login-btn'
+                    type='submit'
+                    aria-label='Sign in'
+                    disabled={loading || checkingCookiesLoading}
+                    onClick={onLogin}
+                  >
+                    Sign in
+                  </button>
+                </div>
+              </>
+            )}
           </form>
         </div>
+        <small onClick={onOpenStudentLogin} className='sign-in-as-button'>
+          {signInAsStudent ? 'Sign in as a user' : 'Sign in as a student'}
+        </small>
       </section>
     </main>
   );
 };
 
+const SignInAsStudentForm = ({ setError }) => {
+  const nationalIDRef = useRef(null);
+  const [studentID, setStudentID] = useState(null);
+  const [redirectToStudentPage, setRedirectToStudentPage] = useState(false);
+
+  const onSignInAsStudent = async (e) => {
+    e.preventDefault();
+
+    if (!nationalIDRef?.current?.value) return;
+
+    try {
+      //search for the student
+      const {
+        data: { students },
+      } = await client.query({
+        query: GET_STUDENT_BY_NATIONAL_ID,
+        variables: {
+          NationalID: nationalIDRef?.current?.value,
+        },
+      });
+
+      if (!students?.length) {
+        //set error
+        setError(true);
+        return;
+      }
+      setStudentID(students?.[0]?.id || null);
+    } catch (e) {
+      console.error(e.message);
+      setError(true);
+
+      return null;
+    }
+  };
+  useEffect(() => {
+    if (studentID) {
+      console.log('now redirect to', studentID);
+      setRedirectToStudentPage(true);
+    }
+  }, [studentID]);
+
+  if (redirectToStudentPage) {
+    return <Redirect to={`/public/student/${studentID}`} />;
+  }
+
+  return (
+    <>
+      <input name='utf8' type='hidden' value='✔️' />
+      <TextField
+        id='outlined-required-email'
+        label='National ID'
+        variant='outlined'
+        autoFocus
+        fullWidth
+        inputRef={nationalIDRef}
+      />
+
+      <div className='login-btn-container'>
+        <button
+          className='login-btn'
+          type='submit'
+          aria-label='Sign in'
+          onClick={onSignInAsStudent}
+        >
+          Sign in
+        </button>
+      </div>
+    </>
+  );
+};
 export default Login;

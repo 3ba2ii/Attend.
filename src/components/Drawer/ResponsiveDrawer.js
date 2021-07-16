@@ -7,8 +7,11 @@ import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
+import { GET_USER_NOTIFICATIONS } from 'api/queries/getUserNotifications';
 import axios from 'axios';
 import AvatarOrInitials from 'components/Avatar/AvatarOrInitials';
+import Query from 'components/Query';
+import { formatDistance } from 'date-fns/esm';
 import { CoursePage } from 'pages/CoursePage/CoursePage';
 import { CoursesPage } from 'pages/CoursesPage/CoursesPage';
 import StaffPage from 'pages/DataEntry/Staff/StaffPage';
@@ -17,6 +20,7 @@ import SettingsPage from 'pages/Settings/SettingsPage';
 import { StudentPage } from 'pages/StudentPage';
 import PropTypes from 'prop-types';
 import React, { lazy, useCallback, useEffect, useRef, useState } from 'react';
+import ContentLoader from 'react-content-loader';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
@@ -154,8 +158,15 @@ function ResponsiveDrawer(props) {
 
 function AppBarComponent(classes, handleDrawerToggle) {
   const {
-    authedUser: { avatar, LecturerNameInEnglish, role },
+    authedUser: { avatar, LecturerNameInEnglish, id },
   } = useSelector((state) => state?.authReducer);
+
+  const [openNotificationsDropdown, setOpenNotificationsDropdown] =
+    useState(false);
+
+  const handleOpenNotificationsDropdown = () => {
+    setOpenNotificationsDropdown(!openNotificationsDropdown);
+  };
   return (
     <AppBar position='fixed' className={classes.appBar}>
       <Toolbar>
@@ -172,11 +183,28 @@ function AppBarComponent(classes, handleDrawerToggle) {
         {AppBarSearch(classes)}
         <div className={classes.grow} />
 
-        <IconButton aria-label='show new notifications' color='inherit'>
-          <Badge variant='dot' color='secondary'>
-            <div className='icons8-notification'></div>
-          </Badge>
-        </IconButton>
+        <div className='notifications-container-with-icon'>
+          <IconButton
+            aria-label='show new notifications'
+            color='inherit'
+            style={{ position: 'relative' }}
+            onClick={handleOpenNotificationsDropdown}
+          >
+            <Badge variant='dot' color='secondary'>
+              <div className='icons8-notification'></div>
+            </Badge>
+          </IconButton>
+
+          <CSSTransition
+            in={openNotificationsDropdown}
+            unmountOnExit
+            timeout={100}
+            classNames={'identifier-error'}
+          >
+            <NotificationsDropdown id={id} />
+          </CSSTransition>
+        </div>
+
         <IconButton
           edge='end'
           aria-label='account of current user'
@@ -198,29 +226,92 @@ function AppBarComponent(classes, handleDrawerToggle) {
   );
 }
 
-ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
-
 export default ResponsiveDrawer;
 let timerID;
+function NotificationsDropdown({ id }) {
+  return (
+    <section className='notifications-modal'>
+      <header>
+        <h6>Notification Center</h6>
+      </header>
+      <Query
+        query={GET_USER_NOTIFICATIONS}
+        variables={{ id: id }}
+        loadingComponent={<NotificationsLoading />}
+      >
+        {({ data: { user } }) => {
+          const { courses } = user || { courses: null };
+          if (!courses)
+            return <h6 className='font-weight500'>No Notifications Yet</h6>;
+          let notificationsSorted = [];
+          courses.forEach(({ notifications }) =>
+            notifications.map((notification) => {
+              notificationsSorted.push(notification);
+            })
+          );
+          notificationsSorted = notificationsSorted.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+
+          return (
+            <ul className='notifications-list'>
+              {notificationsSorted
+                .slice(0, 15)
+                .map(({ course, student, isSeen, createdAt, type }) => {
+                  return (
+                    <NotificationItem
+                      {...{ course, student, isSeen, createdAt, type }}
+                    />
+                  );
+                })}
+            </ul>
+          );
+        }}
+      </Query>
+    </section>
+  );
+}
+
+const NotificationItem = ({ id, course, student, isSeen, createdAt, type }) => {
+  if (!student) return null;
+  const { CourseNameInEnglish } = course;
+  const { StudentNameInArabic, id: studentID } = student;
+  const timeDifference = formatDistance(new Date(createdAt), new Date(), {
+    addSuffix: true,
+  });
+  const getTypeNameMessage = (type) => {
+    switch (type) {
+      case 'alert30':
+        return `Attendance Alert for ${StudentNameInArabic} for exceeding 30% attendance alert for ${CourseNameInEnglish} Course`;
+      case 'alert50':
+        return `Attendance Alert for ${StudentNameInArabic} for exceeding 50% attendance alert for ${CourseNameInEnglish} Course`;
+
+      case 'alert60':
+        return `Attendance Alert for ${StudentNameInArabic} for exceeding 60% attendance alert for ${CourseNameInEnglish} Course`;
+      default:
+        return '';
+    }
+  };
+  const typeNameMessage = getTypeNameMessage(type);
+  return (
+    <Link key={id} className='notification-item' to={`/student/${studentID}`}>
+      <AvatarOrInitials
+        name={StudentNameInArabic}
+        className='small-notifications-avatar'
+      />
+      <div>
+        <span className='font-weigh500'>{typeNameMessage}</span>
+        <span className='font-weigh400'>{timeDifference}</span>
+      </div>
+    </Link>
+  );
+};
 function AppBarSearch(classes) {
   const [searchQuery, setSearchQuery] = useState('');
   const searchFieldRef = useRef(null);
   const [isSearchbarFocused, setSearchbarFocus] = useState(false);
-  console.log(
-    `🚀 ~ file: ResponsiveDrawer.js ~ line 214 ~ AppBarSearch ~ searchFieldRef`,
-    searchFieldRef
-  );
+
   const [options, setOptions] = useState([]);
-  console.log(
-    `🚀 ~ file: ResponsiveDrawer.js ~ line 213 ~ AppBarSearch ~ options`,
-    options
-  );
 
   const onInputChange = (e) => {
     setSearchQuery(e.target.value);
@@ -249,7 +340,7 @@ function AppBarSearch(classes) {
           <div className='icons8-search'></div>
         </div>
         <InputBase
-          placeholder='Search for courses subjects or students..'
+          placeholder='Search for students..'
           value={searchQuery}
           inputRef={searchFieldRef}
           onFocus={setFocusFlag}
@@ -324,4 +415,32 @@ const fetchStudentsSuggestions = async (searchQuery) => {
     console.error(e.message);
     return [];
   }
+};
+ResponsiveDrawer.propTypes = {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window: PropTypes.func,
+};
+
+const NotificationsLoading = (props) => {
+  return (
+    <ContentLoader
+      height={54}
+      width={320}
+      viewBox='0 0 320 54'
+      backgroundColor='#f3f3f3'
+      foregroundColor='#ecebeb'
+      {...props}
+    >
+      <circle cx='27' cy='27' r='18' />
+      <rect x='53' y='14' rx='3' ry='3' width='180' height='13' />
+      <rect x='53' y='30' rx='3' ry='3' width='10' height='10' />
+      <rect x='67' y='30' rx='3' ry='3' width='74' height='10' />
+      <circle cx='305' cy='27' r='8' />
+      <rect x='0' y='53' rx='0' ry='0' width='320' height='1' />
+      <rect x='219' y='146' rx='0' ry='0' width='0' height='0' />
+    </ContentLoader>
+  );
 };

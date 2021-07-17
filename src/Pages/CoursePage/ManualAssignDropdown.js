@@ -22,10 +22,6 @@ export const ManualAssignDropdown = () => {
   const { studentsData, processedLectures, processedSections } =
     useContext(CoursePageContext);
 
-  console.log(
-    `🚀 ~ file: ManualAssignDropdown.js ~ line 23 ~ ManualAssignDropdown ~ processedLectures`,
-    processedLectures
-  );
   const {
     authedUser: {
       role: { name },
@@ -95,6 +91,7 @@ export const ManualAssignDropdown = () => {
     setIdentifer('');
   };
   const handleIdentifierChange = (e) => {
+    setIdentifierError('');
     setIdentifer(e.target.value);
   };
   const validateInput = () => {
@@ -220,6 +217,7 @@ export const ManualAssignDropdown = () => {
             setIdentifierError(`Student is not recognized`);
             return;
           }
+          break;
         default:
           break;
       }
@@ -421,12 +419,11 @@ export const ManualAssignDropdown = () => {
             <div className='assign-input-field-container'>
               <input
                 name={state.__assignBy}
-                className='report-name-input-field'
                 placeholder={`Please add the students' ${state.__assignBy}`}
                 value={identifier}
                 onChange={handleIdentifierChange}
                 onBlur={validateInput}
-                className={`assign-by-input-field ${
+                className={`report-name-input-field assign-by-input-field ${
                   identifierError && 'input-field-error'
                 }`}
               />

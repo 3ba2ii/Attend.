@@ -12,7 +12,7 @@ export const createStudentHelperFunction = ({
       let sid = student['ID'] + '';
       let NationalID = student['الرقم القومي'] + '';
 
-      const { data } = await createStudent({
+      await createStudent({
         variables: {
           StudentNameInArabic,
           StudentOfficialEmail,

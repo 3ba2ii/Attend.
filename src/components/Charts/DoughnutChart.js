@@ -26,10 +26,6 @@ export const DoughnutChart = ({ options }) => {
     };
     const lecturesCount = Object.keys(processedLectures).length;
 
-    console.table(
-      `🚀 ~ file: DoughnutChart.js ~ line 30 ~ Object.values ~ studentsData`,
-      studentsData
-    );
     Object.values(studentsData).forEach(({ course: { lectures } }) => {
       const percentage = (
         (Number(lectures.size) / lecturesCount) *
@@ -49,7 +45,7 @@ export const DoughnutChart = ({ options }) => {
       }
     });
     setLabelDataSet(finalResults);
-  }, [studentsData]);
+  }, [studentsData, processedLectures]);
   const DData = {
     labels: Object.keys(labelsDataSet),
 

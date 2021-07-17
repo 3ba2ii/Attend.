@@ -53,7 +53,6 @@ export const StudentPage = () => {
         const courseName =
           lecture?.course?.CourseNameInEnglish ||
           section?.course?.CourseNameInEnglish; */
-
         /*    if (checkingOnly.hasOwnProperty(courseName)) {
           checkingOnly[courseName].push(meetingNumber);
         } else {
@@ -114,7 +113,6 @@ export const StudentPage = () => {
       });
 
       setStudentCourseInfo(studentCourseInfo);
-      console.log(studentCourseInfo);
 
       setStudentMeetings(studentMeetings);
     } catch (e) {

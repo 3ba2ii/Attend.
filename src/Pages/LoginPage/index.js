@@ -207,7 +207,6 @@ const SignInAsStudentForm = ({ setError }) => {
   };
   useEffect(() => {
     if (studentID) {
-      console.log('now redirect to', studentID);
       setRedirectToStudentPage(true);
     }
   }, [studentID]);

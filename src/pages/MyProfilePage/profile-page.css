@@ -1,0 +1,228 @@
+#profile-page-main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  height: 100%;
+  padding: 7rem 3% 2rem 4%;
+}
+#profile-page-main {
+  display: grid;
+  grid-template-columns: 1.5fr 1.5fr 1fr;
+  grid-template-rows: 0.58fr 0.4fr 0.4fr 0.5fr;
+  gap: 24px;
+}
+.page-card-section {
+  background: #ffffff;
+  /*cardstroke*/
+  border: 1px solid rgba(227, 227, 227, 0.62);
+  box-sizing: border-box;
+  /*cardshadow*/
+  box-shadow: 6px 6px 10px rgba(177, 174, 174, 0.17);
+  /*cardborders*/
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+}
+#avatar-header-section {
+  grid-row: 1/3;
+  grid-column: 1/3;
+}
+
+#activities-courses-section {
+  grid-row: 3/4;
+  grid-column: 1/3;
+  max-height: 400px;
+}
+#user-calendar-chart-section {
+  grid-row: 4/-1;
+  grid-column: 1/3;
+}
+#side-section {
+  grid-row: 1/5;
+  grid-column: 3/4;
+}
+
+#avatar-header-section {
+  position: relative;
+}
+#avatar-header-section header {
+  display: flex;
+  padding: 1rem 24px;
+  gap: 1rem;
+  max-height: 220px;
+  position: relative;
+}
+#avatar-header-section header h4 {
+  font-weight: 600;
+}
+.profile-page-avatar {
+  position: relative;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+}
+.cover-background {
+  display: flex;
+  border-radius: 6px 6px 0 0;
+  -webkit-border-radius: 6px 6px 0 0;
+  -moz-border-radius: 6px 6px 0 0;
+  -ms-border-radius: 6px 6px 0 0;
+  -o-border-radius: 6px 6px 0 0;
+  overflow: hidden;
+}
+.cover-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 300px;
+}
+.user-info-header div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.username {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--third-color);
+}
+.role-department {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--third-color);
+}
+
+.faculty {
+  font-size: 0.85rem;
+
+  font-weight: 400;
+  color: var(--secondary-color);
+}
+.edit-setting-profile {
+  position: absolute;
+  right: 24px;
+}
+/* activities-courses-section */
+#activities-courses-section {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+}
+#activities-section {
+  display: flex;
+  padding: 24px;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  height: 100%;
+}
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.activities-list li {
+  color: var(--secondary-color);
+  padding: 1rem 1rem 1rem 0rem;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(98, 108, 126, 0.8);
+}
+.activities-list li a,
+.activities-list li a:focus,
+.activities-list li a:visited {
+  color: #0596ee;
+  font-weight: 500;
+}
+
+.activities-list li:last-of-type {
+  border-bottom: none;
+}
+.activities-meeting-date {
+  opacity: 0.65;
+}
+
+#courses-section {
+  display: flex;
+  padding: 24px;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  height: 100%;
+}
+.course-meetings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: var(--secondary-color);
+}
+.course-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem 1rem 0rem;
+  border-bottom: 1px solid rgba(98, 108, 126, 0.37);
+}
+.course-list-item div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+.meetings-count {
+}
+.course-name-with-avatar span {
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--primary-color);
+}
+.meetings-count span {
+  font-size: 0.8rem;
+  color: var(--secondary-color);
+}
+.course-list-item:visited {
+  color: var(--primary-color);
+}
+.course-list-item {
+  font-weight: 500;
+}
+#user-calendar-chart-section {
+  padding: 32px 24px;
+  height: 100%;
+}
+#user-calendar-chart-section span {
+  color: var(--secondary-color);
+}
+.connect-card {
+  padding: 24px;
+}
+.connect-card h6 {
+  margin-bottom: 1.5rem;
+}
+#side-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.similar-profiles-users {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.similar-profiles-users a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+.similar-profiles-users a div {
+  display: flex;
+  flex-direction: column;
+}

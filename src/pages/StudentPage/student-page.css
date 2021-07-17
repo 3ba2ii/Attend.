@@ -1,0 +1,40 @@
+#student-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  height: 100%;
+  padding: 7rem 3% 2rem 5%;
+  background: #f5f6f8;
+}
+
+#student-page {
+  display: grid;
+  grid-template-rows: 1fr fit-content 3fr 3fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2.5rem;
+  position: relative;
+}
+#student-page #activities-chart {
+}
+#student-page #attendance-per-lecture-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+#student-page #user-calendar-chart-section {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#student-page .course-header-section aside {
+  position: relative;
+}
+
+#student-page .course-header-section aside .dropdown {
+  left: -300px;
+}
+#student-page #activities-chart {
+  max-height: 100%;
+}

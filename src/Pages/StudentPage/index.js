@@ -87,17 +87,14 @@ export const StudentPage = () => {
       let studentMeetings = { Lecture: [], Section: [] };
       //now iterate over attendances and add student Data to each course
       attendances.forEach(({ section, lecture }) => {
-        let meeting, meetingNumber, meetingDateTime, __typename;
+        let meeting, meetingNumber, __typename;
 
         if (section) {
           meeting = section;
-          meetingDateTime = section.SectionDateTime;
           meetingNumber = section.SectionNumber;
           __typename = 'Section';
         } else if (lecture) {
           meeting = lecture;
-
-          meetingDateTime = lecture.LectureDateTime;
           meetingNumber = lecture.LectureNumber;
           __typename = 'Lecture';
         }
@@ -427,7 +424,7 @@ const MonthlyCourseAttendances = ({ selectedData, courses }) => {
       }
     );
     setDisplayedDataSet(datasets);
-  }, []);
+  }, [courses, selectedData]);
   return <Bar data={data} options={options} />;
 };
 function groupDataPerMonthAndCourse(dataPerMonth) {

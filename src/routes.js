@@ -1,6 +1,6 @@
 import SpinnerElement from 'components/Spinner/spinner';
-import RegisterPage from 'pages/RegisterPage';
-import { StudentPage } from 'pages/StudentPage';
+import RegisterPage from 'pages/RegisterPage/index.js';
+import { StudentPage } from 'pages/StudentPage/index.js';
 import React, { lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';

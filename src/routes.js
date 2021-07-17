@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ResponsiveDrawer from './components/Drawer/ResponsiveDrawer';
 
-const LoginPage = lazy(() => import('pages/LoginPage'));
+const LoginPage = lazy(() => import('pages/LoginPage/index.js'));
 const ForgotPasswordPage = lazy(() =>
   import('pages/PasswordReset/ForgotPassword')
 );

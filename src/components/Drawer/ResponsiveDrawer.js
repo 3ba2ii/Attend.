@@ -17,7 +17,7 @@ import { CoursesPage } from 'pages/CoursesPage/CoursesPage';
 import StaffPage from 'pages/DataEntry/Staff/StaffPage';
 import { ProfilePage } from 'pages/MyProfilePage/ProfilePage';
 import SettingsPage from 'pages/Settings/SettingsPage';
-import { StudentPage } from 'pages/StudentPage';
+import { StudentPage } from 'pages/StudentPage/index.js';
 import PropTypes from 'prop-types';
 import React, { lazy, useCallback, useEffect, useRef, useState } from 'react';
 import ContentLoader from 'react-content-loader';
